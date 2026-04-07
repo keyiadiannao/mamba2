@@ -75,4 +75,4 @@ $env:MAMBA2_RESULTS_ROOT = "D:\cursor_try\mamba2_results"
 
 - AutoDL 数据盘挂载路径：___________
 - 网盘/对象存储 bucket（如有）：___________
-- 默认 Git 远程：___________
+- 默认 Git 远程：`https://github.com/keyiadiannao/mamba2.git`（分支 `master`）
