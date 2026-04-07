@@ -1,0 +1,1 @@
+Micro-benchmarks should fix retrieval budget and tree shape so latency and peak memory comparisons are reproducible across machines.

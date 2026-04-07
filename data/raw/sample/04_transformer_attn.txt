@@ -1,0 +1,1 @@
+Transformer self-attention compares every token to every token, which scales quadratically with context length.

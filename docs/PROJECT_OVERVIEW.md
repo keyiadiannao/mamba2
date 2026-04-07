@@ -92,3 +92,4 @@ mamba2/
 | `docs/PROJECT_MASTER_PLAN.md` | **6 个月级总体规划**、四条线、风险、里程碑 |
 | `docs/CURRENT_SPRINT.md` | **当前 1–2 周**执行任务（滚动） |
 | `docs/DATASETS.md` | 数据与样例路径约定 |
+| `docs/AUTODL_SETUP.md` | 云端实例克隆、环境、smoke、扫参 |

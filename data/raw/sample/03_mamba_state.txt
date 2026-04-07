@@ -1,0 +1,1 @@
+State-space models like Mamba maintain a fixed-size recurrent state instead of growing a KV cache with sequence length.

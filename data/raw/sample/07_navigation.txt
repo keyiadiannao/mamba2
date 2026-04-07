@@ -1,0 +1,1 @@
+Tree navigation chooses child nodes step by step; wrong branches may require backtracking to a saved state checkpoint.

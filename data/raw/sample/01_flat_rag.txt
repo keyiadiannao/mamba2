@@ -1,0 +1,1 @@
+Flat RAG splits documents into chunks, embeds them, and retrieves top-k by similarity before generation.

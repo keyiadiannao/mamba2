@@ -1,0 +1,1 @@
+Mamba-2 SSD relates structured state-space blocks to a constrained attention pattern inside each block while keeping cross-block recurrence.

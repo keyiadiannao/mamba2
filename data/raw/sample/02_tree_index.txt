@@ -1,0 +1,1 @@
+Tree-structured retrieval keeps hierarchical summaries so the model can zoom from coarse topics to fine evidence.

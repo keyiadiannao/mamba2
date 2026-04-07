@@ -8,6 +8,7 @@
 - 阶段 1 验证规划与扫参说明：`docs/PHASE1_VALIDATION_PLAN.md`
 - **总体规划与当前迭代**：`docs/PROJECT_MASTER_PLAN.md`、`docs/CURRENT_SPRINT.md`
 - 数据与样例：`docs/DATASETS.md`
+- AutoDL 环境步骤：`docs/AUTODL_SETUP.md`
 
 ## 本机 Conda 环境 `mamba2`（推荐）
 

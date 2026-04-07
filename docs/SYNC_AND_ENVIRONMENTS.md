@@ -73,7 +73,13 @@ $env:MAMBA2_RESULTS_ROOT = "D:\cursor_try\mamba2_results"
 
 ---
 
-## 7. 待填实例信息（填后勿提交含密码文件）
+## 7. AutoDL 快速上手
+
+分步命令见 **`docs/AUTODL_SETUP.md`**（克隆、`conda`、PyTorch、`smoke`、扫参、CSV 回传与合并）。
+
+---
+
+## 8. 待填实例信息（填后勿提交含密码文件）
 
 - AutoDL 数据盘挂载路径：___________
 - 网盘/对象存储 bucket（如有）：___________

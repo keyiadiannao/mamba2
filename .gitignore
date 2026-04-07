@@ -12,12 +12,15 @@ venv/
 .ipynb_checkpoints/
 
 # Data & artifacts (never commit large blobs)
-data/raw/
+data/raw/**
+!data/raw/sample/
+!data/raw/sample/**
 data/processed/
 checkpoints/*
 !checkpoints/.gitkeep
 results/runs/
 results/artifacts/
+results/metrics/leaves_from_repo_sample.txt
 wandb/
 *.pt
 *.pth

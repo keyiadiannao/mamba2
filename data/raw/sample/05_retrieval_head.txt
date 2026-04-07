@@ -1,0 +1,1 @@
+Retrieval heads are attention heads that specialize in pulling facts from long context; masking them hurts long-form factuality.
