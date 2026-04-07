@@ -2,7 +2,7 @@
 
 - **registry id**: `A-20260407-toy-tree-reader-bench`
 - **方向**: A（树状 RAG 框架 / 验证实验）
-- **目的**: 在**同一棵树、同一路径批量**上对比 **Transformer 路径编码器** 与 **GRU（Mamba 占位）** 的耗时与 `peak_alloc`；后续将 GRU 换成 Mamba-2 reader。
+- **目的**: 在**同一棵树、同一路径批量**上对比 **Transformer**、**GRU（递归占位）** 与 **`Mamba2PathReader`（Transformers `Mamba2Model` + `inputs_embeds`）** 的耗时与 `peak_alloc`。未装 `mamba-ssm` 时为 naive 回退，显存与步耗会偏高，仅作阶段 1 对比曲线。
 
 ## 命令
 

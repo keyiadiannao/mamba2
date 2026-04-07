@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
-Phase-1 stub: balanced tree, all root-to-leaf paths, compare Transformer vs GRU reader.
-
-Mamba-2 can replace GRUPathReader later; this script establishes the harness (latency + VRAM).
+Phase-1 stub: balanced tree, all root-to-leaf paths, compare **Transformer**, **GRU**, and **Mamba-2** path readers.
 
 Run (from repo root, conda env mamba2):
   python scripts/benchmark_tree_walk.py --depth 6 --fanout 2
@@ -31,6 +29,9 @@ def main() -> int:
     p.add_argument("--nhead", type=int, default=8)
     p.add_argument("--tf-layers", type=int, default=2)
     p.add_argument("--gru-layers", type=int, default=2)
+    p.add_argument("--no-mamba2", action="store_true", help="Skip Mamba2PathReader (no transformers dependency path)")
+    p.add_argument("--mamba-layers", type=int, default=2)
+    p.add_argument("--mamba-hidden", type=int, default=128)
     p.add_argument("--warmup", type=int, default=3)
     p.add_argument("--reps", type=int, default=10)
     p.add_argument("--cpu", action="store_true", help="Force CPU")
@@ -50,6 +51,9 @@ def main() -> int:
         nhead=args.nhead,
         tf_layers=args.tf_layers,
         gru_layers=args.gru_layers,
+        include_mamba2=not args.no_mamba2,
+        mamba_layers=args.mamba_layers,
+        mamba_hidden=args.mamba_hidden,
         warmup=args.warmup,
         reps=args.reps,
         device=device,

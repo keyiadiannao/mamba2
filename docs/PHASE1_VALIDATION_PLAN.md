@@ -20,7 +20,8 @@
 - **节点表示**：每节点 `chunk_len × dim` 合成张量；路径序列长度 \(T = (\texttt{depth}+1)\times\texttt{chunk_len}\)。
 - **Reader**：
   - **Transformer**：`TransformerEncoder` + mean pool + 线性头。
-  - **GRU**：双层 GRU + 线性头（**Mamba 占位**）。
+  - **GRU**：双层 GRU + 线性头（递归占位）。
+  - **Mamba-2**：`Mamba2PathReader`（`inputs_embeds` 喂 `Mamba2Model`）；无 `mamba-ssm` 时为 HF naive 实现。
 - **指标**：`elapsed_s`、`per_step_s`（总时间 / `reps`）、`peak_alloc_mib`（CUDA `max_memory_allocated`，CPU 为 0）。
 
 **未纳入（后续迭代）**：真实 RAPTOR 文本、Mamba-2、`mamba_ssm`、检索头、任务级 EM/F1。

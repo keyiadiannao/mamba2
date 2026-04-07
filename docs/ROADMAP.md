@@ -40,3 +40,4 @@
 | 2026-04-07 | `PROJECT_MASTER_PLAN.md`、`CURRENT_SPRINT.md`；文本形树 `benchmark_text_tree.py`；扫参 CSV 增列与 `merge_sweep_csv.py` |
 | 2026-04-07 | `data/raw/sample` 联调语料；`prepare_leaves_from_corpus.py`；`AUTODL_SETUP.md` |
 | 2026-04-07 | `smoke_mamba_minimal.py`：HF `MambaModel` tiny，无 mamba-ssm |
+| 2026-04-07 | `Mamba2PathReader` 接入树路径基准（TF/GRU/Mamba2 三对比） |

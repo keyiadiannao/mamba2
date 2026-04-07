@@ -44,7 +44,7 @@ python scripts\smoke_mamba_minimal.py --arch mamba
 python scripts\benchmark_tree_walk.py --depth 6 --fanout 2
 ```
 
-说明与登记见 `experiments/A-20260407-toy-tree-reader-bench/README.md`（GRU 为 Mamba 占位，后续替换）。
+说明与登记见 `experiments/A-20260407-toy-tree-reader-bench/README.md`。默认含 **Transformer + GRU + Mamba2** 三路对比；`--no-mamba2` 可关掉 Mamba2。
 
 ### 扫参（CSV）
 

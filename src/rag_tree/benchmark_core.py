@@ -8,7 +8,7 @@ from typing import Any
 import torch
 import torch.nn as nn
 
-from src.rag_tree.readers import GRUPathReader, TransformerPathReader
+from src.rag_tree.readers import GRUPathReader, Mamba2PathReader, TransformerPathReader, mamba2_path_reader_available
 from src.rag_tree.tree import batched_paths, build_balanced_tree
 
 
@@ -72,6 +72,9 @@ def run_tree_reader_benchmark(
     nhead: int = 8,
     tf_layers: int = 2,
     gru_layers: int = 2,
+    mamba_layers: int = 2,
+    mamba_hidden: int = 128,
+    include_mamba2: bool = True,
     warmup: int = 3,
     reps: int = 10,
     device: torch.device | None = None,
@@ -93,7 +96,7 @@ def run_tree_reader_benchmark(
     tf = TransformerPathReader(dim=dim, nhead=nhead, num_layers=tf_layers)
     gru = GRUPathReader(dim=dim, num_layers=gru_layers)
 
-    return {
+    out: dict[str, Any] = {
         "device": str(dev),
         "depth": depth,
         "fanout": fanout,
@@ -102,6 +105,12 @@ def run_tree_reader_benchmark(
         "transformer": benchmark_reader("transformer", tf, paths, dev, warmup, reps),
         "gru": benchmark_reader("gru", gru, paths, dev, warmup, reps),
     }
+    if include_mamba2 and mamba2_path_reader_available():
+        m2 = Mamba2PathReader(dim=dim, mamba_hidden=mamba_hidden, num_layers=mamba_layers)
+        out["mamba2"] = benchmark_reader("mamba2", m2, paths, dev, warmup, reps)
+    else:
+        out["mamba2"] = None
+    return out
 
 
 def run_reader_benchmark_on_paths(
@@ -110,6 +119,9 @@ def run_reader_benchmark_on_paths(
     nhead: int = 8,
     tf_layers: int = 2,
     gru_layers: int = 2,
+    mamba_layers: int = 2,
+    mamba_hidden: int = 128,
+    include_mamba2: bool = True,
     warmup: int = 3,
     reps: int = 10,
     device: torch.device | None = None,
@@ -126,7 +138,7 @@ def run_reader_benchmark_on_paths(
     tf = TransformerPathReader(dim=dim, nhead=nhead, num_layers=tf_layers)
     gru = GRUPathReader(dim=dim, num_layers=gru_layers)
 
-    return {
+    out: dict[str, Any] = {
         "device": str(dev),
         "depth": None,
         "fanout": None,
@@ -135,3 +147,9 @@ def run_reader_benchmark_on_paths(
         "transformer": benchmark_reader("transformer", tf, paths, dev, warmup, reps),
         "gru": benchmark_reader("gru", gru, paths, dev, warmup, reps),
     }
+    if include_mamba2 and mamba2_path_reader_available():
+        m2 = Mamba2PathReader(dim=dim, mamba_hidden=mamba_hidden, num_layers=mamba_layers)
+        out["mamba2"] = benchmark_reader("mamba2", m2, paths, dev, warmup, reps)
+    else:
+        out["mamba2"] = None
+    return out

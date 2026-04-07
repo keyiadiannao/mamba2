@@ -45,6 +45,7 @@ def main() -> int:
     p.add_argument("--warmup", type=int, default=3)
     p.add_argument("--reps", type=int, default=10)
     p.add_argument("--cpu", action="store_true")
+    p.add_argument("--no-mamba2", action="store_true")
     args = p.parse_args()
 
     if args.leaf_file:
@@ -76,6 +77,7 @@ def main() -> int:
     out = run_reader_benchmark_on_paths(
         paths,
         nhead=args.nhead,
+        include_mamba2=not args.no_mamba2,
         warmup=args.warmup,
         reps=args.reps,
         device=device,

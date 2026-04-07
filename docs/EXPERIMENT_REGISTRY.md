@@ -10,7 +10,7 @@
 |----|------|------|--------|------|------|----------|------|
 | env-001 | | 5060+ADL | | X | 环境复现与 smoke | import OK | |
 | X-20260407-smoke-local | 2026-04-07 | 5060 | | X | conda env mamba2 冒烟 | torch 2.11.0+cu128, CUDA OK, 50x fwd ~0.27s GPU; mamba_ssm 未装 | OK |
-| A-20260407-toy-tree-reader-bench | 2026-04-07 | 5060 | | A | 玩具树 Reader 微基准 | `python scripts/benchmark_tree_walk.py` | TF vs GRU  harness 就绪；待换 Mamba |
+| A-20260407-toy-tree-reader-bench | 2026-04-07 | 5060 | | A | 玩具树三 Reader 微基准 | `benchmark_tree_walk.py` | TF+GRU+Mamba2PathReader（默认） |
 | A-20260407-sweep-local | 2026-04-07 | 5060 | | A | 扫参 preset=local | `scripts/sweep_tree_benchmark.py` | 见 `results/metrics/sweep_tree_reader_20260407_local.csv` |
 | A-20260408-text-shaped-tree | 2026-04-07 | 5060 | | A | 文本形树 reader 基准 | `scripts/benchmark_text_tree.py` | 确定性文本嵌入；待换神经 encoder |
 | X-20260408-corpus-sample | 2026-04-07 | 5060 | | X | `data/raw/sample` + prepare_leaves | `prepare_leaves_from_corpus.py` → `benchmark_text_tree.py` | 合成 8 段；叶文件见 .gitignore 生成物 |

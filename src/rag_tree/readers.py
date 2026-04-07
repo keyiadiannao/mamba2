@@ -1,9 +1,18 @@
-"""Path readers for micro-benchmarks: Transformer (global attention) vs GRU (fixed state, SSM stand-in)."""
+"""Path readers for micro-benchmarks: Transformer, GRU stand-in, and Mamba-2 (via Transformers)."""
 
 from __future__ import annotations
 
 import torch
 import torch.nn as nn
+
+
+def mamba2_path_reader_available() -> bool:
+    try:
+        from transformers import Mamba2Config, Mamba2Model  # noqa: F401
+
+        return True
+    except ImportError:
+        return False
 
 
 class TransformerPathReader(nn.Module):
@@ -51,3 +60,56 @@ class GRUPathReader(nn.Module):
         _, h_n = self.gru(x)
         last = h_n[-1]
         return self.out_proj(last)
+
+
+class Mamba2PathReader(nn.Module):
+    """
+    Mamba-2 stack on path embeddings [B, T, D] using `inputs_embeds` (no token embedding).
+
+    Internal width `mamba_hidden` uses a small SSD-consistent config (expand=2, n_groups=1).
+    Requires: pip install transformers (5.x for Mamba2).
+    """
+
+    def __init__(
+        self,
+        dim: int,
+        *,
+        mamba_hidden: int = 128,
+        num_layers: int = 2,
+        state_size: int = 16,
+        vocab_size: int = 32000,
+        head_dim: int = 64,
+        expand: int = 2,
+    ) -> None:
+        super().__init__()
+        from transformers import Mamba2Config, Mamba2Model
+
+        inner = mamba_hidden * expand
+        if inner % head_dim != 0:
+            raise ValueError(f"mamba_hidden*expand ({inner}) must be divisible by head_dim ({head_dim})")
+        num_heads = inner // head_dim
+        self.mamba_hidden = mamba_hidden
+        self.in_proj = nn.Linear(dim, mamba_hidden) if dim != mamba_hidden else nn.Identity()
+        cfg = Mamba2Config(
+            num_hidden_layers=num_layers,
+            hidden_size=mamba_hidden,
+            state_size=state_size,
+            vocab_size=vocab_size,
+            num_heads=num_heads,
+            head_dim=head_dim,
+            expand=expand,
+            n_groups=1,
+            use_cache=False,
+        )
+        self.core = Mamba2Model(cfg)
+        self.out_proj = nn.Linear(mamba_hidden, dim)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # x: [B, T, D]
+        if isinstance(self.in_proj, nn.Identity):
+            h = x
+        else:
+            h = self.in_proj(x)
+        y = self.core(inputs_embeds=h).last_hidden_state
+        pooled = y.mean(dim=1)
+        return self.out_proj(pooled)

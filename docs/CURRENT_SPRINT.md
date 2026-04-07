@@ -24,6 +24,7 @@
 - [x] **AutoDL 文档**：`docs/AUTODL_SETUP.md` + `SYNC` 索引（需在实例上亲自执行命令并登记 CSV）
 - [x] **本地最小 Mamba**：`transformers.MambaModel` 小配置 smoke（无需 `mamba-ssm`），见 `scripts/smoke_mamba_minimal.py`
 - [ ] （可选）**mamba-ssm**：在 AutoDL 上安装融合内核；与上述脚本对比速度或换更大 checkpoint
+- [x] **树路径三 reader**：`Mamba2PathReader` 接入 `benchmark_core` / `sweep` / `benchmark_text_tree`（默认开启，`--no-mamba2` 可关）
 
 ---
 
