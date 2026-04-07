@@ -29,6 +29,12 @@ python -m pip install torch torchvision torchaudio --index-url https://download.
 python -m pip install pyyaml tqdm
 ```
 
+锁定当前环境依赖（建议在重大变更后重跑）：
+
+```powershell
+python -m pip freeze > environment\requirements-mamba2-lock.txt
+```
+
 ## 日常使用
 
 ```powershell

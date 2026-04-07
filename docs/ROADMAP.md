@@ -6,14 +6,14 @@
 
 ## 当前周期（请每次更新日期范围）
 
-**周期**：____年__月__日 — __月__日
+**周期**：2026-04-07 — 2026-04-13
 
 | 状态 | 任务 | 机器 | 产出 |
 |------|------|------|------|
-| ☐ | 锁定 Python/CUDA 版本，生成 `environment/requirements-lock.txt`（或 conda export） | 本地+服务器 | 可复现环境 |
+| ☑ | 锁定 Python/CUDA 版本，生成 `environment/requirements-mamba2-lock.txt` | 本地 | 已导出 pip freeze |
 | ☐ | 仓库克隆到 AutoDL，配置 `data/`、`checkpoints/` 为数据盘路径 | AutoDL | `SYNC` 文档中路径已填 |
-| ☐ | Smoke：import 核心依赖 + 假数据 forward 一步 | 5060 | registry 一条 |
-| ☐ | 选定首个语料子集与评测脚本骨架 | 本地 | `experiments/A-...` 目录 |
+| ☑ | Smoke：`scripts/smoke_local.py` | 5060 | registry `X-20260407-smoke-local` |
+| ☑ | 阶段 1 入口：玩具树 + Reader 对比脚本骨架 | 本地 | `experiments/A-20260407-toy-tree-reader-bench`、`scripts/benchmark_tree_walk.py` |
 
 **本周阻塞**：_
 
@@ -35,4 +35,4 @@
 
 | 日期 | 完成项 |
 |------|--------|
-| | |
+| 2026-04-07 | 阶段 1 玩具树 + Transformer/GRU 微基准脚本；`requirements-mamba2-lock.txt` |

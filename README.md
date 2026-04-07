@@ -19,3 +19,13 @@ python scripts\smoke_local.py
 未激活时可直接使用：`C:\Users\26433\miniconda3\envs\mamba2\python.exe scripts\smoke_local.py`
 
 **不要用** base 里自带的 `+cpu` torch 跑 GPU；5060 也不要装 `cu126` 稳定包（会缺 sm_120 内核），请用 `cu128` 轮子（见 `environment/MAMBA2.md`）。
+
+## 阶段 1 入口（玩具树 + Reader 微基准）
+
+在激活 `mamba2` 且位于仓库根目录时：
+
+```powershell
+python scripts\benchmark_tree_walk.py --depth 6 --fanout 2
+```
+
+说明与登记见 `experiments/A-20260407-toy-tree-reader-bench/README.md`（GRU 为 Mamba 占位，后续替换）。
