@@ -47,15 +47,30 @@ python scripts/smoke_mamba_minimal.py
 python scripts/sweep_tree_benchmark.py --preset local --out-csv results/metrics/sweep_autodl.csv
 ```
 
-将 `sweep_autodl.csv` 下载到本机后，可与本地 CSV 合并：
+### 本机合并 CSV（路径怎么填？）
+
+第三个参数必须是：**你已经下载到 Windows 上的 `sweep_autodl.csv` 的完整路径**。
+
+- 若用 **PyCharm Deployment / SFTP**：把远程 `mamba2/results/metrics/sweep_autodl.csv` 同步到本机工程，例如  
+  `d:\cursor_try\mamba2\results\metrics\sweep_autodl.csv`  
+  则合并命令为：
 
 ```powershell
-python scripts\merge_sweep_csv.py results\metrics\merged_local_autodl.csv results\metrics\sweep_tree_reader_20260407_local.csv results\metrics\sweep_autodl.csv
+cd d:\cursor_try\mamba2
+python scripts\merge_sweep_csv.py results\metrics\merged_5060_3090.csv results\metrics\sweep_tree_reader_20260407_local.csv results\metrics\sweep_autodl.csv
 ```
 
-## 5. mamba-ssm（可选）
+- 若文件在 **下载文件夹**（示例，按你的用户名改）：
 
-依赖 CUDA 与 torch 版本；在激活 `mamba2` 后按 [state-spaces/mamba](https://github.com/state-spaces/mamba) 说明安装。成功后在 `EXPERIMENT_REGISTRY.md` 记一条 `import mamba_ssm` + 微型 forward。
+```powershell
+python scripts\merge_sweep_csv.py results\metrics\merged_5060_3090.csv results\metrics\sweep_tree_reader_20260407_local.csv C:\Users\26433\Downloads\sweep_autodl.csv
+```
+
+**不要用** 带「下载路径」字样的占位符；在资源管理器里对 `sweep_autodl.csv` **右键 → 属性** 复制「位置」+ 文件名，或 PyCharm 里右键文件 **Copy Path/Reference**。
+
+## 5. mamba-ssm（可选，建议 Linux 上做）
+
+**分步说明与收益**见 **`docs/MAMBA_SSM_INSTALL_LINUX.md`**（含 `causal-conv1d` 顺序、验证命令、常见问题）。成功后在 `EXPERIMENT_REGISTRY.md` 再记一条带 `mamba_ssm` 的扫参或 `benchmark_tree_walk` 对比。
 
 ## 6. Git 身份与私有仓库
 
