@@ -38,3 +38,4 @@
 | 2026-04-07 | 阶段 1 玩具树 + Transformer/GRU 微基准脚本；`requirements-mamba2-lock.txt` |
 | 2026-04-07 | `PHASE1_VALIDATION_PLAN.md`；`sweep_tree_benchmark.py`；本地 preset 扫参 CSV |
 | 2026-04-07 | `PROJECT_MASTER_PLAN.md`、`CURRENT_SPRINT.md`；文本形树 `benchmark_text_tree.py`；扫参 CSV 增列与 `merge_sweep_csv.py` |
+| 2026-04-07 | `data/raw/sample` 联调语料；`prepare_leaves_from_corpus.py`；`AUTODL_SETUP.md` |
