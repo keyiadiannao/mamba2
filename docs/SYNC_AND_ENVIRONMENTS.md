@@ -9,6 +9,8 @@
 
 **原则**：能在本地验证「逻辑正确」的，不要上云；上云只跑已本地 smoke 通过的提交（commit hash 写入 registry）。
 
+**本机默认解释器（Windows）**：`C:\Users\26433\miniconda3\python.exe`。建议在仓库根目录执行 `python scripts/smoke_local.py` 做冒烟；若 `torch` 显示为 `+cpu` 且机器有 NVIDIA GPU，请为该 conda 环境重装带 CUDA 的 PyTorch 轮子。
+
 ---
 
 ## 2. 什么走 Git，什么不走

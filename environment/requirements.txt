@@ -1,10 +1,12 @@
 # Pin versions after first successful install on both 5060 and AutoDL.
-# torch / mamba-ssm: install per official wheels for your CUDA version.
 #
-# Example placeholders (replace with pinned set):
+# Local smoke (scripts/smoke_local.py) needs only torch; pick wheel for your CUDA:
+#   https://pytorch.org/get-started/locally/
+#
 # torch>=2.2
+# numpy
 # transformers>=4.40
 # datasets
 # tqdm
 # pyyaml
-# numpy
+# mamba-ssm  # install per https://github.com/state-spaces/mamba — after torch matches CUDA
