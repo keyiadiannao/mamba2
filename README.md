@@ -6,6 +6,8 @@
 - 双机分工与上传下载规范：`docs/SYNC_AND_ENVIRONMENTS.md`
 - 实验登记（随做随记）：`docs/EXPERIMENT_REGISTRY.md`
 - 阶段 1 验证规划与扫参说明：`docs/PHASE1_VALIDATION_PLAN.md`
+- **总体规划与当前迭代**：`docs/PROJECT_MASTER_PLAN.md`、`docs/CURRENT_SPRINT.md`
+- 数据与样例：`docs/DATASETS.md`
 
 ## 本机 Conda 环境 `mamba2`（推荐）
 
@@ -38,3 +40,17 @@ python scripts\sweep_tree_benchmark.py --preset local --out-csv results\metrics\
 ```
 
 自定义网格见 `docs/PHASE1_VALIDATION_PLAN.md`（`--depths`、`--chunk-lens`、`--max-leaves` 等）。
+
+多机 CSV 合并：
+
+```powershell
+python scripts\merge_sweep_csv.py results\metrics\merged.csv results\metrics\run_a.csv results\metrics\run_b.csv
+```
+
+### 文本形浅树（样例叶节点）
+
+```powershell
+python scripts\benchmark_text_tree.py --leaf-file experiments\A-20260408-text-shaped-tree\leaves_sample.txt
+```
+
+见 `experiments/A-20260408-text-shaped-tree/README.md`。

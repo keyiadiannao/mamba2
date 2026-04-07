@@ -14,6 +14,7 @@ class TreeNode:
 
     embedding: torch.Tensor  # [L, D] sequence of token vectors for this node
     children: List["TreeNode"] = field(default_factory=list)
+    text: str = ""  # optional source text for text-shaped / RAPTOR-style trees
 
     def is_leaf(self) -> bool:
         return len(self.children) == 0

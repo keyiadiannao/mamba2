@@ -64,7 +64,13 @@
 
 ---
 
-## 7. 命令速查
+## 7. 与总体规划的关系
+
+阶段 1 对应 `docs/PROJECT_MASTER_PLAN.md` 中的 **阶段 1（系统验证）**；当前两周任务见 `docs/CURRENT_SPRINT.md`。
+
+---
+
+## 8. 命令速查
 
 ```powershell
 conda activate mamba2
@@ -79,7 +85,7 @@ python scripts\sweep_tree_benchmark.py --preset local --out-csv results\metrics\
 
 ---
 
-## 8. 相关文件
+## 9. 相关文件
 
 | 文件 | 作用 |
 |------|------|
@@ -87,3 +93,4 @@ python scripts\sweep_tree_benchmark.py --preset local --out-csv results\metrics\
 | `scripts/benchmark_tree_walk.py` | 单次 CLI |
 | `scripts/sweep_tree_benchmark.py` | 多组 CSV / jsonl 扫参 |
 | `experiments/A-20260407-toy-tree-reader-bench/README.md` | 单次实验说明 |
+| `scripts/benchmark_text_tree.py` | 文本形叶节点 + 自底向上建树 + 同 reader 基准 |

@@ -89,3 +89,6 @@ mamba2/
 | `docs/SYNC_AND_ENVIRONMENTS.md` | 5060 / AutoDL 分工与同步 |
 | `docs/EXPERIMENT_REGISTRY.md` | 实验 ID、命令、指标、结论 |
 | `docs/PHASE1_VALIDATION_PLAN.md` | 阶段 1 验证目标、扫参网格、产出与判据 |
+| `docs/PROJECT_MASTER_PLAN.md` | **6 个月级总体规划**、四条线、风险、里程碑 |
+| `docs/CURRENT_SPRINT.md` | **当前 1–2 周**执行任务（滚动） |
+| `docs/DATASETS.md` | 数据与样例路径约定 |

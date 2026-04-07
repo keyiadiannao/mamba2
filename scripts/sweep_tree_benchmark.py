@@ -43,6 +43,13 @@ def _parse_int_list(s: str) -> list[int]:
     return [int(x.strip()) for x in s.split(",") if x.strip()]
 
 
+def _torch_and_gpu(device: torch.device) -> tuple[str, str]:
+    ver = torch.__version__
+    if device.type == "cuda" and torch.cuda.is_available():
+        return ver, torch.cuda.get_device_name(0)
+    return ver, ""
+
+
 def iter_grid(
     depths: Iterable[int],
     chunk_lens: Iterable[int],
@@ -89,6 +96,7 @@ def main() -> int:
         max_leaves = args.max_leaves
 
     device = torch.device("cpu" if args.cpu or not torch.cuda.is_available() else "cuda")
+    torch_version, gpu_name = _torch_and_gpu(device)
     repo = _REPO_ROOT
     sha = _git_short_sha(repo)
 
@@ -105,6 +113,8 @@ def main() -> int:
         "utc_iso",
         "git_sha",
         "device",
+        "gpu_name",
+        "torch_version",
         "depth",
         "fanout",
         "num_leaves",
@@ -147,6 +157,8 @@ def main() -> int:
                     "utc_iso": utc,
                     "git_sha": sha,
                     "device": r["device"],
+                    "gpu_name": gpu_name,
+                    "torch_version": torch_version,
                     "depth": depth,
                     "fanout": fanout,
                     "num_leaves": num_leaves,

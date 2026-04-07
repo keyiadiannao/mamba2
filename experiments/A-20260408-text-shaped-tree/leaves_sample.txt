@@ -1,0 +1,8 @@
+RAG combines retrieval with generation.
+Tree RAG uses hierarchical summaries.
+Mamba uses a recurrent state for long sequences.
+Transformers use quadratic attention in length.
+状态空间模型压缩历史为固定维度。
+检索头预测是否需要查外部知识。
+实验在5060与AutoDL上分工运行。
+复现依赖Git与环境锁定文件。

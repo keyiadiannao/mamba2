@@ -102,3 +102,36 @@ def run_tree_reader_benchmark(
         "transformer": benchmark_reader("transformer", tf, paths, dev, warmup, reps),
         "gru": benchmark_reader("gru", gru, paths, dev, warmup, reps),
     }
+
+
+def run_reader_benchmark_on_paths(
+    paths: torch.Tensor,
+    *,
+    nhead: int = 8,
+    tf_layers: int = 2,
+    gru_layers: int = 2,
+    warmup: int = 3,
+    reps: int = 10,
+    device: torch.device | None = None,
+) -> dict[str, Any]:
+    """
+    Run the same reader timing on an explicit path batch [B, T, D] (e.g. text-shaped tree).
+    """
+    dev = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    paths = paths.to(dev)
+    dim = int(paths.shape[2])
+    if dim % nhead != 0:
+        raise ValueError("dim must be divisible by nhead")
+
+    tf = TransformerPathReader(dim=dim, nhead=nhead, num_layers=tf_layers)
+    gru = GRUPathReader(dim=dim, num_layers=gru_layers)
+
+    return {
+        "device": str(dev),
+        "depth": None,
+        "fanout": None,
+        "num_leaves": int(paths.shape[0]),
+        "chunk_len": None,
+        "transformer": benchmark_reader("transformer", tf, paths, dev, warmup, reps),
+        "gru": benchmark_reader("gru", gru, paths, dev, warmup, reps),
+    }
