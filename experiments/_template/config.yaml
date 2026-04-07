@@ -1,0 +1,5 @@
+# Copy to a real experiment folder or symlink from configs/
+experiment_id: template
+seed: 42
+# Resolve paths in code from env MAMBA2_DATA_ROOT or default ./data
+data_root: "./data"

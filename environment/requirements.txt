@@ -1,0 +1,10 @@
+# Pin versions after first successful install on both 5060 and AutoDL.
+# torch / mamba-ssm: install per official wheels for your CUDA version.
+#
+# Example placeholders (replace with pinned set):
+# torch>=2.2
+# transformers>=4.40
+# datasets
+# tqdm
+# pyyaml
+# numpy
