@@ -23,6 +23,8 @@ conda create -n mamba2 python=3.11 pip -y
 conda activate mamba2
 
 python -m pip install -U pip
+# PyTorch 2.11 常与 setuptools<82 配套；装 torch 前建议：
+python -m pip install "setuptools>=70,<82"
 # 下面一行请换成官网生成的 GPU 版 wheel 命令，例如：
 # python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
 

@@ -32,8 +32,12 @@ python -c "import torch; print('torch', torch.__version__, 'cuda', torch.version
 ```bash
 conda activate mamba2
 cd /root/autodl-tmp/mamba2
-python -m pip install -U pip setuptools wheel packaging ninja
+python -m pip install -U pip wheel packaging ninja
+# PyTorch 2.11 官方轮常要求 setuptools<82；勿盲目 -U 到 82+，否则 pip 会报依赖冲突
+python -m pip install "setuptools>=70,<82"
 ```
+
+若你已误装 `setuptools 82.x`，先执行上一行再装 `causal-conv1d`。
 
 ### 2. 安装 `causal-conv1d`（先于 `mamba-ssm`）
 
@@ -99,6 +103,8 @@ python scripts/benchmark_tree_walk.py --depth 4 --fanout 2 --reps 3 --warmup 1
 
 ## 5. 常见问题
 
+- **`torch ... requires setuptools<82, but you have setuptools 82.x`**：**要管。** 执行 `python -m pip install "setuptools>=70,<82"`，与上节一致；否则少数场景下编译/运行可能出怪问题。  
+- **`Building wheel for causal-conv1d ...` 卡住很久**：**正常。** 首次多半在 **本机编译 CUDA 扩展**，常见 **5–20 分钟**（视 CPU）；`nvidia-smi` 此时往往几乎空闲。可另开终端看 CPU 是否在跑 `nvcc`/`c++`。想限并行：`export MAX_JOBS=4`。  
 - **`RuntimeError: CUDA extension not built`**：当前 torch 与编译时 CUDA 不一致 → 重装匹配的 torch 或换官方 release 的 wheel。  
 - **编译 OOM**：`export MAX_JOBS=2`。  
 - **仍显示 naive**：确认 `python -c "import mamba_ssm"` 无报错；Transformers 版本过旧时升级：`pip install -U transformers`。

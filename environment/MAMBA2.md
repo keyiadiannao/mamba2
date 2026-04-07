@@ -59,6 +59,10 @@ python scripts\smoke_local.py
 
 `C:\Users\26433\miniconda3\envs\mamba2\python.exe`
 
+## 本机用 conda 还是项目里的 `.venv`？
+
+**推荐：Conda 环境名 `mamba2`**（与上文一致）。仓库**没有**自带强制 `.venv`；若你用 `python -m venv .venv` 也可以，但文档与 `requirements-mamba2-lock.txt` 均以 **Miniconda + mamba2** 为准，两台机器对齐时最省事。
+
 ## AutoDL 说明
 
 云端 GPU 架构可能与 5060 不同：若在 **A100 / 4090** 等上安装，可选用对应 CUDA 版本的 PyTorch（例如 `cu126`），**不必**强行与本地一致；以 `nvidia-smi` 与 [pytorch.org](https://pytorch.org/get-started/locally/) 为准。
