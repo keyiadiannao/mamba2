@@ -26,11 +26,12 @@ python scripts\smoke_local.py
 
 ### 本地最小 Mamba（Transformers，8G 友好）
 
-无需 `mamba-ssm` 即可在 5060 上跑通小配置 `MambaModel`（顺序实现，适合做 smoke）：
+无需 `mamba-ssm` 即可在 5060 上跑通小配置 **`Mamba2Model`**（默认；无融合核时为 naive 回退，适合做 smoke）：
 
 ```powershell
 python -m pip install "transformers>=4.45" accelerate
 python scripts\smoke_mamba_minimal.py
+python scripts\smoke_mamba_minimal.py --arch mamba
 ```
 
 详见 `environment/MAMBA2.md` 与 `experiments/X-20260409-mamba-minimal-smoke/README.md`。

@@ -1,8 +1,8 @@
 # 实验：本地最小 Mamba（X）
 
 - **registry id**: `X-20260409-mamba-minimal-smoke`
-- **目的**：在 **8GB** 本机验证 `transformers.MambaModel` 前向/反向与显存峰值；**不依赖** `mamba-ssm`（Windows 上常难装）。
-- **模型选择**：随机初始化的 **tiny** 配置（默认 2 层、`hidden=256`、`state_size=16`、约 **9M 参数**），与论文级 Mamba-2 主模型无关，仅作**工程冒烟**。
+- **目的**：在 **8GB** 本机验证 **`Mamba2Model`（默认）** 或 `MambaModel`（`--arch mamba`）前向/反向与显存峰值；**不依赖** `mamba-ssm`（Windows 上常难装）。
+- **模型选择**：随机初始化的 **tiny** 配置（默认 2 层、`hidden=256`、`state_size=16`、`expand=2`、`8×64` heads，约 **9.1M 参数**），与预训练大模型无关，仅作**工程冒烟**。
 
 ## 命令
 
