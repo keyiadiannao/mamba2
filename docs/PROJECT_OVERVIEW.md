@@ -88,3 +88,4 @@ mamba2/
 | `docs/ROADMAP.md` | 周粒度任务与里程碑 |
 | `docs/SYNC_AND_ENVIRONMENTS.md` | 5060 / AutoDL 分工与同步 |
 | `docs/EXPERIMENT_REGISTRY.md` | 实验 ID、命令、指标、结论 |
+| `docs/PHASE1_VALIDATION_PLAN.md` | 阶段 1 验证目标、扫参网格、产出与判据 |

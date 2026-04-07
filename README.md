@@ -5,6 +5,7 @@
 - 全局目标、分类与阶段计划：`docs/PROJECT_OVERVIEW.md`
 - 双机分工与上传下载规范：`docs/SYNC_AND_ENVIRONMENTS.md`
 - 实验登记（随做随记）：`docs/EXPERIMENT_REGISTRY.md`
+- 阶段 1 验证规划与扫参说明：`docs/PHASE1_VALIDATION_PLAN.md`
 
 ## 本机 Conda 环境 `mamba2`（推荐）
 
@@ -29,3 +30,11 @@ python scripts\benchmark_tree_walk.py --depth 6 --fanout 2
 ```
 
 说明与登记见 `experiments/A-20260407-toy-tree-reader-bench/README.md`（GRU 为 Mamba 占位，后续替换）。
+
+### 扫参（CSV）
+
+```powershell
+python scripts\sweep_tree_benchmark.py --preset local --out-csv results\metrics\sweep_tree_reader_local.csv
+```
+
+自定义网格见 `docs/PHASE1_VALIDATION_PLAN.md`（`--depths`、`--chunk-lens`、`--max-leaves` 等）。

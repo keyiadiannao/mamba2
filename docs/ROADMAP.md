@@ -36,3 +36,4 @@
 | 日期 | 完成项 |
 |------|--------|
 | 2026-04-07 | 阶段 1 玩具树 + Transformer/GRU 微基准脚本；`requirements-mamba2-lock.txt` |
+| 2026-04-07 | `PHASE1_VALIDATION_PLAN.md`；`sweep_tree_benchmark.py`；本地 preset 扫参 CSV |

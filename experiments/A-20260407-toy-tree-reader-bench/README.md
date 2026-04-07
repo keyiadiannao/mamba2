@@ -24,6 +24,14 @@ python scripts\benchmark_tree_walk.py --depth 6 --fanout 2 --out-json results\me
 - `--chunk-len`：每个节点合成「块」长度（沿路径拼接成序列）。
 - `--dim`：需被 `--nhead` 整除（默认 128 / 8）。
 
+## 扫参（多组深度 × chunk_len）
+
+```powershell
+python scripts\sweep_tree_benchmark.py --preset local --out-csv results\metrics\sweep_tree_reader_local.csv
+```
+
+规划与网格说明：`docs/PHASE1_VALIDATION_PLAN.md`。
+
 ## 结论（本地一次样例）
 
 在 `depth=4, fanout=2`、5060 cu128 上，同 batch 下 GRU 步均时间常低于 Transformer（短序列下 attention 开销仍可见）；**峰值显存**以脚本打印 `peak_alloc_mib` 为准，随叶数与 `dim` 扫描可画曲线（阶段 1 主表雏形）。
