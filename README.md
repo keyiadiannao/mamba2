@@ -24,6 +24,17 @@ python scripts\smoke_local.py
 
 **不要用** base 里自带的 `+cpu` torch 跑 GPU；5060 也不要装 `cu126` 稳定包（会缺 sm_120 内核），请用 `cu128` 轮子（见 `environment/MAMBA2.md`）。
 
+### 本地最小 Mamba（Transformers，8G 友好）
+
+无需 `mamba-ssm` 即可在 5060 上跑通小配置 `MambaModel`（顺序实现，适合做 smoke）：
+
+```powershell
+python -m pip install "transformers>=4.45" accelerate
+python scripts\smoke_mamba_minimal.py
+```
+
+详见 `environment/MAMBA2.md` 与 `experiments/X-20260409-mamba-minimal-smoke/README.md`。
+
 ## 阶段 1 入口（玩具树 + Reader 微基准）
 
 在激活 `mamba2` 且位于仓库根目录时：

@@ -29,6 +29,15 @@ python -m pip install torch torchvision torchaudio --index-url https://download.
 python -m pip install pyyaml tqdm
 ```
 
+**Mamba 最小测试（推荐）**：用 HuggingFace `MambaModel` 随机初始化小配置，**无需**在 Windows 上编译 `mamba-ssm`（会使用顺序 PyTorch 实现，首次会打印一次「fast path not available」提示，可忽略）。
+
+```powershell
+python -m pip install "transformers>=4.45" accelerate
+python scripts\smoke_mamba_minimal.py
+```
+
+云端若安装 `mamba-ssm` + `causal-conv1d` 后，同一脚本可走融合内核（更快）。
+
 锁定当前环境依赖（建议在重大变更后重跑）：
 
 ```powershell

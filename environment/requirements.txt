@@ -10,4 +10,5 @@
 # datasets
 # tqdm
 # pyyaml
-# mamba-ssm  # install per https://github.com/state-spaces/mamba — after torch matches CUDA
+# Local minimal Mamba (no mamba-ssm on Windows): transformers>=4.45, accelerate
+# mamba-ssm + causal-conv1d  # Linux/AutoDL for fused kernels — after torch matches CUDA

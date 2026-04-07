@@ -26,7 +26,7 @@ python -m pip install -U pip
 # 下面一行请换成官网生成的 GPU 版 wheel 命令，例如：
 # python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
 
-python -m pip install pyyaml tqdm
+python -m pip install pyyaml tqdm "transformers>=4.45" accelerate
 ```
 
 ## 3. 环境变量（建议）
@@ -43,6 +43,7 @@ mkdir -p "$MAMBA2_DATA_ROOT" "$MAMBA2_CKPT_ROOT" "$MAMBA2_RESULTS_ROOT"
 ```bash
 cd /root/autodl-tmp/mamba2
 python scripts/smoke_local.py
+python scripts/smoke_mamba_minimal.py
 python scripts/sweep_tree_benchmark.py --preset local --out-csv results/metrics/sweep_autodl.csv
 ```
 

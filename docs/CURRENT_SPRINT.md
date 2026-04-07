@@ -22,7 +22,8 @@
 - [x] **文本形浅树**：样例叶文本 + 自底向上建树 + `benchmark_text_tree.py` + `run_reader_benchmark_on_paths`（确定性嵌入，非神经 encoder）
 - [x] **数据约定**：`data/raw/sample/` 8 段合成 `.txt` + `docs/DATASETS.md`；`prepare_leaves_from_corpus.py` 生成叶文件
 - [x] **AutoDL 文档**：`docs/AUTODL_SETUP.md` + `SYNC` 索引（需在实例上亲自执行命令并登记 CSV）
-- [ ] （可选）**mamba-ssm**：在 AutoDL 上尝试安装；成功则 registry 记一条 import + 微型 forward
+- [x] **本地最小 Mamba**：`transformers.MambaModel` 小配置 smoke（无需 `mamba-ssm`），见 `scripts/smoke_mamba_minimal.py`
+- [ ] （可选）**mamba-ssm**：在 AutoDL 上安装融合内核；与上述脚本对比速度或换更大 checkpoint
 
 ---
 
