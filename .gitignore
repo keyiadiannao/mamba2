@@ -14,7 +14,8 @@ venv/
 # Data & artifacts (never commit large blobs)
 data/raw/
 data/processed/
-checkpoints/
+checkpoints/*
+!checkpoints/.gitkeep
 results/runs/
 results/artifacts/
 wandb/
