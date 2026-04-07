@@ -9,7 +9,7 @@
 | id | 日期 | 机器 | commit | 方向 | 目的 | 关键指标 | 结论 |
 |----|------|------|--------|------|------|----------|------|
 | env-001 | | 5060+ADL | | X | 环境复现与 smoke | import OK | |
-| X-20260407-smoke-local | 2026-04-07 | 5060 | | X | 本地 PyTorch 冒烟 | CPU torch 2.10.0+cpu, 50x fwd ~0.07s; mamba_ssm 未装 | OK; 待换 GPU 版 torch |
+| X-20260407-smoke-local | 2026-04-07 | 5060 | | X | conda env mamba2 冒烟 | torch 2.11.0+cu128, CUDA OK, 50x fwd ~0.27s GPU; mamba_ssm 未装 | OK |
 
 ---
 

@@ -1,0 +1,46 @@
+# Conda 环境 `mamba2`（本项目专用）
+
+## 为何用 cu128
+
+**NVIDIA RTX 5060（Laptop）为 sm_120（Blackwell）**。带 **cu126** 的 PyTorch 不包含该架构的 CUDA 内核，会在 GPU 上报 `no kernel image`。请使用 **CUDA 12.8** 对应的官方轮子（`+cu128`）。
+
+## 一次性创建（Windows + Miniconda）
+
+若 `conda create` 提示需接受 Anaconda 渠道条款：
+
+```powershell
+conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/msys2
+```
+
+创建环境：
+
+```powershell
+conda create -n mamba2 python=3.11 pip -y
+conda activate mamba2
+python -m pip install -U pip
+python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+```
+
+可选（后续脚本常用）：
+
+```powershell
+python -m pip install pyyaml tqdm
+```
+
+## 日常使用
+
+```powershell
+conda activate mamba2
+cd d:\cursor_try\mamba2
+python scripts\smoke_local.py
+```
+
+本机解释器完整路径（未激活 conda 时）：
+
+`C:\Users\26433\miniconda3\envs\mamba2\python.exe`
+
+## AutoDL 说明
+
+云端 GPU 架构可能与 5060 不同：若在 **A100 / 4090** 等上安装，可选用对应 CUDA 版本的 PyTorch（例如 `cu126`），**不必**强行与本地一致；以 `nvidia-smi` 与 [pytorch.org](https://pytorch.org/get-started/locally/) 为准。

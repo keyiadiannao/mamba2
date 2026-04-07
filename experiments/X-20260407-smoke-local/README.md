@@ -9,8 +9,11 @@
 在仓库根目录：
 
 ```powershell
-C:\Users\26433\miniconda3\python.exe scripts\smoke_local.py
+conda activate mamba2
+python scripts\smoke_local.py
 ```
+
+或：`C:\Users\26433\miniconda3\envs\mamba2\python.exe scripts\smoke_local.py`
 
 可选：先设置数据/输出根目录（见 `docs/SYNC_AND_ENVIRONMENTS.md`）：
 

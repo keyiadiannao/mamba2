@@ -1,9 +1,10 @@
 # Pin versions after first successful install on both 5060 and AutoDL.
 #
-# Local smoke (scripts/smoke_local.py) needs only torch; pick wheel for your CUDA:
-#   https://pytorch.org/get-started/locally/
+# Local (RTX 5060 sm_120): use cu128 wheels, NOT cu126:
+#   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+# See environment/MAMBA2.md. AutoDL: pick wheel matching that GPU.
 #
-# torch>=2.2
+# torch>=2.2  # +cu128 on this machine
 # numpy
 # transformers>=4.40
 # datasets

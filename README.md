@@ -6,10 +6,16 @@
 - 双机分工与上传下载规范：`docs/SYNC_AND_ENVIRONMENTS.md`
 - 实验登记（随做随记）：`docs/EXPERIMENT_REGISTRY.md`
 
-## 本机 Python（Miniconda）
+## 本机 Conda 环境 `mamba2`（推荐）
+
+专用于本仓库；创建与 **RTX 5060（sm_120）需 cu128 版 PyTorch** 的说明见 `environment/MAMBA2.md`。
 
 ```powershell
-C:\Users\26433\miniconda3\python.exe scripts\smoke_local.py
+conda activate mamba2
+cd d:\cursor_try\mamba2
+python scripts\smoke_local.py
 ```
 
-若 `torch` 为 `+cpu` 而本机有 NVIDIA 显卡，请到 [pytorch.org](https://pytorch.org/get-started/locally/) 按 CUDA 版本安装 **GPU 版** PyTorch，再重跑 smoke。
+未激活时可直接使用：`C:\Users\26433\miniconda3\envs\mamba2\python.exe scripts\smoke_local.py`
+
+**不要用** base 里自带的 `+cpu` torch 跑 GPU；5060 也不要装 `cu126` 稳定包（会缺 sm_120 内核），请用 `cu128` 轮子（见 `environment/MAMBA2.md`）。
