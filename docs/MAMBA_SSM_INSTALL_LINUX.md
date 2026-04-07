@@ -11,6 +11,8 @@
 
 > 说明：本仓库的 **`Mamba2PathReader`** 和 **`smoke_mamba_minimal.py`** 都通过 Transformers 调 Mamba-2；装好 `mamba-ssm` 后，同一脚本一般会**自动**用快路径（无需改 Python 代码）。
 
+**实测（AutoDL / RTX 3090 / torch 2.11+cu126）**：装融合核后，`smoke_mamba_minimal` 峰值显存约 **56 MiB**（naive 约 **411 MiB**）；`benchmark_tree_walk --depth 4 --fanout 2` 中 Mamba2 路径 reader 峰值约 **73 MiB**（naive 约 **2248 MiB**）。具体以你机器为准。
+
 ---
 
 ## 前置条件
