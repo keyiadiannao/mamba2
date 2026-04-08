@@ -9,13 +9,13 @@
 仓库根目录、`conda activate mamba2`：
 
 ```powershell
-python scripts\benchmark_tree_walk.py --depth 6 --fanout 2 --reps 10
+python scripts\benchmarks\benchmark_tree_walk.py --depth 6 --fanout 2 --reps 10
 ```
 
 可选写出 JSON（建议设 `MAMBA2_RESULTS_ROOT`）：
 
 ```powershell
-python scripts\benchmark_tree_walk.py --depth 6 --fanout 2 --out-json results\metrics\A-20260407-bench.json
+python scripts\benchmarks\benchmark_tree_walk.py --depth 6 --fanout 2 --out-json results\metrics\A-20260407-bench.json
 ```
 
 ## 参数说明
@@ -27,10 +27,10 @@ python scripts\benchmark_tree_walk.py --depth 6 --fanout 2 --out-json results\me
 ## 扫参（多组深度 × chunk_len）
 
 ```powershell
-python scripts\sweep_tree_benchmark.py --preset local --out-csv results\metrics\sweep_tree_reader_local.csv
+python scripts\benchmarks\sweep_tree_benchmark.py --preset local --out-csv results\metrics\sweep_tree_reader_local.csv
 ```
 
-规划与网格说明：`docs/PHASE1_VALIDATION_PLAN.md`。
+规划与网格说明：`docs/experiments/PHASE1_VALIDATION_PLAN.md`。
 
 ## 结论（本地一次样例）
 

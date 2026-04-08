@@ -3,7 +3,7 @@
 Local smoke test (5060 8G friendly): PyTorch + optional CUDA + optional mamba_ssm.
 
 Run from repo root:
-  python scripts/smoke_local.py
+  python scripts/smoke/smoke_local.py
 """
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ import time
 def _print_env_roots() -> None:
     for key in ("MAMBA2_DATA_ROOT", "MAMBA2_CKPT_ROOT", "MAMBA2_RESULTS_ROOT"):
         val = os.environ.get(key)
-        print(f"{key}={val!r}" if val else f"{key}=(unset; see docs/SYNC_AND_ENVIRONMENTS.md)")
+        print(f"{key}={val!r}" if val else f"{key}=(unset; see docs/environment/SYNC_AND_ENVIRONMENTS.md)")
 
 
 def main() -> int:

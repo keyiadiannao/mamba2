@@ -9,8 +9,8 @@
 ```powershell
 conda activate mamba2
 cd d:\cursor_try\mamba2
-python scripts\smoke_mamba_minimal.py
-python scripts\smoke_mamba_minimal.py --seq 256 --backward
+python scripts\smoke\smoke_mamba_minimal.py
+python scripts\smoke\smoke_mamba_minimal.py --seq 256 --backward
 ```
 
 ## 说明

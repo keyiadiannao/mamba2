@@ -2,7 +2,7 @@
 """
 Merge multiple sweep CSVs into one file (union of columns). Missing cells become empty strings.
 
-  python scripts/merge_sweep_csv.py results/metrics/merged.csv results/metrics/a.csv results/metrics/b.csv
+  python scripts/benchmarks/merge_sweep_csv.py results/metrics/merged.csv results/metrics/a.csv results/metrics/b.csv
 """
 from __future__ import annotations
 

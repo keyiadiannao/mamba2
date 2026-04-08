@@ -28,7 +28,7 @@ python -m pip install "setuptools>=70,<82"
 # 下面一行请换成官网生成的 GPU 版 wheel 命令，例如：
 # python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
 
-python -m pip install pyyaml tqdm "transformers>=4.45" accelerate
+python -m pip install pyyaml tqdm "transformers>=4.45" accelerate datasets
 ```
 
 ## 3. 环境变量（建议）
@@ -44,9 +44,9 @@ mkdir -p "$MAMBA2_DATA_ROOT" "$MAMBA2_CKPT_ROOT" "$MAMBA2_RESULTS_ROOT"
 
 ```bash
 cd /root/autodl-tmp/mamba2
-python scripts/smoke_local.py
-python scripts/smoke_mamba_minimal.py
-python scripts/sweep_tree_benchmark.py --preset local --out-csv results/metrics/sweep_autodl.csv
+python scripts/smoke/smoke_local.py
+python scripts/smoke/smoke_mamba_minimal.py
+python scripts/benchmarks/sweep_tree_benchmark.py --preset local --out-csv results/metrics/sweep_autodl.csv
 ```
 
 ### 本机合并 CSV（路径怎么填？）
@@ -72,7 +72,7 @@ python scripts\merge_sweep_csv.py results\metrics\merged_5060_3090.csv results\m
 
 ## 5. mamba-ssm（可选，建议 Linux 上做）
 
-**分步说明与收益**见 **`docs/MAMBA_SSM_INSTALL_LINUX.md`**（含 `causal-conv1d` 顺序、验证命令、常见问题）。成功后在 `EXPERIMENT_REGISTRY.md` 再记一条带 `mamba_ssm` 的扫参或 `benchmark_tree_walk` 对比。
+**分步说明与收益**见 **`docs/environment/MAMBA_SSM_INSTALL_LINUX.md`**（含 `causal-conv1d` 顺序、验证命令、常见问题）。成功后在 `docs/experiments/EXPERIMENT_REGISTRY.md` 再记一条带 `mamba_ssm` 的扫参或 `benchmark_tree_walk` 对比。
 
 ## 6. Git 身份与私有仓库
 

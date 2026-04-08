@@ -95,8 +95,8 @@ export MAX_JOBS=4
 ```bash
 python -c "import causal_conv1d; print('causal_conv1d ok')"
 python -c "import mamba_ssm; print('mamba_ssm ok', getattr(mamba_ssm, '__version__', ''))"
-python scripts/smoke_mamba_minimal.py --reps 3 --warmup 1
-python scripts/benchmark_tree_walk.py --depth 4 --fanout 2 --reps 3 --warmup 1
+python scripts/smoke/smoke_mamba_minimal.py --reps 3 --warmup 1
+python scripts/benchmarks/benchmark_tree_walk.py --depth 4 --fanout 2 --reps 3 --warmup 1
 ```
 
 对比安装前后的 **`per_step_s`** 与 **`peak_alloc_mib`（mamba2）**，并把新 CSV 命名如 `sweep_autodl_fused.csv` 以免覆盖旧结果。

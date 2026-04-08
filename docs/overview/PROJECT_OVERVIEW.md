@@ -1,6 +1,6 @@
 # 项目总览与推进计划
 
-> 单一入口文档：目标、知识分类、目录约定、阶段里程碑。细节执行以 `ROADMAP.md` 周历与 `EXPERIMENT_REGISTRY.md` 实验表为准。
+> 单一入口文档：目标、知识分类、目录约定、阶段里程碑。细节执行以 `docs/overview/ROADMAP.md` 周历与 `docs/experiments/EXPERIMENT_REGISTRY.md` 实验表为准。完整文档索引见 `docs/README.md`。
 
 ---
 
@@ -31,11 +31,19 @@
 
 ```
 mamba2/
-├── docs/                    # 规划与登记（本文件、ROADMAP、同步说明、实验表）
+├── docs/                    # 见 docs/README.md
+│   ├── overview/            # 总览、总体规划、ROADMAP、CURRENT_SPRINT
+│   ├── experiments/         # EXPERIMENT_REGISTRY、PHASE1、DATASETS
+│   ├── environment/         # SYNC、AUTODL、mamba-ssm 安装说明
+│   └── research/            # 研究笔记（如 SSGS）
 ├── configs/                 # 实验 YAML（超参、路径占位符，不含密钥）
 ├── src/                     # 可复用库代码（按 A/B/C/X 分子包）
 ├── experiments/             # 每次实验一个子目录：config + 笔记 + 指向 results 的 id
-├── scripts/                 # 入口脚本：train/eval/build_tree/sync 模板
+├── scripts/                 # 见 scripts/README.md
+│   ├── smoke/               # 环境冒烟、Mamba 最小前向
+│   ├── benchmarks/        # 树基准、扫参、CSV 合并
+│   ├── data/                # 叶文件准备
+│   └── sync/                # 双机同步示例
 ├── data/                    # 仅占位；真实数据见 SYNC 文档（本地/服务器路径）
 ├── checkpoints/             # 仅占位；大文件不提交 Git
 └── results/                 # 指标、小图、tensorboard 等；大体积子目录可 gitignore
@@ -51,7 +59,7 @@ mamba2/
 
 - 双机 Python 环境一致（版本锁定文件见 `environment/`）。
 - 跑通「小数据 + 极小模型」在 5060 上的 smoke test；同一脚本在 AutoDL 上只改路径与 batch。
-- 填满 `EXPERIMENT_REGISTRY.md` 表头；第一次登记「环境复现」实验。
+- 填满 `docs/experiments/EXPERIMENT_REGISTRY.md` 表头；第一次登记「环境复现」实验。
 
 ### 阶段 1：验证实验 — 树 RAG + Reader 对比（核心优先）
 
@@ -75,8 +83,8 @@ mamba2/
 
 ## 5. 文档维护规则
 
-- **改代码必改登记**：新实验在 `EXPERIMENT_REGISTRY.md` 增一行；重要结论复制到对应 `experiments/.../README.md`。
-- **周度**：更新 `ROADMAP.md` 勾选与下周三条可执行任务。
+- **改代码必改登记**：新实验在 `docs/experiments/EXPERIMENT_REGISTRY.md` 增一行；重要结论复制到对应 `experiments/.../README.md`。
+- **周度**：更新 `docs/overview/ROADMAP.md` 勾选与下周三条可执行任务。
 - **月度**：在本文件「阶段计划」下追加一段「本月结论与下月假设」。
 
 ---
@@ -85,12 +93,12 @@ mamba2/
 
 | 文档 | 用途 |
 |------|------|
-| `docs/ROADMAP.md` | 周粒度任务与里程碑 |
-| `docs/SYNC_AND_ENVIRONMENTS.md` | 5060 / AutoDL 分工与同步 |
-| `docs/EXPERIMENT_REGISTRY.md` | 实验 ID、命令、指标、结论 |
-| `docs/PHASE1_VALIDATION_PLAN.md` | 阶段 1 验证目标、扫参网格、产出与判据 |
-| `docs/PROJECT_MASTER_PLAN.md` | **6 个月级总体规划**、四条线、风险、里程碑 |
-| `docs/CURRENT_SPRINT.md` | **当前 1–2 周**执行任务（滚动） |
-| `docs/DATASETS.md` | 数据与样例路径约定 |
-| `docs/AUTODL_SETUP.md` | 云端实例克隆、环境、smoke、扫参 |
-| `docs/MAMBA_SSM_INSTALL_LINUX.md` | AutoDL 上安装融合核（causal-conv1d、mamba-ssm） |
+| `docs/overview/ROADMAP.md` | 周粒度任务与里程碑 |
+| `docs/environment/SYNC_AND_ENVIRONMENTS.md` | 5060 / AutoDL 分工与同步 |
+| `docs/experiments/EXPERIMENT_REGISTRY.md` | 实验 ID、命令、指标、结论 |
+| `docs/experiments/PHASE1_VALIDATION_PLAN.md` | 阶段 1 验证目标、扫参网格、产出与判据 |
+| `docs/overview/PROJECT_MASTER_PLAN.md` | **6 个月级总体规划**、四条线、风险、里程碑 |
+| `docs/overview/CURRENT_SPRINT.md` | **当前 1–2 周**执行任务（滚动） |
+| `docs/experiments/DATASETS.md` | 数据与样例路径约定 |
+| `docs/environment/AUTODL_SETUP.md` | 云端实例克隆、环境、smoke、扫参 |
+| `docs/environment/MAMBA_SSM_INSTALL_LINUX.md` | AutoDL 上安装融合核（causal-conv1d、mamba-ssm） |

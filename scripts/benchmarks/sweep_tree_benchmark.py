@@ -2,7 +2,7 @@
 """
 Sweep tree + reader benchmark grid; write CSV (and optional JSONL).
 
-  python scripts/sweep_tree_benchmark.py --preset local --out-csv results/metrics/sweep.csv
+  python scripts/benchmarks/sweep_tree_benchmark.py --preset local --out-csv results/metrics/sweep.csv
 """
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ from itertools import product
 from pathlib import Path
 from typing import Iterable
 
-_REPO_ROOT = Path(__file__).resolve().parents[1]
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 

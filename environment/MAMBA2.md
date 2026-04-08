@@ -32,9 +32,9 @@ python -m pip install pyyaml tqdm
 **Mamba-2 最小测试（推荐）**：用 HuggingFace **`Mamba2Model`** 随机初始化小配置（`smoke_mamba_minimal.py` **默认**），**无需**在 Windows 上编译 `mamba-ssm`（会用 naive PyTorch 回退，首次可能打印一次「fast path is not available」）。
 
 ```powershell
-python -m pip install "transformers>=4.45" accelerate
-python scripts\smoke_mamba_minimal.py
-python scripts\smoke_mamba_minimal.py --arch mamba
+python -m pip install "transformers>=4.45" accelerate datasets
+python scripts\smoke\smoke_mamba_minimal.py
+python scripts\smoke\smoke_mamba_minimal.py --arch mamba
 ```
 
 第二行：Mamba-2（默认）；第三行：原版 `MambaModel`（对照）。
@@ -52,7 +52,7 @@ python -m pip freeze > environment\requirements-mamba2-lock.txt
 ```powershell
 conda activate mamba2
 cd d:\cursor_try\mamba2
-python scripts\smoke_local.py
+python scripts\smoke\smoke_local.py
 ```
 
 本机解释器完整路径（未激活 conda 时）：

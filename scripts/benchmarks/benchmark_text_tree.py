@@ -4,7 +4,7 @@ Text-shaped balanced tree: leaf lines from file (or built-in sample) -> bottom-u
 
 Embeddings are deterministic from text (SHA256-seeded RNG), not a neural encoder.
 
-  python scripts/benchmark_text_tree.py --leaf-file experiments/A-20260408-text-shaped-tree/leaves_sample.txt
+  python scripts/benchmarks/benchmark_text_tree.py --leaf-file experiments/A-20260408-text-shaped-tree/leaves_sample.txt
 """
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ import json
 import sys
 from pathlib import Path
 
-_REPO_ROOT = Path(__file__).resolve().parents[1]
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 

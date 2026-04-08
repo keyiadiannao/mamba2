@@ -16,7 +16,7 @@
 从 `data/raw/sample` 生成叶文件（供 `benchmark_text_tree.py`）：
 
 ```bash
-python scripts/prepare_leaves_from_corpus.py \
+python scripts/data/prepare_leaves_from_corpus.py \
   --input-dir data/raw/sample \
   --out results/metrics/leaves_from_repo_sample.txt \
   --fanout 2 --depth 3
@@ -25,9 +25,22 @@ python scripts/prepare_leaves_from_corpus.py \
 ## AutoDL / 本机大数据
 
 - 全文、PDF、向量库放在 `$MAMBA2_DATA_ROOT/raw/` 与 `processed/`，**不提交 Git**。
-- 云端首次配置步骤见 **`docs/AUTODL_SETUP.md`**。
+- 云端首次配置步骤见 **`docs/environment/AUTODL_SETUP.md`**。
+
+## HuggingFace Wikitext-2（公开小语料）
+
+- **Loader**：`datasets.load_dataset("wikitext", "wikitext-2-raw-v1", split="train")`
+- **引用**：Merity et al., *Pointer Sentinel Mixture Models*（Wikitext-2 / 103）
+- **依赖**：`pip install datasets`
+- **脚本**：`scripts/benchmarks/benchmark_wikitext_tree.py` 从训练 split 取前 `num_leaves * chars_per_leaf` 个字符，切成叶块，再走与 `benchmark_text_tree.py` 相同的自底向上建树与 `run_reader_benchmark_on_paths`（`src/rag_tree/hf_corpus.py`）
+
+示例：
+
+```bash
+python scripts/benchmarks/benchmark_wikitext_tree.py --num-leaves 8 --fanout 2 --chars-per-leaf 600
+```
 
 ## 后续（正式实验）
 
 - 选定公开数据集名称、下载方式、协议与引用格式。
-- 在 `EXPERIMENT_REGISTRY.md` 登记每份外源数据的版本与哈希（可选）。
+- 在 `docs/experiments/EXPERIMENT_REGISTRY.md` 登记每份外源数据的版本与哈希（可选）。

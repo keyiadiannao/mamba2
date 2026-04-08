@@ -8,8 +8,8 @@
 ```powershell
 conda activate mamba2
 cd d:\cursor_try\mamba2
-python scripts\benchmark_text_tree.py
-python scripts\benchmark_text_tree.py --leaf-file experiments\A-20260408-text-shaped-tree\leaves_sample.txt
+python scripts\benchmarks\benchmark_text_tree.py
+python scripts\benchmarks\benchmark_text_tree.py --leaf-file experiments\A-20260408-text-shaped-tree\leaves_sample.txt
 ```
 
 叶行数须满足 `len = fanout ** depth`（默认 `fanout=2` → 1, 2, 4, 8, 16, …）。

@@ -12,8 +12,8 @@
 |------|------|------|------|
 | ☑ | 锁定 Python/CUDA 版本，生成 `environment/requirements-mamba2-lock.txt` | 本地 | 已导出 pip freeze |
 | ☐ | 仓库克隆到 AutoDL，配置 `data/`、`checkpoints/` 为数据盘路径 | AutoDL | `SYNC` 文档中路径已填 |
-| ☑ | Smoke：`scripts/smoke_local.py` | 5060 | registry `X-20260407-smoke-local` |
-| ☑ | 阶段 1 入口：玩具树 + Reader 对比脚本骨架 | 本地 | `experiments/A-20260407-toy-tree-reader-bench`、`scripts/benchmark_tree_walk.py` |
+| ☑ | Smoke：`scripts/smoke/smoke_local.py` | 5060 | registry `X-20260407-smoke-local` |
+| ☑ | 阶段 1 入口：玩具树 + Reader 对比脚本骨架 | 本地 | `experiments/A-20260407-toy-tree-reader-bench`、`scripts/benchmarks/benchmark_tree_walk.py` |
 
 **本周阻塞**：_
 
@@ -36,8 +36,8 @@
 | 日期 | 完成项 |
 |------|--------|
 | 2026-04-07 | 阶段 1 玩具树 + Transformer/GRU 微基准脚本；`requirements-mamba2-lock.txt` |
-| 2026-04-07 | `PHASE1_VALIDATION_PLAN.md`；`sweep_tree_benchmark.py`；本地 preset 扫参 CSV |
-| 2026-04-07 | `PROJECT_MASTER_PLAN.md`、`CURRENT_SPRINT.md`；文本形树 `benchmark_text_tree.py`；扫参 CSV 增列与 `merge_sweep_csv.py` |
+| 2026-04-07 | `docs/experiments/PHASE1_VALIDATION_PLAN.md`；`scripts/benchmarks/sweep_tree_benchmark.py`；本地 preset 扫参 CSV |
+| 2026-04-07 | `docs/overview/PROJECT_MASTER_PLAN.md`、`CURRENT_SPRINT.md`；文本形树 `scripts/benchmarks/benchmark_text_tree.py`；扫参 CSV 增列与 `merge_sweep_csv.py` |
 | 2026-04-07 | `data/raw/sample` 联调语料；`prepare_leaves_from_corpus.py`；`AUTODL_SETUP.md` |
 | 2026-04-07 | `smoke_mamba_minimal.py`：HF `MambaModel` tiny，无 mamba-ssm |
 | 2026-04-07 | `Mamba2PathReader` 接入树路径基准（TF/GRU/Mamba2 三对比） |

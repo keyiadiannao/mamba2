@@ -3,7 +3,7 @@
 Phase-1 stub: balanced tree, all root-to-leaf paths, compare **Transformer**, **GRU**, and **Mamba-2** path readers.
 
 Run (from repo root, conda env mamba2):
-  python scripts/benchmark_tree_walk.py --depth 6 --fanout 2
+  python scripts/benchmarks/benchmark_tree_walk.py --depth 6 --fanout 2
 """
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ import os
 import sys
 from pathlib import Path
 
-_REPO_ROOT = Path(__file__).resolve().parents[1]
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 

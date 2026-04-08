@@ -5,7 +5,7 @@ Build a UTF-8 leaf file (one passage per line) from a directory of .txt files.
 For use with `benchmark_text_tree.py`: line count should equal fanout**depth.
 
 Example:
-  python scripts/prepare_leaves_from_corpus.py --input-dir data/raw/sample --out results/metrics/leaves_from_repo_sample.txt --fanout 2 --depth 3
+  python scripts/data/prepare_leaves_from_corpus.py --input-dir data/raw/sample --out results/metrics/leaves_from_repo_sample.txt --fanout 2 --depth 3
 """
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ import argparse
 import sys
 from pathlib import Path
 
-_REPO_ROOT = Path(__file__).resolve().parents[1]
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def main() -> int:

@@ -9,7 +9,7 @@
 
 **原则**：能在本地验证「逻辑正确」的，不要上云；上云只跑已本地 smoke 通过的提交（commit hash 写入 registry）。
 
-**本机项目环境（Windows）**：conda 环境 **`mamba2`**，解释器 `C:\Users\26433\miniconda3\envs\mamba2\python.exe`。创建与 PyTorch 版本（**5060 需 `+cu128`**）见 `environment/MAMBA2.md`。仓库根目录执行 `python scripts/smoke_local.py` 做冒烟。
+**本机项目环境（Windows）**：conda 环境 **`mamba2`**，解释器 `C:\Users\26433\miniconda3\envs\mamba2\python.exe`。创建与 PyTorch 版本（**5060 需 `+cu128`**）见 `environment/MAMBA2.md`。仓库根目录执行 `python scripts/smoke/smoke_local.py` 做冒烟。
 
 ---
 
@@ -50,15 +50,15 @@ $env:MAMBA2_RESULTS_ROOT = "D:\cursor_try\mamba2_results"
    - 本地 8G **不要**全量同步 checkpoint；只拉取评测所需**单个**小 ckpt 时用手动下载。
 3. **结果回传**：优先只同步 `results/metrics/*.json`、`experiments/*/README.md`、小图；日志可用压缩包。
 
-**Windows 侧**：可选 WinSCP、FileZilla、`rclone`；与脚本模板见 `scripts/sync_example.ps1`。
+**Windows 侧**：可选 WinSCP、FileZilla、`rclone`；与脚本模板见 `scripts/sync/sync_example.ps1`。
 
-**Linux 侧**：`rsync -avz --progress` 或 `rclone copy`；模板见 `scripts/sync_example.sh`。
+**Linux 侧**：`rsync -avz --progress` 或 `rclone copy`；模板见 `scripts/sync/sync_example.sh`。
 
 ---
 
 ## 5. 上传下载纪律（避免乱）
 
-- 每次上传数据/模型前：在 `EXPERIMENT_REGISTRY.md` 记 **文件名 + 目标路径 + 用途**。
+- 每次上传数据/模型前：在 `docs/experiments/EXPERIMENT_REGISTRY.md` 记 **文件名 + 目标路径 + 用途**。
 - 训练产出目录命名：`${MAMBA2_CKPT_ROOT}/run_{YYYYMMDD}_{exp_id}/`。
 - 回传本地时只取**登记过的 run**，避免磁盘被占满。
 
@@ -75,7 +75,7 @@ $env:MAMBA2_RESULTS_ROOT = "D:\cursor_try\mamba2_results"
 
 ## 7. AutoDL 快速上手
 
-分步命令见 **`docs/AUTODL_SETUP.md`**（克隆、`conda`、PyTorch、`smoke`、扫参、CSV 回传与合并）。
+分步命令见 **`docs/environment/AUTODL_SETUP.md`**（克隆、`conda`、PyTorch、`smoke`、扫参、CSV 回传与合并）。
 
 ---
 

@@ -9,9 +9,9 @@ Without `mamba-ssm` / `causal-conv1d`, Transformers falls back to a naive PyTorc
 
 Requires: pip install "transformers>=4.45" accelerate (Mamba2 needs a recent 5.x)
 
-  python scripts/smoke_mamba_minimal.py
-  python scripts/smoke_mamba_minimal.py --arch mamba
-  python scripts/smoke_mamba_minimal.py --seq 256 --backward
+  python scripts/smoke/smoke_mamba_minimal.py
+  python scripts/smoke/smoke_mamba_minimal.py --arch mamba
+  python scripts/smoke/smoke_mamba_minimal.py --seq 256 --backward
 """
 from __future__ import annotations
 

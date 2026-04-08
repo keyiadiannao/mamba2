@@ -1,0 +1,38 @@
+# 实验登记册
+
+> 每条实验一行（或一个小节）。**必填**：id、日期、机器、git commit、目的、关键命令、主要指标、一句话结论。
+
+---
+
+## 登记表
+
+| id | 日期 | 机器 | commit | 方向 | 目的 | 关键指标 | 结论 |
+|----|------|------|--------|------|------|----------|------|
+| env-001 | | 5060+ADL | | X | 环境复现与 smoke | import OK | |
+| X-20260407-smoke-local | 2026-04-07 | 5060 | | X | conda env mamba2 冒烟 | torch 2.11.0+cu128, CUDA OK, 50x fwd ~0.27s GPU; mamba_ssm 未装 | OK |
+| A-20260407-toy-tree-reader-bench | 2026-04-07 | 5060 | | A | 玩具树三 Reader 微基准 | `scripts/benchmarks/benchmark_tree_walk.py` | TF+GRU+Mamba2PathReader（默认） |
+| A-20260407-sweep-local | 2026-04-07 | 5060 | | A | 扫参 preset=local | `scripts/benchmarks/sweep_tree_benchmark.py` | 见 `results/metrics/sweep_tree_reader_20260407_local.csv` |
+| A-20260408-text-shaped-tree | 2026-04-07 | 5060 | | A | 文本形树 reader 基准 | `scripts/benchmarks/benchmark_text_tree.py` | 确定性文本嵌入；待换神经 encoder |
+| X-20260408-corpus-sample | 2026-04-07 | 5060 | | X | `data/raw/sample` + prepare_leaves | `scripts/data/prepare_leaves_from_corpus.py` → `scripts/benchmarks/benchmark_text_tree.py` | 合成 8 段；叶文件见 .gitignore 生成物 |
+| X-20260408-autodl-doc | 2026-04-07 | — | | X | AutoDL 上手指南 | `docs/environment/AUTODL_SETUP.md` | 流程已验证；见下行云端扫参 |
+| A-20260409-sweep-autodl-3090 | 2026-04-09 | AutoDL / RTX 3090 47G | `ab982d7` | A | 云端 preset=local 扫参 | `sweep_autodl.csv` 于 `results/metrics/` | torch 2.11.0+cu126；smoke OK；树基准 depth4 时 Mamba2 naive peak≈2248MiB；`mamba_ssm` 未装 |
+| X-20260409-autodl-fused-mamba | 2026-04-09 | AutoDL / RTX 3090 | —（仅环境） | X | `causal_conv1d`+`mamba_ssm` 后复测 | `scripts/smoke/smoke_mamba_minimal` + `scripts/benchmarks/benchmark_tree_walk` d4 f2 | smoke peak **56MiB**（naive≈411）；树 Mamba2 peak **73MiB**（naive≈2248）；快路径生效 |
+| X-20260409-mamba-minimal-smoke | 2026-04-07 | 5060 | | X | HF Mamba2Model tiny smoke（默认） | `scripts/smoke/smoke_mamba_minimal.py` | 无 mamba-ssm；`--arch mamba` 为 v1 |
+| A-20260410-wikitext-shallow-tree | 2026-04-08 | 5060 | `35e297f`（+未提交脚本） | A | Wikitext-2 叶块 → 浅树 → 同 harness | `scripts/benchmarks/benchmark_wikitext_tree.py --no-mamba2` | HF 下载 OK（需可达 huggingface.co）；depth3 f2；TF ~9.3ms / GRU ~2.6ms（warmup1 reps2） |
+
+---
+
+## 字段说明
+
+- **id**：与 `experiments/` 目录名后缀一致，如 `A-20260407-baseline`。
+- **commit**：该次实验所用代码提交；若脏工作区，注明 `dirty` 并简述差异。
+- **关键命令**：可粘贴完整一行，或指向 `experiments/.../README.md`。
+
+---
+
+## 待跑实验队列（ backlog ）
+
+| 优先级 | id | 说明 |
+|--------|-----|------|
+| P0 | | |
+| P1 | | |

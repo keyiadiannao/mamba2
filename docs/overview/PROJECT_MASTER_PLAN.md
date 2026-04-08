@@ -2,7 +2,7 @@
 
 > **周期**：约 6 个月（2026-04 — 2026-09，可按答辩/截稿调整）  
 > **算力**：本地 RTX 5060 8GB（调试与小规模）；AutoDL 48GB（训练与主实验）  
-> **代码真相源**：GitHub 仓库；大数据与 checkpoint 不入库，见 `docs/SYNC_AND_ENVIRONMENTS.md`
+> **代码真相源**：GitHub 仓库；大数据与 checkpoint 不入库，见 `docs/environment/SYNC_AND_ENVIRONMENTS.md`
 
 ---
 
@@ -33,7 +33,9 @@
 
 1. **系统**：树路径上的**有状态编码** vs **全序列注意力**在固定检索预算下的可测量差异（含显存曲线）。  
 2. **机制**：**检索头**的发现、注入与与树导航决策的对齐（分析 + 轻量训练）。  
-3. **协议**：树导航中的**状态快照 / 廉价回溯**相对 KV 重算或全量重编码的优势边界。
+3. **协议**：树导航中的**状态快照 / 廉价回溯**相对 KV 重算或全量重编码的优势边界。  
+
+   技术展开与 SSGS 算法草图见 **`docs/research/RESEARCH_NOTES.md`**（隐状态 vs KV、实验需固定的对照条件）。
 
 ---
 
@@ -65,8 +67,8 @@
 
 | 阶段 | 时间（约） | 目标 | 完成标志 |
 |------|------------|------|----------|
-| **0 基建** | 第 1–2 周 | 双机环境、Git、smoke、实验登记规范 | `smoke_local` + lock 文件 + registry |
-| **1 系统验证（玩具→文本形→扫参）** | 第 2–5 周 | 证明「树 × reader 类型」在效率上有可写差异或明确无差异 | 曲线/表 + `PHASE1_VALIDATION_PLAN` 结论段 |
+| **0 基建** | 第 1–2 周 | 双机环境、Git、smoke、实验登记规范 | `scripts/smoke/smoke_local.py` + lock 文件 + registry |
+| **1 系统验证（玩具→文本形→扫参）** | 第 2–5 周 | 证明「树 × reader 类型」在效率上有可写差异或明确无差异 | 曲线/表 + `docs/experiments/PHASE1_VALIDATION_PLAN.md` 结论段 |
 | **2 真数据浅层树** | 第 4–8 周 | 小语料 RAPTOR 式或层次聚类树 + 同一 harness | 可复现建树脚本 + 1 个 QA/导航任务指标 |
 | **3 Mamba-2 接入** | 第 6–10 周 | 第三套 reader；与 TF/GRU(占位) 同网格对比 | 同 CSV 列规范 + registry |
 | **4 检索头 B** | 第 8–12 周 | 探针与报告 | 内部技术报告一节可进论文 |
@@ -80,7 +82,7 @@
 ## 5. 里程碑产出物
 
 - **工程**：`src/rag_tree/` 建树与 reader 基准；`src/retrieval_head/`；配置与脚本；`results/metrics/*.csv`。  
-- **文档**：`PROJECT_MASTER_PLAN.md`（本文件）、`PHASE1_VALIDATION_PLAN.md`、`EXPERIMENT_REGISTRY.md`、`ROADMAP.md`。  
+- **文档**：`docs/overview/PROJECT_MASTER_PLAN.md`（本文件）、`docs/experiments/PHASE1_VALIDATION_PLAN.md`、`docs/experiments/EXPERIMENT_REGISTRY.md`、`docs/overview/ROADMAP.md`。  
 - **学术**：1 篇主投（系统 + 机制）或 1 系统 + 1 机制短文；具体在阶段 1 结束后根据数据定题。
 
 ---
@@ -117,18 +119,18 @@
 
 | 文档 | 内容 |
 |------|------|
-| `docs/PROJECT_MASTER_PLAN.md` | 本总体规划 |
-| `docs/PROJECT_OVERVIEW.md` | 精简总览 + 目录约定 |
-| `docs/PHASE1_VALIDATION_PLAN.md` | 阶段 1 扫参与判据 |
-| `docs/CURRENT_SPRINT.md` | **当前 1–2 周可执行任务**（滚动更新） |
-| `docs/SYNC_AND_ENVIRONMENTS.md` | 双机与同步 |
-| `docs/ROADMAP.md` | 周历 |
-| `docs/EXPERIMENT_REGISTRY.md` | 实验登记表 |
+| `docs/overview/PROJECT_MASTER_PLAN.md` | 本总体规划 |
+| `docs/overview/PROJECT_OVERVIEW.md` | 精简总览 + 目录约定 |
+| `docs/experiments/PHASE1_VALIDATION_PLAN.md` | 阶段 1 扫参与判据 |
+| `docs/overview/CURRENT_SPRINT.md` | **当前 1–2 周可执行任务**（滚动更新） |
+| `docs/environment/SYNC_AND_ENVIRONMENTS.md` | 双机与同步 |
+| `docs/overview/ROADMAP.md` | 周历 |
+| `docs/experiments/EXPERIMENT_REGISTRY.md` | 实验登记表 |
 
 ---
 
 ## 10. 当前进度快照（维护方式）
 
-在 `docs/CURRENT_SPRINT.md` 顶部更新 **已完成 / 进行中 / 下一步** 三行即可；重大节点再改本文件「进度快照」段落。
+在 `docs/overview/CURRENT_SPRINT.md` 顶部更新 **已完成 / 进行中 / 下一步** 三行即可；重大节点再改本文件「进度快照」段落。
 
-**截至规划落盘时**：阶段 0 基本完成；阶段 1 已完成玩具树、单次基准、本地扫参 CSV 与规划文档；**下一工作包**见 `CURRENT_SPRINT.md`。
+**截至规划落盘时**：阶段 0 基本完成；阶段 1 已完成玩具树、单次基准、本地扫参 CSV 与规划文档；**下一工作包**见 `docs/overview/CURRENT_SPRINT.md`。
