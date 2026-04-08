@@ -2,8 +2,10 @@
 """
 在同一 (depth, fanout, num_leaves, chunk_len, dim) 网格上对比两份扫参 CSV 的 **Mamba2 峰值显存**（及可选 per_step）。
 
-典型用法：本地 naive（5060 HF） vs 仓库内 fused（AutoDL + mamba_ssm）——**两机、reps 可能不同**，
-图题须声明「控制变量=脚本与网格，非绝对同机对照」；论文主文应以 **同机复跑** 为准。
+典型用法：
+
+- **主文优先（同机）**：`paper_main_naive_*`（`run_server_paper_main_sweep_naive.sh`）vs `paper_main_*` fused，同 `WARMUP`/`REPS`/网格。
+- **示意（跨机）**：本地 5060 naive vs AutoDL fused——图题须声明非同机；reps 可能不同。
 
   python scripts/benchmarks/plot_mamba_naive_vs_fused.py \\
     --csv-a results/metrics/sweep_tree_reader_20260410_local5060.csv \\

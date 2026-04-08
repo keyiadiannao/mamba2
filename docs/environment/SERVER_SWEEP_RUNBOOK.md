@@ -72,7 +72,43 @@ WARMUP=2 REPS=8 TAG=paper_main_v1 ./scripts/benchmarks/run_server_paper_main_swe
 
 生成三份 CSV：**dim256×12 点**、**dim128 preset local 8 点**、**dim384×6 点**（网格与本地 extended 对齐，但 **reps 与本地历史 CSV 可能不同**，以本脚本为准写主文）。
 
-**同机 HF naive 对照**：当前脚本在 **已装 `mamba_ssm`** 的环境下跑的是 **fused** 路径。若需 **同一台机器** 再出 naive 曲线，需另建 **无 `mamba_ssm` 的 conda 环境**，用相同 `TAG`、`WARMUP`、`REPS` 手跑上述三条 `sweep_tree_benchmark` 命令（或后续再加 `run_server_paper_main_sweep_naive.sh`）。
+### 2c. 同机 HF naive（替代跨机 5060 vs 3090）
+
+`run_server_paper_main_sweep.sh` 在 **已装 `mamba_ssm` + `causal_conv1d`** 时跑的是 **融合路径**。要与 **同一 GPU、同一网格** 下的 **HF naive** 对比，需在 **另一个 conda 环境** 中卸掉融合栈后跑 **`run_server_paper_main_sweep_naive.sh`**（网格与 `WARMUP`/`REPS` 与 fused 脚本共用 `_paper_main_sweep_body.sh`，完全一致）。
+
+**建环境（示例，在已装好 `mamba2` 的机器上）：**
+
+```bash
+conda create -n mamba2_naive --clone mamba2
+source /root/miniconda3/etc/profile.d/conda.sh
+conda activate mamba2_naive
+pip uninstall -y mamba-ssm causal-conv1d
+python -c "import importlib.util as u; assert u.find_spec('mamba_ssm') is None and u.find_spec('causal_conv1d') is None"
+```
+
+**跑 naive 主文扫参（建议 `WARMUP`/`REPS` 与 fused 次相同；`TAG` 用不同前缀区分）：**
+
+```bash
+cd /path/to/mamba2
+git pull origin master   # 若网络可用；否则本机同步
+chmod +x scripts/benchmarks/run_server_paper_main_sweep_naive.sh
+sed -i 's/\r$//' scripts/benchmarks/run_server_paper_main_sweep_naive.sh  # 若遇 bash\r
+export MAMBA2_RESULTS_ROOT=/root/autodl-tmp/mamba2_results
+WARMUP=2 REPS=8 TAG=paper_main_naive_v1 ./scripts/benchmarks/run_server_paper_main_sweep_naive.sh
+```
+
+**本机叠画（同机对照，主文优先）：**
+
+```powershell
+python scripts\benchmarks\plot_mamba_naive_vs_fused.py `
+  --csv-a results\metrics\paper_main_naive_dim128_localgrid_paper_main_naive_v1.csv `
+  --label-a "3090 HF naive same grid" `
+  --csv-b results\metrics\paper_main_dim128_localgrid_paper_main_v1.csv `
+  --label-b "3090 fused same grid" `
+  --out results\metrics\figures\mamba_naive_vs_fused_dim128_3090_same_machine.png
+```
+
+（将路径换成你下载后的实际文件名。）
 
 ---
 

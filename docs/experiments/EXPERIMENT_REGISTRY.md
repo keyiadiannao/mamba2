@@ -38,5 +38,5 @@
 
 | 优先级 | id | 说明 |
 |--------|-----|------|
-| P0 | | |
+| P0 | A-paper-main-3090-naive | AutoDL **同机**：`mamba2_naive` 环境卸 `mamba-ssm`/`causal-conv1d` 后跑 `run_server_paper_main_sweep_naive.sh`（`WARMUP`/`REPS` 与 fused `paper_main_v1` 对齐）；本机 `plot_mamba_naive_vs_fused.py` 叠画 **3090 naive vs 3090 fused** |
 | P1 | | |

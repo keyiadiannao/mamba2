@@ -23,7 +23,7 @@
 - [x] **数据约定**：`data/raw/sample/` 8 段合成 `.txt` + `docs/experiments/DATASETS.md`；`scripts/data/prepare_leaves_from_corpus.py` 生成叶文件
 - [x] **AutoDL 文档**：`docs/environment/AUTODL_SETUP.md` + `SYNC` 索引；**已在 3090 实例跑通** smoke + `sweep_autodl.csv`（见 `EXPERIMENT_REGISTRY`）
 - [x] **本地最小 Mamba**：`transformers.MambaModel` 小配置 smoke（无需 `mamba-ssm`），见 `scripts/smoke/smoke_mamba_minimal.py`
-- [ ] （可选）**mamba-ssm**：在 AutoDL 上安装融合内核；与上述脚本对比速度或换更大 checkpoint
+- [x] （可选）**mamba-ssm**：AutoDL 已装；**同机 naive 对照**见 `run_server_paper_main_sweep_naive.sh` + `SERVER_SWEEP_RUNBOOK` §2c（`mamba2_naive` 克隆环境卸融合栈）
 - [x] **树路径三 reader**：`Mamba2PathReader` 接入 `benchmark_core` / `sweep` / `benchmark_text_tree`（默认开启，`--no-mamba2` 可关）
 - [x] **公开语料浅树**：Wikitext-2（HF `datasets`）→ `hf_corpus.wikitext2_leaf_chunks` → `scripts/benchmarks/benchmark_wikitext_tree.py`（与合成叶同一 reader 槽位）
 
