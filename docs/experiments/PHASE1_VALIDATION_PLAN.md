@@ -24,7 +24,7 @@
   - **Mamba-2**：`Mamba2PathReader`（`inputs_embeds` 喂 `Mamba2Model`）；无 `mamba-ssm` 时为 HF naive 实现。
 - **指标**：`elapsed_s`、`per_step_s`（总时间 / `reps`）、`peak_alloc_mib`（CUDA `max_memory_allocated`，CPU 为 0）。
 
-**未纳入（后续迭代）**：真实 RAPTOR 文本、Mamba-2、`mamba_ssm`、检索头、任务级 EM/F1。
+**未纳入（后续迭代）**：真实 RAPTOR 全流程、**全 LLM KV cache** 对照、检索头、任务级 EM/F1。（`mamba_ssm` 已在云端 fused 扫参中部分纳入。）
 
 ---
 
@@ -58,7 +58,33 @@
 
 ---
 
-## 6. 执行顺序（建议）
+## 6. 批判性收编与叙事限定（滚动，2026-04）
+
+### 6.1 应接收的结论（有数据支撑）
+
+- 在 **本仓库 path-reader harness**（`run_tree_reader_benchmark`：合成树、**批量根→叶路径**、小宽度 `Mamba2PathReader`）下，**无 `mamba-ssm` 的 HF 顺序实现（naive）** 的 **峰值显存与步耗** 可随 **叶数 batch** 急剧劣于同设定下的 **TransformerEncoder / GRU** 路径 reader（见 `sweep_tree_reader_20260410_local5060.csv`）。
+- **Linux + fused 栈**（`mamba_ssm` + `causal_conv1d`）上，**同一脚本网格**可将 **Mamba2 峰值** 压到 **MiB 量级**（见 `sweep_autodl_fused.csv`）。这说明 **实现路径** 对可观测效率的影响极大，不能从「线性复杂度」口号直接推出「在树上一定省显存」。
+
+### 6.2 不应过度外推的表述（写论文前须改口）
+
+- 本阶段 **Transformer** 是 **小型 path encoder**，**不是** 长上下文 **LLM 全序列 KV cache** 对照；「比 KV 回溯便宜」仍属 **SSGS 协议层假说**（见 `docs/research/RESEARCH_NOTES.md` §7），须单独实验。
+- **5060 与 3090、cu128 与 cu126、reps 不同** 时，两张 CSV 的对比是 **动机图 / 趋势图**；主文 **Figure 1** 应尽量 **同机、同 commit、同 `warmup/reps`** 复扫 naive vs fused。
+
+### 6.3 阶段 1 结论文本（约 200 字，可贴进报告）
+
+在树路径批量编码设定下（`fanout=2`、`dim=128`、多组 `depth×chunk_len`），HuggingFace **无融合核** 的 Mamba-2 path reader 的 CUDA **峰值显存** 可达 **GiB 级**（例如 64 条并行路径时约 **8.9GiB**），而同设定下 **Transformer / GRU** 路径 reader 多在 **百 MiB** 量级。相对地，在 **AutoDL** 上启用 **`mamba_ssm` 融合实现** 后，**同一网格**上 Mamba2 峰值可降至 **约 51–217MiB**（随配置变化），降幅可达 **两个数量级**。因此：**在树形 RAG 的 path-batch workload 中，可观测效率高度依赖实现是否融合，而不能仅由 SSM 架构名义复杂度替代。**
+
+### 6.4 无服务器时本地仍可做的事（安全网格）
+
+| 动作 | 说明 |
+|------|------|
+| **加密网格（小心显存）** | 固定 `dim=128`、`fanout=2`，用 `--max-leaves 64` 或 `32` 扫 `chunk_len`；**naive Mamba** 大叶数前先 `--no-mamba2` 探路 |
+| **naive vs fused 示意图** | `scripts/benchmarks/plot_mamba_naive_vs_fused.py` 叠两张已有 CSV（图题写清跨机限定） |
+| **叙事定稿** | 更新 `PROJECT_MASTER_PLAN` §1 贡献表述为「实现敏感 + workload 敏感」而非「Mamba 必然更省」 |
+
+---
+
+## 7. 执行顺序（建议）
 
 1. 跑默认小网格（脚本 `--preset local`）→ 检查 CSV 列完整、数值无 NaN。
 2. 固定 `chunk_len=8`，扫 `depth`；再固定 `depth=6`，扫 `chunk_len`。
@@ -67,28 +93,31 @@
 
 ---
 
-## 7. 与总体规划的关系
+## 8. 与总体规划的关系
 
 阶段 1 对应 `docs/overview/PROJECT_MASTER_PLAN.md` 中的 **阶段 1（系统验证）**；当前两周任务见 `docs/overview/CURRENT_SPRINT.md`。
 
 ---
 
-## 8. 命令速查
+## 9. 命令速查
 
 ```powershell
 conda activate mamba2
 cd d:\cursor_try\mamba2
 
 # 单次
-python scripts\benchmark_tree_walk.py --depth 6 --fanout 2 --out-json results\metrics\single.json
+python scripts\benchmarks\benchmark_tree_walk.py --depth 6 --fanout 2 --out-json results\metrics\single.json
 
 # 扫参（预设本地小网格）
-python scripts\sweep_tree_benchmark.py --preset local --out-csv results\metrics\sweep_tree_reader_local.csv
+python scripts\benchmarks\sweep_tree_benchmark.py --preset local --out-csv results\metrics\sweep_tree_reader_local.csv
+
+# naive vs fused 对比图（跨机时仅作示意，主文请同机复扫）
+python scripts\benchmarks\plot_mamba_naive_vs_fused.py --csv-a results\metrics\sweep_tree_reader_20260410_local5060.csv --label-a "5060 HF naive" --csv-b results\metrics\sweep_autodl_fused.csv --label-b "3090 fused" --out results\metrics\figures\mamba_naive_vs_fused_peak.png
 ```
 
 ---
 
-## 9. 相关文件
+## 10. 相关文件
 
 | 文件 | 作用 |
 |------|------|

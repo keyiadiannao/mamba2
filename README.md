@@ -81,3 +81,9 @@ python -m unittest tests.test_ssgs -v
 ```powershell
 python scripts\benchmarks\benchmark_ssgs_tensor_overhead.py --dim 256 --micro-iters 50000
 ```
+
+阶段 1 叙事与 **naive vs fused** 对比图（详见 `docs/experiments/PHASE1_VALIDATION_PLAN.md` §6）：
+
+```powershell
+python scripts\benchmarks\plot_mamba_naive_vs_fused.py --csv-a results\metrics\sweep_tree_reader_20260410_local5060.csv --label-a "5060 HF naive" --csv-b results\metrics\sweep_autodl_fused.csv --label-b "3090 fused" --out results\metrics\figures\mamba_naive_vs_fused_peak.png
+```

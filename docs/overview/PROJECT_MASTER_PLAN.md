@@ -31,9 +31,9 @@
 
 **论文级贡献候选（从中选 1–2 条做主故事，其余作附录或 future work）**：
 
-1. **系统**：树路径上的**有状态编码** vs **全序列注意力**在固定检索预算下的可测量差异（含显存曲线）。  
+1. **系统**：树路径 **path-reader** 设定下，**Mamba-2 vs Transformer vs GRU** 的延迟/显存随 **叶数 batch、chunk、实现（HF naive vs `mamba_ssm` fused）** 的变化；结论已显示 **高度实现敏感**，而非「SSM 必然更省」——详见 **`docs/experiments/PHASE1_VALIDATION_PLAN.md` §6**。  
 2. **机制**：**检索头**的发现、注入与与树导航决策的对齐（分析 + 轻量训练）。  
-3. **协议**：树导航中的**状态快照 / 廉价回溯**相对 KV 重算或全量重编码的优势边界。  
+3. **协议**：树导航中的**状态快照 / 廉价回溯**相对 KV 重算或全量重编码的优势边界（**path reader 与全 LLM KV 须分项声明**）。  
 
    技术展开与 SSGS 算法草图见 **`docs/research/RESEARCH_NOTES.md`**（隐状态 vs KV、实验需固定的对照条件）。
 
