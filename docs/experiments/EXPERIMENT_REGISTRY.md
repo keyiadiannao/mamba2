@@ -22,6 +22,7 @@
 | A-20260410-sweep-local5060 | 2026-04-10 | 5060 | `3218cf9` | A | P0 玩具树扫参 preset=local | `sweep_tree_benchmark.py --preset local --warmup 2 --reps 5` | CSV 同上；图 `results/metrics/figures/sweep_readers_20260410_local5060.png`（`plot_tree_reader_sweep.py`）；Mamba2 naive 随叶数升（d6c8 m2_peak≈8.9GiB） |
 | A-20260410-sweep-local5060-ext | 2026-04-10 | 5060 | `6e84de1` | A | ~15min 窗口内多网格（HF naive） | `sweep_tree_benchmark.py` `--dim 256/384`，多 `chunk_len` / `reps` | 见 `sweep_local5060_dim256_chunk_sweep_20260410.csv`、`..._chunk4to16_reps8...`、`..._highreps...`、`..._dim384...`；d6c12 dim256 **m2_peak≈8.8GiB** |
 | X-20260410-ssgs-dryrun | 2026-04-10 | 5060 | — | X | P1 SSGS + §7 协议 | `ssgs.py`：`dfs_ssgs` / `dfs_ssgs_tensor` / `TensorNavState`；`tests.test_ssgs`；`benchmark_ssgs_tensor_overhead.py` | 无 LM；张量快照=clone+restore 微基准见脚本 JSON 输出 |
+| A-20260410-sweep-autodl-fused-aligned | 2026-04-08 | AutoDL / RTX 3090 | CSV 内 `ab982d7` | A | `run_server_sweep_aligned.sh` 对齐本地网格 | `sweep_adl_dim128_localgrid_autodl_fused_20260410.csv` 等 4 份 | fused **m2_peak** 相对 5060 naive 同键大降；对比图 `figures/mamba_naive_vs_fused_dim{128,256,384}*.png`（跨机，主文宜同机复扫） |
 
 ---
 
