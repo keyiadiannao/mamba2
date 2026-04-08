@@ -20,6 +20,7 @@
 | X-20260409-mamba-minimal-smoke | 2026-04-07 | 5060 | | X | HF Mamba2Model tiny smoke（默认） | `scripts/smoke/smoke_mamba_minimal.py` | 无 mamba-ssm；`--arch mamba` 为 v1 |
 | A-20260410-wikitext-shallow-tree | 2026-04-10 | 5060 | `3218cf9`+ | A | Wikitext-2 叶块 → 浅树 → 同 harness | `scripts/benchmarks/benchmark_wikitext_tree.py` | 见 `benchmark_wikitext_p0_20260410.json`；开加速器后 Hub 无 SSL 报错（仍可走缓存） |
 | A-20260410-sweep-local5060 | 2026-04-10 | 5060 | `3218cf9` | A | P0 玩具树扫参 preset=local | `sweep_tree_benchmark.py --preset local --warmup 2 --reps 5` | CSV 同上；图 `results/metrics/figures/sweep_readers_20260410_local5060.png`（`plot_tree_reader_sweep.py`）；Mamba2 naive 随叶数升（d6c8 m2_peak≈8.9GiB） |
+| A-20260410-sweep-local5060-ext | 2026-04-10 | 5060 | `6e84de1` | A | ~15min 窗口内多网格（HF naive） | `sweep_tree_benchmark.py` `--dim 256/384`，多 `chunk_len` / `reps` | 见 `sweep_local5060_dim256_chunk_sweep_20260410.csv`、`..._chunk4to16_reps8...`、`..._highreps...`、`..._dim384...`；d6c12 dim256 **m2_peak≈8.8GiB** |
 | X-20260410-ssgs-dryrun | 2026-04-10 | 5060 | — | X | P1 SSGS + §7 协议 | `ssgs.py`：`dfs_ssgs` / `dfs_ssgs_tensor` / `TensorNavState`；`tests.test_ssgs`；`benchmark_ssgs_tensor_overhead.py` | 无 LM；张量快照=clone+restore 微基准见脚本 JSON 输出 |
 
 ---
