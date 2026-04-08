@@ -84,9 +84,10 @@ python scripts\research\demo_tree_lm_minimal.py --cpu
 
 ```powershell
 python scripts\research\demo_tree_lm_nav_greedy.py --cpu --eval-all-leaves --out-json results\metrics\tree_lm_nav_greedy_default8_cpu.json
+python scripts\research\demo_tree_lm_nav_greedy.py --eval-all-leaves --out-json results\metrics\tree_lm_nav_greedy_default8_cuda.json
 ```
 
-登记 **X-20260423-tree-lm-nav-greedy**；**非**训练好的策略。
+登记 **X-20260423-tree-lm-nav-greedy**（`tree_lm_nav_greedy_default8_{cpu,cuda}.json` 指标一致）。终端若出现 **`UNEXPECTED` / `loss_type=None`** 来自 Transformers 加载 **tiny-gpt2**，可忽略。**非**训练好的策略。
 
 ## 单测（SSGS 草稿）
 
