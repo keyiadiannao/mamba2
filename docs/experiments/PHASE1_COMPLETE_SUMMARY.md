@@ -95,3 +95,22 @@ bash scripts/research/run_path_protocol_cuda.sh
 ### A.3 与阶段 1 叙事的关系
 
 本附录产出 **仅服务 §7 玩具协议复现**，**不替代** **A-20260408-paper-main-3090-*** 主图数据；正文引用时须 **分列标注**（见上文第 3 节）。
+
+---
+
+## 附录 B：§7 复跑验收（与 `RESEARCH_NOTES` §7.3.1 对照）
+
+**场景**：AutoDL CUDA、`MAMBA2_RESULTS_ROOT` 指向数据盘时，脚本将带 **`STAMP`** 的 JSON 写入 **`$MAMBA2_RESULTS_ROOT/metrics/`**（与仓内 `results/metrics/*_20260421.json` **并存**，不必覆盖归档）。
+
+**验收**：下列量级应与 **§7.3.1** 及 **`results/metrics/*_20260421.json`** **同阶**（允许 ±30% 级波动，因 GPU 负载与驱动差异）：
+
+| 协议 | 抽查字段（seg 0→4） | 你次复跑（示例） | §7.3.1 表（约） |
+|------|---------------------|------------------|-----------------|
+| S1 | `clone_wall_ms` | ~0.14→0.08 ms | 0.16→0.075 |
+| S2 | `forward_mean_ms` | ~0.53–0.56 ms | 0.54–0.58 |
+| S3 | `increment_last_chunk_mean_ms` | ~2.0→9.9 ms | 2.0→10.1 |
+| S4 same | `restore_wall_ms` | ~0.051 ms | 0.051–0.068 |
+| S4 CPU | `restore_wall_ms` | ~0.13 ms | 0.13–0.17 |
+| S3 demo | `truncate_mean_ms` | ~0.10 ms | ~0.11 |
+
+**结论**：若上表一致，则 **§7 玩具协议在当前 fused 环境下可复现**；**`git_sha`** 在 JSON 内可为历史提交（如 **`6fa7873`**），与当前 **HEAD** 不同 **不**影响与登记 **X-20260421-*** 的口径对齐，但正文应写清 **复现所用 commit 或归档文件名**。

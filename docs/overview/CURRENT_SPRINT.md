@@ -59,8 +59,24 @@
 
 - [x] **主图与登记对齐审计**：见 **`PHASE1_VALIDATION_PLAN.md` §6.5**（2026-04-09）：**A-20260408-paper-main-3090-*** ↔ `results/metrics_result/paper_main_*_{v1,naive_v1}.csv` ↔ `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`。  
 - [x] **`PHASE1_VALIDATION_PLAN.md` 结论段**：**§6.3**（结论文本）+ **§6.5**（引用规则）；**5060 vs 3090** 不可混填见 **§6.2**。  
-- [ ] **§7 可复现性**：有 CUDA 时按 **`docs/experiments/PHASE1_COMPLETE_SUMMARY.md` 附录 A** 全量执行 `run_path_protocol_cuda.sh`；否则以 **`results/metrics/*_20260421.json`** + 登记 **X-20260421-*** 为准（**`PHASE1_VALIDATION_PLAN.md` §6.5** 末段）。  
+- [x] **§7 可复现性**：**2026-04-08** AutoDL 上已按附录 A 全量跑通 `run_path_protocol_cuda.sh`（`MAMBA2_RESULTS_ROOT` → `…/mamba2_results/metrics/`，`STAMP=20260408T1617Z`）；数值与 **`RESEARCH_NOTES` §7.3.1** / 仓内 `*_20260421.json` **同阶**，见 **`PHASE1_COMPLETE_SUMMARY.md` 附录 B**。  
 - [x] **阶段 2 入口草拟**：**`ROADMAP.md`「阶段 2 入口（一页）」**。
+
+### 后续两周执行计划（主线，可勾选）
+
+- [ ] **成文**：把 **`PHASE1_VALIDATION_PLAN.md` §6.3** 结论文本迁入论文/报告「阶段 1」节；主图只引用 **A-20260408-paper-main-3090-pair** + **`FIGURE_CAPTIONS_STAGE1.md`** 句稿。  
+- [ ] **§7 归档（可选）**：将 AutoDL 上 `*_20260408T1617Z.json`（或最新 `STAMP`）**复制到本机** `results/metrics/` 并 **git add**（或仅网盘备份 + 在 **EXPERIMENT_REGISTRY** 备注路径），便于离线 diff。  
+- [ ] **阶段 2 开工**：在 **EXPERIMENT_REGISTRY** 新增占位行（如 **A-20260410-stage2-wikitext-smoke**）；跑 **`benchmark_wikitext_tree.py`** 小网格（`num_leaves≤16`）→ 一条 CSV/JSON。  
+- [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
+
+### 文档与代码检查纪要（2026-04-09）
+
+| 项 | 结论 |
+|----|------|
+| **docs** | `EXPERIMENT_REGISTRY` / `PHASE1_*` / `FIGURE_CAPTIONS` / `RESEARCH_NOTES` §7 与 **主线辅线** 分工一致；未发现 `TODO/FIXME` 占位。 |
+| **`run_path_protocol_cuda.sh`** | 已 **LF** + **`set -eu` / `set -o pipefail` 分行**；**`.gitattributes`** 已约束 `*.sh eol=lf`。 |
+| **其它 `.sh`** | 共 7 个；若从 Windows 上传覆盖，仍可能 CRLF — 用 **`SH_CRLF_LINUX.md`** 批量 `sed`。 |
+| **§7 基准脚本** | `benchmark_*_path_segments.py` 等向 **stdout 打 JSON** 属预期；与 **`--out-json`** 写入文件并行。 |
 
 ### 支线（延后，非本周期默认）
 
@@ -81,7 +97,7 @@
 |--------|------|----------|
 | P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **EXPERIMENT_REGISTRY** 对齐；**`PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 仅作 **口径护栏**（已完成大部，剩审计与截稿前润色） |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT`；**A-20260408-wikitext-3090-fused** — 主线引用时标明 **与合成树同一 harness** |
-| P1 | **主线：§7 协议** | S1–S4 JSON + **`run_path_protocol_cuda.sh`**；与主图 **分列声明**（§7.3.1），**禁止**与 path-batch 混减 |
+| P1 | **主线：§7 协议** | **复跑已通过**（见 sprint §7 勾选 + **`PHASE1_COMPLETE_SUMMARY` 附录 B**）；正文仍须与主图 **分列声明**（§7.3.1） |
 | P1 | **SSGS（协议层）** | **X-20260421-*** 张量 + **`dfs_ssgs_mamba`** demo；**不等于** 真 LM 导航线 |
 | P2 | **阶段 2 预备** | 浅层真数据树 + 同一 reader 槽位（`PROJECT_MASTER_PLAN` 阶段 2）；依赖 **A** 流水线稳定 |
 | P2 | **检索头 B** | 探针与层/头报告（与主线并行，需 **48G** 窗口） |
