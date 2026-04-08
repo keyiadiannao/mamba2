@@ -143,7 +143,7 @@
 - **TF-R1（重算）与 S1 对齐的玩具协议**：`scripts/research/benchmark_tf_r1_path_segments.py` — 单路径、累积前缀、`TransformerPathReader` **仅前向**、无 KV；每边界输出 `forward_mean_ms` 与（CUDA）`peak_alloc_mib`。与 `benchmark_tree_walk` 中带 backward 的 `benchmark_reader` **不是**同一计时定义。
 - **TF-KV（截断 + 续写）玩具协议**：`scripts/research/benchmark_tf_kv_path_segments.py` — Pre-LN 因果 trunk、**每层 MHA 的 K/V 缓存**；与 S1 同单路径上报 `kv_cache_nbytes` 与「仅前向最后一节点 chunk」的 `increment_last_chunk_mean_ms`；`--branch-truncate-demo` 复现根下错子 chunk → `truncate_kv` → 兄弟 chunk（KV 字节与截断 ms）。
 - **SSM restore（§7.3）**：`scripts/research/benchmark_mamba2_cache_restore_segments.py` — S1 同款累积前向得到 `DynamicCache` 后，`clone` 快照；每 rep：`zero_` 活动张量再 `copy_` 还原；`restore_wall_ms`；`--snapshot-device cpu` 时含 CPU→GPU。
-- **SSGS × Mamba（导航环）**：`src/rag_tree/ssgs.py` 中 **`MambaNavState` / `dfs_ssgs_mamba` / `build_toy_mamba2_for_ssgs`**；`mamba_cache_utils.patch_mamba2_model_use_torch_forward_only` 在 **CUDA** 上强制 **HF ``torch_forward``**（避免 fused ``causal_conv1d`` 在 **batch=1** 下的 stride 限制）；cache **clone/restore** 同文件。与 path reader **不同**：**DFS 试错序** + **token 步进**（非单次整段 `inputs_embeds`）。
+- **SSGS × Mamba（导航环）**：`src/rag_tree/ssgs.py` 中 **`MambaNavState` / `dfs_ssgs_mamba` / `build_toy_mamba2_for_ssgs`**；`mamba_cache_utils.patch_mamba2_model_use_torch_forward_only` 在 **CUDA** 上强制 **HF ``torch_forward``**（避免 fused ``causal_conv1d`` 在 **batch=1** 下的 stride 限制）；cache **clone/restore** 同文件。与 path reader **不同**：**DFS 试错序** + **token 步进**（非单次整段 `inputs_embeds`）。**可归档 JSON**：`scripts/research/demo_ssgs_mamba_dfs.py --out-json` → `results/metrics/ssgs_mamba_dfs_demo_{cpu,cuda}_20260421.json`（登记 **X-20260421-ssgs-mamba-dfs-demo**）。
 - **真实 LM**：尚未接线；接线点后应新增独立 benchmark 与 registry id，避免与玩具 `benchmark_tree_walk` 混淆。
 
 ### 7.5 接线顺序（定稿：先做什么、后做什么）

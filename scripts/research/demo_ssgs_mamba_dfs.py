@@ -7,10 +7,13 @@
 
   python scripts/research/demo_ssgs_mamba_dfs.py --device cpu
   python scripts/research/demo_ssgs_mamba_dfs.py --device cuda
+  python scripts/research/demo_ssgs_mamba_dfs.py --device cpu --out-json results/metrics/ssgs_mamba_dfs_demo_cpu_20260421.json
 """
 from __future__ import annotations
 
 import argparse
+import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -30,6 +33,20 @@ from src.rag_tree.ssgs import (
 from src.rag_tree.tree import build_balanced_tree, iter_root_leaf_paths
 
 
+def _git_short_sha(repo: Path) -> str:
+    try:
+        out = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=repo,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        return out.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "unknown"
+
+
 def main() -> int:
     try:
         from transformers import Mamba2Model  # noqa: F401
@@ -44,6 +61,12 @@ def main() -> int:
     p.add_argument("--dim", type=int, default=64)
     p.add_argument("--layers", type=int, default=2)
     p.add_argument("--device", type=str, default="cpu")
+    p.add_argument(
+        "--out-json",
+        type=str,
+        default="",
+        help="可选：写入可复现指标 JSON（含 events 全表）",
+    )
     args = p.parse_args()
 
     dev = torch.device(args.device if args.device != "cuda" or torch.cuda.is_available() else "cpu")
@@ -69,6 +92,31 @@ def main() -> int:
     )
     print("ok", ok, "snapshots_taken", tr.snapshots_taken, "rollbacks", tr.rollbacks, "leaf_checks", tr.leaf_checks)
     print("events", tr.events[:20], "..." if len(tr.events) > 20 else "")
+
+    if args.out_json:
+        out_path = Path(args.out_json)
+        if not out_path.is_absolute():
+            out_path = _REPO_ROOT / out_path
+        payload = {
+            "kind": "ssgs_mamba_dfs_demo",
+            "git_sha": _git_short_sha(_REPO_ROOT),
+            "device": str(dev),
+            "depth": args.depth,
+            "fanout": args.fanout,
+            "chunk_len": args.chunk_len,
+            "dim": args.dim,
+            "layers": args.layers,
+            "mamba_torch_forward_only": dev.type == "cuda",
+            "ok": ok,
+            "snapshots_taken": tr.snapshots_taken,
+            "rollbacks": tr.rollbacks,
+            "leaf_checks": tr.leaf_checks,
+            "events": list(tr.events),
+        }
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        print("wrote", out_path)
+
     return 0 if ok else 1
 
 

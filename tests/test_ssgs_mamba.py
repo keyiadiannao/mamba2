@@ -22,6 +22,32 @@ def _mamba2_available() -> bool:
         return False
 
 
+# 与 ``demo_ssgs_mamba_dfs.py`` 默认网格及 ``ssgs_mamba_dfs_demo_{cpu,cuda}_20260421.json`` 中 ``events`` 一致（登记 X-20260421-ssgs-mamba-dfs-demo）。
+_DEMO_DEFAULT_GRID_EVENTS = [
+    "mamba_visit",
+    "mamba_try_child",
+    "mamba_visit",
+    "mamba_try_child",
+    "mamba_visit",
+    "leaf_ok:False",
+    "mamba_rollback",
+    "mamba_try_child",
+    "mamba_visit",
+    "leaf_ok:False",
+    "mamba_rollback",
+    "mamba_rollback",
+    "mamba_try_child",
+    "mamba_visit",
+    "mamba_try_child",
+    "mamba_visit",
+    "leaf_ok:False",
+    "mamba_rollback",
+    "mamba_try_child",
+    "mamba_visit",
+    "leaf_ok:True",
+]
+
+
 @unittest.skipUnless(_mamba2_available(), "transformers Mamba2Model not available")
 class TestSSGSMambaNav(unittest.TestCase):
     def test_dfs_finds_rightmost_leaf_depth2(self) -> None:
@@ -61,6 +87,43 @@ class TestSSGSMambaNav(unittest.TestCase):
         self.assertEqual(root.state_snapshot.get("kind"), "mamba_dynamic_cache")
         clear_tree_snapshots(root)
         self.assertIsNone(root.state_snapshot)
+
+    def test_demo_default_grid_events_match_registry_fixture(self) -> None:
+        from src.rag_tree.ssgs import (
+            MambaNavState,
+            SSGSTrace,
+            build_toy_mamba2_for_ssgs,
+            dfs_ssgs_mamba,
+            mount_mamba_cache_meta_on_tree,
+        )
+        from src.rag_tree.tree import build_balanced_tree, iter_root_leaf_paths
+
+        dim = 64
+        dev = torch.device("cpu")
+        gen = torch.Generator(device=dev)
+        gen.manual_seed(0)
+        root = build_balanced_tree(2, 2, chunk_len=2, dim=dim, device=dev, generator=gen)
+        leaves = [path[-1] for path in iter_root_leaf_paths(root)]
+        target = leaves[-1]
+
+        def leaf_goal(n) -> bool:
+            return n is target
+
+        model = build_toy_mamba2_for_ssgs(dim, dev, num_layers=2)
+        state = MambaNavState(model=model)
+        tr = SSGSTrace()
+        ok = dfs_ssgs_mamba(
+            root,
+            state,
+            leaf_goal=leaf_goal,
+            trace=tr,
+            mount_snapshot=mount_mamba_cache_meta_on_tree,
+        )
+        self.assertTrue(ok)
+        self.assertEqual(tr.snapshots_taken, 3)
+        self.assertEqual(tr.rollbacks, 4)
+        self.assertEqual(tr.leaf_checks, 4)
+        self.assertEqual(tr.events, _DEMO_DEFAULT_GRID_EVENTS)
 
     def test_restore_roundtrip_matches_snapshot(self) -> None:
         from src.rag_tree.mamba_cache_utils import clone_mamba_dynamic_cache, zero_mamba_dynamic_cache
