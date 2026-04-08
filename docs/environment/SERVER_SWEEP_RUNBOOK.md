@@ -109,7 +109,9 @@ python scripts\benchmarks\plot_mamba_naive_vs_fused.py `
   --out results\metrics\figures\mamba_naive_vs_fused_dim128_3090_same_machine.png
 ```
 
-（将路径换成你下载后的实际文件名。）
+（将路径换成你下载后的实际文件名，例如本机 `results\metrics_result\...`。）
+
+**conda 分工（避免误卸主环境）**：`pip uninstall mamba-ssm causal-conv1d` **只应在 `mamba2_naive` 里做**。主环境 **`mamba2`** 保留融合栈，用于 `run_server_paper_main_sweep.sh`、`run_server_sweep_aligned.sh` 等。naive 跑完后若要再跑 fused：`conda activate mamba2` 即可；若曾在 **`mamba2` 主环境**误卸融合包，需按 **`MAMBA_SSM_INSTALL_LINUX.md`** 装回。
 
 ---
 

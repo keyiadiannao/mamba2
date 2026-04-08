@@ -23,6 +23,9 @@
 | A-20260410-sweep-local5060-ext | 2026-04-10 | 5060 | `6e84de1` | A | ~15min 窗口内多网格（HF naive） | `sweep_tree_benchmark.py` `--dim 256/384`，多 `chunk_len` / `reps` | 见 `sweep_local5060_dim256_chunk_sweep_20260410.csv`、`..._chunk4to16_reps8...`、`..._highreps...`、`..._dim384...`；d6c12 dim256 **m2_peak≈8.8GiB** |
 | X-20260410-ssgs-dryrun | 2026-04-10 | 5060 | — | X | P1 SSGS + §7 协议 | `ssgs.py`：`dfs_ssgs` / `dfs_ssgs_tensor` / `TensorNavState`；`tests.test_ssgs`；`benchmark_ssgs_tensor_overhead.py` | 无 LM；张量快照=clone+restore 微基准见脚本 JSON 输出 |
 | A-20260410-sweep-autodl-fused-aligned | 2026-04-08 | AutoDL / RTX 3090 | CSV 内 `ab982d7` | A | `run_server_sweep_aligned.sh` 对齐本地网格 | `sweep_adl_dim128_localgrid_autodl_fused_20260410.csv` 等 4 份 | fused **m2_peak** 相对 5060 naive 同键大降；对比图 `figures/mamba_naive_vs_fused_dim{128,256,384}*.png`（跨机，主文宜同机复扫） |
+| A-20260408-paper-main-3090-fused | 2026-04-08 | AutoDL / RTX 3090 | `6fa7873` | A | 主文网格 fused：`run_server_paper_main_sweep.sh` | `TAG=paper_main_v1`，`WARMUP=2` `REPS=8`；`results/metrics_result/paper_main_{dim256,dim128_localgrid,dim384}_paper_main_v1.csv` + `paper_main_manifest_paper_main_v1.txt` | manifest：`mode=fused_expected`，`mamba_ssm` True；dim128 d6c8 **m2_peak** ≈216MiB |
+| A-20260408-paper-main-3090-naive | 2026-04-08 | AutoDL / RTX 3090 | `6fa7873` | A | 同网格 HF naive：`mamba2_naive` + `run_server_paper_main_sweep_naive.sh` | `TAG=paper_main_naive_v1`，路径同上后缀 `_paper_main_naive_v1` + manifest | manifest：`mode=hf_naive`，`mamba_ssm`/`causal_conv1d` False；dim128 d6c8 **m2_peak** ≈8.9GiB |
+| A-20260408-paper-main-3090-pair | 2026-04-08 | AutoDL / RTX 3090 | `6fa7873` | A | **同机** naive vs fused 主文对照（与上行两行同一轮数据） | `plot_mamba_naive_vs_fused.py` → `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`（各 8/12/6 个重合格点） | 主文硬对照：同 GPU、同 commit、同计时设定；实现路径致 **m2_peak** 量级差（例 dim128 最重格 ~GiB vs ~10²MiB） |
 
 ---
 
@@ -38,5 +41,5 @@
 
 | 优先级 | id | 说明 |
 |--------|-----|------|
-| P0 | A-paper-main-3090-naive | AutoDL **同机**：`mamba2_naive` 环境卸 `mamba-ssm`/`causal-conv1d` 后跑 `run_server_paper_main_sweep_naive.sh`（`WARMUP`/`REPS` 与 fused `paper_main_v1` 对齐）；本机 `plot_mamba_naive_vs_fused.py` 叠画 **3090 naive vs 3090 fused** |
+| P0 | — | （已完成）同机 paper_main：见登记表 **A-20260408-paper-main-3090-*** |
 | P1 | | |
