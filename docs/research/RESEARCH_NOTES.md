@@ -119,6 +119,8 @@
 
 **玩具协议 JSON（同路径 depth4 / chunk8 / dim128，3090 CUDA，`6fa7873`）**：S1 `mamba2_cache_snap_segments_depth4_cuda_20260421.json`（`clone_wall_ms`）；S2 `tf_r1_path_segments_depth4_cuda_20260421.json`（`forward_mean_ms`）；S3 `tf_kv_path_segments_depth4_cuda_20260421.json`（`increment_last_chunk_mean_ms` / `kv_cache_nbytes`）；S4 `mamba2_cache_restore_depth4_cuda_same_20260421.json` 与 **`mamba2_cache_restore_depth4_cuda_fromcpu_20260421.json`**（`restore_wall_ms`）。
 
+**复跑**：`bash scripts/research/run_path_protocol_cuda.sh`（输出带 UTC 时间戳文件名；未设 `MAMBA2_RESULTS_ROOT` 时写入 `results/metrics/`）。
+
 #### 7.3.1 玩具 3090 对照（每边界一行，ms）
 
 登记 **X-20260421-*** 系列；**口径不同**（clone / restore / 整段 TF / 增量 KV），勿混为同一物理「一步」。

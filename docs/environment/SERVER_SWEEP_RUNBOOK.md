@@ -228,6 +228,12 @@ python scripts/research/benchmark_tf_kv_path_segments.py --device cuda --branch-
   --out-json "$MAMBA2_RESULTS_ROOT/metrics/tf_kv_path_segments_depth4_cuda_branchdemo_$(date -u +%Y%m%dT%H%MZ).json"
 ```
 
+**一键复跑 S1–S4（CUDA）**（时间戳文件名写入 ``metrics/``；未设 ``MAMBA2_RESULTS_ROOT`` 时用仓库内 ``results/metrics/``）：
+
+```bash
+bash scripts/research/run_path_protocol_cuda.sh
+```
+
 **S4 / §7.3 SSM restore**（与 S1 同模型与路径；快照 ``clone`` 后对活动 ``DynamicCache`` 做 ``zero_`` → ``copy_`` 还原；**不含**重算前向）：
 
 ```bash

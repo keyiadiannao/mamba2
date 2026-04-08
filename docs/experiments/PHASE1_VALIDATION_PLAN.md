@@ -24,7 +24,9 @@
   - **Mamba-2**：`Mamba2PathReader`（`inputs_embeds` 喂 `Mamba2Model`）；无 `mamba-ssm` 时为 HF naive 实现。
 - **指标**：`elapsed_s`、`per_step_s`（总时间 / `reps`）、`peak_alloc_mib`（CUDA `max_memory_allocated`，CPU 为 0）。
 
-**未纳入（后续迭代）**：真实 RAPTOR 全流程、**全 LLM KV cache** 对照、检索头、任务级 EM/F1。（`mamba_ssm` 已在云端 fused 扫参中部分纳入。）
+**未纳入（后续迭代）**：真实 RAPTOR 全流程、**全规模 LLM** 上的 KV 与 SSM 主循环接线、检索头、任务级 EM/F1。
+
+**已另册（玩具协议，≠ 上文 path-batch 扫参 CSV）**：`RESEARCH_NOTES` §7 / §7.3.1 与登记 **X-20260421-*** — S1（Mamba `DynamicCache` clone）、S2（TF-R1 整段前向）、S3（TF-KV 增量 + 可选错枝截断）、S4（SSM `copy_` restore，same / CPU 快照）。原始 JSON 在 `results/metrics/*_20260421.json`；云端一键复跑：`bash scripts/research/run_path_protocol_cuda.sh`（`MAMBA2_RESULTS_ROOT` 可选）。
 
 ---
 
@@ -126,3 +128,5 @@ python scripts\benchmarks\plot_mamba_naive_vs_fused.py --csv-a results\metrics\s
 | `scripts/benchmarks/sweep_tree_benchmark.py` | 多组 CSV / jsonl 扫参 |
 | `experiments/A-20260407-toy-tree-reader-bench/README.md` | 单次实验说明 |
 | `scripts/benchmarks/benchmark_text_tree.py` | 文本形叶节点 + 自底向上建树 + 同 reader 基准 |
+| `scripts/research/run_path_protocol_cuda.sh` | §7 玩具 S1–S4 CUDA 串行复跑 → `metrics/` |
+| `docs/research/RESEARCH_NOTES.md` §7.3.1 | 3090 同边界 ms 对照表（与主文 path-batch 图正交） |

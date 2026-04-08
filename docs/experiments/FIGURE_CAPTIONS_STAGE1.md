@@ -52,4 +52,6 @@
 
 ## 与 §7 回溯实验的边界
 
-上述图与表仅对比 **单遍前向 path-batch** 下的峰值显存与计时；**不包含** `RESEARCH_NOTES` §7.2 的 TF-R1/TF-KV **回溯**协议。见 **§7.0**。
+上述三张 naive/fused 图与 Wikitext 说明仍只服务 **单遍前向 path-batch** 峰值显存与计时。
+
+**玩具级回溯协议**（HF Mamba `DynamicCache` + 手写 TF-KV trunk）已单独跑数并登记 **EXPERIMENT_REGISTRY `X-20260421-*`**；**每边界毫秒对照表**见 **`RESEARCH_NOTES.md` §7.3.1**，原始 JSON 见 `results/metrics/*_20260421.json`。复跑：`bash scripts/research/run_path_protocol_cuda.sh`。正文若引用，请标明 **toy / 非全 LLM KV** 与 §7.0 边界。

@@ -35,6 +35,7 @@
 - [x] **S2 TF-R1（玩具路径，与 S1 对齐）**：`benchmark_tf_r1_path_segments.py`；**X-20260421-tf-r1-path-segments-cuda**（`results/metrics/tf_r1_path_segments_depth4_cuda_20260421.json`）
 - [x] **S3 TF-KV**：`benchmark_tf_kv_path_segments.py`；**X-20260421-tf-kv-path-segments-cuda**（`tf_kv_path_segments_depth4_cuda_20260421.json` + **`tf_kv_path_segments_depth4_cuda_branchdemo_20260421.json`**）
 - [x] **S4 SSM restore**：`benchmark_mamba2_cache_restore_segments.py`；**X-20260421-mamba2-cache-restore-cuda**（`mamba2_cache_restore_depth4_cuda_same_20260421.json` + **`mamba2_cache_restore_depth4_cuda_fromcpu_20260421.json`**）
+- [x] **§7 协议复跑入口**：`scripts/research/run_path_protocol_cuda.sh` + `PHASE1_VALIDATION_PLAN` / `FIGURE_CAPTIONS` / `SERVER_SWEEP_RUNBOOK` 交叉引用
 
 ---
 
@@ -51,7 +52,7 @@
 |--------|------|----------|
 | P0 | **阶段 1 叙事收束** | **`docs/experiments/FIGURE_CAPTIONS_STAGE1.md`**（中英图注模板）；`RESEARCH_NOTES.md` **§7.0** |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT` 镜像；JSON 与登记见 **A-20260408-wikitext-3090-fused** |
-| P1 | **测量协议成文** | S1–S4 已登记；**RESEARCH_NOTES §7.3.1** 玩具 3090 对照表；后续可收束叙事 / 真 LM 接线 |
+| P1 | **测量协议成文** | S1–S4 已登记；**§7.3.1** 对照表 + **`scripts/research/run_path_protocol_cuda.sh`** 复跑；下一跳：**P0 叙事收束**（图注/正文边界句）或 **真 LM / SSGS 接线** |
 | P1 | **SSGS** | 固定配置 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；§7.5 接线路线图已写入 `RESEARCH_NOTES.md` |
 | P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
 | 延后 | **大叶数研究扫参** | （已完成）**A-20260408-research-large-leaves-3090**；扩展网格可另开新 TAG |
