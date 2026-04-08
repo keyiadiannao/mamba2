@@ -75,7 +75,7 @@
 | **任务** | **平衡玩具树**上，对同一批根—叶路径批量跑三个 **path reader**：`TransformerPathReader`、`GRUPathReader`、`Mamba2PathReader`（HF `Mamba2Model` + `inputs_embeds`）。入口：`run_tree_reader_benchmark` / `sweep_tree_benchmark.py`；语料型树为 `benchmark_text_tree.py` / `benchmark_wikitext_tree.py`（同一 reader 槽位）。 |
 | **CSV 字段** | 每次运行记录 `tf_*` / `gru_*` / `m2_*` 的耗时与 **`m2_peak_mib` 等**：对 Mamba2 路径为 **`torch.cuda.max_memory_allocated()` 在单次 reader 基准内的峰值增量**（与脚本 `benchmark_reader` 一致）；**不是** KV cache 分项；§7.2 **TF-R1 / TF-KV** 的玩具测量在独立脚本 **`benchmark_tf_r1_path_segments.py`** / **`benchmark_tf_kv_path_segments.py`**，**未**并入本扫参 harness。 |
 | **naive vs fused** | 由环境是否可 import **`mamba_ssm` / `causal_conv1d`** 决定 HF 是否走融合内核；**同机**成对数据见 `EXPERIMENT_REGISTRY` **A-20260408-paper-main-3090-fused** / **-naive** / **-pair**，主图 `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`。 |
-| **尚未接线** | **全规模 LLM**（生成、任务指标）与树上导航闭环；§7.3 玩具 **S1–S4** 已分脚本登记 **X-20260421-***（含 S4 restore）；**SSGS** 已可跑 **Mamba `DynamicCache`** 版 DFS（见 §6）。**不与** path-batch 扫参 CSV harness 混为一谈。 |
+| **尚未接线** | **全规模 LLM** 与**可学习导航策略**（按子打分、任务级指标）仍在扩展；已有 **最小因果 LM 闭环**（路径文本 → `AutoModelForCausalLM` CE + 续写 + 可选一步训练，见 §7.4）。§7.3 玩具 **S1–S4** 已分脚本登记 **X-20260421-***；**SSGS** 已可跑 **Mamba `DynamicCache`** 版 DFS（§6）。**不与** path-batch 扫参 CSV harness 混为一谈。 |
 
 ### 7.1 快照里装什么（Mamba / SSM reader）
 
@@ -146,7 +146,7 @@
 - **TF-KV（截断 + 续写）玩具协议**：`scripts/research/benchmark_tf_kv_path_segments.py` — Pre-LN 因果 trunk、**每层 MHA 的 K/V 缓存**；与 S1 同单路径上报 `kv_cache_nbytes` 与「仅前向最后一节点 chunk」的 `increment_last_chunk_mean_ms`；`--branch-truncate-demo` 复现根下错子 chunk → `truncate_kv` → 兄弟 chunk（KV 字节与截断 ms）。
 - **SSM restore（§7.3）**：`scripts/research/benchmark_mamba2_cache_restore_segments.py` — S1 同款累积前向得到 `DynamicCache` 后，`clone` 快照；每 rep：`zero_` 活动张量再 `copy_` 还原；`restore_wall_ms`；`--snapshot-device cpu` 时含 CPU→GPU。
 - **SSGS × Mamba（导航环）**：`src/rag_tree/ssgs.py` 中 **`MambaNavState` / `dfs_ssgs_mamba` / `build_toy_mamba2_for_ssgs`**；`mamba_cache_utils.patch_mamba2_model_use_torch_forward_only` 在 **CUDA** 上强制 **HF ``torch_forward``**（避免 fused ``causal_conv1d`` 在 **batch=1** 下的 stride 限制）；cache **clone/restore** 同文件。与 path reader **不同**：**DFS 试错序** + **token 步进**（非单次整段 `inputs_embeds`）。**可归档 JSON**：`scripts/research/demo_ssgs_mamba_dfs.py --out-json` → `results/metrics/ssgs_mamba_dfs_demo_{cpu,cuda}_20260421.json`（登记 **X-20260421-ssgs-mamba-dfs-demo**）。
-- **真实 LM**：尚未接线；接线点后应新增独立 benchmark 与 registry id，避免与玩具 `benchmark_tree_walk` 混淆。
+- **真实因果 LM（最小闭环）**：`src/rag_tree/tree_lm_closure.py` — 根—叶路径上节点 ``text`` 拼文档 → HF **`AutoModelForCausalLM`** 的 teacher-forcing **CE** + **`generate` 续写**；`train_one_step_mean_loss` 提供 **一步 AdamW**。入口：`scripts/research/demo_tree_lm_minimal.py`（默认 ``sshleifer/tiny-gpt2``）。**不是**树上强化学习导航，也**不是** Mamba path-reader 基准；跑通后再加 **登记 id** 与任务指标（准确率等）即可与阶段 1 主图并列声明。
 
 ### 7.5 接线顺序（定稿：先做什么、后做什么）
 
@@ -157,7 +157,7 @@
 | S2 | **TF-R1**：同一棵树、固定试错序列下，实现「回退 → 从规定起点重算」的 wall-clock + 峰值 | **已完成（玩具协议）**：`benchmark_tf_r1_path_segments.py`；3090 JSON 与登记 **X-20260421-tf-r1-path-segments-cuda** |
 | S3 | **TF-KV**：同一协议下「截断子分支 KV → 续算兄弟分支」+ KV 字节统计 | **已完成（玩具协议）**：`benchmark_tf_kv_path_segments.py`；登记 **X-20260421-tf-kv-path-segments-cuda**；JSON：`tf_kv_path_segments_depth4_cuda_20260421.json` + **`tf_kv_path_segments_depth4_cuda_branchdemo_20260421.json`**（`branch_truncate_demo` / 截断 ms） |
 | S4 | **SSM restore**：与 §7.3 一致，仅测 `clone`/`copy_` 或 `load_state` 的 **restore_wall_ms**（可与 S1 后真实张量尺寸一起报） | **已完成（玩具协议）**：`benchmark_mamba2_cache_restore_segments.py`；登记 **X-20260421-mamba2-cache-restore-cuda**（same + fromcpu 两 JSON） |
-| S5 | 汇总表：**同等树深、同等试错次数** 下 SSM vs TF-R1 vs TF-KV（或两列 TF） | **部分**：§7.3.1 表 + JSON；**导航环**已接 **`dfs_ssgs_mamba`**（与 path-batch 表仍非同一实验）；真 LM / 任务指标待收束 |
+| S5 | 汇总表：**同等树深、同等试错次数** 下 SSM vs TF-R1 vs TF-KV（或两列 TF） | **部分**：§7.3.1 表 + JSON；**导航环**已接 **`dfs_ssgs_mamba`**（与 path-batch 表仍非同一实验）；**真 LM**：已接 **路径文档 × 因果 LM** 最小闭环（§7.4）；**任务级指标 / 可学习策略** 待收束 |
 
 **依赖关系**：S2/S3 依赖清晰的 **token 边界** 与 **路径枚举**（可与 `dfs_ssgs` 轨迹对齐）；S1 完成前，勿把玩具 `dim` 向量与「层状态字节数」混称为论文主表。
 

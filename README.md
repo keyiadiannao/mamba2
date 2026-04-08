@@ -70,6 +70,16 @@ python scripts\benchmarks\benchmark_text_tree.py --leaf-file experiments\A-20260
 
 见 `experiments/A-20260408-text-shaped-tree/README.md`。
 
+### 真因果 LM × 文本形树（最小闭环）
+
+路径上节点 `text` 拼成文档 → `AutoModelForCausalLM` 的 **CE（teacher forcing）** + **续写**；可选 `--train-one-step`。默认小模型 `sshleifer/tiny-gpt2`（需能访问 Hub 或镜像，见 `AUTODL_SETUP` / `HF_ENDPOINT`）；也可用 `--model <本地权重目录>`。
+
+```powershell
+python scripts\research\demo_tree_lm_minimal.py --cpu
+```
+
+说明与边界见 `docs/research/RESEARCH_NOTES.md` §7.4（**非** path-batch reader 基准，**非** 可学习树上导航）。
+
 ## 单测（SSGS 草稿）
 
 ```powershell
