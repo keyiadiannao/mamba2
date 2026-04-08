@@ -80,6 +80,14 @@ python scripts\research\demo_tree_lm_minimal.py --cpu
 
 说明与边界见 `docs/research/RESEARCH_NOTES.md` §7.4（**非** path-batch reader 基准，**非** 可学习树上导航）。
 
+**启发式导航指标**（子节点 CE argmin，与金路径对比）：
+
+```powershell
+python scripts\research\demo_tree_lm_nav_greedy.py --cpu --eval-all-leaves --out-json results\metrics\tree_lm_nav_greedy_default8_cpu.json
+```
+
+登记 **X-20260423-tree-lm-nav-greedy**；**非**训练好的策略。
+
 ## 单测（SSGS 草稿）
 
 ```powershell
