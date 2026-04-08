@@ -161,3 +161,35 @@ python scripts\benchmarks\plot_mamba_naive_vs_fused.py `
 python scripts/benchmarks/sweep_tree_benchmark.py --preset local --dim 128 --warmup 2 --reps 8 \
   --out-csv results/metrics/sweep_adl_dim128_quick.csv
 ```
+
+---
+
+## 7. 研究下一步（大叶数 + Mamba2 输出探针）
+
+### 7a. 大叶数扫参（与 `paper_main` 区分）
+
+`paper_main` 网格 **`max_leaves=64`**（depth≤6）。研究向 **128 条并行路径**（depth=7）扩展时用：
+
+```bash
+find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'   # 若 PyCharm 上传过 .sh
+chmod +x scripts/benchmarks/run_server_research_large_leaves.sh
+
+export MAMBA2_RESULTS_ROOT=/root/autodl-tmp/mamba2_results
+export HF_ENDPOINT=https://hf-mirror.com   # 若需镜像
+source /root/miniconda3/etc/profile.d/conda.sh && conda activate mamba2
+
+WARMUP=2 REPS=5 TAG=research_lg_v1 ./scripts/benchmarks/run_server_research_large_leaves.sh
+```
+
+产出：`sweep_research_large_leaves_dim128_${TAG}.csv`、`dim256_...` 与 **`sweep_research_large_leaves_manifest_${TAG}.txt`**。下回本机后写入 **`EXPERIMENT_REGISTRY`**（新 id，注明 TAG 与 fused）。
+
+### 7b. §7.5 S1：探针 `Mamba2Model` 前向里有什么
+
+在云端 fused 环境跑（也可本机对照）：
+
+```bash
+python scripts/research/probe_mamba2_outputs.py --device cuda
+python scripts/research/probe_mamba2_outputs.py --device cuda --use-cache
+```
+
+用于确认 **`last_hidden_state`**、**`cache_params` / DynamicCache** 等字段，再决定快照从何处 `clone`（见 `RESEARCH_NOTES` §7.1）。**不是**正式基准，无需登记；日志可贴进实验笔记或 PR 描述。

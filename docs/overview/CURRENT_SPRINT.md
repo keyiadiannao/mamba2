@@ -49,7 +49,7 @@
 | P1 | **测量协议成文** | `RESEARCH_NOTES.md` **§7**：§7.1–7.3 定稿；**TF-R1 / TF-KV** 与真实 Mamba 状态接线前排期 |
 | P1 | **SSGS** | 固定配置 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；§7.5 接线路线图已写入 `RESEARCH_NOTES.md` |
 | P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
-| 延后 | **大叶数、`--max-leaves` 大网格** | fused 环境、`sweep_tree_benchmark.py`；与主文网格区分 TAG |
+| 延后 | **大叶数研究扫参** | **`run_server_research_large_leaves.sh`** + `SERVER_SWEEP_RUNBOOK` §7a；`TAG=research_lg_v1`；完成后登记 `EXPERIMENT_REGISTRY` |
 
 **讨论结论（写入此表的目的）**：主故事仍是 **`docs/overview/PROJECT_MASTER_PLAN.md` §1.1 树内 Mamba vs Transformer**；**状态快照 / SSGS** 作为协议层贡献，需 **公平基线下的曲线** 支撑，避免仅停留在类比。
 

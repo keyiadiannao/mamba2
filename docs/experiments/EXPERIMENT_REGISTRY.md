@@ -44,4 +44,4 @@
 | 优先级 | id | 说明 |
 |--------|-----|------|
 | P0 | — | （已完成）同机 paper_main：见登记表 **A-20260408-paper-main-3090-*** |
-| P1 | | |
+| P1 | A-research-large-leaves-3090 | 云端跑 `run_server_research_large_leaves.sh`，回填 CSV/manifest 路径与 TAG |
