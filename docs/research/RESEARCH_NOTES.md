@@ -83,15 +83,24 @@
 | **消融** | 仅根快照 / 每层决策点快照 / 全节点快照 —— 三档报告 **bytes/节点** 与 **回退延迟**。 |
 
 **已观测（HF + `Mamba2Model`，`use_cache=True`，Transformers 与仓库脚本一致）**  
-命令：`scripts/research/probe_mamba2_outputs.py --use-cache --dump-cache`（CUDA fused 上建议带默认 batch≥8）。
+命令：`scripts/research/probe_mamba2_outputs.py --use-cache --dump-cache`（CUDA fused 上 batch 自动 ≥8）。
 
 - 前向输出除 `last_hidden_state` 外有 **`cache_params`：`DynamicCache`**，按层为 **`LinearAttentionLayer`**。
-- 每层暴露的张量字段（**名称以当前 transformers 为准**）示例：
-  - **`conv_states`**：如形状 `(B, 288, 4)`（与卷积状态维有关，随配置变）。
-  - **`recurrent_states`**：如形状 `(B, 8, 32, 16)`（与 `num_heads`、头维、`state_size` 等相关）。
-- **快照候选**：至少可对上述 tensor **逐 `clone().detach()`** 计入 **bytes**；是否与 SSM 论文中的「层状态」一一对应，需在正文中**显式声明**并与逐步前向边界对齐（§7.5 S1）。
+- 每层暴露的张量字段（**名称以当前 transformers 为准**）：
 
-> 形状随 **`batch`、`seq`、`hidden`、`num_heads`、`head_dim`、`state_size`** 变化；论文表应以**登记实验**一次 `probe --dump-cache` 日志或固定配置 JSON 为准。
+**AutoDL / RTX 3090 / fused**（`mamba_ssm`+`causal_conv1d`，与 **X-20260408-probe-mamba2-3090-fused** 一致）：`batch=8`，`seq=32`，`hidden=128`，`num_heads=8`，`head_dim=32`，**2 层**。
+
+| 字段 | 每层形状 | float32 元素数 | 约 nbytes（该张量） |
+|------|----------|----------------|---------------------|
+| `conv_states` | `(8, 288, 4)` | 9 216 | 36 864 |
+| `recurrent_states` | `(8, 8, 32, 16)` | 32 768 | 131 072 |
+
+- **单层**两字段合计约 **167 936 B（≈164 KiB）**；**两层**若全量 `clone` 约 **335 872 B（≈328 KiB）**（不含 `last_hidden_state` 与其它开销）。
+- **本机 CPU / naive**（`batch=1` 同脚本）：形状为 `(1, 288, 4)` 与 `(1, 8, 32, 16)`，仅 **batch 维**与上表不同。
+
+**快照候选**：对上述 tensor **逐 `clone().detach()`** 计入 **bytes**；是否与 SSM 论文「层状态」一一对应，正文需**显式声明**并与逐步前向边界对齐（§7.5 S1）。
+
+> 形状随 **`batch`、`seq`、`hidden`、`num_heads`、`head_dim`、`state_size`** 变化；论文数字以本表 + 登记 **X-20260408-probe-mamba2-3090-fused** 为准。
 
 ### 7.2 Transformer 对照基线（必须固定其一，勿混用）
 
