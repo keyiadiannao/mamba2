@@ -31,6 +31,14 @@ chmod +x scripts/benchmarks/run_server_sweep_aligned.sh
 TAG=autodl_fused_$(date +%Y%m%d) ./scripts/benchmarks/run_server_sweep_aligned.sh
 ```
 
+若报错 **`/usr/bin/env: 'bash\r': No such file or directory`**，说明脚本为 Windows CRLF 行尾，在服务器上执行：
+
+```bash
+sed -i 's/\r$//' scripts/benchmarks/run_server_sweep_aligned.sh
+```
+
+然后重新 `chmod +x` 并运行。仓库已加 **`.gitattributes`**（`*.sh` 强制 LF）；请 **`git pull`** 后再跑。
+
 会依次写出 **4 份 CSV**（文件名含 `$TAG`）：
 
 | 段 | 内容 | 对齐本地文件（示例） |

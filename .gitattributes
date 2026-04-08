@@ -1,0 +1,2 @@
+# Shell scripts must use LF so Linux/AutoDL can execute them (avoid bash\r).
+*.sh text eol=lf
