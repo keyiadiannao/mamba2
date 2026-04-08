@@ -31,13 +31,14 @@ chmod +x scripts/benchmarks/run_server_sweep_aligned.sh
 TAG=autodl_fused_$(date +%Y%m%d) ./scripts/benchmarks/run_server_sweep_aligned.sh
 ```
 
-若报错 **`/usr/bin/env: 'bash\r': No such file or directory`**，说明脚本为 Windows CRLF 行尾，在服务器上执行：
+若报错 **`/usr/bin/env: 'bash\r': No such file or directory`**，说明脚本为 Windows CRLF 行尾（常见于 **PyCharm/SFTP 上传**）。在仓库根目录一次性去掉所有 `scripts/**/*.sh` 的 `\r`：
 
 ```bash
-sed -i 's/\r$//' scripts/benchmarks/run_server_sweep_aligned.sh
+find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'
+chmod +x scripts/benchmarks/run_server_sweep_aligned.sh scripts/benchmarks/run_server_paper_main_sweep.sh scripts/benchmarks/run_server_paper_main_sweep_naive.sh
 ```
 
-然后重新 `chmod +x` 并运行。仓库已加 **`.gitattributes`**（`*.sh` 强制 LF）；请 **`git pull`** 后再跑。
+然后重新运行。仓库 **`.gitattributes`** 已设 `*.sh text eol=lf`；**`git pull` / clone** 应得到 LF。若仍从 Windows **覆盖上传** `.sh`，再跑上述 `find … sed` 即可。
 
 会依次写出 **4 份 CSV**（文件名含 `$TAG`）：
 
