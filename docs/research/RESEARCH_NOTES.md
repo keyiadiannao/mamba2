@@ -56,5 +56,37 @@
 
 ## 6. 与仓库现状的关系
 
-- 当前 **`Mamba2PathReader` + `benchmark_*`**：验证 **单路径 / 批路径**上的延迟与显存，**尚未**实现树上多分支试错与快照回退。
-- **下一步工程**：在 `TreeNode` 或导航器上增加 **可选快照钩子** + 与 Transformer 路径的 **重算基线** 对拍，再写入 `docs/experiments/EXPERIMENT_REGISTRY.md`。
+- 当前 **`Mamba2PathReader` + `benchmark_*`**：验证 **单路径 / 批路径**上的延迟与显存；**SSGS 最小草稿**见 `src/rag_tree/ssgs.py`（假状态 DFS + `TreeNode.state_snapshot` 挂载钩子），单测 `tests/test_ssgs.py`。
+- **下一步工程**：把 `dfs_ssgs` 的「状态」从 `list[id]` 换成 **真实 Mamba 层状态 clone**；与 Transformer **重算基线**对拍计时，再写入 `docs/experiments/EXPERIMENT_REGISTRY.md`。
+
+---
+
+## 7. 测量协议草案（P1，可写进实验章节）
+
+### 7.1 快照里装什么（Mamba / SSM reader）
+
+| 对象 | 说明 |
+|------|------|
+| **最小集** | 每一层（或每个 Mamba block）在**读完当前树节点文本、做完该段递推之后**的 **SSM 状态张量**；以 `Module.state_dict()` 子集或 `NamedTuple[torch.Tensor, ...]` 列出，**逐 tensor `clone().detach()`**。 |
+| **实现依赖** | HuggingFace `Mamba2Model`：需从 `outputs` / 内部 cache 钩出与 **步进边界** 对齐的状态；若 API 不暴露，则记录「等价物」（例如 block 输入输出拼接前的 hidden）并在正文声明。 |
+| **消融** | 仅根快照 / 每层决策点快照 / 全节点快照 —— 三档报告 **bytes/节点** 与 **回退延迟**。 |
+
+### 7.2 Transformer 对照基线（必须固定其一，勿混用）
+
+| 基线代号 | 做法 | 测量的量 |
+|----------|------|----------|
+| **TF-R1（重算）** | 回退到父检查点后，**从根（或从该检查点对应的 token 边界）重新前向**到当前分支，**不复用**旧 KV。 | wall-clock、总 FLOPs 估计（可选）、峰值显存。 |
+| **TF-KV（截断）** | 保留缓存至父边界，丢弃子分支产生的 KV 后缀，**继续**前向兄弟分支。 | 同上；另报 **KV 占用字节**（按层累加）。 |
+
+**公平性**：两种基线允许的 **token 序列** 必须与 SSGS 路径一致；Mamba 侧 **不得**在回退后仍保留错误子分支的隐状态（除非故意做「污染」消融）。
+
+### 7.3 回退成本怎么报
+
+- **SSM**：`restore_wall_ms = 拷贝快照到设备 + `load_state`（若有）**；不含重新编码子树。
+- **TF-R1**：`recompute_wall_ms` = 从固定起点到兄弟叶的全序列前向。
+- **指标表**：至少一行 **「同等树深、同等试错次数」** 下三者对比。
+
+### 7.4 与当前代码的映射
+
+- **结构 / 试错顺序**：`ssgs.dfs_ssgs`（假状态）；挂载示例 `mount_snapshot_on_tree`。
+- **真实 LM**：尚未接线；接线点后应新增 `scripts/benchmarks/...` 与 registry id，避免与玩具 `benchmark_tree_walk` 混淆。

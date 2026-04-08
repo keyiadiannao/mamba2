@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Iterator, List
+from typing import Any, Iterator, List, Optional
 
 import torch
 
@@ -15,6 +15,8 @@ class TreeNode:
     embedding: torch.Tensor  # [L, D] sequence of token vectors for this node
     children: List["TreeNode"] = field(default_factory=list)
     text: str = ""  # optional source text for text-shaped / RAPTOR-style trees
+    # SSGS / 有状态导航草稿：在决策点挂载 Mamba 隐状态等；基准脚本默认不读写
+    state_snapshot: Optional[Any] = None
 
     def is_leaf(self) -> bool:
         return len(self.children) == 0

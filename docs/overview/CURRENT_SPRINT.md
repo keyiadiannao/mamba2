@@ -43,8 +43,8 @@
 |--------|------|----------|
 | P0 | **阶段 1 收束** | 本地扫参 CSV + **`scripts/benchmarks/plot_tree_reader_sweep.py`** 出图（例：`results/metrics/figures/sweep_readers_20260410_local5060.png`）；登记见 `EXPERIMENT_REGISTRY` |
 | P0 | **真实语料线** | 继续用 `scripts/benchmarks/benchmark_wikitext_tree.py`（及合成叶）巩固「非玩具文本 + 同 reader」；可选：把一次完整 JSON 结果贴进 `experiments/A-20260410-wikitext-shallow-tree/` |
-| P1 | **叙事与可检验命题** | 维护 `docs/research/RESEARCH_NOTES.md`：把「快照回溯」写成 **测量协议草案**（快照含哪些 tensor、TF 基线是截断 KV 还是从 checkpoint 重算） |
-| P1 | **SSGS 最小原型（设计/伪代码）** | 在 `src/rag_tree/` 增加 **导航器草稿**（例如在 `TreeNode` 上挂 `state_snapshot: Optional[...]`，先不接真实 LM），或独立 `docs/` 算法伪代码 + 单元测试「树遍历 + 假状态」；**不依赖** mamba-ssm |
+| P1 | **叙事与可检验命题** | `docs/research/RESEARCH_NOTES.md` **§7 测量协议草案**（Mamba 快照内容、TF-R1/TF-KV 基线、报表字段） |
+| P1 | **SSGS 最小原型** | `src/rag_tree/ssgs.py` + `TreeNode.state_snapshot` + `tests/test_ssgs.py`；**不接真实 LM** |
 | P2 | **检索头** | 读论文与接口草图；代码保持占位，等 GPU 再做探针 |
 | 延后 | **mamba-ssm 融合**、大叶数、`--max-leaves` 大网格 | **有服务器再开** |
 

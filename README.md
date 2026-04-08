@@ -69,3 +69,9 @@ python scripts\benchmarks\benchmark_text_tree.py --leaf-file experiments\A-20260
 ```
 
 见 `experiments/A-20260408-text-shaped-tree/README.md`。
+
+## 单测（SSGS 草稿）
+
+```powershell
+python -m unittest tests.test_ssgs -v
+```
