@@ -128,7 +128,7 @@
 | 步骤 | 内容 | 状态（截至本仓库当前迭代） |
 |------|------|---------------------------|
 | S0 | 阶段 1 path reader 扫参 + **同机** naive/fused 峰值图 + Wikitext 同 harness | **已完成**（§7.0 / `FIGURE_CAPTIONS_STAGE1.md`） |
-| S1 | **SSM 快照对象**在代码中从玩具 `TensorNavState` 对齐到 **HF `Mamba2Model` 可导出状态**（或正文声明的等价张量） | **进行中**：探针已跑通（3090 fused）；**§7.1** 已记 `DynamicCache` / `LinearAttentionLayer` 的 `conv_states`、`recurrent_states`；下一步：**树导航边界上调用 forward 片段并 clone 上述张量** + 报 bytes |
+| S1 | **SSM 快照对象**在代码中从玩具 `TensorNavState` 对齐到 **HF `Mamba2Model` 可导出状态**（或正文声明的等价张量） | **进行中**：探针 + §7.1 表；**分段前向 + 每节点后 clone cache**：`scripts/research/benchmark_mamba2_cache_snapshot_segments.py`（单路径 `batch=1`；3090 上跑后登记 JSON） |
 | S2 | **TF-R1**：同一棵树、固定试错序列下，实现「回退 → 从规定起点重算」的 wall-clock + 峰值 | **未做** |
 | S3 | **TF-KV**：同一协议下「截断子分支 KV → 续算兄弟分支」+ KV 字节统计 | **未做**（与 S2 **二选一为主表**，另一放附录） |
 | S4 | **SSM restore**：与 §7.3 一致，仅测 `clone`/`copy_` 或 `load_state` 的 **restore_wall_ms**（可与 S1 后真实张量尺寸一起报） | **部分**：玩具维度的微基准已有 JSON；真实层状态待 S1 |

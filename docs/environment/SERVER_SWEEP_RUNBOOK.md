@@ -196,3 +196,13 @@ python scripts/research/probe_mamba2_outputs.py --device cuda --use-cache --dump
 用于确认 **`last_hidden_state`**、**`cache_params` / DynamicCache** 等字段，再决定快照从何处 `clone`（见 `RESEARCH_NOTES` §7.1）。**不是**正式基准，无需登记；日志可贴进实验笔记或 PR 描述。
 
 若报 **`causal_conv1d ... strides ... multiples of 8`**：多为 **fused 核在小 batch / 少 head** 上的限制。探针脚本已对 **CUDA+fused** 自动把 **`batch` 提到 ≥8**，并把 **`num_heads` 优先设为 8**（`head_dim=32`）；仍失败时可试 **`--batch 16`** 或 **`--seq 32`**（8 的倍数）。
+
+**S1 分段快照基准**（单路径、每节点一段 `Mamba2Model` forward，`batch=1` 的 cache；与 path-reader 全路径大 batch 不同）：
+
+```bash
+python scripts/research/benchmark_mamba2_cache_snapshot_segments.py --device cuda \
+  --depth 4 --chunk-len 8 --dim 128 \
+  --out-json "$MAMBA2_RESULTS_ROOT/metrics/mamba2_cache_snap_segments_$(date -u +%Y%m%dT%H%MZ).json"
+```
+
+若 fused 在 **分段 `batch=1`** 上仍触发 stride 报错，可先 **`--device cpu`** 或在正文声明该数为 CPU 协议参考；再迭代多路径 batch 化。
