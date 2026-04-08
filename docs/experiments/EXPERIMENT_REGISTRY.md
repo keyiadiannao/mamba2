@@ -50,4 +50,4 @@
 | 优先级 | id | 说明 |
 |--------|-----|------|
 | P0 | — | （已完成）同机 paper_main：见登记表 **A-20260408-paper-main-3090-*** |
-| P1 | S1/S2/S3 路径协议 | S1 **X-20260421-mamba2-cache-segments-{cpu,cuda}**；S2 **X-20260421-tf-r1-path-segments-cuda**；S3 **X-20260421-tf-kv-path-segments-cuda**；大叶数 **A-20260408-research-large-leaves-3090**、探针 **X-20260408-probe-mamba2-3090-fused** |
+| P1 | S1–S4 路径协议 | S1–S3 已登记；**S4** `benchmark_mamba2_cache_restore_segments.py` CUDA JSON 待登记；大叶数 **A-20260408-research-large-leaves-3090**、探针 **X-20260408-probe-mamba2-3090-fused** |

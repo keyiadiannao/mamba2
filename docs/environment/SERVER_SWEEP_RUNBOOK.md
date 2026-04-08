@@ -227,3 +227,16 @@ python scripts/research/benchmark_tf_kv_path_segments.py --device cuda \
 python scripts/research/benchmark_tf_kv_path_segments.py --device cuda --branch-truncate-demo \
   --out-json "$MAMBA2_RESULTS_ROOT/metrics/tf_kv_path_segments_depth4_cuda_branchdemo_$(date -u +%Y%m%dT%H%MZ).json"
 ```
+
+**S4 / §7.3 SSM restore**（与 S1 同模型与路径；快照 ``clone`` 后对活动 ``DynamicCache`` 做 ``zero_`` → ``copy_`` 还原；**不含**重算前向）：
+
+```bash
+# 快照与模型同显存（设备内 copy_）
+python scripts/research/benchmark_mamba2_cache_restore_segments.py --device cuda \
+  --depth 4 --chunk-len 8 --dim 128 \
+  --out-json "$MAMBA2_RESULTS_ROOT/metrics/mamba2_cache_restore_depth4_cuda_same_$(date -u +%Y%m%dT%H%MZ).json"
+# 快照在 CPU；restore 含拷回 GPU（§7.3「到设备」）
+python scripts/research/benchmark_mamba2_cache_restore_segments.py --device cuda --snapshot-device cpu \
+  --depth 4 --chunk-len 8 --dim 128 \
+  --out-json "$MAMBA2_RESULTS_ROOT/metrics/mamba2_cache_restore_depth4_cuda_fromcpu_$(date -u +%Y%m%dT%H%MZ).json"
+```
