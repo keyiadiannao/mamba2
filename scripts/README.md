@@ -17,7 +17,7 @@
 | **[data/](data/)** | `prepare_leaves_from_corpus.py` | 从目录生成叶文本文件 |
 | **[sync/](sync/)** | `sync_example.ps1`, `sync_example.sh` | 双机同步命令模板 |
 | **[research/](research/)** | `probe_mamba2_outputs.py` | §7.5 S1：探针 `Mamba2Model` 的 `forward` 输出字段（含可选 `use_cache`） |
-| | `benchmark_mamba2_cache_snapshot_segments.py` | §7.5 S1：沿根—叶按节点 chunk 分段前向，每段后 **clone cache** 的 nbytes / ms |
+| | `benchmark_mamba2_cache_snapshot_segments.py` | §7.5 S1：单路径上每多读一个节点对**累积** `inputs_embeds` 整段前向，边界处 **clone cache** nbytes/ms（段间不传 cache，兼容 fused CUDA） |
 | **Linux** | `benchmarks/run_server_sweep_aligned.sh` | 服务器 fused 对齐扫参（与本地 CSV 键对齐） |
 | **Linux** | `benchmarks/run_server_paper_main_sweep.sh` | **同机主文扫参 fused**（统一 `WARMUP`/`REPS` + manifest） |
 | **Linux** | `benchmarks/run_server_paper_main_sweep_naive.sh` | **同机主文扫参 HF naive**（需无 `mamba-ssm`/`causal-conv1d` 的环境；网格与上者相同） |

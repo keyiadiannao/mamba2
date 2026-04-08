@@ -197,7 +197,9 @@ python scripts/research/probe_mamba2_outputs.py --device cuda --use-cache --dump
 
 若报 **`causal_conv1d ... strides ... multiples of 8`**：多为 **fused 核在小 batch / 少 head** 上的限制。探针脚本已对 **CUDA+fused** 自动把 **`batch` 提到 ≥8**，并把 **`num_heads` 优先设为 8**（`head_dim=32`）；仍失败时可试 **`--batch 16`** 或 **`--seq 32`**（8 的倍数）。
 
-**S1 分段快照基准**（单路径、每节点一段 `Mamba2Model` forward，`batch=1` 的 cache；与 path-reader 全路径大 batch 不同）：
+**S1 分段快照基准**（单路径；每读完路径上第 *k* 个节点，对**累积** `inputs_embeds` `[1, (k+1)*chunk_len, dim]` 做一次完整 forward，`batch=1` 的 cache；与 path-reader 全路径大 batch 不同）：
+
+实现上**不在段之间传入** `cache_params`：HF Mamba2 在「续写 cache」的 fused 路径里要求 **`seq_len == 1`**；若下一段仍喂整段 chunk，会报 **`causal_conv1d_update`：`weight must have shape (dim, width)`**。累积整段前向与逐步因果消费在最终 cache 上等价。
 
 ```bash
 python scripts/research/benchmark_mamba2_cache_snapshot_segments.py --device cuda \
@@ -205,4 +207,4 @@ python scripts/research/benchmark_mamba2_cache_snapshot_segments.py --device cud
   --out-json "$MAMBA2_RESULTS_ROOT/metrics/mamba2_cache_snap_segments_$(date -u +%Y%m%dT%H%MZ).json"
 ```
 
-若 fused 在 **分段 `batch=1`** 上仍触发 stride 报错，可先 **`--device cpu`** 或在正文声明该数为 CPU 协议参考；再迭代多路径 batch 化。
+若 fused 在 **`batch=1`** 上仍触发 stride 报错，可先 **`--device cpu`** 或在正文声明该数为 CPU 协议参考；再迭代多路径 batch 化。

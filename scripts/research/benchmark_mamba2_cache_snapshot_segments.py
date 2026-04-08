@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """
-S1：沿**单条根—叶路径**，按**节点 chunk** 分段调用 ``Mamba2Model``（``use_cache``），
-在每段结束后对 ``DynamicCache`` 内 ``conv_states`` / ``recurrent_states`` 做 **clone**，
-统计 **nbytes** 与 **wall-clock**（§7.5 S1 / ``RESEARCH_NOTES`` §7.1）。
+S1：沿**单条根—叶路径**，在读完第 *k* 个节点后（累积序列长度 ``(k+1)*chunk_len``）对 ``Mamba2Model``
+做一次**完整前向**（``use_cache=True``，``cache_params=None``），在每步后对 ``DynamicCache`` 内
+``conv_states`` / ``recurrent_states`` 做 **clone**，统计 **nbytes** 与 **wall-clock**
+（§7.5 S1 / ``RESEARCH_NOTES`` §7.1）。
+
+**为何不用段间传 cache**：HF Mamba2 在 ``cache_params.has_previous_state`` 为真时走 fused 单步解码，
+要求 ``seq_len == 1``；若下一段仍喂 ``[1, chunk_len, dim]`` 会触发 ``causal_conv1d_update`` 的
+``weight must have shape (dim, width)``。累积整段前向与逐步因果消费在最终 cache 上等价，且 CUDA/CPU 一致。
 
 与 ``Mamba2PathReader`` 一致：``inputs_embeds`` 宽度 = path ``dim``；内部 ``hidden_size=dim``，
 ``num_heads=8``、``head_dim=32``（fused CUDA 下与 ``probe_mamba2_outputs`` 对齐）。
@@ -117,15 +122,16 @@ def main() -> int:
     model.eval()
 
     per_seg: list[dict[str, float | int]] = []
-    cache_params = None
+    prefix_chunks: list[torch.Tensor] = []
 
     for seg_i, node in enumerate(path):
-        seg = node.embedding.unsqueeze(0)  # [1, chunk_len, dim]
+        prefix_chunks.append(node.embedding)
+        cum = torch.cat(prefix_chunks, dim=0).unsqueeze(0)  # [1, (seg_i+1)*chunk_len, dim]
         _sync(dev)
         with torch.no_grad():
             out = model(
-                inputs_embeds=seg,
-                cache_params=cache_params,
+                inputs_embeds=cum,
+                cache_params=None,
                 use_cache=True,
                 return_dict=True,
             )
@@ -165,7 +171,11 @@ def main() -> int:
         "head_dim": head_dim,
         "per_segment": per_seg,
         "total_clone_nbytes_sum_segments": sum(s["clone_nbytes"] for s in per_seg),
-        "note": "clone_nbytes per row is full cache size after that segment; sum is not 'one snapshot' but cumulative reporting per boundary",
+        "note": (
+            "Each row: full cache after consuming root→node_k (one full forward on prefix; "
+            "no cross-segment cache_params — required for HF fused Mamba2 when chunk_len>1). "
+            "Sum of clone_nbytes is per-boundary reporting, not a single snapshot."
+        ),
     }
 
     text = json.dumps(payload, indent=2)
