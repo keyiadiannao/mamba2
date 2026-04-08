@@ -216,3 +216,14 @@ python scripts/research/benchmark_tf_r1_path_segments.py --device cuda \
   --depth 4 --chunk-len 8 --dim 128 \
   --out-json "$MAMBA2_RESULTS_ROOT/metrics/tf_r1_path_segments_depth4_cuda_$(date -u +%Y%m%dT%H%MZ).json"
 ```
+
+**S3 / §7.2 TF-KV**（手写 Pre-LN 因果 trunk + 层间 KV cache；与 ``TransformerPathReader`` 非逐层同一实现，宽度/深度一致）：
+
+```bash
+python scripts/research/benchmark_tf_kv_path_segments.py --device cuda \
+  --depth 4 --chunk-len 8 --dim 128 \
+  --out-json "$MAMBA2_RESULTS_ROOT/metrics/tf_kv_path_segments_depth4_cuda_$(date -u +%Y%m%dT%H%MZ).json"
+# 可选：根下错子 → 截断 KV → 兄弟 chunk（§7.2 语义演示）
+python scripts/research/benchmark_tf_kv_path_segments.py --device cuda --branch-truncate-demo \
+  --out-json "$MAMBA2_RESULTS_ROOT/metrics/tf_kv_path_segments_depth4_cuda_branchdemo_$(date -u +%Y%m%dT%H%MZ).json"
+```

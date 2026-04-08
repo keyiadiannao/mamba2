@@ -70,9 +70,9 @@
 | 对象 | 说明 |
 |------|------|
 | **任务** | **平衡玩具树**上，对同一批根—叶路径批量跑三个 **path reader**：`TransformerPathReader`、`GRUPathReader`、`Mamba2PathReader`（HF `Mamba2Model` + `inputs_embeds`）。入口：`run_tree_reader_benchmark` / `sweep_tree_benchmark.py`；语料型树为 `benchmark_text_tree.py` / `benchmark_wikitext_tree.py`（同一 reader 槽位）。 |
-| **CSV 字段** | 每次运行记录 `tf_*` / `gru_*` / `m2_*` 的耗时与 **`m2_peak_mib` 等**：对 Mamba2 路径为 **`torch.cuda.max_memory_allocated()` 在单次 reader 基准内的峰值增量**（与脚本 `benchmark_reader` 一致）；**不是** KV cache 分项、也**未**实现 §7.2 的 TF-R1（重算）/ TF-KV（截断）回溯实验。 |
+| **CSV 字段** | 每次运行记录 `tf_*` / `gru_*` / `m2_*` 的耗时与 **`m2_peak_mib` 等**：对 Mamba2 路径为 **`torch.cuda.max_memory_allocated()` 在单次 reader 基准内的峰值增量**（与脚本 `benchmark_reader` 一致）；**不是** KV cache 分项；§7.2 **TF-R1 / TF-KV** 的玩具测量在独立脚本 **`benchmark_tf_r1_path_segments.py`** / **`benchmark_tf_kv_path_segments.py`**，**未**并入本扫参 harness。 |
 | **naive vs fused** | 由环境是否可 import **`mamba_ssm` / `causal_conv1d`** 决定 HF 是否走融合内核；**同机**成对数据见 `EXPERIMENT_REGISTRY` **A-20260408-paper-main-3090-fused** / **-naive** / **-pair**，主图 `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`。 |
-| **尚未接线** | §7.1 **全 LM** 层状态与 SSGS 主循环对接；§7.2 **TF-KV**；§7.3 **三方回退表**（SSM restore vs TF-R1 vs TF-KV）— **玩具 TF-R1** 已见 `scripts/research/benchmark_tf_r1_path_segments.py`，登记待补；**不与**上述玩具扫参表混为一谈。 |
+| **尚未接线** | §7.1 **全 LM** 层状态与 SSGS 主循环对接；§7.3 **三方回退表**全文 — **玩具 TF-R1** 见 `benchmark_tf_r1_path_segments.py`（已登记）；**玩具 TF-KV** 见 `benchmark_tf_kv_path_segments.py`（增量 KV + 可选截断演示）；CUDA JSON 待登记；**不与**上述玩具扫参表混为一谈。 |
 
 ### 7.1 快照里装什么（Mamba / SSM reader）
 
@@ -122,6 +122,7 @@
 - **结构 / 试错顺序**：`ssgs.dfs_ssgs`（id 列表）；`ssgs.dfs_ssgs_tensor` + `TensorNavState`（**h∈ℝ^D** 上 `clone`/`copy_`，单测 `tests/test_ssgs.py`）。
 - **纯快照带宽下界**：`scripts/benchmarks/benchmark_ssgs_tensor_overhead.py`（导航 wall-clock + 50k 次 clone+restore 均摊）；固定配置 JSON 见 `EXPERIMENT_REGISTRY` **X-20260421-ssgs-tensor-overhead-fixed**。
 - **TF-R1（重算）与 S1 对齐的玩具协议**：`scripts/research/benchmark_tf_r1_path_segments.py` — 单路径、累积前缀、`TransformerPathReader` **仅前向**、无 KV；每边界输出 `forward_mean_ms` 与（CUDA）`peak_alloc_mib`。与 `benchmark_tree_walk` 中带 backward 的 `benchmark_reader` **不是**同一计时定义。
+- **TF-KV（截断 + 续写）玩具协议**：`scripts/research/benchmark_tf_kv_path_segments.py` — Pre-LN 因果 trunk、**每层 MHA 的 K/V 缓存**；与 S1 同单路径上报 `kv_cache_nbytes` 与「仅前向最后一节点 chunk」的 `increment_last_chunk_mean_ms`；`--branch-truncate-demo` 复现根下错子 chunk → `truncate_kv` → 兄弟 chunk（KV 字节与截断 ms）。
 - **真实 LM**：尚未接线；接线点后应新增独立 benchmark 与 registry id，避免与玩具 `benchmark_tree_walk` 混淆。
 
 ### 7.5 接线顺序（定稿：先做什么、后做什么）
@@ -131,7 +132,7 @@
 | S0 | 阶段 1 path reader 扫参 + **同机** naive/fused 峰值图 + Wikitext 同 harness | **已完成**（§7.0 / `FIGURE_CAPTIONS_STAGE1.md`） |
 | S1 | **SSM 快照对象**在代码中从玩具 `TensorNavState` 对齐到 **HF `Mamba2Model` 可导出状态**（或正文声明的等价张量） | **已完成（玩具协议）**：探针 + §7.1 表；**累积前缀 + clone cache**：`benchmark_mamba2_cache_snapshot_segments.py`；登记 **X-20260421-mamba2-cache-segments-{cpu,cuda}** |
 | S2 | **TF-R1**：同一棵树、固定试错序列下，实现「回退 → 从规定起点重算」的 wall-clock + 峰值 | **已完成（玩具协议）**：`benchmark_tf_r1_path_segments.py`；3090 JSON 与登记 **X-20260421-tf-r1-path-segments-cuda** |
-| S3 | **TF-KV**：同一协议下「截断子分支 KV → 续算兄弟分支」+ KV 字节统计 | **未做**（与 S2 **二选一为主表**，另一放附录） |
+| S3 | **TF-KV**：同一协议下「截断子分支 KV → 续算兄弟分支」+ KV 字节统计 | **进行中（玩具）**：`benchmark_tf_kv_path_segments.py`；线性路径 KV 增长 + 增量 chunk 耗时；可选错枝截断演示；3090 JSON 与 registry **待补** |
 | S4 | **SSM restore**：与 §7.3 一致，仅测 `clone`/`copy_` 或 `load_state` 的 **restore_wall_ms**（可与 S1 后真实张量尺寸一起报） | **部分**：玩具维度的微基准已有 JSON；真实层状态待 S1 |
 | S5 | 汇总表：**同等树深、同等试错次数** 下 SSM vs TF-R1 vs TF-KV（或两列 TF） | **未做** |
 
