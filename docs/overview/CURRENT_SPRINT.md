@@ -32,7 +32,7 @@
 - [x] **§7.5 接线路线图** + **SSGS 固定 JSON**：`RESEARCH_NOTES.md`；**X-20260421-ssgs-tensor-overhead-fixed**；`benchmark_ssgs_tensor_overhead.py --out-json`
 - [x] **3090 大叶数研究扫参**：`run_server_research_large_leaves.sh`，`TAG=research_lg_v1`；登记 **A-20260408-research-large-leaves-3090**
 - [x] **S1 分段 cache 基准**：`benchmark_mamba2_cache_snapshot_segments.py`；**X-20260421-mamba2-cache-segments-cpu** + **X-20260421-mamba2-cache-segments-cuda**（`results/metrics/mamba2_cache_snap_segments_depth4_cuda_20260421.json`）
-- [x] **S2 TF-R1 脚本（玩具路径，与 S1 对齐）**：`benchmark_tf_r1_path_segments.py`；默认 depth4 / chunk8 / dim128；**待**跑 JSON 并写入 `EXPERIMENT_REGISTRY`
+- [x] **S2 TF-R1（玩具路径，与 S1 对齐）**：`benchmark_tf_r1_path_segments.py`；**X-20260421-tf-r1-path-segments-cuda**（`results/metrics/tf_r1_path_segments_depth4_cuda_20260421.json`）
 
 ---
 
@@ -49,7 +49,7 @@
 |--------|------|----------|
 | P0 | **阶段 1 叙事收束** | **`docs/experiments/FIGURE_CAPTIONS_STAGE1.md`**（中英图注模板）；`RESEARCH_NOTES.md` **§7.0** |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT` 镜像；JSON 与登记见 **A-20260408-wikitext-3090-fused** |
-| P1 | **测量协议成文** | §7.1 + S1：**`benchmark_mamba2_cache_snapshot_segments.py`**（**X-20260421-mamba2-cache-segments-{cpu,cuda}**）；S2：**`benchmark_tf_r1_path_segments.py`**（TF-R1，跑后登记）；再后 **TF-KV**（S3）或 SSGS restore 数字汇总 |
+| P1 | **测量协议成文** | §7.1 + S1 **X-20260421-mamba2-cache-segments-{cpu,cuda}** + S2 **X-20260421-tf-r1-path-segments-cuda**；再后 **TF-KV**（S3）或 SSGS restore / §7.3 三方表汇总 |
 | P1 | **SSGS** | 固定配置 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；§7.5 接线路线图已写入 `RESEARCH_NOTES.md` |
 | P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
 | 延后 | **大叶数研究扫参** | （已完成）**A-20260408-research-large-leaves-3090**；扩展网格可另开新 TAG |

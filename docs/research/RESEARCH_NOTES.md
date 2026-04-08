@@ -130,7 +130,7 @@
 |------|------|---------------------------|
 | S0 | 阶段 1 path reader 扫参 + **同机** naive/fused 峰值图 + Wikitext 同 harness | **已完成**（§7.0 / `FIGURE_CAPTIONS_STAGE1.md`） |
 | S1 | **SSM 快照对象**在代码中从玩具 `TensorNavState` 对齐到 **HF `Mamba2Model` 可导出状态**（或正文声明的等价张量） | **已完成（玩具协议）**：探针 + §7.1 表；**累积前缀 + clone cache**：`benchmark_mamba2_cache_snapshot_segments.py`；登记 **X-20260421-mamba2-cache-segments-{cpu,cuda}** |
-| S2 | **TF-R1**：同一棵树、固定试错序列下，实现「回退 → 从规定起点重算」的 wall-clock + 峰值 | **进行中**：与 S1 同路径维度的 **仅前向** 脚本 `scripts/research/benchmark_tf_r1_path_segments.py`；跑 JSON 后另开 registry id |
+| S2 | **TF-R1**：同一棵树、固定试错序列下，实现「回退 → 从规定起点重算」的 wall-clock + 峰值 | **已完成（玩具协议）**：`benchmark_tf_r1_path_segments.py`；3090 JSON 与登记 **X-20260421-tf-r1-path-segments-cuda** |
 | S3 | **TF-KV**：同一协议下「截断子分支 KV → 续算兄弟分支」+ KV 字节统计 | **未做**（与 S2 **二选一为主表**，另一放附录） |
 | S4 | **SSM restore**：与 §7.3 一致，仅测 `clone`/`copy_` 或 `load_state` 的 **restore_wall_ms**（可与 S1 后真实张量尺寸一起报） | **部分**：玩具维度的微基准已有 JSON；真实层状态待 S1 |
 | S5 | 汇总表：**同等树深、同等试错次数** 下 SSM vs TF-R1 vs TF-KV（或两列 TF） | **未做** |
