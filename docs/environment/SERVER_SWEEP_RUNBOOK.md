@@ -208,3 +208,11 @@ python scripts/research/benchmark_mamba2_cache_snapshot_segments.py --device cud
 ```
 
 若 fused 在 **`batch=1`** 上仍触发 stride 报错，可先 **`--device cpu`** 或在正文声明该数为 CPU 协议参考；再迭代多路径 batch 化。
+
+**S2 / §7.2 TF-R1（与 S1 同树、累积前缀）**：`TransformerPathReader` 全序列前向，**无 KV**，测每边界 `forward_mean_ms` 与 CUDA `peak_alloc_mib`。
+
+```bash
+python scripts/research/benchmark_tf_r1_path_segments.py --device cuda \
+  --depth 4 --chunk-len 8 --dim 128 \
+  --out-json "$MAMBA2_RESULTS_ROOT/metrics/tf_r1_path_segments_depth4_cuda_$(date -u +%Y%m%dT%H%MZ).json"
+```
