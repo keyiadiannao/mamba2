@@ -1,4 +1,59 @@
-# 服务器上 `merge` / `pull`：untracked 将覆盖
+# 服务器上 `merge` / `pull` 失败
+
+文件名仍用 `GIT_SERVER_MERGE_UNTRACKED`；下面分两种常见报错。
+
+---
+
+## A. 「Please commit your changes or stash them before you merge」
+
+典型完整信息里还会有 **Your local changes to the following files would be overwritten by merge** 和一串已跟踪文件路径。
+
+含义：这些文件在服务器上 **已被修改或已暂存**，`pull` 要合并入站版本时会覆盖它们，Git 直接中止。**与 Windows 本地无关**，只看你 **服务器** 这个 clone 是否干净。
+
+### 先看状态（在仓库根目录）
+
+```bash
+cd /path/to/mamba2
+git status
+```
+
+若显示 `You have unmerged paths` 或正在进行 merge，先中止再处理：
+
+```bash
+git merge --abort 2>/dev/null || true
+```
+
+### 方案 1：不要服务器上的改动，只要和 GitHub 一致（最常见）
+
+**会丢弃工作区里所有未提交修改和未跟踪文件**（先备份 `results/metrics` 等）：
+
+```bash
+git fetch origin
+git reset --hard origin/master
+git clean -fd
+```
+
+然后再：
+
+```bash
+git pull origin master
+```
+
+（`reset --hard` 后通常已与 `origin/master` 一致，`pull` 可能只是 “Already up to date”。）
+
+### 方案 2：想暂时保留服务器上的修改
+
+```bash
+git stash push -u -m "server wip before pull"
+git pull origin master
+git stash pop   # 若有冲突再手动解决
+```
+
+`-u` 会把未跟踪文件也收进 stash，避免和入站文件再次冲突。
+
+---
+
+## B. 「untracked … would be overwritten by merge」
 
 若出现：
 
@@ -66,6 +121,7 @@ WARMUP=2 REPS=8 TAG=paper_main_v1 ./scripts/benchmarks/run_server_paper_main_swe
 
 ---
 
-## 不要用 `stash` 处理上述列表
+## `stash` 何时有用
 
-`git stash` 默认不解决「未跟踪与入站跟踪冲突」的典型情况；**`git clean -fd`** 或 **移走冲突路径** 才是正解。
+- **A 类**（已跟踪文件有修改）：`git stash -u` 再 `pull` 合适。
+- **B 类**（纯未跟踪挡路）：优先 **`git clean -fd`** 或移走目录；若你坚持用 stash，需要 **`git stash push -u`** 把未跟踪也收起来，否则仍会冲突。
