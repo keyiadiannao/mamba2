@@ -5,13 +5,13 @@
 ## 周期
 
 **开始**：2026-04-07  
-**目标结束**：2026-04-20（约两周）
+**当前滚动至**：2026-04-21 起（主文级 3090 数据已齐，迭代重点转向叙事收束与 Wikitext/§7 边界）
 
 ---
 
 ## 本迭代目标
 
-把阶段 1 从**纯合成树**推进到**可读的文本形树 + 同一 reader 基准槽位**，并准备好 **AutoDL** 上扩大扫参或安装 Mamba 的环境说明。
+把阶段 1 从**纯合成树**推进到**可读的文本形树 + 同一 reader 基准槽位**；**AutoDL** 上 **fused 主环境**与 **`mamba2_naive` 同机对照**已跑通（见 `EXPERIMENT_REGISTRY` **A-20260408-paper-main-3090-***）。
 
 ---
 
@@ -26,27 +26,27 @@
 - [x] （可选）**mamba-ssm**：AutoDL 已装；**同机 naive 对照**见 `run_server_paper_main_sweep_naive.sh` + `SERVER_SWEEP_RUNBOOK` §2c（`mamba2_naive` 克隆环境卸融合栈）
 - [x] **树路径三 reader**：`Mamba2PathReader` 接入 `benchmark_core` / `sweep` / `benchmark_text_tree`（默认开启，`--no-mamba2` 可关）
 - [x] **公开语料浅树**：Wikitext-2（HF `datasets`）→ `hf_corpus.wikitext2_leaf_chunks` → `scripts/benchmarks/benchmark_wikitext_tree.py`（与合成叶同一 reader 槽位）
+- [x] **3090 主文扫参（同机）**：`run_server_paper_main_sweep.sh`（fused）+ `run_server_paper_main_sweep_naive.sh`（`mamba2_naive`）；CSV 归档示例见本机 `results/metrics_result/`；图 `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`
 
 ---
 
 ## 阻塞项
 
-- **云端算力**：暂无空闲 AutoDL/服务器 → **融合内核扫参、大叶数、检索头训练** 顺延；见下文「无服务器阶段」优先事项。
+- **云端算力**：**按需开机**即可；主环境 **`conda activate mamba2`** 下 fused 已验证。**大叶数扫参、检索头训练**仍受机时与预算约束，非每日阻塞。
+- **仅本机 5060 时**：无法复现 3090 fused 数字；以登记册与图为准，不混填表格。
 
 ---
 
-## 无服务器阶段（优先事项，与讨论对齐）
-
-在只有 **本机 5060** 的前提下，仍与总目标一致：**树内同 harness、叙事上预留 SSGS / 检索头**，但不假装已有 48G 上的数字。
+## 优先事项（本机 + 云端）
 
 | 优先级 | 方向 | 可执行项 |
 |--------|------|----------|
-| P0 | **阶段 1 收束** | 本地扫参 CSV + **`scripts/benchmarks/plot_tree_reader_sweep.py`** 出图（例：`results/metrics/figures/sweep_readers_20260410_local5060.png`）；登记见 `EXPERIMENT_REGISTRY` |
-| P0 | **真实语料线** | 继续用 `scripts/benchmarks/benchmark_wikitext_tree.py`（及合成叶）巩固「非玩具文本 + 同 reader」；可选：把一次完整 JSON 结果贴进 `experiments/A-20260410-wikitext-shallow-tree/` |
-| P1 | **叙事与可检验命题** | `docs/research/RESEARCH_NOTES.md` **§7 测量协议草案**（Mamba 快照内容、TF-R1/TF-KV 基线、报表字段） |
-| P1 | **SSGS 最小原型** | `src/rag_tree/ssgs.py` + `TreeNode.state_snapshot` + `tests/test_ssgs.py`；**不接真实 LM** |
-| P2 | **检索头** | 读论文与接口草图；代码保持占位，等 GPU 再做探针 |
-| 延后 | **mamba-ssm 融合**、大叶数、`--max-leaves` 大网格 | **有服务器再开** |
+| P0 | **阶段 1 叙事收束** | 主文图注统一（3090、同 commit、WARMUP/REPS、naive vs fused 定义）；`RESEARCH_NOTES.md` **§7.0** 与阶段 1 边界已对齐 |
+| P0 | **真实语料线（云端）** | 在 AutoDL **`mamba2`** 再跑 `scripts/benchmarks/benchmark_wikitext_tree.py`，JSON + `EXPERIMENT_REGISTRY` 一行 |
+| P1 | **测量协议成文** | `RESEARCH_NOTES.md` **§7**：§7.1–7.3 定稿；**TF-R1 / TF-KV** 与真实 Mamba 状态接线前排期 |
+| P1 | **SSGS** | `ssgs.py` / `TensorNavState` / `benchmark_ssgs_tensor_overhead.py`；**不接真实 LM**；registry 补一条固定配置的 overhead JSON（若尚无） |
+| P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
+| 延后 | **大叶数、`--max-leaves` 大网格** | fused 环境、`sweep_tree_benchmark.py`；与主文网格区分 TAG |
 
 **讨论结论（写入此表的目的）**：主故事仍是 **`docs/overview/PROJECT_MASTER_PLAN.md` §1.1 树内 Mamba vs Transformer**；**状态快照 / SSGS** 作为协议层贡献，需 **公平基线下的曲线** 支撑，避免仅停留在类比。
 
@@ -55,3 +55,4 @@
 ## 上迭代归档（简述）
 
 - 环境 `mamba2`、cu128、玩具树基准、本地 preset 扫参 8 点 CSV。
+- **2026-04-08**：3090 `paper_main_v1` / `paper_main_naive_v1` 成对数据与同机三张 `mamba_3090_naive_vs_fused_*.png`（见 `EXPERIMENT_REGISTRY`）。

@@ -63,6 +63,17 @@
 
 ## 7. 测量协议草案（P1，可写进实验章节）
 
+### 7.0 阶段 1 已报告内容（与 §7.2–7.3 的边界）
+
+当前仓库中**已写入论文素材、且与下文「回溯协议」区分开**的部分如下：
+
+| 对象 | 说明 |
+|------|------|
+| **任务** | **平衡玩具树**上，对同一批根—叶路径批量跑三个 **path reader**：`TransformerPathReader`、`GRUPathReader`、`Mamba2PathReader`（HF `Mamba2Model` + `inputs_embeds`）。入口：`run_tree_reader_benchmark` / `sweep_tree_benchmark.py`；语料型树为 `benchmark_text_tree.py` / `benchmark_wikitext_tree.py`（同一 reader 槽位）。 |
+| **CSV 字段** | 每次运行记录 `tf_*` / `gru_*` / `m2_*` 的耗时与 **`m2_peak_mib` 等**：对 Mamba2 路径为 **`torch.cuda.max_memory_allocated()` 在单次 reader 基准内的峰值增量**（与脚本 `benchmark_reader` 一致）；**不是** KV cache 分项、也**未**实现 §7.2 的 TF-R1（重算）/ TF-KV（截断）回溯实验。 |
+| **naive vs fused** | 由环境是否可 import **`mamba_ssm` / `causal_conv1d`** 决定 HF 是否走融合内核；**同机**成对数据见 `EXPERIMENT_REGISTRY` **A-20260408-paper-main-3090-fused** / **-naive** / **-pair**，主图 `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`。 |
+| **尚未接线** | §7.1 的**真实层状态快照**、§7.2 的 **TF-R1/TF-KV**、§7.3 的**回退 wall-clock 三方表** — 需在 SSGS + 完整前向协议落地后单独开 benchmark 与 registry id，**不与**上述玩具扫参表混为一谈。 |
+
 ### 7.1 快照里装什么（Mamba / SSM reader）
 
 | 对象 | 说明 |
