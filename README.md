@@ -10,6 +10,7 @@
 - 阶段 1 验证规划与扫参说明：`docs/experiments/PHASE1_VALIDATION_PLAN.md`
 - 阶段 1 **成文稿**（可贴论文/报告）：`docs/experiments/PHASE1_MANUSCRIPT.md`；**指标归档目录**：`results/metrics_result/`
 - **总体规划与当前迭代**：`docs/overview/PROJECT_MASTER_PLAN.md`、`docs/overview/CURRENT_SPRINT.md`
+- **下一步研究展开**（阶段 2 / 检索头 / S5）：`docs/overview/NEXT_RESEARCH_PLAN.md`
 - 数据与样例：`docs/experiments/DATASETS.md`
 - AutoDL 环境步骤：`docs/environment/AUTODL_SETUP.md`
 
