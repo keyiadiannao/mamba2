@@ -100,5 +100,19 @@
 ### 7.4 与当前代码的映射
 
 - **结构 / 试错顺序**：`ssgs.dfs_ssgs`（id 列表）；`ssgs.dfs_ssgs_tensor` + `TensorNavState`（**h∈ℝ^D** 上 `clone`/`copy_`，单测 `tests/test_ssgs.py`）。
-- **纯快照带宽下界**：`scripts/benchmarks/benchmark_ssgs_tensor_overhead.py`（导航 wall-clock + 50k 次 clone+restore 均摊）。
+- **纯快照带宽下界**：`scripts/benchmarks/benchmark_ssgs_tensor_overhead.py`（导航 wall-clock + 50k 次 clone+restore 均摊）；固定配置 JSON 见 `EXPERIMENT_REGISTRY` **X-20260421-ssgs-tensor-overhead-fixed**。
 - **真实 LM**：尚未接线；接线点后应新增独立 benchmark 与 registry id，避免与玩具 `benchmark_tree_walk` 混淆。
+
+### 7.5 接线顺序（定稿：先做什么、后做什么）
+
+| 步骤 | 内容 | 状态（截至本仓库当前迭代） |
+|------|------|---------------------------|
+| S0 | 阶段 1 path reader 扫参 + **同机** naive/fused 峰值图 + Wikitext 同 harness | **已完成**（§7.0 / `FIGURE_CAPTIONS_STAGE1.md`） |
+| S1 | **SSM 快照对象**在代码中从玩具 `TensorNavState` 对齐到 **HF `Mamba2Model` 可导出状态**（或正文声明的等价张量） | **未做** |
+| S2 | **TF-R1**：同一棵树、固定试错序列下，实现「回退 → 从规定起点重算」的 wall-clock + 峰值 | **未做** |
+| S3 | **TF-KV**：同一协议下「截断子分支 KV → 续算兄弟分支」+ KV 字节统计 | **未做**（与 S2 **二选一为主表**，另一放附录） |
+| S4 | **SSM restore**：与 §7.3 一致，仅测 `clone`/`copy_` 或 `load_state` 的 **restore_wall_ms**（可与 S1 后真实张量尺寸一起报） | **部分**：玩具维度的微基准已有 JSON；真实层状态待 S1 |
+| S5 | 汇总表：**同等树深、同等试错次数** 下 SSM vs TF-R1 vs TF-KV（或两列 TF） | **未做** |
+
+**依赖关系**：S2/S3 依赖清晰的 **token 边界** 与 **路径枚举**（可与 `dfs_ssgs` 轨迹对齐）；S1 完成前，勿把玩具 `dim` 向量与「层状态字节数」混称为论文主表。
+

@@ -38,6 +38,7 @@ def main() -> int:
     p.add_argument("--dim", type=int, default=256)
     p.add_argument("--device", type=str, default="cuda")
     p.add_argument("--micro-iters", type=int, default=50_000, help="clone+restore loop count")
+    p.add_argument("--out-json", type=Path, default=None, help="also write the same JSON to this path")
     args = p.parse_args()
 
     dev = torch.device(args.device if args.device != "cuda" or torch.cuda.is_available() else "cpu")
@@ -86,7 +87,11 @@ def main() -> int:
             "per_clone_plus_restore_ms": round(per_pair_ms, 6),
         },
     }
-    print(json.dumps(out, indent=2))
+    text = json.dumps(out, indent=2)
+    print(text)
+    if args.out_json is not None:
+        args.out_json.parent.mkdir(parents=True, exist_ok=True)
+        args.out_json.write_text(text + "\n", encoding="utf-8")
     return 0 if ok else 1
 
 

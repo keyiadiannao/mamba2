@@ -13,7 +13,7 @@
 | | `merge_sweep_csv.py` | 多机 CSV 合并 |
 | | `plot_tree_reader_sweep.py` | 扫参 CSV → 延迟/显存图（需 `matplotlib`） |
 | | `plot_mamba_naive_vs_fused.py` | 两份 CSV 叠 Mamba2 `m2_peak_mib`（跨机仅示意） |
-| | `benchmark_ssgs_tensor_overhead.py` | SSGS 张量快照/恢复微基准（无 LM） |
+| | `benchmark_ssgs_tensor_overhead.py` | SSGS 张量快照/恢复微基准（无 LM）；`--out-json` 写登记用 JSON |
 | **[data/](data/)** | `prepare_leaves_from_corpus.py` | 从目录生成叶文本文件 |
 | **[sync/](sync/)** | `sync_example.ps1`, `sync_example.sh` | 双机同步命令模板 |
 | **Linux** | `benchmarks/run_server_sweep_aligned.sh` | 服务器 fused 对齐扫参（与本地 CSV 键对齐） |

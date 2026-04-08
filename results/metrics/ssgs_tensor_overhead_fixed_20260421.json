@@ -1,0 +1,19 @@
+{
+  "device": "cpu",
+  "depth": 4,
+  "fanout": 2,
+  "chunk_len": 8,
+  "dim": 256,
+  "nav_ok": true,
+  "nav_wall_s": 0.011859,
+  "trace": {
+    "snapshots_taken": 15,
+    "rollbacks": 26,
+    "leaf_checks": 16
+  },
+  "micro_clone_restore": {
+    "iters": 50000,
+    "total_s": 0.119077,
+    "per_clone_plus_restore_ms": 0.002382
+  }
+}
