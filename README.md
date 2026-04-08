@@ -22,7 +22,7 @@ cd d:\cursor_try\mamba2
 python scripts\smoke\smoke_local.py
 ```
 
-未激活时可直接使用：`C:\Users\26433\miniconda3\envs\mamba2\python.exe scripts\smoke\smoke_local.py`
+未激活时可直接使用（路径请按本机 conda 安装位置修改）：`…\miniconda3\envs\mamba2\python.exe scripts\smoke\smoke_local.py`（示例见 `environment/MAMBA2.md`）
 
 **不要用** base 里自带的 `+cpu` torch 跑 GPU；5060 也不要装 `cu126` 稳定包（会缺 sm_120 内核），请用 `cu128` 轮子（见 `environment/MAMBA2.md`）。
 

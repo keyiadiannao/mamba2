@@ -6,7 +6,7 @@
 
 ## 当前周期（请每次更新日期范围）
 
-**周期**：2026-04-07 — 2026-04-13
+**周期（滚动）**：以 **`docs/overview/CURRENT_SPRINT.md`** 为准（截至登记：阶段 1 主数据、§7 协议与 **SSGS×Mamba** 已齐）；本表保留早期周历作归档。
 
 | 状态 | 任务 | 机器 | 产出 |
 |------|------|------|------|
@@ -15,7 +15,7 @@
 | ☑ | Smoke：`scripts/smoke/smoke_local.py` | 5060 | registry `X-20260407-smoke-local` |
 | ☑ | 阶段 1 入口：玩具树 + Reader 对比脚本骨架 | 本地 | `experiments/A-20260407-toy-tree-reader-bench`、`scripts/benchmarks/benchmark_tree_walk.py` |
 
-**本周阻塞**：_
+**本周阻塞**：见 **CURRENT_SPRINT**「阻塞项」。
 
 ---
 

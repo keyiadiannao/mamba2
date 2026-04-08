@@ -25,7 +25,10 @@ def main() -> int:
     try:
         import torch
     except ImportError:
-        print("ERROR: PyTorch not installed. Example: pip install torch --index-url https://download.pytorch.org/whl/cu124")
+        print(
+            "ERROR: PyTorch not installed. RTX 5060 (sm_120): pip install torch --index-url "
+            "https://download.pytorch.org/whl/cu128 (see environment/MAMBA2.md)"
+        )
         return 1
 
     print(f"torch={torch.__version__}")
