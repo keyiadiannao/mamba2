@@ -31,6 +31,7 @@
 - [x] **主文图注模板**：`docs/experiments/FIGURE_CAPTIONS_STAGE1.md`
 - [x] **§7.5 接线路线图** + **SSGS 固定 JSON**：`RESEARCH_NOTES.md`；**X-20260421-ssgs-tensor-overhead-fixed**；`benchmark_ssgs_tensor_overhead.py --out-json`
 - [x] **3090 大叶数研究扫参**：`run_server_research_large_leaves.sh`，`TAG=research_lg_v1`；登记 **A-20260408-research-large-leaves-3090**
+- [x] **S1 分段 cache 基准**：`benchmark_mamba2_cache_snapshot_segments.py`；CPU 样例 **X-20260421-mamba2-cache-segments-cpu**；3090 `cuda` 待登记
 
 ---
 
