@@ -89,6 +89,14 @@ python scripts\research\demo_tree_lm_nav_greedy.py --eval-all-leaves --out-json 
 
 登记 **X-20260423-tree-lm-nav-greedy**（`tree_lm_nav_greedy_default8_{cpu,cuda}.json` 指标一致）。终端若出现 **`UNEXPECTED` / `loss_type=None`** 来自 Transformers 加载 **tiny-gpt2**，可忽略。**非**训练好的策略。
 
+**目标叶条件、可学习子指针**（与上行对照：需指定 **哪片叶** 为导航目标，**非**盲 CE-argmin）：
+
+```powershell
+python scripts\research\demo_tree_lm_nav_learned.py --cpu --epochs 250 --eval-all-leaves --out-json results\metrics\tree_lm_nav_learned_default8_cpu.json
+```
+
+登记 **X-20260424-tree-lm-nav-learned**；默认 8 叶上 **reach_rate** 高于 **X-20260423**（见 `EXPERIMENT_REGISTRY` 与 `RESEARCH_NOTES` §7.4）。
+
 ## 单测（SSGS 草稿）
 
 ```powershell
