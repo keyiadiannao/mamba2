@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -35,6 +36,20 @@ from src.rag_tree.tree_lm_closure import (
 )
 
 # 与 ``benchmark_text_tree.py`` 默认叶一致（``scripts`` 非包，避免跨目录 import）
+def _git_short_sha(repo: Path) -> str:
+    try:
+        out = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=repo,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        return out.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "unknown"
+
+
 _DEFAULT_LEAF_LINES = [
     "RAG combines retrieval with generation.",
     "Tree RAG uses hierarchical summaries.",
@@ -60,7 +75,12 @@ def main() -> int:
     p.add_argument("--path-index", type=int, default=0, help="对第几条根—叶路径做续写（0-based）")
     p.add_argument("--train-one-step", action="store_true", help="对全部路径文档平均 CE 做一次 optimizer.step")
     p.add_argument("--lr", type=float, default=3e-4)
-    p.add_argument("--out-json", type=str, default="", help="可选：写入本次指标 JSON")
+    p.add_argument(
+        "--out-json",
+        type=str,
+        default="",
+        help="可选：写入本次指标 JSON（含当前仓库 git short SHA）",
+    )
     args = p.parse_args()
 
     try:
@@ -154,6 +174,7 @@ def main() -> int:
             out_path = _REPO_ROOT / out_path
         payload = {
             "kind": "tree_lm_minimal_demo",
+            "git_sha": _git_short_sha(_REPO_ROOT),
             "model": args.model,
             "device": str(dev),
             "num_paths": len(documents),

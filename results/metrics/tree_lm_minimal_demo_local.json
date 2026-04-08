@@ -1,0 +1,23 @@
+{
+  "kind": "tree_lm_minimal_demo",
+  "git_sha": "82eacf7",
+  "model": "sshleifer/tiny-gpt2",
+  "device": "cpu",
+  "num_paths": 8,
+  "mean_nll_loss": 10.826079368591309,
+  "per_path_nll_loss": [
+    10.824605941772461,
+    10.824563980102539,
+    10.82556438446045,
+    10.825977325439453,
+    10.826982498168945,
+    10.826982498168945,
+    10.826982498168945,
+    10.826982498168945
+  ],
+  "generate_path_index": 0,
+  "continuation_preview": "RAG combines retrieval with generation.\nTree RAG uses hierarchical summaries.\nMamba uses a recurrent state for long sequences.\nTransformers use quadratic attention in length.\n状态空间模型压缩历史为固定维度。\n检索头预测是否需要查外部知识。\n实验在5060与AutoDL上分工运行。\n复现依赖Git与环境锁定文件。\n\nRAG combines retrieval with generation.\nTree RAG uses hierarchical summaries.\nMamba uses a recurrent state for long sequences.\nTransformers use quadratic attention in length.\n\nRAG combines retrieval with generation.\nTree RAG uses hierarchical summaries.\n",
+  "train_one_step": false,
+  "train_one_step_mean_loss": null,
+  "mean_nll_loss_after": null
+}

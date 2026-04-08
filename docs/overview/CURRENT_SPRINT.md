@@ -39,7 +39,7 @@
 - [x] **叙事**：`FIGURE_CAPTIONS_STAGE1.md` 附录表注（中英）界定主图 vs §7.3.1
 - [x] **P0 中文摘要**：主图 path-batch vs §7 玩具协议 vs SSGS 导航三线边界（`FIGURE_CAPTIONS_STAGE1.md` 篇首 + `RESEARCH_NOTES` §7.0）
 - [x] **SSGS × Mamba**：`MambaNavState` / `dfs_ssgs_mamba` / `mamba_cache_utils.py`；`demo_ssgs_mamba_dfs.py`（`--out-json`）；`tests/test_ssgs_mamba.py`（默认网格 **events** 与登记 JSON 对齐）；登记 **X-20260421-ssgs-mamba-dfs-demo**
-- [x] **真 LM 最小闭环（骨架）**：`src/rag_tree/tree_lm_closure.py` + `scripts/research/demo_tree_lm_minimal.py`（路径文本 → CE + 续写 + 可选一步训练）；下一步：**导航任务指标** + **EXPERIMENT_REGISTRY** 登记
+- [x] **真 LM 最小闭环（骨架）**：`src/rag_tree/tree_lm_closure.py` + `scripts/research/demo_tree_lm_minimal.py`（路径文本 → CE + 续写 + 可选一步训练；`--out-json` 写 **`git_sha`**）；登记 **X-20260422-tree-lm-minimal**；下一步：**导航任务指标**
 
 ---
 
@@ -56,7 +56,7 @@
 |--------|------|----------|
 | P0 | **阶段 1 叙事收束** | **`FIGURE_CAPTIONS_STAGE1.md`**（篇首 **P0 叙事边界（中文摘要）** + 中英图注/表注）；`RESEARCH_NOTES.md` **§7.0** 段首同主题摘要 |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT` 镜像；JSON 与登记见 **A-20260408-wikitext-3090-fused** |
-| P1 | **测量协议成文** | S1–S4 已登记；**§7.3.1** 对照表 + **`run_path_protocol_cuda.sh`** 复跑；**真 LM**：`demo_tree_lm_minimal.py`（路径文档 × 因果 LM）；下一跳：**任务指标** + **registry**，或与 **SSGS** 组合实验设计 |
+| P1 | **测量协议成文** | S1–S4 已登记；**§7.3.1** 对照表 + **`run_path_protocol_cuda.sh`** 复跑；**真 LM**：**X-20260422-tree-lm-minimal**（`demo_tree_lm_minimal.py`）；下一跳：**树上导航任务指标**，或与 **SSGS** 组合实验设计 |
 | P1 | **SSGS** | 张量玩具 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；**Mamba `DynamicCache` DFS**：`dfs_ssgs_mamba` + `demo_ssgs_mamba_dfs.py --out-json`（**X-20260421-ssgs-mamba-dfs-demo**，见 `RESEARCH_NOTES` §6 / §7.4） |
 | P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
 | 延后 | **大叶数研究扫参** | （已完成）**A-20260408-research-large-leaves-3090**；扩展网格可另开新 TAG |
