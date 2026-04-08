@@ -82,6 +82,17 @@
 | **实现依赖** | HuggingFace `Mamba2Model`：需从 `outputs` / 内部 cache 钩出与 **步进边界** 对齐的状态；若 API 不暴露，则记录「等价物」（例如 block 输入输出拼接前的 hidden）并在正文声明。 |
 | **消融** | 仅根快照 / 每层决策点快照 / 全节点快照 —— 三档报告 **bytes/节点** 与 **回退延迟**。 |
 
+**已观测（HF + `Mamba2Model`，`use_cache=True`，Transformers 与仓库脚本一致）**  
+命令：`scripts/research/probe_mamba2_outputs.py --use-cache --dump-cache`（CUDA fused 上建议带默认 batch≥8）。
+
+- 前向输出除 `last_hidden_state` 外有 **`cache_params`：`DynamicCache`**，按层为 **`LinearAttentionLayer`**。
+- 每层暴露的张量字段（**名称以当前 transformers 为准**）示例：
+  - **`conv_states`**：如形状 `(B, 288, 4)`（与卷积状态维有关，随配置变）。
+  - **`recurrent_states`**：如形状 `(B, 8, 32, 16)`（与 `num_heads`、头维、`state_size` 等相关）。
+- **快照候选**：至少可对上述 tensor **逐 `clone().detach()`** 计入 **bytes**；是否与 SSM 论文中的「层状态」一一对应，需在正文中**显式声明**并与逐步前向边界对齐（§7.5 S1）。
+
+> 形状随 **`batch`、`seq`、`hidden`、`num_heads`、`head_dim`、`state_size`** 变化；论文表应以**登记实验**一次 `probe --dump-cache` 日志或固定配置 JSON 为准。
+
 ### 7.2 Transformer 对照基线（必须固定其一，勿混用）
 
 | 基线代号 | 做法 | 测量的量 |
@@ -108,7 +119,7 @@
 | 步骤 | 内容 | 状态（截至本仓库当前迭代） |
 |------|------|---------------------------|
 | S0 | 阶段 1 path reader 扫参 + **同机** naive/fused 峰值图 + Wikitext 同 harness | **已完成**（§7.0 / `FIGURE_CAPTIONS_STAGE1.md`） |
-| S1 | **SSM 快照对象**在代码中从玩具 `TensorNavState` 对齐到 **HF `Mamba2Model` 可导出状态**（或正文声明的等价张量） | **未做**；先做探针：`scripts/research/probe_mamba2_outputs.py`（`--use-cache` 可看 `cache_params` / DynamicCache） |
+| S1 | **SSM 快照对象**在代码中从玩具 `TensorNavState` 对齐到 **HF `Mamba2Model` 可导出状态**（或正文声明的等价张量） | **进行中**：探针已跑通（3090 fused）；**§7.1** 已记 `DynamicCache` / `LinearAttentionLayer` 的 `conv_states`、`recurrent_states`；下一步：**树导航边界上调用 forward 片段并 clone 上述张量** + 报 bytes |
 | S2 | **TF-R1**：同一棵树、固定试错序列下，实现「回退 → 从规定起点重算」的 wall-clock + 峰值 | **未做** |
 | S3 | **TF-KV**：同一协议下「截断子分支 KV → 续算兄弟分支」+ KV 字节统计 | **未做**（与 S2 **二选一为主表**，另一放附录） |
 | S4 | **SSM restore**：与 §7.3 一致，仅测 `clone`/`copy_` 或 `load_state` 的 **restore_wall_ms**（可与 S1 后真实张量尺寸一起报） | **部分**：玩具维度的微基准已有 JSON；真实层状态待 S1 |

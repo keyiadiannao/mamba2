@@ -14,6 +14,7 @@ path batch — both are valid probes of the same HF module family.
 
   python scripts/research/probe_mamba2_outputs.py
   python scripts/research/probe_mamba2_outputs.py --device cuda --use-cache
+  python scripts/research/probe_mamba2_outputs.py --device cuda --use-cache --dump-cache
 """
 from __future__ import annotations
 
@@ -29,6 +30,58 @@ if str(_REPO_ROOT) not in sys.path:
 import torch
 
 
+def _describe_tensors(obj: object, prefix: str = "", max_depth: int = 4) -> None:
+    """Best-effort walk for cache / layer objects (versions may differ)."""
+    if max_depth <= 0:
+        return
+    if torch.is_tensor(obj):
+        print(f"{prefix}Tensor shape={tuple(obj.shape)} dtype={obj.dtype} device={obj.device}", flush=True)
+        return
+    if isinstance(obj, (list, tuple)):
+        for i, item in enumerate(obj):
+            _describe_tensors(item, f"{prefix}[{i}].", max_depth - 1)
+        return
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            _describe_tensors(v, f"{prefix}{k}.", max_depth - 1)
+        return
+    if obj is None:
+        return
+    layers = getattr(obj, "layers", None)
+    if isinstance(layers, (list, tuple)) and layers:
+        print(f"{prefix}layers: len={len(layers)}", flush=True)
+        for i, layer in enumerate(layers):
+            print(f"{prefix}  [{i}] type={type(layer).__name__}", flush=True)
+            _describe_layer_tensors(layer, f"{prefix}    ")
+        return
+    # generic shallow attrs
+    for name in dir(obj):
+        if name.startswith("_"):
+            continue
+        try:
+            v = getattr(obj, name)
+        except Exception:
+            continue
+        if callable(v):
+            continue
+        if torch.is_tensor(v):
+            print(f"{prefix}{name}: Tensor shape={tuple(v.shape)} dtype={v.dtype}", flush=True)
+
+
+def _describe_layer_tensors(layer: object, indent: str) -> None:
+    for name in dir(layer):
+        if name.startswith("_"):
+            continue
+        try:
+            v = getattr(layer, name)
+        except Exception:
+            continue
+        if callable(v):
+            continue
+        if torch.is_tensor(v):
+            print(f"{indent}{name}: Tensor shape={tuple(v.shape)} dtype={v.dtype}", flush=True)
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--device", type=str, default="cuda")
@@ -37,6 +90,11 @@ def main() -> int:
     p.add_argument("--hidden", type=int, default=128)
     p.add_argument("--layers", type=int, default=2)
     p.add_argument("--use-cache", action="store_true", help="call with use_cache=True (if supported)")
+    p.add_argument(
+        "--dump-cache",
+        action="store_true",
+        help="after forward with --use-cache, print cache_params layer tensors (shapes)",
+    )
     args = p.parse_args()
 
     dev = torch.device(
@@ -96,6 +154,14 @@ def main() -> int:
                 print(f"  {k}: Tensor shape={tuple(v.shape)} dtype={v.dtype}", flush=True)
             else:
                 print(f"  {k}: {type(v).__name__} {repr(v)[:200]}", flush=True)
+
+    if args.dump_cache and args.use_cache:
+        cp = getattr(out, "cache_params", None) or getattr(out, "past_key_values", None)
+        if cp is None:
+            print("# dump-cache: no cache_params / past_key_values on output", flush=True)
+        else:
+            print("--- dump-cache ---", flush=True)
+            _describe_tensors(cp, prefix="cache: ")
 
     return 0
 

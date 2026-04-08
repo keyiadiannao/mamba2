@@ -190,6 +190,7 @@ WARMUP=2 REPS=5 TAG=research_lg_v1 ./scripts/benchmarks/run_server_research_larg
 ```bash
 python scripts/research/probe_mamba2_outputs.py --device cuda
 python scripts/research/probe_mamba2_outputs.py --device cuda --use-cache
+python scripts/research/probe_mamba2_outputs.py --device cuda --use-cache --dump-cache
 ```
 
 用于确认 **`last_hidden_state`**、**`cache_params` / DynamicCache** 等字段，再决定快照从何处 `clone`（见 `RESEARCH_NOTES` §7.1）。**不是**正式基准，无需登记；日志可贴进实验笔记或 PR 描述。

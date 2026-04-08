@@ -47,7 +47,7 @@
 |--------|------|----------|
 | P0 | **阶段 1 叙事收束** | **`docs/experiments/FIGURE_CAPTIONS_STAGE1.md`**（中英图注模板）；`RESEARCH_NOTES.md` **§7.0** |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT` 镜像；JSON 与登记见 **A-20260408-wikitext-3090-fused** |
-| P1 | **测量协议成文** | `RESEARCH_NOTES.md` **§7**：§7.1–7.3 定稿；**TF-R1 / TF-KV** 与真实 Mamba 状态接线前排期 |
+| P1 | **测量协议成文** | §7.1 已记 **probe + DynamicCache** 张量（**X-20260408-probe-mamba2-3090-fused**）；下一：**树边界上 clone 状态 + bytes**；再后 **TF-R1 或 TF-KV** |
 | P1 | **SSGS** | 固定配置 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；§7.5 接线路线图已写入 `RESEARCH_NOTES.md` |
 | P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
 | 延后 | **大叶数研究扫参** | （已完成）**A-20260408-research-large-leaves-3090**；扩展网格可另开新 TAG |
