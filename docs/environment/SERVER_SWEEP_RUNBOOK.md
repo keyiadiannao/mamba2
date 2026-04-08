@@ -3,6 +3,8 @@
 > 目标：在 **Linux + `mamba_ssm` 融合栈** 上复跑与本地 **HF naive** 相同或可对键合并的网格，生成 **naive vs fused** 主文级对照数据。  
 > 前置安装见 **`MAMBA_SSM_INSTALL_LINUX.md`**。
 
+若执行任何 `.sh` 时出现 **`/usr/bin/env: 'bash\r': No such file or directory`**：脚本为 **Windows CRLF**，Linux 把解释器当成 `bash\r`。**专文与修复命令**见 **`SH_CRLF_LINUX.md`**（勿与「未安装 bash」混淆）。
+
 ---
 
 ## 1. 更新代码
