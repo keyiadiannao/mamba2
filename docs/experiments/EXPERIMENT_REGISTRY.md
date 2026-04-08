@@ -28,6 +28,7 @@
 | A-20260408-paper-main-3090-pair | 2026-04-08 | AutoDL / RTX 3090 | `6fa7873` | A | **同机** naive vs fused 主文对照（与上行两行同一轮数据） | `plot_mamba_naive_vs_fused.py` → `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`（各 8/12/6 个重合格点） | 主文硬对照：同 GPU、同 commit、同计时设定；实现路径致 **m2_peak** 量级差（例 dim128 最重格 ~GiB vs ~10²MiB） |
 | A-20260408-wikitext-3090-fused | 2026-04-08 | AutoDL / RTX 3090 | `e9ac3e2+` | A | Wikitext-2 叶块浅树 + 同 harness（fused）；Hub 不可直连时用镜像 | `benchmark_wikitext_tree.py --num-leaves 8 --fanout 2 --warmup 3 --reps 10`；`HF_ENDPOINT=https://hf-mirror.com` 或 `MAMBA2_USE_HF_MIRROR=1`（见 `AUTODL_SETUP` §2b） | JSON：`results/metrics_result/benchmark_wikitext_3090_fused_20260408T0846Z.json`；8 叶 d3、f2、c8、dim128：**mamba2 peak_alloc_mib** ≈53；与 5060 `A-20260410-wikitext-shallow-tree` 同脚本不同机 |
 | X-20260421-ssgs-tensor-overhead-fixed | 2026-04-21 | 5060 / `mamba2` env，**CPU**（`--device cpu`，可复现） | `e40e8a1+` | X | SSGS 玩具张量：`dfs_ssgs_tensor` 导航 + 50k 次 clone/restore 均摊 | `benchmark_ssgs_tensor_overhead.py --depth 4 --fanout 2 --chunk-len 8 --dim 256 --micro-iters 50000 --device cpu --out-json results/metrics/ssgs_tensor_overhead_fixed_20260421.json` | JSON：`results/metrics/ssgs_tensor_overhead_fixed_20260421.json`（例：`per_clone_plus_restore_ms`≈0.0024）；**非**真实 Mamba 状态；CUDA 上可同参复跑对比 |
+| A-20260408-research-large-leaves-3090 | 2026-04-08 | AutoDL / RTX 3090 | `6fa7873` | A | 研究扫参：depth **6–7**（**128 叶**）× chunk 4/8；dim128+dim256；fused | `run_server_research_large_leaves.sh`，`TAG=research_lg_v1`，`WARMUP=2` `REPS=5` | CSV + manifest：`results/metrics_result/sweep_research_large_leaves_{dim128,dim256}_research_lg_v1.csv`、`sweep_research_large_leaves_manifest_research_lg_v1.txt`；例 dim128 d7c8 **m2_peak_mib**≈316；dim256 d7c8≈348 |
 
 ---
 
@@ -44,4 +45,4 @@
 | 优先级 | id | 说明 |
 |--------|-----|------|
 | P0 | — | （已完成）同机 paper_main：见登记表 **A-20260408-paper-main-3090-*** |
-| P1 | A-research-large-leaves-3090 | 云端跑 `run_server_research_large_leaves.sh`，回填 CSV/manifest 路径与 TAG |
+| P1 | — | （已完成）大叶数研究扫参：**A-20260408-research-large-leaves-3090** |

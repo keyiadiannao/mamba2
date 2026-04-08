@@ -193,3 +193,5 @@ python scripts/research/probe_mamba2_outputs.py --device cuda --use-cache
 ```
 
 用于确认 **`last_hidden_state`**、**`cache_params` / DynamicCache** 等字段，再决定快照从何处 `clone`（见 `RESEARCH_NOTES` §7.1）。**不是**正式基准，无需登记；日志可贴进实验笔记或 PR 描述。
+
+若报 **`causal_conv1d ... strides ... multiples of 8`**：多为 **fused 核在小 batch / 少 head** 上的限制。探针脚本已对 **CUDA+fused** 自动把 **`batch` 提到 ≥8**，并把 **`num_heads` 优先设为 8**（`head_dim=32`）；仍失败时可试 **`--batch 16`** 或 **`--seq 32`**（8 的倍数）。

@@ -30,12 +30,13 @@
 - [x] **3090 Wikitext 浅树（fused + 镜像）**：`benchmark_wikitext_tree.py`；`results/metrics_result/benchmark_wikitext_3090_fused_20260408T0846Z.json`；登记 **A-20260408-wikitext-3090-fused**
 - [x] **主文图注模板**：`docs/experiments/FIGURE_CAPTIONS_STAGE1.md`
 - [x] **§7.5 接线路线图** + **SSGS 固定 JSON**：`RESEARCH_NOTES.md`；**X-20260421-ssgs-tensor-overhead-fixed**；`benchmark_ssgs_tensor_overhead.py --out-json`
+- [x] **3090 大叶数研究扫参**：`run_server_research_large_leaves.sh`，`TAG=research_lg_v1`；登记 **A-20260408-research-large-leaves-3090**
 
 ---
 
 ## 阻塞项
 
-- **云端算力**：**按需开机**即可；主环境 **`conda activate mamba2`** 下 fused 已验证。**大叶数扫参、检索头训练**仍受机时与预算约束，非每日阻塞。
+- **云端算力**：**按需开机**即可；主环境 **`conda activate mamba2`** 下 fused 已验证。**检索头训练**等仍受机时与预算约束，非每日阻塞。
 - **仅本机 5060 时**：无法复现 3090 fused 数字；以登记册与图为准，不混填表格。
 
 ---
@@ -49,7 +50,7 @@
 | P1 | **测量协议成文** | `RESEARCH_NOTES.md` **§7**：§7.1–7.3 定稿；**TF-R1 / TF-KV** 与真实 Mamba 状态接线前排期 |
 | P1 | **SSGS** | 固定配置 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；§7.5 接线路线图已写入 `RESEARCH_NOTES.md` |
 | P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
-| 延后 | **大叶数研究扫参** | **`run_server_research_large_leaves.sh`** + `SERVER_SWEEP_RUNBOOK` §7a；`TAG=research_lg_v1`；完成后登记 `EXPERIMENT_REGISTRY` |
+| 延后 | **大叶数研究扫参** | （已完成）**A-20260408-research-large-leaves-3090**；扩展网格可另开新 TAG |
 
 **讨论结论（写入此表的目的）**：主故事仍是 **`docs/overview/PROJECT_MASTER_PLAN.md` §1.1 树内 Mamba vs Transformer**；**状态快照 / SSGS** 作为协议层贡献，需 **公平基线下的曲线** 支撑，避免仅停留在类比。
 

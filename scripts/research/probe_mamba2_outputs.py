@@ -7,6 +7,11 @@ and cache-related fields. With ``--use-cache``, HF may attach ``cache_params`` (
 ``DynamicCache``). Without ``mamba_ssm``, expect a one-time stderr warning about
 the fast path; fused env on AutoDL should show ``mamba_ssm True``.
 
+**Note:** On **CUDA + fused**, this script uses **8 heads** (``head_dim=32`` for
+``hidden=128``) and at least **batch 8** to avoid ``causal_conv1d`` stride errors
+with tiny batches; ``Mamba2PathReader`` in benchmarks may use 4 heads but larger
+path batch — both are valid probes of the same HF module family.
+
   python scripts/research/probe_mamba2_outputs.py
   python scripts/research/probe_mamba2_outputs.py --device cuda --use-cache
 """
@@ -28,7 +33,7 @@ def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--device", type=str, default="cuda")
     p.add_argument("--batch", type=int, default=1)
-    p.add_argument("--seq", type=int, default=16)
+    p.add_argument("--seq", type=int, default=32, help="seq len; fused CUDA often needs multiple of 8")
     p.add_argument("--hidden", type=int, default=128)
     p.add_argument("--layers", type=int, default=2)
     p.add_argument("--use-cache", action="store_true", help="call with use_cache=True (if supported)")
@@ -42,9 +47,14 @@ def main() -> int:
 
     from transformers import Mamba2Config, Mamba2Model
 
-    expand, head_dim = 2, 64
+    expand = 2
     inner = args.hidden * expand
+    # Fused causal_conv1d on CUDA is picky about layout; prefer num_heads >= 8 (see state-spaces/mamba#643).
+    head_dim = 32
     num_heads = inner // head_dim
+    if inner % head_dim != 0:
+        head_dim = 64
+        num_heads = inner // head_dim
     cfg = Mamba2Config(
         num_hidden_layers=args.layers,
         hidden_size=args.hidden,
@@ -58,9 +68,21 @@ def main() -> int:
     )
     model = Mamba2Model(cfg).to(dev)
     model.eval()
-    x = torch.randn(args.batch, args.seq, args.hidden, device=dev)
+
+    batch = args.batch
+    if dev.type == "cuda" and has_ssm and batch < 8:
+        print(
+            "# note: batch bumped to 8 for fused causal_conv1d (batch=1 can hit stride error); "
+            "use --batch 8 or larger explicitly.",
+            file=sys.stderr,
+            flush=True,
+        )
+        batch = 8
+
+    x = torch.randn(batch, args.seq, args.hidden, device=dev, dtype=torch.float32).contiguous()
 
     print("device", dev, "mamba_ssm", has_ssm, "causal_conv1d", has_cc, flush=True)
+    print("batch", batch, "seq", args.seq, "hidden", args.hidden, "num_heads", num_heads, "head_dim", head_dim, flush=True)
     with torch.no_grad():
         out = model(inputs_embeds=x, use_cache=args.use_cache, return_dict=True)
 
