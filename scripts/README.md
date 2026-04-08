@@ -16,7 +16,8 @@
 | | `benchmark_ssgs_tensor_overhead.py` | SSGS 张量快照/恢复微基准（无 LM） |
 | **[data/](data/)** | `prepare_leaves_from_corpus.py` | 从目录生成叶文本文件 |
 | **[sync/](sync/)** | `sync_example.ps1`, `sync_example.sh` | 双机同步命令模板 |
-| **Linux** | `benchmarks/run_server_sweep_aligned.sh` | 服务器上 fused 对齐扫参（见 `docs/environment/SERVER_SWEEP_RUNBOOK.md`） |
+| **Linux** | `benchmarks/run_server_sweep_aligned.sh` | 服务器 fused 对齐扫参（与本地 CSV 键对齐） |
+| **Linux** | `benchmarks/run_server_paper_main_sweep.sh` | **同机主文扫参**（统一 `WARMUP`/`REPS` + manifest） |
 
 示例：
 

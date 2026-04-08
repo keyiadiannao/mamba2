@@ -56,6 +56,24 @@ mkdir -p "$MAMBA2_RESULTS_ROOT/metrics"
 TAG=adl1 ./scripts/benchmarks/run_server_sweep_aligned.sh
 ```
 
+### 2b. 同机主文扫参（统一 `WARMUP` / `REPS`，审稿友好）
+
+用于论文 **Figure 1 候选**：整段会话内 **固定** `warmup` 与 `reps`，产出 `paper_main_*_${TAG}.csv` 与 **`paper_main_manifest_${TAG}.txt`**（含 `git_sha`、torch、是否加载 `mamba_ssm`）。
+
+```bash
+git pull origin master
+source /root/miniconda3/etc/profile.d/conda.sh && conda activate mamba2
+chmod +x scripts/benchmarks/run_server_paper_main_sweep.sh
+# 可选：sed -i 's/\r$//' scripts/benchmarks/run_server_paper_main_sweep.sh
+
+export MAMBA2_RESULTS_ROOT=/root/autodl-tmp/mamba2_results   # 可选
+WARMUP=2 REPS=8 TAG=paper_main_v1 ./scripts/benchmarks/run_server_paper_main_sweep.sh
+```
+
+生成三份 CSV：**dim256×12 点**、**dim128 preset local 8 点**、**dim384×6 点**（网格与本地 extended 对齐，但 **reps 与本地历史 CSV 可能不同**，以本脚本为准写主文）。
+
+**同机 HF naive 对照**：当前脚本在 **已装 `mamba_ssm`** 的环境下跑的是 **fused** 路径。若需 **同一台机器** 再出 naive 曲线，需另建 **无 `mamba_ssm` 的 conda 环境**，用相同 `TAG`、`WARMUP`、`REPS` 手跑上述三条 `sweep_tree_benchmark` 命令（或后续再加 `run_server_paper_main_sweep_naive.sh`）。
+
 ---
 
 ## 3. 拉回本机合并 / 出图
