@@ -1,6 +1,6 @@
 {
   "kind": "tree_lm_nav_learned_eval",
-  "git_sha": "66b7bba",
+  "git_sha": "1913c27",
   "model": "sshleifer/tiny-gpt2",
   "device": "cpu",
   "goal_conditioned": true,
