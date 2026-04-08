@@ -5,7 +5,7 @@
 ## 周期
 
 **开始**：2026-04-07  
-**当前滚动至**：**2026-04-09** 起 — **回归主线**（见下「决策记录」）；辅线 **X-20260422–25** 已收口归档。
+**当前滚动至**：**2026-04-09** 起 — **阶段 1 已收束**；**下一阶段**见 **`NEXT_RESEARCH_PLAN.md`**（阶段 2 + 检索头 B + 成文/S5）。
 
 ---
 
@@ -66,7 +66,7 @@
 
 - [x] **成文**：**`docs/experiments/PHASE1_MANUSCRIPT.md`**（摘要—方法—结果—§7 关系—**`results/metrics_result/`** 索引—结论文本—英文摘要）；正文可整节迁移或按需截取 **§6** 与 **`FIGURE_CAPTIONS_STAGE1.md`** 句稿。  
 - [x] **指标归档**：主文 CSV、Wikitext JSON、§7 复跑 `*_20260408T1617Z.json`、大叶数扫参等已集中于 **`results/metrics_result/`**（本机 `D:\cursor_try\mamba2\results\metrics_result`），并已纳入 **Git** 与 **§6.5** 表。  
-- [ ] **阶段 2 开工**：在 **EXPERIMENT_REGISTRY** 新增占位行（如 **A-20260410-stage2-wikitext-smoke**）；跑 **`benchmark_wikitext_tree.py`** 小网格（`num_leaves≤16`）→ 一条 CSV/JSON。  
+- [ ] **阶段 2 开工**：按 **`NEXT_RESEARCH_PLAN.md` §2** — **A2-S0** 登记占位 + **A2-S1** `benchmark_wikitext_tree.py` smoke（stdout 重定向至 **`results/metrics_result/`**，见该文档 **§2.4**）。  
 - [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
 
 ### 文档与代码检查纪要（2026-04-09）
@@ -99,7 +99,7 @@
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT`；**A-20260408-wikitext-3090-fused** — 主线引用时标明 **与合成树同一 harness** |
 | P1 | **主线：§7 协议** | **复跑已通过**（见 sprint §7 勾选 + **`PHASE1_COMPLETE_SUMMARY` 附录 B**）；正文仍须与主图 **分列声明**（§7.3.1） |
 | P1 | **SSGS（协议层）** | **X-20260421-*** 张量 + **`dfs_ssgs_mamba`** demo；**不等于** 真 LM 导航线 |
-| P2 | **阶段 2 预备** | 浅层真数据树 + 同一 reader 槽位（`PROJECT_MASTER_PLAN` 阶段 2）；依赖 **A** 流水线稳定 |
+| P2 | **阶段 2 执行** | **`NEXT_RESEARCH_PLAN.md`** 轨道 **A**（A2-S0→S4）；Wikitext smoke → 小网格 → **+1 任务指标** |
 | P2 | **检索头 B** | 探针与层/头报告（与主线并行，需 **48G** 窗口） |
 | 延后 | **真 LM 支线 B** | **X-20260424** 子头加强、**X-20260425** wall-clock；**非**阶段 1 unblock |
 | 延后 | **大叶数扩展** | **A-20260408-research-large-leaves-3090** 已归档；新网格另开 **TAG** |

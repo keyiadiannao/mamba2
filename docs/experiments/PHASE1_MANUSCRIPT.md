@@ -71,8 +71,15 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 ---
 
+## 8. 下一阶段（指针）
+
+**展开任务清单**：**`docs/overview/NEXT_RESEARCH_PLAN.md`**（阶段 2 真语料浅树 + 任务指标、检索头 B、S5/成文）。
+
+---
+
 ## 修订记录
 
 | 日期 | 说明 |
 |------|------|
 | 2026-04-09 | 初稿：与 `CURRENT_SPRINT` 主线收束、`metrics_result` 归档同步 |
+| 2026-04-09 | 增加 §8 指向 **`NEXT_RESEARCH_PLAN.md`** |
