@@ -1,0 +1,59 @@
+{
+  "kind": "mamba2_cache_restore_segments",
+  "baseline": "SSM-restore",
+  "git_sha": "6fa7873",
+  "device": "cuda",
+  "snapshot_device": "cpu",
+  "tree_depth_param": 4,
+  "path_nodes": 5,
+  "chunk_len": 8,
+  "dim": 128,
+  "mamba_layers": 2,
+  "num_heads": 8,
+  "head_dim": 32,
+  "warmup": 3,
+  "reps": 20,
+  "per_segment": [
+    {
+      "segment_index": 0,
+      "nodes_on_path": 5,
+      "seq_len": 8,
+      "restore_nbytes": 41984,
+      "restore_wall_ms": 0.129526,
+      "peak_alloc_mib": 25.1167
+    },
+    {
+      "segment_index": 1,
+      "nodes_on_path": 5,
+      "seq_len": 16,
+      "restore_nbytes": 41984,
+      "restore_wall_ms": 0.169553,
+      "peak_alloc_mib": 25.1245
+    },
+    {
+      "segment_index": 2,
+      "nodes_on_path": 5,
+      "seq_len": 24,
+      "restore_nbytes": 41984,
+      "restore_wall_ms": 0.138946,
+      "peak_alloc_mib": 25.1323
+    },
+    {
+      "segment_index": 3,
+      "nodes_on_path": 5,
+      "seq_len": 32,
+      "restore_nbytes": 41984,
+      "restore_wall_ms": 0.133392,
+      "peak_alloc_mib": 25.1401
+    },
+    {
+      "segment_index": 4,
+      "nodes_on_path": 5,
+      "seq_len": 40,
+      "restore_nbytes": 41984,
+      "restore_wall_ms": 0.129553,
+      "peak_alloc_mib": 25.1479
+    }
+  ],
+  "note": "After S1-style cumulative forward, snapshot = clone(conv_states, recurrent_states); each trial: zero live cache then copy_ snapshot back. §7.3 restore_wall_ms (no re-encode). snapshot-device cpu includes H2D in copy_ path."
+}

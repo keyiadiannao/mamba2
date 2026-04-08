@@ -34,7 +34,7 @@
 - [x] **S1 分段 cache 基准**：`benchmark_mamba2_cache_snapshot_segments.py`；**X-20260421-mamba2-cache-segments-cpu** + **X-20260421-mamba2-cache-segments-cuda**（`results/metrics/mamba2_cache_snap_segments_depth4_cuda_20260421.json`）
 - [x] **S2 TF-R1（玩具路径，与 S1 对齐）**：`benchmark_tf_r1_path_segments.py`；**X-20260421-tf-r1-path-segments-cuda**（`results/metrics/tf_r1_path_segments_depth4_cuda_20260421.json`）
 - [x] **S3 TF-KV**：`benchmark_tf_kv_path_segments.py`；**X-20260421-tf-kv-path-segments-cuda**（`tf_kv_path_segments_depth4_cuda_20260421.json` + **`tf_kv_path_segments_depth4_cuda_branchdemo_20260421.json`**）
-- [x] **S4 SSM restore 脚本**：`benchmark_mamba2_cache_restore_segments.py`（`--snapshot-device same|cpu`）；**待**3090 JSON 与 `EXPERIMENT_REGISTRY`
+- [x] **S4 SSM restore**：`benchmark_mamba2_cache_restore_segments.py`；**X-20260421-mamba2-cache-restore-cuda**（`mamba2_cache_restore_depth4_cuda_same_20260421.json` + **`mamba2_cache_restore_depth4_cuda_fromcpu_20260421.json`**）
 
 ---
 
@@ -51,7 +51,7 @@
 |--------|------|----------|
 | P0 | **阶段 1 叙事收束** | **`docs/experiments/FIGURE_CAPTIONS_STAGE1.md`**（中英图注模板）；`RESEARCH_NOTES.md` **§7.0** |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT` 镜像；JSON 与登记见 **A-20260408-wikitext-3090-fused** |
-| P1 | **测量协议成文** | §7.1 + S1/S2/S3 已登记；**S4** `benchmark_mamba2_cache_restore_segments.py` 跑 CUDA（`same` + 可选 `cpu` 快照）后登记；§7.3 四方指标表（clone / restore / TF-R1 / TF-KV） |
+| P1 | **测量协议成文** | S1–S4 已登记；**RESEARCH_NOTES §7.3.1** 玩具 3090 对照表；后续可收束叙事 / 真 LM 接线 |
 | P1 | **SSGS** | 固定配置 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；§7.5 接线路线图已写入 `RESEARCH_NOTES.md` |
 | P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
 | 延后 | **大叶数研究扫参** | （已完成）**A-20260408-research-large-leaves-3090**；扩展网格可另开新 TAG |
