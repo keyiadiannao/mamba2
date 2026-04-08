@@ -55,3 +55,17 @@
 上述三张 naive/fused 图与 Wikitext 说明仍只服务 **单遍前向 path-batch** 峰值显存与计时。
 
 **玩具级回溯协议**（HF Mamba `DynamicCache` + 手写 TF-KV trunk）已单独跑数并登记 **EXPERIMENT_REGISTRY `X-20260421-*`**；**每边界毫秒对照表**见 **`RESEARCH_NOTES.md` §7.3.1**，原始 JSON 见 `results/metrics/*_20260421.json`。复跑：`bash scripts/research/run_path_protocol_cuda.sh`。正文若引用，请标明 **toy / 非全 LLM KV** 与 §7.0 边界。
+
+---
+
+## 附录表（非主图）：§7.3.1 玩具回溯协议对照
+
+**放哪里**：建议 **附录** 或 **补充材料**；**不要**与 naive/fused 主图并列为 Figure 1 的并列子图，以免读者误以为同一实验 harness。
+
+**英文图注（表注，长）**
+
+> **Auxiliary toy protocol (not the path-batch reader sweep).** Per-tree-boundary timings on a **single root-to-leaf synthetic path** (`depth=4`, `chunk_len=8`, `dim=128`, `fanout=2`), **RTX 3090**, **commit `6fa7873`**. **S1** `clone_wall_ms`: clone HF `Mamba2Model` `DynamicCache` (`conv_states` + `recurrent_states`) after a **full-prefix** forward (`batch=1`). **S4** `restore_wall_ms`: `zero_` live cache then `copy_` from snapshot (**same** GPU vs **CPU-resident** snapshot). **S2** `forward_mean_ms`: one **full** `TransformerPathReader` forward on the cumulative prefix (**TF-R1**, no KV). **S3** `increment_last_chunk_mean_ms`: **incremental** causal Transformer with **MHA KV cache** (**TF-KV** toy trunk, not the path-reader module). Metrics are **not interchangeable** (different operations per column). Source JSON: `results/metrics/*_20260421.json`; registry ids **X-20260421-***; reproducibility: `scripts/research/run_path_protocol_cuda.sh`. **SSGS navigation** with real Mamba cache is implemented separately (`MambaNavState` / `dfs_ssgs_mamba`, token-wise forward); see `RESEARCH_NOTES` §6–§7.4.
+
+**中文表注（长）**
+
+> **附录级玩具协议（与主文 path-batch 扫参非同一 harness）。** 在**单条**合成根—叶路径上（`depth=4`，`chunk_len=8`，`dim=128`），**RTX 3090**，**`6fa7873`**。**S1** 列为 HF `Mamba2Model` 在**累积前缀**整段前向后的 **`DynamicCache` clone** 耗时；**S4** 列为对活动 cache 做 **`zero_`+`copy_` 还原**（快照在 GPU 或 CPU）；**S2** 为 **TF-R1**（整段 Transformer 前向、无 KV）；**S3** 为 **TF-KV** 玩具 trunk 上**仅新 chunk** 的增量前向。各列**物理含义不同**，不可当作同一「一步」互减。**SSGS** 与 Mamba 真 cache 的接线路径为 **`dfs_ssgs_mamba`**（按 **token** 前向，见 `RESEARCH_NOTES` §6）。数据 JSON：`results/metrics/*_20260421.json`；登记 **X-20260421-***；复跑：`run_path_protocol_cuda.sh`。

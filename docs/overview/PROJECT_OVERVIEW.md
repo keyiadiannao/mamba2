@@ -17,7 +17,7 @@
 | **A** | Mamba-RAPTOR / 树状 RAG 框架 | 流水线代码、树构建与遍历、基线对比 | `src/rag_tree/`, `experiments/A-*` |
 | **B** | 检索头：发现与分析 | 探针、可视化、与层/头的关联 | `src/retrieval_head/`, `experiments/B-*` |
 | **C** | 检索头：轻量注入与训练 | 模块、训练脚本、消融 | `src/retrieval_head/`, `experiments/C-*` |
-| **X** | 横切：回溯/快照/评测协议 | 工具与统一指标 | `src/utils/`, `experiments/X-*` |
+| **X** | 横切：回溯/快照/评测协议 | 工具与统一指标；**SSGS**（含 **`MambaNavState` / `dfs_ssgs_mamba`**）与 §7 玩具 JSON | `src/rag_tree/ssgs.py`, `src/rag_tree/mamba_cache_utils.py`, `experiments/X-*` |
 
 **验证实验优先顺序（建议）**
 

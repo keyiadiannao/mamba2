@@ -1,11 +1,13 @@
 """
 State-Snapshot Guided Search (SSGS) — 最小草稿。
 
-不依赖 mamba-ssm：
-
 - ``dfs_ssgs``：用路径上节点 id 列表模拟离散状态。
-- ``TensorNavState`` + ``dfs_ssgs_tensor``：用 **真实 torch 向量 h** 做快照/恢复；
-  每读一节点将 ``embedding`` 沿序列维均值累加到 h（占位式「一步更新」），便于测 **clone / copy_** 成本。
+- ``TensorNavState`` + ``dfs_ssgs_tensor``：用 **真实 torch 向量 h** 做快照/恢复（占位更新）。
+- ``MambaNavState`` + ``dfs_ssgs_mamba``：用 **HF ``Mamba2Model`` + ``DynamicCache``**；每节点按 **token**
+  增量前向（``seq_len=1``），以兼容 **CUDA fused** 在 ``has_previous_state`` 下对 chunk 的限制；快照为
+  ``conv_states``/``recurrent_states`` 的 **clone**，恢复为 **zero_ + copy_**（与 §7 S4 同语义）。
+
+不依赖 ``mamba-ssm`` 亦可跑（HF naive）；融合栈下仍走 token 步进。
 """
 
 from __future__ import annotations
@@ -15,6 +17,12 @@ from typing import Any, Callable, List, Optional, Tuple
 
 import torch
 
+from .mamba_cache_utils import (
+    clone_mamba_dynamic_cache,
+    restore_mamba_dynamic_cache,
+    snapshot_list_nbytes,
+    zero_mamba_dynamic_cache,
+)
 from .tree import TreeNode
 
 
@@ -112,6 +120,135 @@ class TensorNavState:
 
 def mount_tensor_snapshot_on_tree(node: TreeNode, checkpoint: torch.Tensor) -> None:
     node.state_snapshot = checkpoint.detach().clone()
+
+
+def build_toy_mamba2_for_ssgs(
+    dim: int,
+    device: torch.device,
+    *,
+    num_layers: int = 2,
+) -> Any:
+    """与 ``benchmark_mamba2_cache_snapshot_segments`` 默认宽度一致的小 ``Mamba2Model``（``use_cache=True``）。"""
+    from transformers import Mamba2Config, Mamba2Model
+
+    expand = 2
+    inner = dim * expand
+    head_dim = 32
+    num_heads = inner // head_dim
+    if inner % head_dim != 0:
+        head_dim = 64
+        num_heads = inner // head_dim
+    cfg = Mamba2Config(
+        num_hidden_layers=num_layers,
+        hidden_size=dim,
+        state_size=16,
+        vocab_size=32000,
+        num_heads=num_heads,
+        head_dim=head_dim,
+        expand=expand,
+        n_groups=1,
+        use_cache=True,
+    )
+    model = Mamba2Model(cfg).to(device)
+    model.eval()
+    return model
+
+
+@dataclass
+class MambaNavState:
+    """
+    导航态 = HF ``Mamba2Model`` 的 ``cache_params``（``DynamicCache``）。
+    ``absorb_node``：对节点 ``embedding [L,D]`` 按 **单 token** 前向，避免 fused CUDA 在多 token 续写 cache 上的限制。
+    """
+
+    model: Any
+    _cache: Any = None
+
+    def absorb_node(self, node: TreeNode) -> None:
+        dev = next(self.model.parameters()).device
+        emb = node.embedding.unsqueeze(0).to(dev)
+        with torch.no_grad():
+            for ti in range(emb.shape[1]):
+                tok = emb[:, ti : ti + 1, :]
+                out = self.model(
+                    inputs_embeds=tok,
+                    cache_params=self._cache,
+                    use_cache=True,
+                    return_dict=True,
+                )
+                self._cache = out.cache_params
+
+    def snapshot(self) -> Optional[List[dict[str, torch.Tensor]]]:
+        if self._cache is None:
+            return None
+        return clone_mamba_dynamic_cache(self._cache)
+
+    def restore(self, snap: Optional[List[dict[str, torch.Tensor]]]) -> None:
+        if snap is None:
+            self._cache = None
+            return
+        if self._cache is None:
+            raise RuntimeError("MambaNavState.restore: cannot apply non-None snapshot when live cache is None")
+        dev = next(self.model.parameters()).device
+        zero_mamba_dynamic_cache(self._cache)
+        restore_mamba_dynamic_cache(self._cache, snap, snapshot_on_cpu=False, device=dev)
+
+
+def mount_mamba_cache_meta_on_tree(node: TreeNode, checkpoint: Optional[List[dict[str, torch.Tensor]]]) -> None:
+    """将快照元数据挂到 ``node.state_snapshot``（避免整份张量挂在树上占内存）。"""
+    if checkpoint is None:
+        node.state_snapshot = None
+    else:
+        node.state_snapshot = {
+            "kind": "mamba_dynamic_cache",
+            "snapshot_nbytes": snapshot_list_nbytes(checkpoint),
+        }
+
+
+def dfs_ssgs_mamba(
+    node: TreeNode,
+    state: MambaNavState,
+    *,
+    leaf_goal: Callable[[TreeNode], bool],
+    trace: Optional[SSGSTrace] = None,
+    mount_snapshot: Optional[Callable[[TreeNode, Optional[List[dict[str, torch.Tensor]]]], None]] = None,
+) -> bool:
+    """
+    与 ``dfs_ssgs_tensor`` 同序 DFS；内部节点在子树前 ``snapshot``，试兄弟前 ``restore``。
+    要求 ``transformers`` 提供 ``Mamba2Model``。
+    """
+    state.absorb_node(node)
+    t = trace
+    if t:
+        t.events.append("mamba_visit")
+
+    if node.is_leaf():
+        if t:
+            t.leaf_checks += 1
+        ok = leaf_goal(node)
+        if t:
+            t.events.append(f"leaf_ok:{ok}")
+        return ok
+
+    checkpoint = state.snapshot()
+    if checkpoint is None:
+        raise RuntimeError("dfs_ssgs_mamba: expected non-None cache after absorbing an internal node")
+    if mount_snapshot is not None:
+        mount_snapshot(node, checkpoint)
+    if t:
+        t.snapshots_taken += 1
+
+    for ch in node.children:
+        state.restore(checkpoint)
+        if t:
+            t.events.append("mamba_try_child")
+        if dfs_ssgs_mamba(ch, state, leaf_goal=leaf_goal, trace=t, mount_snapshot=mount_snapshot):
+            return True
+        if t:
+            t.rollbacks += 1
+            t.events.append("mamba_rollback")
+
+    return False
 
 
 def dfs_ssgs_tensor(

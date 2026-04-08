@@ -21,6 +21,7 @@
 | | `benchmark_tf_r1_path_segments.py` | §7.5 S2 / §7.2 **TF-R1**：同路径设定下 `TransformerPathReader` **仅前向**、无 KV；每边界 `forward_mean_ms` + CUDA `peak_alloc_mib` |
 | | `benchmark_tf_kv_path_segments.py` | §7.5 S3 / §7.2 **TF-KV**：Pre-LN 因果 trunk + MHA KV cache；`kv_cache_nbytes`、`increment_last_chunk_mean_ms`；可选 `--branch-truncate-demo` |
 | | `benchmark_mamba2_cache_restore_segments.py` | §7.5 S4 / §7.3 **SSM restore**：S1 同款 cache 上 `zero_`→`copy_` 快照；`restore_wall_ms`；`--snapshot-device cpu` 含 H2D |
+| | `demo_ssgs_mamba_dfs.py` | **SSGS × Mamba**：`dfs_ssgs_mamba` 玩具树 DFS（最右叶）；`MambaNavState` + token 前向 |
 | **Linux** | `research/run_path_protocol_cuda.sh` | §7 玩具 S1–S4 串行 CUDA 复跑 → `metrics/`（见 `RESEARCH_NOTES` §7.3.1） |
 | **Linux** | `benchmarks/run_server_sweep_aligned.sh` | 服务器 fused 对齐扫参（与本地 CSV 键对齐） |
 | **Linux** | `benchmarks/run_server_paper_main_sweep.sh` | **同机主文扫参 fused**（统一 `WARMUP`/`REPS` + manifest） |

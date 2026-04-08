@@ -56,8 +56,9 @@
 
 ## 6. 与仓库现状的关系
 
-- 当前 **`Mamba2PathReader` + `benchmark_*`**：验证 **单路径 / 批路径**上的延迟与显存；**SSGS 最小草稿**见 `src/rag_tree/ssgs.py`（假状态 DFS + `TreeNode.state_snapshot` 挂载钩子），单测 `tests/test_ssgs.py`。
-- **下一步工程**：把 `dfs_ssgs` 的「状态」从 `list[id]` 换成 **真实 Mamba 层状态 clone**；与 Transformer **重算基线**对拍计时，再写入 `docs/experiments/EXPERIMENT_REGISTRY.md`。
+- 当前 **`Mamba2PathReader` + `benchmark_*`**：验证 **单路径 / 批路径**上的延迟与显存。
+- **SSGS**：`src/rag_tree/ssgs.py` — `dfs_ssgs`（id 状态）、`dfs_ssgs_tensor`（占位向量 h）、**`MambaNavState` + `dfs_ssgs_mamba`**（HF **`Mamba2Model` + `DynamicCache`**，按 **token** 前向 + **clone / zero_ / copy_** 快照，与 §7 S1/S4 同张量族）；单测 `tests/test_ssgs.py`、`tests/test_ssgs_mamba.py`；演示 `scripts/research/demo_ssgs_mamba_dfs.py`。
+- **仍非「全 LM」**：未接生成头、长上下文任务 loss；回溯玩具数见 §7.3.1 与 **X-20260421-***。
 
 ---
 
@@ -72,7 +73,7 @@
 | **任务** | **平衡玩具树**上，对同一批根—叶路径批量跑三个 **path reader**：`TransformerPathReader`、`GRUPathReader`、`Mamba2PathReader`（HF `Mamba2Model` + `inputs_embeds`）。入口：`run_tree_reader_benchmark` / `sweep_tree_benchmark.py`；语料型树为 `benchmark_text_tree.py` / `benchmark_wikitext_tree.py`（同一 reader 槽位）。 |
 | **CSV 字段** | 每次运行记录 `tf_*` / `gru_*` / `m2_*` 的耗时与 **`m2_peak_mib` 等**：对 Mamba2 路径为 **`torch.cuda.max_memory_allocated()` 在单次 reader 基准内的峰值增量**（与脚本 `benchmark_reader` 一致）；**不是** KV cache 分项；§7.2 **TF-R1 / TF-KV** 的玩具测量在独立脚本 **`benchmark_tf_r1_path_segments.py`** / **`benchmark_tf_kv_path_segments.py`**，**未**并入本扫参 harness。 |
 | **naive vs fused** | 由环境是否可 import **`mamba_ssm` / `causal_conv1d`** 决定 HF 是否走融合内核；**同机**成对数据见 `EXPERIMENT_REGISTRY` **A-20260408-paper-main-3090-fused** / **-naive** / **-pair**，主图 `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`。 |
-| **尚未接线** | §7.1 **全 LM** 层状态与 SSGS 主循环对接；§7.3 **三方回退表**全文（玩具数字已分脚本：S1/S2/S3 均见 `EXPERIMENT_REGISTRY` **X-20260421-***）；**不与**上述玩具扫参 CSV harness 混为一谈。 |
+| **尚未接线** | **全规模 LLM**（生成、任务指标）与树上导航闭环；§7.3 玩具 **S1–S4** 已分脚本登记 **X-20260421-***（含 S4 restore）；**SSGS** 已可跑 **Mamba `DynamicCache`** 版 DFS（见 §6）。**不与** path-batch 扫参 CSV harness 混为一谈。 |
 
 ### 7.1 快照里装什么（Mamba / SSM reader）
 
@@ -142,6 +143,7 @@
 - **TF-R1（重算）与 S1 对齐的玩具协议**：`scripts/research/benchmark_tf_r1_path_segments.py` — 单路径、累积前缀、`TransformerPathReader` **仅前向**、无 KV；每边界输出 `forward_mean_ms` 与（CUDA）`peak_alloc_mib`。与 `benchmark_tree_walk` 中带 backward 的 `benchmark_reader` **不是**同一计时定义。
 - **TF-KV（截断 + 续写）玩具协议**：`scripts/research/benchmark_tf_kv_path_segments.py` — Pre-LN 因果 trunk、**每层 MHA 的 K/V 缓存**；与 S1 同单路径上报 `kv_cache_nbytes` 与「仅前向最后一节点 chunk」的 `increment_last_chunk_mean_ms`；`--branch-truncate-demo` 复现根下错子 chunk → `truncate_kv` → 兄弟 chunk（KV 字节与截断 ms）。
 - **SSM restore（§7.3）**：`scripts/research/benchmark_mamba2_cache_restore_segments.py` — S1 同款累积前向得到 `DynamicCache` 后，`clone` 快照；每 rep：`zero_` 活动张量再 `copy_` 还原；`restore_wall_ms`；`--snapshot-device cpu` 时含 CPU→GPU。
+- **SSGS × Mamba（导航环）**：`src/rag_tree/ssgs.py` 中 **`MambaNavState` / `dfs_ssgs_mamba` / `build_toy_mamba2_for_ssgs`**；`src/rag_tree/mamba_cache_utils.py` 提供 cache **clone/restore**；与 path reader **不同**：此处为 **DFS 试错序** + **token 步进**（非单次 `inputs_embeds` 整段）。
 - **真实 LM**：尚未接线；接线点后应新增独立 benchmark 与 registry id，避免与玩具 `benchmark_tree_walk` 混淆。
 
 ### 7.5 接线顺序（定稿：先做什么、后做什么）
@@ -153,7 +155,7 @@
 | S2 | **TF-R1**：同一棵树、固定试错序列下，实现「回退 → 从规定起点重算」的 wall-clock + 峰值 | **已完成（玩具协议）**：`benchmark_tf_r1_path_segments.py`；3090 JSON 与登记 **X-20260421-tf-r1-path-segments-cuda** |
 | S3 | **TF-KV**：同一协议下「截断子分支 KV → 续算兄弟分支」+ KV 字节统计 | **已完成（玩具协议）**：`benchmark_tf_kv_path_segments.py`；登记 **X-20260421-tf-kv-path-segments-cuda**；JSON：`tf_kv_path_segments_depth4_cuda_20260421.json` + **`tf_kv_path_segments_depth4_cuda_branchdemo_20260421.json`**（`branch_truncate_demo` / 截断 ms） |
 | S4 | **SSM restore**：与 §7.3 一致，仅测 `clone`/`copy_` 或 `load_state` 的 **restore_wall_ms**（可与 S1 后真实张量尺寸一起报） | **已完成（玩具协议）**：`benchmark_mamba2_cache_restore_segments.py`；登记 **X-20260421-mamba2-cache-restore-cuda**（same + fromcpu 两 JSON） |
-| S5 | 汇总表：**同等树深、同等试错次数** 下 SSM vs TF-R1 vs TF-KV（或两列 TF） | **部分**：§7.3.1 每边界 ms 表 + 各 JSON；正文叙事与真 LM 仍待收束 |
+| S5 | 汇总表：**同等树深、同等试错次数** 下 SSM vs TF-R1 vs TF-KV（或两列 TF） | **部分**：§7.3.1 表 + JSON；**导航环**已接 **`dfs_ssgs_mamba`**（与 path-batch 表仍非同一实验）；真 LM / 任务指标待收束 |
 
 **依赖关系**：S2/S3 依赖清晰的 **token 边界** 与 **路径枚举**（可与 `dfs_ssgs` 轨迹对齐）；S1 完成前，勿把玩具 `dim` 向量与「层状态字节数」混称为论文主表。
 

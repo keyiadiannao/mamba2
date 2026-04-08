@@ -228,6 +228,13 @@ python scripts/research/benchmark_tf_kv_path_segments.py --device cuda --branch-
   --out-json "$MAMBA2_RESULTS_ROOT/metrics/tf_kv_path_segments_depth4_cuda_branchdemo_$(date -u +%Y%m%dT%H%MZ).json"
 ```
 
+**SSGS × Mamba（DFS 演示，CPU/CUDA）**：
+
+```bash
+python scripts/research/demo_ssgs_mamba_dfs.py --device cpu
+python scripts/research/demo_ssgs_mamba_dfs.py --device cuda
+```
+
 **一键复跑 S1–S4（CUDA）**（时间戳文件名写入 ``metrics/``；未设 ``MAMBA2_RESULTS_ROOT`` 时用仓库内 ``results/metrics/``）：
 
 ```bash
