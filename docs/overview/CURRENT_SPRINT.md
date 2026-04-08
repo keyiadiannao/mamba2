@@ -1,5 +1,6 @@
 # 当前迭代（滚动）
 
+> **方向与现状总览**（读后再勾选）：**`RESEARCH_STATUS_AND_DIRECTION.md`**。  
 > 每 1–2 周更新一次「周期」与勾选；完成后把结论一行写入 `docs/experiments/EXPERIMENT_REGISTRY.md`。
 
 ## 周期

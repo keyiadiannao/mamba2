@@ -54,6 +54,7 @@
 | 2026-04-09 | **决策**：真 LM 导航 **X-20260422–25** 登记与 CUDA 对比 JSON 收口；**回归主线**（path-batch + §7）；**B（子头加强）** 延后 — 见 **CURRENT_SPRINT**「决策记录」与「后续研究方向」 |
 | 2026-04-09 | **主线执行**：`PHASE1_VALIDATION_PLAN.md` **§6.5** 主文登记↔CSV↔图审计；**ROADMAP** 增加 **阶段 2 入口（一页）** |
 | 2026-04-09 | **`NEXT_RESEARCH_PLAN.md`**：阶段 2 / 检索头 B / 成文与 S5 **展开** |
+| 2026-04-09 | **`RESEARCH_STATUS_AND_DIRECTION.md`**：现状、四条轴、决策原则与 **推荐执行顺序**（统领 `NEXT_RESEARCH_PLAN`） |
 | 2026-04-08 | **§7 串行复跑**：AutoDL `run_path_protocol_cuda.sh` 全量通过；数值与 **§7.3.1** / `*_20260421.json` 同阶（见 **`PHASE1_COMPLETE_SUMMARY` 附录 B**） |
 | 2026-04-07 | 阶段 1 玩具树 + Transformer/GRU 微基准脚本；`requirements-mamba2-lock.txt` |
 | 2026-04-07 | `docs/experiments/PHASE1_VALIDATION_PLAN.md`；`scripts/benchmarks/sweep_tree_benchmark.py`；本地 preset 扫参 CSV |

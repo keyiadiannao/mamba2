@@ -73,7 +73,8 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 ## 8. 下一阶段（指针）
 
-**展开任务清单**：**`docs/overview/NEXT_RESEARCH_PLAN.md`**（阶段 2 真语料浅树 + 任务指标、检索头 B、S5/成文）。
+1. **总览（先读）**：**`docs/overview/RESEARCH_STATUS_AND_DIRECTION.md`** — 现状、整体方向、决策规则、**推荐执行顺序**。  
+2. **任务展开**：**`docs/overview/NEXT_RESEARCH_PLAN.md`** — 里程碑 A2-S0…、B-S1…、命令与风险。
 
 ---
 
