@@ -49,6 +49,8 @@ python scripts/smoke/smoke_mamba_minimal.py
 python scripts/benchmarks/sweep_tree_benchmark.py --preset local --out-csv results/metrics/sweep_autodl.csv
 ```
 
+**服务器空闲后、与本地 naive 网格对齐的批量扫参**：见 **`docs/environment/SERVER_SWEEP_RUNBOOK.md`** 与 `scripts/benchmarks/run_server_sweep_aligned.sh`。
+
 ### 本机合并 CSV（路径怎么填？）
 
 第三个参数必须是：**你已经下载到 Windows 上的 `sweep_autodl.csv` 的完整路径**。
@@ -59,13 +61,13 @@ python scripts/benchmarks/sweep_tree_benchmark.py --preset local --out-csv resul
 
 ```powershell
 cd d:\cursor_try\mamba2
-python scripts\merge_sweep_csv.py results\metrics\merged_5060_3090.csv results\metrics\sweep_tree_reader_20260407_local.csv results\metrics\sweep_autodl.csv
+python scripts\benchmarks\merge_sweep_csv.py results\metrics\merged_5060_3090.csv results\metrics\sweep_tree_reader_20260407_local.csv results\metrics\sweep_autodl.csv
 ```
 
 - 若文件在 **下载文件夹**（示例，按你的用户名改）：
 
 ```powershell
-python scripts\merge_sweep_csv.py results\metrics\merged_5060_3090.csv results\metrics\sweep_tree_reader_20260407_local.csv C:\Users\26433\Downloads\sweep_autodl.csv
+python scripts\benchmarks\merge_sweep_csv.py results\metrics\merged_5060_3090.csv results\metrics\sweep_tree_reader_20260407_local.csv C:\Users\26433\Downloads\sweep_autodl.csv
 ```
 
 **不要用** 带「下载路径」字样的占位符；在资源管理器里对 `sweep_autodl.csv` **右键 → 属性** 复制「位置」+ 文件名，或 PyCharm 里右键文件 **Copy Path/Reference**。

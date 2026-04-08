@@ -6,7 +6,7 @@
 |------|------|
 | **[overview/](overview/)** | 项目总览、总体规划、周历 `ROADMAP`、当前迭代 `CURRENT_SPRINT` |
 | **[experiments/](experiments/)** | 实验登记 `EXPERIMENT_REGISTRY`、阶段 1 验证计划、数据与样例 `DATASETS` |
-| **[environment/](environment/)** | 双机同步 `SYNC_AND_ENVIRONMENTS`、AutoDL 上手、`MAMBA_SSM_INSTALL_LINUX` |
+| **[environment/](environment/)** | 双机同步、AutoDL 上手、`MAMBA_SSM_INSTALL_LINUX`、**`SERVER_SWEEP_RUNBOOK`（云端对齐扫参）** |
 | **[research/](research/)** | 研究笔记（如隐状态快照 vs KV / SSGS 草图） |
 
 常用直达：
