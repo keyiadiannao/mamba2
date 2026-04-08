@@ -18,7 +18,11 @@ cd /root/autodl-tmp   # 或你的数据盘挂载点
 git clone https://github.com/keyiadiannao/mamba2.git
 cd mamba2
 
-# Miniconda 若已预装：
+# Miniconda 若已预装（AutoDL 常见路径 `/root/miniconda3`）：
+# 若直接 `conda activate` 报 CondaError: Run 'conda init' —— 先加载 hook：
+source /root/miniconda3/etc/profile.d/conda.sh
+# 若为 Anaconda 则改为：source /root/anaconda3/etc/profile.d/conda.sh
+
 conda create -n mamba2 python=3.11 pip -y
 conda activate mamba2
 

@@ -10,6 +10,7 @@
 ```bash
 cd /path/to/mamba2   # 或 git clone 见 AUTODL_SETUP.md
 git pull origin master
+source /root/miniconda3/etc/profile.d/conda.sh   # 避免「Run conda init before conda activate」
 conda activate mamba2
 ```
 
