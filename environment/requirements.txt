@@ -8,6 +8,7 @@
 # numpy
 # transformers>=4.40
 datasets>=2.14
+matplotlib>=3.7
 # tqdm
 # pyyaml
 # Local minimal Mamba (no mamba-ssm on Windows): transformers>=4.45, accelerate

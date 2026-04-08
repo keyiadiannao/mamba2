@@ -19,7 +19,7 @@
 | X-20260409-autodl-fused-mamba | 2026-04-09 | AutoDL / RTX 3090 | —（仅环境） | X | `causal_conv1d`+`mamba_ssm` 后复测 | `scripts/smoke/smoke_mamba_minimal` + `scripts/benchmarks/benchmark_tree_walk` d4 f2 | smoke peak **56MiB**（naive≈411）；树 Mamba2 peak **73MiB**（naive≈2248）；快路径生效 |
 | X-20260409-mamba-minimal-smoke | 2026-04-07 | 5060 | | X | HF Mamba2Model tiny smoke（默认） | `scripts/smoke/smoke_mamba_minimal.py` | 无 mamba-ssm；`--arch mamba` 为 v1 |
 | A-20260410-wikitext-shallow-tree | 2026-04-10 | 5060 | `3218cf9`+ | A | Wikitext-2 叶块 → 浅树 → 同 harness | `scripts/benchmarks/benchmark_wikitext_tree.py` | 见 `benchmark_wikitext_p0_20260410.json`；开加速器后 Hub 无 SSL 报错（仍可走缓存） |
-| A-20260410-sweep-local5060 | 2026-04-10 | 5060 | `3218cf9` | A | P0 玩具树扫参 preset=local | `sweep_tree_benchmark.py --preset local --warmup 2 --reps 5` | `results/metrics/sweep_tree_reader_20260410_local5060.csv`；d3–d6×chunk4/8；Mamba2 naive 随叶数升（d6c8 m2_peak≈8.9GiB） |
+| A-20260410-sweep-local5060 | 2026-04-10 | 5060 | `3218cf9` | A | P0 玩具树扫参 preset=local | `sweep_tree_benchmark.py --preset local --warmup 2 --reps 5` | CSV 同上；图 `results/metrics/figures/sweep_readers_20260410_local5060.png`（`plot_tree_reader_sweep.py`）；Mamba2 naive 随叶数升（d6c8 m2_peak≈8.9GiB） |
 
 ---
 

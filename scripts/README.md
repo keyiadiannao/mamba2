@@ -11,6 +11,7 @@
 | | `benchmark_wikitext_tree.py` | Wikitext-2 叶块 + 同 harness |
 | | `sweep_tree_benchmark.py` | 扫参 CSV / jsonl |
 | | `merge_sweep_csv.py` | 多机 CSV 合并 |
+| | `plot_tree_reader_sweep.py` | 扫参 CSV → 延迟/显存图（需 `matplotlib`） |
 | **[data/](data/)** | `prepare_leaves_from_corpus.py` | 从目录生成叶文本文件 |
 | **[sync/](sync/)** | `sync_example.ps1`, `sync_example.sh` | 双机同步命令模板 |
 

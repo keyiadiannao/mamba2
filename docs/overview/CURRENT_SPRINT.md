@@ -41,7 +41,7 @@
 
 | 优先级 | 方向 | 可执行项 |
 |--------|------|----------|
-| P0 | **阶段 1 收束** | 本地跑完 `docs/experiments/PHASE1_VALIDATION_PLAN.md` 建议网格（或子集）：`depth × chunk_len`，固定 `fanout=2`，产出一张 **per_step_s / peak_mib vs 路径长度或叶数** 图；写入 `docs/experiments/EXPERIMENT_REGISTRY.md` |
+| P0 | **阶段 1 收束** | 本地扫参 CSV + **`scripts/benchmarks/plot_tree_reader_sweep.py`** 出图（例：`results/metrics/figures/sweep_readers_20260410_local5060.png`）；登记见 `EXPERIMENT_REGISTRY` |
 | P0 | **真实语料线** | 继续用 `scripts/benchmarks/benchmark_wikitext_tree.py`（及合成叶）巩固「非玩具文本 + 同 reader」；可选：把一次完整 JSON 结果贴进 `experiments/A-20260410-wikitext-shallow-tree/` |
 | P1 | **叙事与可检验命题** | 维护 `docs/research/RESEARCH_NOTES.md`：把「快照回溯」写成 **测量协议草案**（快照含哪些 tensor、TF 基线是截断 KV 还是从 checkpoint 重算） |
 | P1 | **SSGS 最小原型（设计/伪代码）** | 在 `src/rag_tree/` 增加 **导航器草稿**（例如在 `TreeNode` 上挂 `state_snapshot: Optional[...]`，先不接真实 LM），或独立 `docs/` 算法伪代码 + 单元测试「树遍历 + 假状态」；**不依赖** mamba-ssm |
