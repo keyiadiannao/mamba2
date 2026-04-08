@@ -12,6 +12,8 @@
 
 Linux 内核执行脚本时，会把解释器名字解析成 **`bash\\r`**（带回车），系统里没有叫这个名字的可执行文件，于是 **`env` 找不到解释器**。这与「没装 bash」无关，**几乎总是 CRLF 问题**。
 
+同类症状：`run_path_protocol_cuda.sh: line 6: set: pipefail` 或 `invalid option name` 与路径粘在一行 — 同样是 **`set -o pipefail` 行尾带了 `\r`**，bash 把选项名认成 `pipefail\r`。修复仍用下文 **`sed -i 's/\r$//'`**。
+
 常见来源：
 
 - 在 **Windows** 上编辑或保存了 `.sh`，编辑器默认 CRLF；

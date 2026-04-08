@@ -86,6 +86,12 @@ bash scripts/research/run_path_protocol_cuda.sh
 - **`torch.cuda.is_available()` 为 False**：脚本仍会调用 `--device cuda` 而失败 — 请在 **GPU 实例**上执行。  
 - **OOM**：先减小 `--depth` 或 `--dim`（需改 `.sh` 内参数，并**另开登记行**说明与默认 **X-20260421** 网格不一致）。
 
+- **`set: pipefail` / `invalid option name` 与文件名粘在一起**：几乎总是 **Windows CRLF** 检出 — 行尾 `\r` 使 `pipefail` 变成非法选项。在仓库根执行：
+  ```bash
+  sed -i 's/\r$//' scripts/research/run_path_protocol_cuda.sh
+  ```
+  然后重跑 `bash scripts/research/run_path_protocol_cuda.sh`。长期做法见 **`docs/environment/SH_CRLF_LINUX.md`**；仓内 **`.gitattributes`** 已设 `*.sh text eol=lf`，**`git pull` 最新脚本**后应不再出现。
+
 ### A.3 与阶段 1 叙事的关系
 
 本附录产出 **仅服务 §7 玩具协议复现**，**不替代** **A-20260408-paper-main-3090-*** 主图数据；正文引用时须 **分列标注**（见上文第 3 节）。

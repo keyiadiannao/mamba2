@@ -3,7 +3,9 @@
 # 用法（仓库根）：
 #   bash scripts/research/run_path_protocol_cuda.sh
 # 输出目录：若已设 MAMBA2_RESULTS_ROOT 则写入 $MAMBA2_RESULTS_ROOT/metrics/；否则写入 results/metrics/。
-set -euo pipefail
+# 须为 LF 换行；若从 Windows 检出后出现 set: pipefail 报错，见 docs/environment/SH_CRLF_LINUX.md
+set -eu
+set -o pipefail
 
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$REPO"
