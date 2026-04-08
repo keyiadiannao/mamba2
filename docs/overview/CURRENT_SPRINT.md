@@ -33,7 +33,7 @@
 - [x] **3090 大叶数研究扫参**：`run_server_research_large_leaves.sh`，`TAG=research_lg_v1`；登记 **A-20260408-research-large-leaves-3090**
 - [x] **S1 分段 cache 基准**：`benchmark_mamba2_cache_snapshot_segments.py`；**X-20260421-mamba2-cache-segments-cpu** + **X-20260421-mamba2-cache-segments-cuda**（`results/metrics/mamba2_cache_snap_segments_depth4_cuda_20260421.json`）
 - [x] **S2 TF-R1（玩具路径，与 S1 对齐）**：`benchmark_tf_r1_path_segments.py`；**X-20260421-tf-r1-path-segments-cuda**（`results/metrics/tf_r1_path_segments_depth4_cuda_20260421.json`）
-- [x] **S3 TF-KV**：`benchmark_tf_kv_path_segments.py`；**X-20260421-tf-kv-path-segments-cuda**（`results/metrics/tf_kv_path_segments_depth4_cuda_20260421.json`）
+- [x] **S3 TF-KV**：`benchmark_tf_kv_path_segments.py`；**X-20260421-tf-kv-path-segments-cuda**（`tf_kv_path_segments_depth4_cuda_20260421.json` + **`tf_kv_path_segments_depth4_cuda_branchdemo_20260421.json`**）
 
 ---
 
