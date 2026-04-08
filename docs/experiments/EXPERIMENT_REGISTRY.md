@@ -26,6 +26,7 @@
 | A-20260408-paper-main-3090-fused | 2026-04-08 | AutoDL / RTX 3090 | `6fa7873` | A | 主文网格 fused：`run_server_paper_main_sweep.sh` | `TAG=paper_main_v1`，`WARMUP=2` `REPS=8`；`results/metrics_result/paper_main_{dim256,dim128_localgrid,dim384}_paper_main_v1.csv` + `paper_main_manifest_paper_main_v1.txt` | manifest：`mode=fused_expected`，`mamba_ssm` True；dim128 d6c8 **m2_peak** ≈216MiB |
 | A-20260408-paper-main-3090-naive | 2026-04-08 | AutoDL / RTX 3090 | `6fa7873` | A | 同网格 HF naive：`mamba2_naive` + `run_server_paper_main_sweep_naive.sh` | `TAG=paper_main_naive_v1`，路径同上后缀 `_paper_main_naive_v1` + manifest | manifest：`mode=hf_naive`，`mamba_ssm`/`causal_conv1d` False；dim128 d6c8 **m2_peak** ≈8.9GiB |
 | A-20260408-paper-main-3090-pair | 2026-04-08 | AutoDL / RTX 3090 | `6fa7873` | A | **同机** naive vs fused 主文对照（与上行两行同一轮数据） | `plot_mamba_naive_vs_fused.py` → `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`（各 8/12/6 个重合格点） | 主文硬对照：同 GPU、同 commit、同计时设定；实现路径致 **m2_peak** 量级差（例 dim128 最重格 ~GiB vs ~10²MiB） |
+| A-20260408-wikitext-3090-fused | 2026-04-08 | AutoDL / RTX 3090 | `e9ac3e2+` | A | Wikitext-2 叶块浅树 + 同 harness（fused）；Hub 不可直连时用镜像 | `benchmark_wikitext_tree.py --num-leaves 8 --fanout 2 --warmup 3 --reps 10`；`HF_ENDPOINT=https://hf-mirror.com` 或 `MAMBA2_USE_HF_MIRROR=1`（见 `AUTODL_SETUP` §2b） | JSON：`results/metrics_result/benchmark_wikitext_3090_fused_20260408T0846Z.json`（另有 `0811Z`/`0817Z` 重复跑）；8 叶 d3、f2、c8、dim128：**mamba2 peak_alloc_mib** ≈53；与 5060 `A-20260410-wikitext-shallow-tree` 同脚本不同机 |
 
 ---
 

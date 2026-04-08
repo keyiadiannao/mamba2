@@ -27,6 +27,7 @@
 - [x] **树路径三 reader**：`Mamba2PathReader` 接入 `benchmark_core` / `sweep` / `benchmark_text_tree`（默认开启，`--no-mamba2` 可关）
 - [x] **公开语料浅树**：Wikitext-2（HF `datasets`）→ `hf_corpus.wikitext2_leaf_chunks` → `scripts/benchmarks/benchmark_wikitext_tree.py`（与合成叶同一 reader 槽位）
 - [x] **3090 主文扫参（同机）**：`run_server_paper_main_sweep.sh`（fused）+ `run_server_paper_main_sweep_naive.sh`（`mamba2_naive`）；CSV 归档示例见本机 `results/metrics_result/`；图 `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`
+- [x] **3090 Wikitext 浅树（fused + 镜像）**：`benchmark_wikitext_tree.py`；`results/metrics_result/benchmark_wikitext_3090_fused_20260408T0846Z.json`；登记 **A-20260408-wikitext-3090-fused**
 
 ---
 
@@ -42,7 +43,7 @@
 | 优先级 | 方向 | 可执行项 |
 |--------|------|----------|
 | P0 | **阶段 1 叙事收束** | 主文图注统一（3090、同 commit、WARMUP/REPS、naive vs fused 定义）；`RESEARCH_NOTES.md` **§7.0** 与阶段 1 边界已对齐 |
-| P0 | **真实语料线（云端）** | 在 AutoDL **`mamba2`** 再跑 `scripts/benchmarks/benchmark_wikitext_tree.py`，JSON + `EXPERIMENT_REGISTRY` 一行 |
+| P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT` 镜像；JSON 与登记见 **A-20260408-wikitext-3090-fused** |
 | P1 | **测量协议成文** | `RESEARCH_NOTES.md` **§7**：§7.1–7.3 定稿；**TF-R1 / TF-KV** 与真实 Mamba 状态接线前排期 |
 | P1 | **SSGS** | `ssgs.py` / `TensorNavState` / `benchmark_ssgs_tensor_overhead.py`；**不接真实 LM**；registry 补一条固定配置的 overhead JSON（若尚无） |
 | P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
