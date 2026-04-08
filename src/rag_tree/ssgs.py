@@ -4,10 +4,11 @@ State-Snapshot Guided Search (SSGS) — 最小草稿。
 - ``dfs_ssgs``：用路径上节点 id 列表模拟离散状态。
 - ``TensorNavState`` + ``dfs_ssgs_tensor``：用 **真实 torch 向量 h** 做快照/恢复（占位更新）。
 - ``MambaNavState`` + ``dfs_ssgs_mamba``：用 **HF ``Mamba2Model`` + ``DynamicCache``**；每节点按 **token**
-  增量前向（``seq_len=1``），以兼容 **CUDA fused** 在 ``has_previous_state`` 下对 chunk 的限制；快照为
+  增量前向（``seq_len=1``）。**CUDA** 上 ``build_toy_mamba2_for_ssgs`` 会 **patch 每层 mixer 为 ``torch_forward``**，
+  避免 fused ``causal_conv1d`` 在 **batch=1** 下的 stride=8 报错（与 path-batch fused 峰值 **不同**）。快照为
   ``conv_states``/``recurrent_states`` 的 **clone**，恢复为 **zero_ + copy_**（与 §7 S4 同语义）。
 
-不依赖 ``mamba-ssm`` 亦可跑（HF naive）；融合栈下仍走 token 步进。
+不依赖 ``mamba-ssm`` 亦可跑（HF naive）。
 """
 
 from __future__ import annotations
@@ -19,6 +20,7 @@ import torch
 
 from .mamba_cache_utils import (
     clone_mamba_dynamic_cache,
+    patch_mamba2_model_use_torch_forward_only,
     restore_mamba_dynamic_cache,
     snapshot_list_nbytes,
     zero_mamba_dynamic_cache,
@@ -151,6 +153,8 @@ def build_toy_mamba2_for_ssgs(
     )
     model = Mamba2Model(cfg).to(device)
     model.eval()
+    if device.type == "cuda":
+        patch_mamba2_model_use_torch_forward_only(model)
     return model
 
 
@@ -158,7 +162,7 @@ def build_toy_mamba2_for_ssgs(
 class MambaNavState:
     """
     导航态 = HF ``Mamba2Model`` 的 ``cache_params``（``DynamicCache``）。
-    ``absorb_node``：对节点 ``embedding [L,D]`` 按 **单 token** 前向，避免 fused CUDA 在多 token 续写 cache 上的限制。
+    ``absorb_node``：对节点 ``embedding [L,D]`` 按 **单 token** 前向（与 ``has_previous_state`` 的增量解码一致）。
     """
 
     model: Any

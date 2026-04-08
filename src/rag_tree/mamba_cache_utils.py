@@ -65,3 +65,34 @@ def snapshot_list_nbytes(snapshot: list[dict[str, torch.Tensor]]) -> int:
         for t in block.values():
             n += int(t.numel() * t.element_size())
     return n
+
+
+def patch_mamba2_model_use_torch_forward_only(model: torch.nn.Module) -> None:
+    """
+    将每层 ``Mamba2Mixer.forward`` 改为始终调用 ``torch_forward``。
+
+    **原因**：CUDA + fused ``causal_conv1d_fn`` 在 **batch=1**、token 步进（SSGS ``absorb_node``）下常触发
+    ``strides ... multiples of 8``；``torch_forward`` 走 PyTorch ``conv1d`` / SSD 实现，语义与 cache 一致，仅更慢。
+    CPU 上 HF 本身已走非 fused 路径，本函数可重复调用（幂等）。
+    """
+    layers = getattr(model, "layers", None)
+    if layers is None:
+        return
+    for block in layers:
+        mixer = getattr(block, "mixer", None)
+        if mixer is None or getattr(mixer, "_ssgs_torch_forward_patched", False):
+            continue
+
+        def _bind(m: torch.nn.Module):
+            def forward(
+                hidden_states: torch.Tensor,
+                cache_params: object | None = None,
+                attention_mask: torch.Tensor | None = None,
+                **kwargs: object,
+            ) -> torch.Tensor:
+                return m.torch_forward(hidden_states, cache_params, attention_mask)
+
+            return forward
+
+        mixer.forward = _bind(mixer)  # type: ignore[method-assign]
+        mixer._ssgs_torch_forward_patched = True

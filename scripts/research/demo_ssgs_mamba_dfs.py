@@ -3,7 +3,7 @@
 演示 **SSGS + HF Mamba2Model**：``dfs_ssgs_mamba`` 在玩具平衡树上 DFS，目标为**最右叶**；
 内部节点打 ``DynamicCache`` 快照，兄弟回溯前 ``restore``（与 ``RESEARCH_NOTES`` §7 / ``ssgs.py`` 一致）。
 
-使用 **按 token** 前向以兼容 CUDA fused。需 ``transformers``（Mamba2）。
+使用 **按 token** 前向。CUDA 上自动 **patch 为 HF ``torch_forward``**（避免 fused ``causal_conv1d`` 在 batch=1 的 stride 限制）。需 ``transformers``（Mamba2）。
 
   python scripts/research/demo_ssgs_mamba_dfs.py --device cpu
   python scripts/research/demo_ssgs_mamba_dfs.py --device cuda

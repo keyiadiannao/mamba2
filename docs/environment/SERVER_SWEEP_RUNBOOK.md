@@ -230,6 +230,8 @@ python scripts/research/benchmark_tf_kv_path_segments.py --device cuda --branch-
 
 **SSGS × Mamba（DFS 演示，CPU/CUDA）**：
 
+CUDA 上 ``build_toy_mamba2_for_ssgs`` 会将 mixer **固定为 ``torch_forward``**（batch=1 token 步进否则会触发 fused ``causal_conv1d`` 的 stride=8 报错）。
+
 ```bash
 python scripts/research/demo_ssgs_mamba_dfs.py --device cpu
 python scripts/research/demo_ssgs_mamba_dfs.py --device cuda
