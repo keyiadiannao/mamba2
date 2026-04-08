@@ -44,7 +44,7 @@
 - [x] **目标叶条件可学习子指针**：`tree_lm_nav_learned.py` + `demo_tree_lm_nav_learned.py`（冻结 LM、goal 嵌入 + 线性头；**X-20260424**；**CPU/CUDA** 归档 `tree_lm_nav_learned_default8_{cpu,cuda}.json`，**reach_rate=0.375** 一致）
 - [x] **叙事收束（C）**：`FIGURE_CAPTIONS_STAGE1.md` P0 段末 + `RESEARCH_NOTES` §7.0 / §7.4 — **X-20260424** 默认 **reach_rate** 仍低于 1，勿过度宣称；与 SSGS **任务不同**
 - [x] **SSGS×LM 并列（A）**：`demo_ssgs_lm_nav_compare.py`（同文本 8 叶：**dfs_ssgs_mamba** 必达 vs **子头贪心**）；`tests/test_ssgs_lm_nav_compare.py`；登记 **X-20260425**；可选 `--out-json` 归档
-- [ ] **下一跳（择一）**：（**B**）**抬高可学习头上限**：浅 MLP、`goal_dim`、更长训练、或 **小步解冻 LM**；或 **wall-clock** 扩展（在 **X-20260425** JSON 外再报时）
+- [ ] **下一跳（优先 B）**：**抬高可学习头上限**（**X-20260424**）：浅 MLP、`goal_dim`、更长 epoch / 调 lr、或 **小步解冻 LM**；用同一 **`--eval-all-leaves`** 与 **X-20260425** 对照脚本观察 **reach_rate** 是否过 **0.375**。可选：**X-20260425** 加 **wall-clock**（SSGS vs LM 八 goal）
 
 ---
 
