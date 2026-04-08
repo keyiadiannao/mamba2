@@ -125,3 +125,57 @@ WARMUP=2 REPS=8 TAG=paper_main_v1 ./scripts/benchmarks/run_server_paper_main_swe
 
 - **A 类**（已跟踪文件有修改）：`git stash -u` 再 `pull` 合适。
 - **B 类**（纯未跟踪挡路）：优先 **`git clean -fd`** 或移走目录；若你坚持用 stash，需要 **`git stash push -u`** 把未跟踪也收起来，否则仍会冲突。
+
+---
+
+## C. 服务器访问 GitHub 超时（`Failed to connect to github.com port 443`）
+
+说明机器到 GitHub 的 HTTPS 不通（防火墙/地区线路/机房策略）。**不必在服务器上 `git pull`**，可以用 **本机已同步的仓库** 覆盖到服务器。
+
+### 做法 1：PyCharm Deployment（SFTP/SSH）
+
+1. 在 **Windows** 上先把本地 `mamba2` **`git pull` 到最新**。
+2. PyCharm：**Settings → Build, Execution, Deployment → Deployment**，新增 **SFTP**，填服务器 SSH 主机、用户、认证方式，**Root path** 指到服务器上的项目目录（如 `/root/autodl-tmp/mamba2`）。
+3. **Mappings**：Local path = 本机仓库根目录，Deployment path = `/`（相对 Root path）或等价映射。
+4. 右键项目根目录 → **Deployment → Upload to…**（或 **Sync with Deployed to…** 先看差异再上传）。
+5. **排除**（在 Deployment → Excluded Paths）：`.git` 可选（见下）、`.venv` / `venv`、`__pycache__`、`.idea`、大体积 `data/` 等，避免慢传或覆盖环境。
+
+**是否上传 `.git`：**
+
+- **上传 `.git`**：服务器上的 Git 历史与本机一致，以后若网络恢复可继续 `git pull`（注意本机要先提交/拉齐再传）。
+- **不上传 `.git`**：只保证 **代码与脚本** 与本地一致；服务器上 `git status` 可能无意义，以「能跑 benchmark」为主即可。
+
+上传后可在 SSH 里执行：
+
+```bash
+chmod +x scripts/benchmarks/*.sh
+sed -i 's/\r$//' scripts/benchmarks/*.sh   # 若出现 bash\r
+```
+
+### 做法 2：本机打包 + SCP / WinSCP
+
+在本机仓库上级目录：
+
+```bash
+# PowerShell 示例：排除虚拟环境（按你目录名调整）
+tar -czvf mamba2-sync.tgz --exclude=.venv --exclude=__pycache__ -C d:\cursor_try mamba2
+```
+
+用 **WinSCP** 或 `scp` 把 `mamba2-sync.tgz` 传到服务器后解压到目标目录（或解压到新目录再替换）。
+
+### 做法 3：Git (bundle) 离线包（本机能连 GitHub 时在本机做）
+
+在本机：
+
+```bash
+git bundle create mamba2-master.bundle origin/master
+```
+
+把 `mamba2-master.bundle` 拷到服务器后：
+
+```bash
+git fetch ../mamba2-master.bundle master:refs/remotes/origin/master
+git reset --hard origin/master
+```
+
+（路径按你放置 bundle 的位置调整。）
