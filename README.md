@@ -75,3 +75,9 @@ python scripts\benchmarks\benchmark_text_tree.py --leaf-file experiments\A-20260
 ```powershell
 python -m unittest tests.test_ssgs -v
 ```
+
+张量快照/恢复微基准（无 LM，默认 CUDA）：
+
+```powershell
+python scripts\benchmarks\benchmark_ssgs_tensor_overhead.py --dim 256 --micro-iters 50000
+```

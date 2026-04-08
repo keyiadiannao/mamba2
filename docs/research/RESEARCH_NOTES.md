@@ -88,5 +88,6 @@
 
 ### 7.4 与当前代码的映射
 
-- **结构 / 试错顺序**：`ssgs.dfs_ssgs`（假状态）；挂载示例 `mount_snapshot_on_tree`。
-- **真实 LM**：尚未接线；接线点后应新增 `scripts/benchmarks/...` 与 registry id，避免与玩具 `benchmark_tree_walk` 混淆。
+- **结构 / 试错顺序**：`ssgs.dfs_ssgs`（id 列表）；`ssgs.dfs_ssgs_tensor` + `TensorNavState`（**h∈ℝ^D** 上 `clone`/`copy_`，单测 `tests/test_ssgs.py`）。
+- **纯快照带宽下界**：`scripts/benchmarks/benchmark_ssgs_tensor_overhead.py`（导航 wall-clock + 50k 次 clone+restore 均摊）。
+- **真实 LM**：尚未接线；接线点后应新增独立 benchmark 与 registry id，避免与玩具 `benchmark_tree_walk` 混淆。

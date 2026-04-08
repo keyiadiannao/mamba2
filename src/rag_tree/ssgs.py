@@ -1,14 +1,19 @@
 """
 State-Snapshot Guided Search (SSGS) — 最小草稿。
 
-不依赖 mamba-ssm：用「路径上已读节点 id 列表」模拟隐状态；在内部节点分叉前打快照，
-子树失败则回到快照再试兄弟分支。后续可把 list[int] 换成 clone 的多层 tensor 元组。
+不依赖 mamba-ssm：
+
+- ``dfs_ssgs``：用路径上节点 id 列表模拟离散状态。
+- ``TensorNavState`` + ``dfs_ssgs_tensor``：用 **真实 torch 向量 h** 做快照/恢复；
+  每读一节点将 ``embedding`` 沿序列维均值累加到 h（占位式「一步更新」），便于测 **clone / copy_** 成本。
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any, Callable, List, Optional, Tuple
+
+import torch
 
 from .tree import TreeNode
 
@@ -80,6 +85,77 @@ def dfs_ssgs(
 def mount_snapshot_on_tree(node: TreeNode, checkpoint: State) -> None:
     """把当前检查点（浅拷贝列表）挂到节点，供调试 / 论文图示。"""
     node.state_snapshot = list(checkpoint)
+
+
+@dataclass
+class TensorNavState:
+    """
+    固定形状隐向量 ``h``（[D]）。``absorb_node``：把节点 ``[L,D]`` embedding 的序列均值加到 h。
+    与真实 SSM 不同，但 **snapshot=clone、restore=copy_** 与日后多层状态块同类。
+    """
+
+    h: torch.Tensor
+
+    @classmethod
+    def zeros(cls, dim: int, device: torch.device, dtype: torch.dtype = torch.float32) -> TensorNavState:
+        return cls(torch.zeros(dim, device=device, dtype=dtype))
+
+    def absorb_node(self, node: TreeNode) -> None:
+        self.h = self.h + node.embedding.mean(dim=0)
+
+    def snapshot(self) -> torch.Tensor:
+        return self.h.clone()
+
+    def restore(self, snap: torch.Tensor) -> None:
+        self.h.copy_(snap)
+
+
+def mount_tensor_snapshot_on_tree(node: TreeNode, checkpoint: torch.Tensor) -> None:
+    node.state_snapshot = checkpoint.detach().clone()
+
+
+def dfs_ssgs_tensor(
+    node: TreeNode,
+    state: TensorNavState,
+    *,
+    leaf_goal: Callable[[TreeNode], bool],
+    trace: Optional[SSGSTrace] = None,
+    mount_snapshot: Optional[Callable[[TreeNode, torch.Tensor], None]] = None,
+) -> bool:
+    """
+    与 ``dfs_ssgs`` 同序 DFS；内部节点在子树前 ``snapshot``，试兄弟前 ``restore``。
+    返回是否找到满足 ``leaf_goal`` 的叶。
+    """
+    state.absorb_node(node)
+    t = trace
+    if t:
+        t.events.append("tensor_visit")
+
+    if node.is_leaf():
+        if t:
+            t.leaf_checks += 1
+        ok = leaf_goal(node)
+        if t:
+            t.events.append(f"leaf_ok:{ok}")
+        return ok
+
+    checkpoint = state.snapshot()
+    if mount_snapshot is not None:
+        mount_snapshot(node, checkpoint)
+    if t:
+        t.snapshots_taken += 1
+
+    for ch in node.children:
+        state.restore(checkpoint)
+        if t:
+            t.events.append("tensor_try_child")
+        if dfs_ssgs_tensor(ch, state, leaf_goal=leaf_goal, trace=t, mount_snapshot=mount_snapshot):
+            return True
+        if t:
+            t.rollbacks += 1
+            t.events.append("tensor_rollback")
+
+    return False
 
 
 def clear_tree_snapshots(root: TreeNode) -> None:
