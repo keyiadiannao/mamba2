@@ -14,6 +14,8 @@
 
 **正文可粘贴的一句边界**：主文图呈现 **path-batch 系统级曲线**；§7 表呈现 **分解尺上的玩具对照**；SSGS demo 呈现 **状态快照式 DFS 的可行性**，三者口径须在段落中显式区分。
 
+**真 LM 玩具导航（登记 X-20260422–24）**：路径文本上的 **teacher-forcing / 子文档 CE / 目标叶条件可学习子头**，**都不是**主图 path-batch，也**不是** SSGS 里 **Mamba `DynamicCache` + token 步进 DFS** 的同一条实验。**X-20260424** 在默认 8 叶、冻结 **tiny-gpt2** 与浅线性头下 **reach_rate 仍 &lt; 1**（登记约 **0.375**），正文**不应**写成「已解决全树导航」；要强宣称需另给架构、数据或训练设定。**与 SSGS 的并列对照**（同文本树、按 goal 统计 DFS 代价 vs 子头贪心）见 `scripts/research/demo_ssgs_lm_nav_compare.py`，登记 **X-20260425-ssgs-lm-nav-compare**。
+
 ---
 
 ## 图：`mamba_3090_naive_vs_fused_dim128_paper_main_v1.png`
