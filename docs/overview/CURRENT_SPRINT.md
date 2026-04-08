@@ -37,6 +37,7 @@
 - [x] **S4 SSM restore**：`benchmark_mamba2_cache_restore_segments.py`；**X-20260421-mamba2-cache-restore-cuda**（`mamba2_cache_restore_depth4_cuda_same_20260421.json` + **`mamba2_cache_restore_depth4_cuda_fromcpu_20260421.json`**）
 - [x] **§7 协议复跑入口**：`scripts/research/run_path_protocol_cuda.sh` + `PHASE1_VALIDATION_PLAN` / `FIGURE_CAPTIONS` / `SERVER_SWEEP_RUNBOOK` 交叉引用
 - [x] **叙事**：`FIGURE_CAPTIONS_STAGE1.md` 附录表注（中英）界定主图 vs §7.3.1
+- [x] **P0 中文摘要**：主图 path-batch vs §7 玩具协议 vs SSGS 导航三线边界（`FIGURE_CAPTIONS_STAGE1.md` 篇首 + `RESEARCH_NOTES` §7.0）
 - [x] **SSGS × Mamba**：`MambaNavState` / `dfs_ssgs_mamba` / `mamba_cache_utils.py`；`demo_ssgs_mamba_dfs.py`（`--out-json`）；`tests/test_ssgs_mamba.py`（默认网格 **events** 与登记 JSON 对齐）；登记 **X-20260421-ssgs-mamba-dfs-demo**
 
 ---
@@ -52,7 +53,7 @@
 
 | 优先级 | 方向 | 可执行项 |
 |--------|------|----------|
-| P0 | **阶段 1 叙事收束** | **`docs/experiments/FIGURE_CAPTIONS_STAGE1.md`**（中英图注模板）；`RESEARCH_NOTES.md` **§7.0** |
+| P0 | **阶段 1 叙事收束** | **`FIGURE_CAPTIONS_STAGE1.md`**（篇首 **P0 叙事边界（中文摘要）** + 中英图注/表注）；`RESEARCH_NOTES.md` **§7.0** 段首同主题摘要 |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT` 镜像；JSON 与登记见 **A-20260408-wikitext-3090-fused** |
 | P1 | **测量协议成文** | S1–S4 已登记；**§7.3.1** 对照表 + **`scripts/research/run_path_protocol_cuda.sh`** 复跑；下一跳：**P0 叙事收束**（图注/正文边界句）或 **真 LM / SSGS 接线** |
 | P1 | **SSGS** | 张量玩具 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；**Mamba `DynamicCache` DFS**：`dfs_ssgs_mamba` + `demo_ssgs_mamba_dfs.py --out-json`（**X-20260421-ssgs-mamba-dfs-demo**，见 `RESEARCH_NOTES` §6 / §7.4） |

@@ -4,6 +4,18 @@
 
 ---
 
+## P0 叙事边界（中文摘要）
+
+**主文主图（naive vs fused 峰值 + Wikitext 同 harness）**回答的是：在**固定建树与 path reader 协议**下，对一批根—叶路径做 **path-batch 前向**时的计时与 **Mamba2 峰值显存**（`max_memory_allocated`）。该 harness **不实现**树上的 DFS 试错序，也**不**把全模型 KV 分项摊进同一张主图。
+
+**§7.2–§7.3 与附录表 §7.3.1** 属于**另一套可复现玩具协议**：在**单条**合成路径或专用 Transformer trunk 上，**分别**测量 S1（Mamba `DynamicCache` clone）、S4（restore）、S2（TF-R1 无 KV 整段前向）、S3（TF-KV 增量）等；**各列物理含义不同**，**不得**与主图曲线混为同一「一步」或互相做差得出结论。
+
+**SSGS × Mamba（`dfs_ssgs_mamba`）** 再占一条线：**按 token 前向 + `DynamicCache` + DFS 回溯**，用于证明**导航环**与迹的一致性（登记 **X-20260421-ssgs-mamba-dfs-demo**）。它与 path-batch 扫参、与 §7.3.1 各列**仍非同一实验**。
+
+**正文可粘贴的一句边界**：主文图呈现 **path-batch 系统级曲线**；§7 表呈现 **分解尺上的玩具对照**；SSGS demo 呈现 **状态快照式 DFS 的可行性**，三者口径须在段落中显式区分。
+
+---
+
 ## 图：`mamba_3090_naive_vs_fused_dim128_paper_main_v1.png`
 
 **建议英文图注（短）**
