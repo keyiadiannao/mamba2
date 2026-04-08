@@ -84,6 +84,20 @@
 | **naive vs fused 示意图** | `scripts/benchmarks/plot_mamba_naive_vs_fused.py` 叠两张已有 CSV（图题写清跨机限定） |
 | **叙事定稿** | 更新 `PROJECT_MASTER_PLAN` §1 贡献表述为「实现敏感 + workload 敏感」而非「Mamba 必然更省」 |
 
+### 6.5 主文素材三角互证（登记 ↔ CSV ↔ 图，2026-04-09 审计）
+
+**规则**：正文/幻灯片引用主文 **naive vs fused** 数字时，须同时指向 **`EXPERIMENT_REGISTRY`** 行与 **仓内路径**；**5060 本地 CSV** 与 **3090 主文 CSV** 不得混填为「同一点」。
+
+| 登记 id | 含义 | 本仓库路径（存在性已核对） |
+|---------|------|---------------------------|
+| **A-20260408-paper-main-3090-fused** | 3090 fused 主文扫参 | `results/metrics_result/paper_main_dim128_localgrid_paper_main_v1.csv`、`paper_main_dim256_paper_main_v1.csv`、`paper_main_dim384_paper_main_v1.csv`；`paper_main_manifest_paper_main_v1.txt` |
+| **A-20260408-paper-main-3090-naive** | 同网格 `mamba2_naive` | 同上 basename 后缀 **`_paper_main_naive_v1.csv`**；`paper_main_manifest_paper_main_naive_v1.txt` |
+| **A-20260408-paper-main-3090-pair** | 同机成对对照（作图） | `results/metrics/figures/mamba_3090_naive_vs_fused_dim128_paper_main_v1.png`、`dim256`、`dim384` |
+
+**结论文本**：仍用 **§6.3**；写「同机 3090」时引 **pair** 行与上表 **PNG**。**§7 玩具协议**（S1–S4 ms）引 **X-20260421-*** 与 `run_path_protocol_cuda.sh`，**勿**与上表混为同一「一步」。
+
+**§7 复跑（可选）**：有 CUDA 环境时 `bash scripts/research/run_path_protocol_cuda.sh`；无 GPU 时以登记 JSON `results/metrics/*_20260421.json` 为准，不阻塞阶段 1 收束。
+
 ---
 
 ## 7. 执行顺序（建议）

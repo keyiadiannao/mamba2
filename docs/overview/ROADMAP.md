@@ -31,11 +31,28 @@
 
 ---
 
+## 阶段 2 入口（一页，滚动）
+
+**目标**（对齐 `PROJECT_MASTER_PLAN` 阶段 2）：在 **真语料** 上得到 **浅层树** + **与阶段 1 相同的 path reader harness**，并增加 **至少一个任务级指标**（导航或 QA），避免长期停在纯合成网格。
+
+| 项 | 说明 |
+|------|------|
+| **语料** | 优先扩展 **`benchmark_wikitext_tree.py` / `hf_corpus.wikitext2_leaf_chunks`**（已登记 **A-20260408-wikitext-3090-fused**）；或另增小语料 + `prepare_leaves_from_corpus.py` |
+| **建树** | 保持 **平衡 k 叉 / 自底向上** 与现有 `benchmark_text_tree` 接口一致；RAPTOR 式层次聚类 **可选**，以「能进同一 `run_tree_reader_benchmark`」为硬约束 |
+| **指标** | 阶段 1：**latency + m2_peak_mib**；阶段 2：**+1** 如路径准确率、浅层 QA EM/F1 或检索命中率（具体指标在开工前写入 **EXPERIMENT_REGISTRY** 新行） |
+| **依赖** | 阶段 1 **主图与登记**审计闭环（**`PHASE1_VALIDATION_PLAN.md` §6.5**）；AutoDL **`HF_ENDPOINT`** 与数据盘路径见 **`AUTODL_SETUP.md`** |
+| **风险** | 真树叶块长短不一 → 需固定 **padding/截断** 策略并在 registry 写明，避免与合成树混比 |
+
+**下一步可执行动作（择一启动）**：在 **`EXPERIMENT_REGISTRY`** 开新 **A-*** 或 **阶段 2-*** 占位行；或提交 **Wikitext 扩展网格** 的一条 smoke CSV（小 `num_leaves`）。
+
+---
+
 ## 历史记录（倒序，每条一行）
 
 | 日期 | 完成项 |
 |------|--------|
 | 2026-04-09 | **决策**：真 LM 导航 **X-20260422–25** 登记与 CUDA 对比 JSON 收口；**回归主线**（path-batch + §7）；**B（子头加强）** 延后 — 见 **CURRENT_SPRINT**「决策记录」与「后续研究方向」 |
+| 2026-04-09 | **主线执行**：`PHASE1_VALIDATION_PLAN.md` **§6.5** 主文登记↔CSV↔图审计；**ROADMAP** 增加 **阶段 2 入口（一页）** |
 | 2026-04-07 | 阶段 1 玩具树 + Transformer/GRU 微基准脚本；`requirements-mamba2-lock.txt` |
 | 2026-04-07 | `docs/experiments/PHASE1_VALIDATION_PLAN.md`；`scripts/benchmarks/sweep_tree_benchmark.py`；本地 preset 扫参 CSV |
 | 2026-04-07 | `docs/overview/PROJECT_MASTER_PLAN.md`、`CURRENT_SPRINT.md`；文本形树 `scripts/benchmarks/benchmark_text_tree.py`；扫参 CSV 增列与 `merge_sweep_csv.py` |

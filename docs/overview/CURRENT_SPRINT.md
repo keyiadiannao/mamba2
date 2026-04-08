@@ -57,10 +57,10 @@
 
 ### 主线待办（本周期优先）
 
-- [ ] **主图与登记对齐审计**：`EXPERIMENT_REGISTRY` **A-20260408-*** 与 `results/metrics/figures/mamba_3090_naive_vs_fused_*.png`、CSV 路径一致；正文/幻灯片只引用已登记行。  
-- [ ] **`PHASE1_VALIDATION_PLAN.md` 结论段**：用现有 CSV/图写清 **naive vs fused** 量级结论与 **5060 vs 3090** 不可混填规则。  
-- [ ] **§7 可复现性**：`run_path_protocol_cuda.sh` 与 `RESEARCH_NOTES` §7.3.1 表在 **同 commit** 下抽查一条复跑（可选）。  
-- [ ] **阶段 2 入口草拟**（轻量）：`PROJECT_MASTER_PLAN` 阶段 2「真数据浅层树」— 是否沿用 `benchmark_wikitext_tree` 扩展、或另开 RAPTOR 式建树脚本 — **一页纸**写入 `ROADMAP.md` 或本文件「后续方向」。
+- [x] **主图与登记对齐审计**：见 **`PHASE1_VALIDATION_PLAN.md` §6.5**（2026-04-09）：**A-20260408-paper-main-3090-*** ↔ `results/metrics_result/paper_main_*_{v1,naive_v1}.csv` ↔ `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`。  
+- [x] **`PHASE1_VALIDATION_PLAN.md` 结论段**：**§6.3**（结论文本）+ **§6.5**（引用规则）；**5060 vs 3090** 不可混填见 **§6.2**。  
+- [ ] **§7 可复现性**：有 CUDA 时 `bash scripts/research/run_path_protocol_cuda.sh` 抽查；否则以 **`results/metrics/*_20260421.json`** + 登记 **X-20260421-*** 为准（**§6.5** 末段）。  
+- [x] **阶段 2 入口草拟**：**`ROADMAP.md`「阶段 2 入口（一页）」**。
 
 ### 支线（延后，非本周期默认）
 
