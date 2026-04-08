@@ -2,7 +2,25 @@
 
 from __future__ import annotations
 
+import os
 from typing import List
+
+
+def _apply_hf_mirror_env() -> None:
+    """
+    When the server cannot reach huggingface.co (e.g. AutoDL without VPN), set before Hub access:
+
+    - **Explicit** (huggingface_hub standard): ``export HF_ENDPOINT=https://hf-mirror.com``
+    - **This repo**: ``export MAMBA2_USE_HF_MIRROR=1`` → sets ``HF_ENDPOINT`` to
+      ``MAMBA2_HF_ENDPOINT`` if set, else ``https://hf-mirror.com``.
+
+    See ``docs/environment/AUTODL_SETUP.md`` §「Hugging Face 镜像」.
+    """
+    flag = os.environ.get("MAMBA2_USE_HF_MIRROR", "").strip().lower()
+    if flag not in ("1", "true", "yes"):
+        return
+    url = (os.environ.get("MAMBA2_HF_ENDPOINT") or "https://hf-mirror.com").strip().rstrip("/")
+    os.environ["HF_ENDPOINT"] = url
 
 
 def wikitext2_leaf_chunks(
@@ -21,6 +39,8 @@ def wikitext2_leaf_chunks(
         from datasets import load_dataset
     except ImportError as e:
         raise ImportError("pip install datasets") from e
+
+    _apply_hf_mirror_env()
 
     if num_leaves < 1 or chars_per_leaf < 1:
         raise ValueError("num_leaves and chars_per_leaf must be positive")

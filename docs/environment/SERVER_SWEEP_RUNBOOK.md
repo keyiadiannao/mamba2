@@ -147,7 +147,13 @@ python scripts\benchmarks\plot_mamba_naive_vs_fused.py `
 
 ---
 
-## 5. 仅跑子集（省时）
+## 5. Wikitext 基准与 Hub 网络
+
+`scripts/benchmarks/benchmark_wikitext_tree.py` 会经 `datasets` 访问 Hub。若报 **`Network is unreachable`** / 无法连 `huggingface.co`，见 **`AUTODL_SETUP.md` §2b**（`HF_ENDPOINT` / `MAMBA2_USE_HF_MIRROR=1`）。
+
+---
+
+## 6. 仅跑子集（省时）
 
 若只想快速验证 fused，只跑 A：
 

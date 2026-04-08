@@ -6,6 +6,14 @@ bottom-up `TreeNode` -> same TF / GRU / Mamba2 path reader benchmark.
 Requires: pip install datasets
 
   python scripts/benchmarks/benchmark_wikitext_tree.py --num-leaves 8 --fanout 2
+
+AutoDL / 无法直连 huggingface.co 时，在运行前任选其一::
+
+  export HF_ENDPOINT=https://hf-mirror.com
+  # 或：export MAMBA2_USE_HF_MIRROR=1
+  # 自定义镜像：export MAMBA2_HF_ENDPOINT=https://你的镜像主机
+
+见 ``docs/environment/AUTODL_SETUP.md``（Hugging Face 镜像）。
 """
 from __future__ import annotations
 

@@ -35,6 +35,34 @@ python -m pip install "setuptools>=70,<82"
 python -m pip install pyyaml tqdm "transformers>=4.45" accelerate datasets
 ```
 
+### 2b. Hugging Face 镜像（`datasets` / Hub 无法直连）
+
+若出现 **`Network is unreachable`**、**连接 huggingface.co 超时**（机房不能访问外网 Hub），需把请求指到镜像；`datasets` 与 `huggingface_hub` 会读 **`HF_ENDPOINT`**。
+
+**方式 A（通用，推荐）** — 与 [hf-mirror](https://hf-mirror.com/) 等文档一致：
+
+```bash
+export HF_ENDPOINT=https://hf-mirror.com
+```
+
+可写入 `~/.bashrc` 或跑基准前在同一 shell 里 `export` 一次。
+
+**方式 B（本仓库快捷开关）** — 在 `wikitext2_leaf_chunks` 等加载前自动设置 `HF_ENDPOINT`：
+
+```bash
+export MAMBA2_USE_HF_MIRROR=1
+# 可选，默认即为 https://hf-mirror.com：
+# export MAMBA2_HF_ENDPOINT=https://hf-mirror.com
+```
+
+**验证**（应能列出或下载，而非立刻 `Network is unreachable`）：
+
+```bash
+python -c "from datasets import load_dataset; load_dataset('wikitext','wikitext-2-raw-v1',split='train[:1]')"
+```
+
+若镜像亦不可用，只能在**能访问 Hub 的机器**上先 `load_dataset` 缓存后，把 HuggingFace 缓存目录拷到服务器的 `HF_HOME` / `HF_DATASETS_CACHE` 所指路径（见 [缓存文档](https://huggingface.co/docs/datasets/cache)）。
+
 ## 3. 环境变量（建议）
 
 ```bash
