@@ -1,0 +1,39 @@
+{
+  "device": "cuda",
+  "depth": 3,
+  "fanout": 2,
+  "num_leaves": 8,
+  "chunk_len": 8,
+  "transformer": {
+    "reader": "transformer",
+    "elapsed_s": 0.017464,
+    "per_step_s": 0.003493,
+    "peak_alloc_mib": 24.17,
+    "batch_paths": 8,
+    "tokens_per_path": 32,
+    "dim": 128
+  },
+  "gru": {
+    "reader": "gru",
+    "elapsed_s": 0.00575,
+    "per_step_s": 0.00115,
+    "peak_alloc_mib": 42.8,
+    "batch_paths": 8,
+    "tokens_per_path": 32,
+    "dim": 128
+  },
+  "mamba2": {
+    "reader": "mamba2",
+    "elapsed_s": 0.203766,
+    "per_step_s": 0.040753,
+    "peak_alloc_mib": 1141.51,
+    "batch_paths": 8,
+    "tokens_per_path": 32,
+    "dim": 128
+  },
+  "tree_kind": "wikitext2_bottom_up",
+  "dataset": "wikitext",
+  "wikitext_config": "wikitext-2-raw-v1",
+  "chars_per_leaf": 600,
+  "run_note": "P0 local; warmup=2 reps=5; HF hub SSL fail, used local cache; mamba2 naive (no mamba-ssm on Windows)"
+}
