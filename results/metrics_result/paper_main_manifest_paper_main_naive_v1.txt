@@ -1,0 +1,7 @@
+mode=hf_naive
+utc=2026-04-08T07:55:49Z
+git_sha=6fa78733cf6b75d2f9a492c73c65503bedba5b2a
+torch 2.11.0+cu126 cuda True
+mamba_ssm False
+causal_conv1d False
+NVIDIA GeForce RTX 3090, 580.105.08, 49152 MiB

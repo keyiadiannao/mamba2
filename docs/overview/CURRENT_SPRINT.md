@@ -64,8 +64,8 @@
 
 ### 后续两周执行计划（主线，可勾选）
 
-- [ ] **成文**：把 **`PHASE1_VALIDATION_PLAN.md` §6.3** 结论文本迁入论文/报告「阶段 1」节；主图只引用 **A-20260408-paper-main-3090-pair** + **`FIGURE_CAPTIONS_STAGE1.md`** 句稿。  
-- [ ] **§7 归档（可选）**：将 AutoDL 上 `*_20260408T1617Z.json`（或最新 `STAMP`）**复制到本机** `results/metrics/` 并 **git add**（或仅网盘备份 + 在 **EXPERIMENT_REGISTRY** 备注路径），便于离线 diff。  
+- [x] **成文**：**`docs/experiments/PHASE1_MANUSCRIPT.md`**（摘要—方法—结果—§7 关系—**`results/metrics_result/`** 索引—结论文本—英文摘要）；正文可整节迁移或按需截取 **§6** 与 **`FIGURE_CAPTIONS_STAGE1.md`** 句稿。  
+- [x] **指标归档**：主文 CSV、Wikitext JSON、§7 复跑 `*_20260408T1617Z.json`、大叶数扫参等已集中于 **`results/metrics_result/`**（本机 `D:\cursor_try\mamba2\results\metrics_result`），并已纳入 **Git** 与 **§6.5** 表。  
 - [ ] **阶段 2 开工**：在 **EXPERIMENT_REGISTRY** 新增占位行（如 **A-20260410-stage2-wikitext-smoke**）；跑 **`benchmark_wikitext_tree.py`** 小网格（`num_leaves≤16`）→ 一条 CSV/JSON。  
 - [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
 

@@ -1,0 +1,5 @@
+utc_iso,git_sha,device,gpu_name,torch_version,depth,fanout,num_leaves,chunk_len,tokens_per_path,dim,warmup,reps,tf_elapsed_s,tf_per_step_s,tf_peak_mib,gru_elapsed_s,gru_per_step_s,gru_peak_mib,m2_elapsed_s,m2_per_step_s,m2_peak_mib
+2026-04-08T09:51:32Z,6fa7873,cuda,NVIDIA GeForce RTX 3090,2.11.0+cu126,6,2,64,4,28,256,2,5,0.018155,0.003631,97.94,0.013915,0.002783,76.54,0.067007,0.013401,130.07
+2026-04-08T09:51:46Z,6fa7873,cuda,NVIDIA GeForce RTX 3090,2.11.0+cu126,6,2,64,8,56,256,2,5,0.021125,0.004225,186.91,0.024224,0.004845,134.45,0.056812,0.011362,182.3
+2026-04-08T09:51:46Z,6fa7873,cuda,NVIDIA GeForce RTX 3090,2.11.0+cu126,7,2,128,4,32,256,2,5,0.022233,0.004447,224.48,0.017611,0.003522,165.01,0.05966,0.011932,256.69
+2026-04-08T09:51:47Z,6fa7873,cuda,NVIDIA GeForce RTX 3090,2.11.0+cu126,7,2,128,8,64,256,2,5,0.038971,0.007794,405.5,0.028569,0.005714,277.68,0.068845,0.013769,348.37

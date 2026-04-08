@@ -1,6 +1,7 @@
 # 阶段 1 完整总结（存档）
 
-> **用途**：论文/报告「阶段 1 做了什么」的一页式叙事 + 复现入口；与 **`PHASE1_VALIDATION_PLAN.md`**（扫参细则）、**`FIGURE_CAPTIONS_STAGE1.md`**（图注句稿）、**`RESEARCH_NOTES.md` §7**（协议数学）分工不同 — 本文件不重写公式，只收束**结论与路径**。
+> **用途**：论文/报告「阶段 1 做了什么」的一页式叙事 + 复现入口；与 **`PHASE1_VALIDATION_PLAN.md`**（扫参细则）、**`FIGURE_CAPTIONS_STAGE1.md`**（图注句稿）、**`RESEARCH_NOTES.md` §7**（协议数学）分工不同 — 本文件不重写公式，只收束**结论与路径**。  
+> **连续成稿（摘要—方法—结果—归档）**：**`PHASE1_MANUSCRIPT.md`**。
 
 ---
 
@@ -16,9 +17,9 @@
 
 | 类别 | 内容 | 登记 / 路径 |
 |------|------|-------------|
-| **主文 path-batch** | 3090 同机 **naive vs fused** 扫参 + 三张主图 | **A-20260408-paper-main-3090-{fused,naive,pair}**；CSV 见 **`PHASE1_VALIDATION_PLAN.md` §6.5**；图 `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png` |
-| **语料浅树** | Wikitext-2 叶块 + **同一 reader harness** | **A-20260408-wikitext-3090-fused** |
-| **§7 玩具协议** | S1–S4 单路径、depth4/chunk8/dim128，3090 CUDA JSON | **X-20260421-***；仓内归档 `results/metrics/*_20260421.json` |
+| **主文 path-batch** | 3090 同机 **naive vs fused** 扫参 + 三张主图 | **A-20260408-paper-main-3090-{fused,naive,pair}**；CSV 见 **`results/metrics_result/paper_main_*.csv`** 与 **`PHASE1_VALIDATION_PLAN.md` §6.5**；图 `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png` |
+| **语料浅树** | Wikitext-2 叶块 + **同一 reader harness** | **A-20260408-wikitext-3090-fused**；JSON **`results/metrics_result/benchmark_wikitext_3090_fused_20260408T0846Z.json`** |
+| **§7 玩具协议** | S1–S4 单路径、depth4/chunk8/dim128，3090 CUDA JSON | **X-20260421-***；`results/metrics/*_20260421.json` + **复跑** `results/metrics_result/*_20260408T1617Z.json`（及 **`PHASE1_MANUSCRIPT.md` §5** 索引） |
 | **SSGS 导航环** | `dfs_ssgs_mamba` + `DynamicCache` 快照/恢复 | **X-20260421-ssgs-mamba-dfs-demo** 等 |
 | **叙事护栏** | 主图 vs §7 vs SSGS vs 真 LM 四线边界 | **`FIGURE_CAPTIONS_STAGE1.md`** 篇首、`RESEARCH_NOTES` §7.0 |
 

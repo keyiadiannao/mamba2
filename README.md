@@ -8,6 +8,7 @@
 - 双机分工与上传下载规范：`docs/environment/SYNC_AND_ENVIRONMENTS.md`
 - 实验登记（随做随记）：`docs/experiments/EXPERIMENT_REGISTRY.md`
 - 阶段 1 验证规划与扫参说明：`docs/experiments/PHASE1_VALIDATION_PLAN.md`
+- 阶段 1 **成文稿**（可贴论文/报告）：`docs/experiments/PHASE1_MANUSCRIPT.md`；**指标归档目录**：`results/metrics_result/`
 - **总体规划与当前迭代**：`docs/overview/PROJECT_MASTER_PLAN.md`、`docs/overview/CURRENT_SPRINT.md`
 - 数据与样例：`docs/experiments/DATASETS.md`
 - AutoDL 环境步骤：`docs/environment/AUTODL_SETUP.md`

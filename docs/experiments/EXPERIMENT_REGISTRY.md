@@ -1,6 +1,7 @@
 # 实验登记册
 
-> 每条实验一行（或一个小节）。**必填**：id、日期、机器、git commit、目的、关键命令、主要指标、一句话结论。
+> 每条实验一行（或一个小节）。**必填**：id、日期、机器、git commit、目的、关键命令、主要指标、一句话结论。  
+> **指标归档 hub**（主文 CSV、Wikitext JSON、§7 `STAMP` 复跑、大叶数扫参等）：**`results/metrics_result/`**；阶段 1 成稿：**`PHASE1_MANUSCRIPT.md`**。
 
 ---
 

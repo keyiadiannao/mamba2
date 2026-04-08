@@ -1,7 +1,7 @@
 # 阶段 1 验证：规划与扫参说明
 
-> 与 `docs/overview/PROJECT_OVERVIEW.md` 阶段 1 对齐；执行记录进 `docs/experiments/EXPERIMENT_REGISTRY.md`，原始表格进 `results/metrics/`。  
-> **阶段 1 文章体总结 + §7 CUDA 串行复跑完整指令**：**`PHASE1_COMPLETE_SUMMARY.md`**。
+> 与 `docs/overview/PROJECT_OVERVIEW.md` 阶段 1 对齐；执行记录进 `docs/experiments/EXPERIMENT_REGISTRY.md`；主文 CSV / §7 复跑等归档见 **`results/metrics_result/`**。  
+> **阶段 1 一页式存档 + §7 CUDA 复跑指令**：**`PHASE1_COMPLETE_SUMMARY.md`**。**可贴正文成稿**：**`PHASE1_MANUSCRIPT.md`**。
 
 ---
 
@@ -94,10 +94,11 @@
 | **A-20260408-paper-main-3090-fused** | 3090 fused 主文扫参 | `results/metrics_result/paper_main_dim128_localgrid_paper_main_v1.csv`、`paper_main_dim256_paper_main_v1.csv`、`paper_main_dim384_paper_main_v1.csv`；`paper_main_manifest_paper_main_v1.txt` |
 | **A-20260408-paper-main-3090-naive** | 同网格 `mamba2_naive` | 同上 basename 后缀 **`_paper_main_naive_v1.csv`**；`paper_main_manifest_paper_main_naive_v1.txt` |
 | **A-20260408-paper-main-3090-pair** | 同机成对对照（作图） | `results/metrics/figures/mamba_3090_naive_vs_fused_dim128_paper_main_v1.png`、`dim256`、`dim384` |
+| **§7 复跑（STAMP）** | S1–S4 串行 JSON（与 `*_20260421.json` 同协议） | **`results/metrics_result/`** 内 `*_20260408T1617Z.json` 等（与 **`MAMBA2_RESULTS_ROOT`** 备份一致）；历史归档仍在 `results/metrics/*_20260421.json` |
 
-**结论文本**：仍用 **§6.3**；写「同机 3090」时引 **pair** 行与上表 **PNG**。**§7 玩具协议**（S1–S4 ms）引 **X-20260421-*** 与 `run_path_protocol_cuda.sh`，**勿**与上表混为同一「一步」。
+**结论文本**：仍用 **§6.3**；写「同机 3090」时引 **pair** 行与上表 **PNG**。**§7 玩具协议**（S1–S4 ms）引 **X-20260421-*** 与 `run_path_protocol_cuda.sh`，**勿**与上表混为同一「一步」。**成稿叙述**见 **`PHASE1_MANUSCRIPT.md`**。
 
-**§7 复跑（可选）**：有 CUDA 环境时执行串行脚本；**完整命令与环境说明**见 **`PHASE1_COMPLETE_SUMMARY.md` 附录 A**。无 GPU 时以登记 JSON `results/metrics/*_20260421.json` 为准，不阻塞阶段 1 收束。
+**§7 复跑（可选）**：有 CUDA 环境时执行串行脚本；**完整命令与环境说明**见 **`PHASE1_COMPLETE_SUMMARY.md` 附录 A**。无 GPU 时以 `results/metrics/*_20260421.json` 或 **`results/metrics_result/*_20260408T1617Z.json`** 为准。
 
 ---
 
