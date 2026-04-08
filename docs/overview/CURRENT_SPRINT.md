@@ -5,13 +5,23 @@
 ## 周期
 
 **开始**：2026-04-07  
-**当前滚动至**：2026-04-21 起（主文级 3090 数据已齐，迭代重点转向叙事收束与 Wikitext/§7 边界）
+**当前滚动至**：**2026-04-09** 起 — **回归主线**（见下「决策记录」）；辅线 **X-20260422–25** 已收口归档。
 
 ---
 
-## 本迭代目标
+## 决策记录（真 LM 支线 → 主线）
 
-把阶段 1 从**纯合成树**推进到**可读的文本形树 + 同一 reader 基准槽位**；**AutoDL** 上 **fused 主环境**与 **`mamba2_naive` 同机对照**已跑通（见 `EXPERIMENT_REGISTRY` **A-20260408-paper-main-3090-***）。
+**日期**：2026-04-09  
+
+- **已完成**：**X-20260422–25**（最小 LM 闭环、启发式导航、goal 子头、叙事收束、**SSGS×LM** 并列；**CUDA** 指标与 `ssgs_lm_nav_compare_default8_cuda.json` 已登记 **EXPERIMENT_REGISTRY**）。  
+- **定位**：该支线 **不替代** 主文 **path-batch 三 reader** harness；用于 **边界叙事** 与日后 **检索头 / 策略** 接口参考（见 `FIGURE_CAPTIONS_STAGE1.md` P0、`RESEARCH_NOTES` §7.0 / §7.4）。  
+- **共识**：**优先回到主线** — `PROJECT_MASTER_PLAN` **§1.1** 树内 **Mamba vs Transformer** 与阶段 1 **曲线/表** 的核查与成文；**B（MLP / 解冻 LM 抬 reach_rate）** **整体延后**，仅在单独排期或升格为正式子课题时再做。
+
+---
+
+## 本迭代目标（主线）
+
+巩固阶段 1 **可交付素材**：**主图**（naive vs fused、与 `PHASE1_VALIDATION_PLAN` §6 一致）、**Wikitext 同 harness**、**§7 玩具协议**（S1–S4 + 复跑脚本）与 **登记册** 一一对应；避免将 **X-20260422–25** 数字与主图混读。
 
 ---
 
@@ -43,8 +53,18 @@
 - [x] **树上导航任务指标（启发式）**：`tree_lm_nav_eval.py` + `demo_tree_lm_nav_greedy.py`（子文档 CE argmin、**reach_rate** / **child_choice_accuracy**）；登记 **X-20260423-tree-lm-nav-greedy**
 - [x] **目标叶条件可学习子指针**：`tree_lm_nav_learned.py` + `demo_tree_lm_nav_learned.py`（冻结 LM、goal 嵌入 + 线性头；**X-20260424**；**CPU/CUDA** 归档 `tree_lm_nav_learned_default8_{cpu,cuda}.json`，**reach_rate=0.375** 一致）
 - [x] **叙事收束（C）**：`FIGURE_CAPTIONS_STAGE1.md` P0 段末 + `RESEARCH_NOTES` §7.0 / §7.4 — **X-20260424** 默认 **reach_rate** 仍低于 1，勿过度宣称；与 SSGS **任务不同**
-- [x] **SSGS×LM 并列（A）**：`demo_ssgs_lm_nav_compare.py`（同文本 8 叶：**dfs_ssgs_mamba** 必达 vs **子头贪心**）；`tests/test_ssgs_lm_nav_compare.py`；登记 **X-20260425**；可选 `--out-json` 归档
-- [ ] **下一跳（优先 B）**：**抬高可学习头上限**（**X-20260424**）：浅 MLP、`goal_dim`、更长 epoch / 调 lr、或 **小步解冻 LM**；用同一 **`--eval-all-leaves`** 与 **X-20260425** 对照脚本观察 **reach_rate** 是否过 **0.375**。可选：**X-20260425** 加 **wall-clock**（SSGS vs LM 八 goal）
+- [x] **SSGS×LM 并列（A）**：`demo_ssgs_lm_nav_compare.py`（同文本 8 叶：**dfs_ssgs_mamba** 必达 vs **子头贪心**）；`tests/test_ssgs_lm_nav_compare.py`；登记 **X-20260425**；**CUDA** 归档 `ssgs_lm_nav_compare_default8_cuda.json`
+
+### 主线待办（本周期优先）
+
+- [ ] **主图与登记对齐审计**：`EXPERIMENT_REGISTRY` **A-20260408-*** 与 `results/metrics/figures/mamba_3090_naive_vs_fused_*.png`、CSV 路径一致；正文/幻灯片只引用已登记行。  
+- [ ] **`PHASE1_VALIDATION_PLAN.md` 结论段**：用现有 CSV/图写清 **naive vs fused** 量级结论与 **5060 vs 3090** 不可混填规则。  
+- [ ] **§7 可复现性**：`run_path_protocol_cuda.sh` 与 `RESEARCH_NOTES` §7.3.1 表在 **同 commit** 下抽查一条复跑（可选）。  
+- [ ] **阶段 2 入口草拟**（轻量）：`PROJECT_MASTER_PLAN` 阶段 2「真数据浅层树」— 是否沿用 `benchmark_wikitext_tree` 扩展、或另开 RAPTOR 式建树脚本 — **一页纸**写入 `ROADMAP.md` 或本文件「后续方向」。
+
+### 支线（延后，非本周期默认）
+
+- [ ] **B**：抬高 **X-20260424** 子头（MLP、`goal_dim`、epoch/lr、小步解冻 LM）；**X-20260425** 加 **wall-clock** — 仅在 **GPU 空闲** 或 **导航升格为正式贡献** 时启动。
 
 ---
 
@@ -59,14 +79,25 @@
 
 | 优先级 | 方向 | 可执行项 |
 |--------|------|----------|
-| P0 | **阶段 1 叙事收束** | **`FIGURE_CAPTIONS_STAGE1.md`**（篇首 **P0 叙事边界（中文摘要）** + 中英图注/表注）；`RESEARCH_NOTES.md` **§7.0** 段首同主题摘要 |
-| P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT` 镜像；JSON 与登记见 **A-20260408-wikitext-3090-fused** |
-| P1 | **测量协议成文** | S1–S4；**真 LM**：**X-20260422–25**（含 **X-20260425** SSGS×LM 并列脚本）；下一跳：**调 head / 解冻** 追 **reach_rate**，或 **X-20260425** 加 **wall-clock** |
-| P1 | **SSGS** | 张量玩具 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；**Mamba `DynamicCache` DFS**：`dfs_ssgs_mamba` + `demo_ssgs_mamba_dfs.py --out-json`（**X-20260421-ssgs-mamba-dfs-demo**，见 `RESEARCH_NOTES` §6 / §7.4） |
-| P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
-| 延后 | **大叶数研究扫参** | （已完成）**A-20260408-research-large-leaves-3090**；扩展网格可另开新 TAG |
+| P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **EXPERIMENT_REGISTRY** 对齐；**`PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 仅作 **口径护栏**（已完成大部，剩审计与截稿前润色） |
+| P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT`；**A-20260408-wikitext-3090-fused** — 主线引用时标明 **与合成树同一 harness** |
+| P1 | **主线：§7 协议** | S1–S4 JSON + **`run_path_protocol_cuda.sh`**；与主图 **分列声明**（§7.3.1），**禁止**与 path-batch 混减 |
+| P1 | **SSGS（协议层）** | **X-20260421-*** 张量 + **`dfs_ssgs_mamba`** demo；**不等于** 真 LM 导航线 |
+| P2 | **阶段 2 预备** | 浅层真数据树 + 同一 reader 槽位（`PROJECT_MASTER_PLAN` 阶段 2）；依赖 **A** 流水线稳定 |
+| P2 | **检索头 B** | 探针与层/头报告（与主线并行，需 **48G** 窗口） |
+| 延后 | **真 LM 支线 B** | **X-20260424** 子头加强、**X-20260425** wall-clock；**非**阶段 1 unblock |
+| 延后 | **大叶数扩展** | **A-20260408-research-large-leaves-3090** 已归档；新网格另开 **TAG** |
 
-**讨论结论（写入此表的目的）**：主故事仍是 **`docs/overview/PROJECT_MASTER_PLAN.md` §1.1 树内 Mamba vs Transformer**；**状态快照 / SSGS** 作为协议层贡献，需 **公平基线下的曲线** 支撑，避免仅停留在类比。
+**讨论结论（写入此表的目的）**：主故事仍是 **`PROJECT_MASTER_PLAN.md` §1.1 树内 Mamba vs Transformer**；**X-20260422–25** 为 **辅线登记**，回归主线后 **默认不增投** 直至阶段 2/检索头需要接口演示。
+
+---
+
+## 后续研究方向（滚动，与总览一致）
+
+1. **近期（阶段 1 收尾）**：主图 + §7 **双轨叙事**定稿；registry / 图 / CSV **三角互证**；5060 本地只跑 **smoke 与结构校验**，**3090 数字以登记为准**。  
+2. **中期（阶段 2）**：在 **真语料** 上建 **浅层树**（Wikitext 扩展或 RAPTOR 式），**同一** `benchmark_*_tree` / reader 接口，补 **1 个任务指标**（导航或 QA）。  
+3. **并行（检索头）**：`PROJECT_MASTER_PLAN` **B→C**；与 **A** 共享小树探针，再上 **48G** 注入实验。  
+4. **长期（协议贡献）**：**SSM 快照 vs TF-KV** 在 **同等试错轨迹** 下的对照表（§7.5 S5）；真 LM 导航仅在有 **新假设** 时再接回。
 
 ---
 

@@ -6,7 +6,7 @@
 
 ## 当前周期（请每次更新日期范围）
 
-**周期（滚动）**：以 **`docs/overview/CURRENT_SPRINT.md`** 为准（截至登记：阶段 1 主数据、§7 协议与 **SSGS×Mamba** 已齐）；本表保留早期周历作归档。
+**周期（滚动）**：以 **`docs/overview/CURRENT_SPRINT.md`** 为准。**2026-04-09**：**真 LM 支线（X-20260422–25）** 已归档；**迭代焦点回归主线** — 阶段 1 主图/path-batch 与 §7 的 **审计与成文**，支线 **B** 整体延后。
 
 | 状态 | 任务 | 机器 | 产出 |
 |------|------|------|------|
@@ -35,6 +35,7 @@
 
 | 日期 | 完成项 |
 |------|--------|
+| 2026-04-09 | **决策**：真 LM 导航 **X-20260422–25** 登记与 CUDA 对比 JSON 收口；**回归主线**（path-batch + §7）；**B（子头加强）** 延后 — 见 **CURRENT_SPRINT**「决策记录」与「后续研究方向」 |
 | 2026-04-07 | 阶段 1 玩具树 + Transformer/GRU 微基准脚本；`requirements-mamba2-lock.txt` |
 | 2026-04-07 | `docs/experiments/PHASE1_VALIDATION_PLAN.md`；`scripts/benchmarks/sweep_tree_benchmark.py`；本地 preset 扫参 CSV |
 | 2026-04-07 | `docs/overview/PROJECT_MASTER_PLAN.md`、`CURRENT_SPRINT.md`；文本形树 `scripts/benchmarks/benchmark_text_tree.py`；扫参 CSV 增列与 `merge_sweep_csv.py` |
