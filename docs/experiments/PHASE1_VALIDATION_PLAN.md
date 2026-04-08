@@ -1,6 +1,7 @@
 # 阶段 1 验证：规划与扫参说明
 
-> 与 `docs/overview/PROJECT_OVERVIEW.md` 阶段 1 对齐；执行记录进 `docs/experiments/EXPERIMENT_REGISTRY.md`，原始表格进 `results/metrics/`。
+> 与 `docs/overview/PROJECT_OVERVIEW.md` 阶段 1 对齐；执行记录进 `docs/experiments/EXPERIMENT_REGISTRY.md`，原始表格进 `results/metrics/`。  
+> **阶段 1 文章体总结 + §7 CUDA 串行复跑完整指令**：**`PHASE1_COMPLETE_SUMMARY.md`**。
 
 ---
 
@@ -96,7 +97,7 @@
 
 **结论文本**：仍用 **§6.3**；写「同机 3090」时引 **pair** 行与上表 **PNG**。**§7 玩具协议**（S1–S4 ms）引 **X-20260421-*** 与 `run_path_protocol_cuda.sh`，**勿**与上表混为同一「一步」。
 
-**§7 复跑（可选）**：有 CUDA 环境时 `bash scripts/research/run_path_protocol_cuda.sh`；无 GPU 时以登记 JSON `results/metrics/*_20260421.json` 为准，不阻塞阶段 1 收束。
+**§7 复跑（可选）**：有 CUDA 环境时执行串行脚本；**完整命令与环境说明**见 **`PHASE1_COMPLETE_SUMMARY.md` 附录 A**。无 GPU 时以登记 JSON `results/metrics/*_20260421.json` 为准，不阻塞阶段 1 收束。
 
 ---
 
