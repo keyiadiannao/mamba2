@@ -37,7 +37,7 @@
 - [x] **S4 SSM restore**：`benchmark_mamba2_cache_restore_segments.py`；**X-20260421-mamba2-cache-restore-cuda**（`mamba2_cache_restore_depth4_cuda_same_20260421.json` + **`mamba2_cache_restore_depth4_cuda_fromcpu_20260421.json`**）
 - [x] **§7 协议复跑入口**：`scripts/research/run_path_protocol_cuda.sh` + `PHASE1_VALIDATION_PLAN` / `FIGURE_CAPTIONS` / `SERVER_SWEEP_RUNBOOK` 交叉引用
 - [x] **叙事**：`FIGURE_CAPTIONS_STAGE1.md` 附录表注（中英）界定主图 vs §7.3.1
-- [x] **SSGS × Mamba**：`MambaNavState` / `dfs_ssgs_mamba` / `mamba_cache_utils.py`；`demo_ssgs_mamba_dfs.py`；`tests/test_ssgs_mamba.py`
+- [x] **SSGS × Mamba**：`MambaNavState` / `dfs_ssgs_mamba` / `mamba_cache_utils.py`；`demo_ssgs_mamba_dfs.py`；`tests/test_ssgs_mamba.py`；登记 **X-20260421-ssgs-mamba-dfs-demo**
 
 ---
 

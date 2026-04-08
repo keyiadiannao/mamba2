@@ -57,7 +57,7 @@
 ## 6. 与仓库现状的关系
 
 - 当前 **`Mamba2PathReader` + `benchmark_*`**：验证 **单路径 / 批路径**上的延迟与显存。
-- **SSGS**：`src/rag_tree/ssgs.py` — `dfs_ssgs`（id 状态）、`dfs_ssgs_tensor`（占位向量 h）、**`MambaNavState` + `dfs_ssgs_mamba`**（HF **`Mamba2Model` + `DynamicCache`**，按 **token** 前向 + **clone / zero_ / copy_** 快照，与 §7 S1/S4 同张量族）；单测 `tests/test_ssgs.py`、`tests/test_ssgs_mamba.py`；演示 `scripts/research/demo_ssgs_mamba_dfs.py`。
+- **SSGS**：`src/rag_tree/ssgs.py` — `dfs_ssgs`（id 状态）、`dfs_ssgs_tensor`（占位向量 h）、**`MambaNavState` + `dfs_ssgs_mamba`**（HF **`Mamba2Model` + `DynamicCache`**，按 **token** 前向 + **clone / zero_ / copy_** 快照，与 §7 S1/S4 同张量族）；单测 `tests/test_ssgs.py`、`tests/test_ssgs_mamba.py`；演示 `scripts/research/demo_ssgs_mamba_dfs.py`。**可复现登记**：`EXPERIMENT_REGISTRY` **X-20260421-ssgs-mamba-dfs-demo**（CPU/CUDA 同 DFS 迹；CUDA 用 **`torch_forward`** 补丁）。
 - **仍非「全 LM」**：未接生成头、长上下文任务 loss；回溯玩具数见 §7.3.1 与 **X-20260421-***。
 
 ---
