@@ -93,9 +93,10 @@ python scripts\research\demo_tree_lm_nav_greedy.py --eval-all-leaves --out-json 
 
 ```powershell
 python scripts\research\demo_tree_lm_nav_learned.py --cpu --epochs 250 --eval-all-leaves --out-json results\metrics\tree_lm_nav_learned_default8_cpu.json
+python scripts\research\demo_tree_lm_nav_learned.py --epochs 250 --eval-all-leaves --out-json results\metrics\tree_lm_nav_learned_default8_cuda.json
 ```
 
-登记 **X-20260424-tree-lm-nav-learned**；默认 8 叶上 **reach_rate** 高于 **X-20260423**（见 `EXPERIMENT_REGISTRY` 与 `RESEARCH_NOTES` §7.4）。
+登记 **X-20260424-tree-lm-nav-learned**；默认 8 叶上 **reach_rate** 高于 **X-20260423**；**CPU/CUDA** 指标一致（见 `EXPERIMENT_REGISTRY` 与 `RESEARCH_NOTES` §7.4）。
 
 ## 单测（SSGS 草稿）
 

@@ -1,0 +1,330 @@
+{
+  "kind": "tree_lm_nav_learned_eval",
+  "git_sha": "6fa7873",
+  "model": "sshleifer/tiny-gpt2",
+  "device": "cuda",
+  "goal_conditioned": true,
+  "freeze_lm": true,
+  "epochs": 250,
+  "lr": 0.002,
+  "shuffle_seed": 0,
+  "train_examples": 24,
+  "final_epoch_mean_loss": 0.43024796418467304,
+  "loss_curve_last5": [
+    0.43031340710876975,
+    0.4302966580580687,
+    0.43028020085330354,
+    0.43026394721770583,
+    0.43024796418467304
+  ],
+  "eval_all_leaves": true,
+  "num_leaves": 8,
+  "reach_rate": 0.375,
+  "mean_child_choice_accuracy": 0.5833333333333333,
+  "per_leaf": [
+    {
+      "target_leaf_index": 0,
+      "reached_target_leaf": true,
+      "num_internal_decisions": 3,
+      "child_choice_accuracy": 1.0,
+      "steps": [
+        {
+          "depth": 0,
+          "scores_per_child": [
+            3.9456255435943604,
+            -3.451655387878418
+          ],
+          "chosen_child": 0,
+          "gold_child": 0,
+          "correct": true
+        },
+        {
+          "depth": 1,
+          "scores_per_child": [
+            2.6058857440948486,
+            -2.2596864700317383
+          ],
+          "chosen_child": 0,
+          "gold_child": 0,
+          "correct": true
+        },
+        {
+          "depth": 2,
+          "scores_per_child": [
+            2.6124870777130127,
+            -2.265559673309326
+          ],
+          "chosen_child": 0,
+          "gold_child": 0,
+          "correct": true
+        }
+      ]
+    },
+    {
+      "target_leaf_index": 1,
+      "reached_target_leaf": false,
+      "num_internal_decisions": 3,
+      "child_choice_accuracy": 0.6666666666666666,
+      "steps": [
+        {
+          "depth": 0,
+          "scores_per_child": [
+            0.5561697483062744,
+            -2.1007704734802246
+          ],
+          "chosen_child": 0,
+          "gold_child": 0,
+          "correct": true
+        },
+        {
+          "depth": 1,
+          "scores_per_child": [
+            -0.7835699319839478,
+            -0.9088016748428345
+          ],
+          "chosen_child": 0,
+          "gold_child": 0,
+          "correct": true
+        },
+        {
+          "depth": 2,
+          "scores_per_child": [
+            -0.7769684791564941,
+            -0.9146748781204224
+          ],
+          "chosen_child": 0,
+          "gold_child": 1,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "target_leaf_index": 2,
+      "reached_target_leaf": true,
+      "num_internal_decisions": 3,
+      "child_choice_accuracy": 1.0,
+      "steps": [
+        {
+          "depth": 0,
+          "scores_per_child": [
+            0.6868155002593994,
+            -1.039460301399231
+          ],
+          "chosen_child": 0,
+          "gold_child": 0,
+          "correct": true
+        },
+        {
+          "depth": 1,
+          "scores_per_child": [
+            -0.6529242992401123,
+            0.15250861644744873
+          ],
+          "chosen_child": 1,
+          "gold_child": 1,
+          "correct": true
+        },
+        {
+          "depth": 2,
+          "scores_per_child": [
+            0.6399334669113159,
+            -0.9977492094039917
+          ],
+          "chosen_child": 0,
+          "gold_child": 0,
+          "correct": true
+        }
+      ]
+    },
+    {
+      "target_leaf_index": 3,
+      "reached_target_leaf": false,
+      "num_internal_decisions": 3,
+      "child_choice_accuracy": 0.0,
+      "steps": [
+        {
+          "depth": 0,
+          "scores_per_child": [
+            0.11359253525733948,
+            0.2042539417743683
+          ],
+          "chosen_child": 1,
+          "gold_child": 0,
+          "correct": false
+        },
+        {
+          "depth": 1,
+          "scores_per_child": [
+            -0.2314077913761139,
+            0.5112013816833496
+          ],
+          "chosen_child": 1,
+          "gold_child": -1,
+          "correct": false
+        },
+        {
+          "depth": 2,
+          "scores_per_child": [
+            -0.2314077913761139,
+            0.5112013816833496
+          ],
+          "chosen_child": 1,
+          "gold_child": -1,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "target_leaf_index": 4,
+      "reached_target_leaf": false,
+      "num_internal_decisions": 3,
+      "child_choice_accuracy": 0.0,
+      "steps": [
+        {
+          "depth": 0,
+          "scores_per_child": [
+            0.8502695560455322,
+            -0.29416027665138245
+          ],
+          "chosen_child": 0,
+          "gold_child": 1,
+          "correct": false
+        },
+        {
+          "depth": 1,
+          "scores_per_child": [
+            -0.48947009444236755,
+            0.8978085517883301
+          ],
+          "chosen_child": 1,
+          "gold_child": -1,
+          "correct": false
+        },
+        {
+          "depth": 2,
+          "scores_per_child": [
+            0.8033875226974487,
+            -0.25244924426078796
+          ],
+          "chosen_child": 0,
+          "gold_child": -1,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "target_leaf_index": 5,
+      "reached_target_leaf": false,
+      "num_internal_decisions": 3,
+      "child_choice_accuracy": 0.3333333333333333,
+      "steps": [
+        {
+          "depth": 0,
+          "scores_per_child": [
+            -0.31076544523239136,
+            -0.049021534621715546
+          ],
+          "chosen_child": 1,
+          "gold_child": 1,
+          "correct": true
+        },
+        {
+          "depth": 1,
+          "scores_per_child": [
+            -0.6557657718658447,
+            0.25792592763900757
+          ],
+          "chosen_child": 1,
+          "gold_child": 0,
+          "correct": false
+        },
+        {
+          "depth": 2,
+          "scores_per_child": [
+            -0.6557657718658447,
+            0.25792592763900757
+          ],
+          "chosen_child": 1,
+          "gold_child": -1,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "target_leaf_index": 6,
+      "reached_target_leaf": false,
+      "num_internal_decisions": 3,
+      "child_choice_accuracy": 0.6666666666666666,
+      "steps": [
+        {
+          "depth": 0,
+          "scores_per_child": [
+            -0.6330413818359375,
+            -0.3602628707885742
+          ],
+          "chosen_child": 1,
+          "gold_child": 1,
+          "correct": true
+        },
+        {
+          "depth": 1,
+          "scores_per_child": [
+            -0.9780417680740356,
+            -0.05331539362668991
+          ],
+          "chosen_child": 1,
+          "gold_child": 1,
+          "correct": true
+        },
+        {
+          "depth": 2,
+          "scores_per_child": [
+            -0.9780417680740356,
+            -0.05331539362668991
+          ],
+          "chosen_child": 1,
+          "gold_child": 0,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "target_leaf_index": 7,
+      "reached_target_leaf": true,
+      "num_internal_decisions": 3,
+      "child_choice_accuracy": 1.0,
+      "steps": [
+        {
+          "depth": 0,
+          "scores_per_child": [
+            -3.052356004714966,
+            1.3666383028030396
+          ],
+          "chosen_child": 1,
+          "gold_child": 1,
+          "correct": true
+        },
+        {
+          "depth": 1,
+          "scores_per_child": [
+            -3.3973565101623535,
+            1.6735857725143433
+          ],
+          "chosen_child": 1,
+          "gold_child": 1,
+          "correct": true
+        },
+        {
+          "depth": 2,
+          "scores_per_child": [
+            -3.3973565101623535,
+            1.6735857725143433
+          ],
+          "chosen_child": 1,
+          "gold_child": 1,
+          "correct": true
+        }
+      ]
+    }
+  ]
+}

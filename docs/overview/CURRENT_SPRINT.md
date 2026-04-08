@@ -41,7 +41,8 @@
 - [x] **SSGS × Mamba**：`MambaNavState` / `dfs_ssgs_mamba` / `mamba_cache_utils.py`；`demo_ssgs_mamba_dfs.py`（`--out-json`）；`tests/test_ssgs_mamba.py`（默认网格 **events** 与登记 JSON 对齐）；登记 **X-20260421-ssgs-mamba-dfs-demo**
 - [x] **真 LM 最小闭环（骨架）**：`src/rag_tree/tree_lm_closure.py` + `scripts/research/demo_tree_lm_minimal.py`（路径文本 → CE + 续写 + 可选一步训练；`--out-json` 写 **`git_sha`**）；登记 **X-20260422-tree-lm-minimal**
 - [x] **树上导航任务指标（启发式）**：`tree_lm_nav_eval.py` + `demo_tree_lm_nav_greedy.py`（子文档 CE argmin、**reach_rate** / **child_choice_accuracy**）；登记 **X-20260423-tree-lm-nav-greedy**
-- [x] **目标叶条件可学习子指针**：`tree_lm_nav_learned.py` + `demo_tree_lm_nav_learned.py`（冻结 LM、goal 嵌入 + 线性头；**X-20260424**；与 **X-20260423** 对照：**goal 条件** vs **盲 CE-argmin**）；下一步：**与 SSGS 轨迹对照** 或 调 head / 解冻 LM
+- [x] **目标叶条件可学习子指针**：`tree_lm_nav_learned.py` + `demo_tree_lm_nav_learned.py`（冻结 LM、goal 嵌入 + 线性头；**X-20260424**；**CPU/CUDA** 归档 `tree_lm_nav_learned_default8_{cpu,cuda}.json`，**reach_rate=0.375** 一致）
+- [ ] **下一跳（择一深入）**：（**A**）**SSGS × LM**：同一玩具树上用 `dfs_ssgs_mamba` 轨迹与 **goal** 导航逐步对齐或对照 **wall-clock / 事件表**；（**B**）**抬高可学习头上限**：浅 MLP、`goal_dim`、更长训练、或 **小步解冻 LM**（需显存）；（**C**）**叙事**：在 `FIGURE_CAPTIONS_STAGE1` / §7.4 用一行说明「goal 条件仍非全拟合」避免过度宣称
 
 ---
 
@@ -58,7 +59,7 @@
 |--------|------|----------|
 | P0 | **阶段 1 叙事收束** | **`FIGURE_CAPTIONS_STAGE1.md`**（篇首 **P0 叙事边界（中文摘要）** + 中英图注/表注）；`RESEARCH_NOTES.md` **§7.0** 段首同主题摘要 |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT` 镜像；JSON 与登记见 **A-20260408-wikitext-3090-fused** |
-| P1 | **测量协议成文** | S1–S4；**真 LM**：**X-20260422** + **X-20260423** + **X-20260424**（`demo_tree_lm_nav_learned.py`，goal 条件）；下一跳：**SSGS×LM** 组合 / 导航指标进一步调优 |
+| P1 | **测量协议成文** | S1–S4；**真 LM**：**X-20260422** + **X-20260423** + **X-20260424**（**CPU/CUDA** 成对 JSON）；下一跳：**SSGS×LM** 对照轨迹，或 **调 head / 解冻** 追 **reach_rate**，或 **叙事收束** |
 | P1 | **SSGS** | 张量玩具 JSON：**X-20260421-ssgs-tensor-overhead-fixed**；**Mamba `DynamicCache` DFS**：`dfs_ssgs_mamba` + `demo_ssgs_mamba_dfs.py --out-json`（**X-20260421-ssgs-mamba-dfs-demo**，见 `RESEARCH_NOTES` §6 / §7.4） |
 | P2 | **检索头** | 读论文与接口草图；训练探针等 **GPU 空闲窗口** |
 | 延后 | **大叶数研究扫参** | （已完成）**A-20260408-research-large-leaves-3090**；扩展网格可另开新 TAG |
