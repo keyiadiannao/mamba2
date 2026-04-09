@@ -104,7 +104,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | **3090 fused** | **`mamba_ssm` / fused**；登记 **A-20260408-wikitext-3090-fused** 等 |
 | **A2-S3 JSON** | **任务名、划分（stratified / leaf_heldout）、`chunk_len`** |
 
-**A2-S2（3090 fused，已归档）**：**`WARMUP=2` `REPS=8`**，**RTX 3090**、驱动 **580.105.08**，**`torch 2.11.0+cu126`**。**R1**：**`TAG=stage2_fused`** **`STAMP=20260409T1035Z`** — **`benchmark_wikitext_stage2_fused_20260409T1035Z_n{8,16}_c{8,12}.json`**、**`…_grid_20260409T1035Z.csv`**、manifest。**R2（复跑）**：**`TAG=stage2_fused_r2`** **`STAMP=20260409T1110Z`** — **`benchmark_wikitext_stage2_fused_r2_20260409T1110Z_*`**、**`…_r2_grid_20260409T1110Z.csv`**。**Mamba2 `peak_alloc_mib` 两轮四格一致**（**53.12 / 55.32 / 72.59 / 78.42**）；**墙钟** 有小幅抖动属正常。**JSON `git_sha` 仍为 `6fa7873`**（与 **paper_main** 同提交）；若正文要对齐 **当前文档/脚本 HEAD**，需在服务器 **`git pull`** 后再记新 JSON。**5060 naive** 同拓扑须 **分列**。**复跑命令**：**`SERVER_SWEEP_RUNBOOK.md` §2d / §2e**。
+**A2-S2（3090 fused，已归档）**：**`WARMUP=2` `REPS=8`**，**RTX 3090**、驱动 **580.105.08**，**`torch 2.11.0+cu126`**。**R1**：**`TAG=stage2_fused`** **`STAMP=20260409T1035Z`** — **`benchmark_wikitext_stage2_fused_20260409T1035Z_n{8,16}_c{8,12}.json`**、**`…_grid_20260409T1035Z.csv`**、manifest。**R2（复跑）**：**`TAG=stage2_fused_r2`** **`STAMP=20260409T1110Z`** — **`benchmark_wikitext_stage2_fused_r2_20260409T1110Z_*`**、**`…_r2_grid_20260409T1110Z.csv`**。**Mamba2 `peak_alloc_mib` 两轮四格一致**（**53.12 / 55.32 / 72.59 / 78.42**）；**墙钟** 有小幅抖动属正常。**扩维**：**`dim=256`** 四格 **`STAMP=20260409T1137Z`**（**`stage2_dim256`**）— **`benchmark_wikitext_stage2_dim256_20260409T1137Z_*`** 与汇总 CSV；**Mamba2 峰值** 四格约 **62→87 MiB**（较 **dim128** 升高）。**大叶数单点**：**32 叶** **dim128** **`benchmark_wikitext_fused_n32_c8_20260409T1140Z.json`**（**Mamba2 `peak_alloc_mib`≈98**）。**JSON `git_sha`** 上述跑次 **仍为 `6fa7873`**（服务器 **`mamba2` 目录** 与 **paper_main** 同提交）；与 **GitHub 文档-only 更新** 不等价 — 需 **`git pull` 到目标提交** 再跑若正文要写 **最新 HEAD**。**5060 naive** 须 **分列**。**命令**：**`SERVER_SWEEP_RUNBOOK` §2d/§2e**、**`NEXT_EXPERIMENTS_COMMANDS.md`**。
 
 ---
 
@@ -142,3 +142,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-07 | **§8.3**：**A2-S2** 待云端段落改为 **`run_server_stage2_wikitext_grid.sh`** + **`SERVER_SWEEP_RUNBOOK` §2d** |
 | 2026-04-09 | **§8.3**：**A2-S2** 实测归档（**`STAMP=20260409T1035Z`**）+ **`EXPERIMENT_REGISTRY` A-stage2-wikitext-grid-v1** 更新 |
 | 2026-04-09 | **§8.3**：**A2-S2 R2**（**`STAMP=20260409T1110Z`** **`stage2_fused_r2`**）；峰值与 R1 一致；登记册合并叙述 |
+| 2026-04-09 | **§8.3**：**dim256 四格**、**32 叶单点**、**headcheck**；新登记 **A-stage2-wikitext-dim256-v1**、**n32-c8**、**X-20260409-wikitext-headcheck** |

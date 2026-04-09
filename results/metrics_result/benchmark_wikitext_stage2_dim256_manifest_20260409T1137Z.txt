@@ -1,0 +1,12 @@
+kind=wikitext_fused_dim256_grid
+dim=256
+grid=full
+tag=stage2_dim256
+stamp=20260409T1137Z
+warmup=2 reps=8
+utc=2026-04-09T11:37:31Z
+git_sha=6fa78733cf6b75d2f9a492c73c65503bedba5b2a
+HF_ENDPOINT=https://hf-mirror.com
+torch 2.11.0+cu126 cuda True
+mamba_ssm True
+NVIDIA GeForce RTX 3090, 580.105.08, 49152 MiB

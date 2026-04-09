@@ -1,0 +1,13 @@
+json_file,num_leaves,chunk_len,reader,peak_alloc_mib,per_step_s,elapsed_s,batch_paths,tokens_per_path,dim,device,git_sha
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n8_c8.json,8,8,gru,40.03,0.002865,0.02292,8,32,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n8_c8.json,8,8,mamba2,61.94,0.012712,0.101693,8,32,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n8_c8.json,8,8,transformer,34.67,0.004441,0.035525,8,32,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n8_c12.json,8,12,gru,42.35,0.003449,0.02759,8,48,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n8_c12.json,8,12,mamba2,63.56,0.012998,0.103987,8,48,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n8_c12.json,8,12,transformer,40.62,0.004169,0.033354,8,48,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n16_c8.json,16,8,gru,48.3,0.004361,0.034886,16,40,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n16_c8.json,16,8,mamba2,81.55,0.012328,0.098624,16,40,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n16_c8.json,16,8,transformer,50.1,0.003882,0.031055,16,40,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n16_c12.json,16,12,gru,55.6,0.004362,0.034897,16,60,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n16_c12.json,16,12,mamba2,87.32,0.013109,0.104869,16,60,256,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_dim256_20260409T1137Z_n16_c12.json,16,12,transformer,61.79,0.004394,0.035152,16,60,256,cuda,6fa7873

@@ -7,7 +7,7 @@
 
 ## 1. 阶段 2 要报告什么
 
-- **系统**：在 **Wikitext-2 叶块 → 自底向上平衡树** 上，沿用 **`benchmark_wikitext_tree.py`** 的 **同一 reader 槽位**（TF / GRU / Mamba2 path reader），扩展 **网格**（`num_leaves`、`chunk_len`、`dim` 等见 **`NEXT_RESEARCH_PLAN.md`** 与 **`EXPERIMENT_REGISTRY`** 行 **`A-stage2-wikitext-grid-v1`**）。**5060 CUDA、HF naive Mamba** 的 **墙钟 / m2_peak** 见 **`metrics_result/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`**。**3090 fused 同拓扑四格**（**A2-S2**）见 **`benchmark_wikitext_stage2_fused_20260409T1035Z_n*_c*.json`** 与 **`benchmark_wikitext_stage2_fused_grid_20260409T1035Z.csv`**（与 naive **分列**，见 **§3**）。
+- **系统**：在 **Wikitext-2 叶块 → 自底向上平衡树** 上，沿用 **`benchmark_wikitext_tree.py`** 的 **同一 reader 槽位**（TF / GRU / Mamba2 path reader），扩展 **网格**（`num_leaves`、`chunk_len`、`dim` 等见 **`NEXT_RESEARCH_PLAN.md`** 与 **`EXPERIMENT_REGISTRY`** 行 **`A-stage2-wikitext-grid-v1`**）。**5060 CUDA、HF naive Mamba** 的 **墙钟 / m2_peak** 见 **`metrics_result/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`**。**3090 fused 同拓扑四格 `dim=128`**（**A2-S2**）见 **`benchmark_wikitext_stage2_fused_20260409T1035Z_n*_c*.json`** 与 **`benchmark_wikitext_stage2_fused_grid_20260409T1035Z.csv`**。**同 harness `dim=256`** 四格见 **`benchmark_wikitext_stage2_dim256_20260409T1137Z_*`** 与 **`…_grid_20260409T1137Z.csv`**（登记 **A-stage2-wikitext-dim256-v1**）。**大叶数单点**（**32 叶**、**c8**、**dim128**）见 **`benchmark_wikitext_fused_n32_c8_20260409T1140Z.json`**。以上与 **5060 naive** **分列**（见 **§3**）。
 
 ### 1.1 本地 5060 CUDA：Wikitext 浅树 2×2（**HF naive** Mamba，`dim=128`，`WARMUP=2` `REPS=5`）
 
@@ -45,7 +45,7 @@
 | **5060 CUDA + HF naive** | 与 fused 3090 **不可同表绝对对比**；须标注 **naive**。 |
 | **3090 fused** | **`A-20260408-wikitext-3090-fused`** 等登记行；**仅**在列标题或脚注写明 **fused / mamba_ssm**。 |
 
-详见 **`RESEARCH_STATUS_AND_DIRECTION.md` §6**。**A2-S2** 小网格（fused）仍依赖 **AutoDL** 窗口；未跑前不占位主文硬数字。
+详见 **`RESEARCH_STATUS_AND_DIRECTION.md` §6**。**A2-S2** 小网格（fused）依赖 **AutoDL** 窗口；**dim128 / dim256 四格** 与 **32 叶单点** 已归档（见上列 JSON）；扩更大网格前主文仍宜 **脚注标 `git_sha` / 机器**。
 
 ---
 
@@ -62,3 +62,5 @@
 | 2026-04-07 | **`benchmark_wikitext_5060_cuda_grid_20260407.csv`**；**`path_pair_geometry`**；**A2-S3** **`chunk_len=12`** leaf_heldout H=6 |
 | 2026-04-09 | **A2-S2**：3090 fused 四格 **`STAMP=20260409T1035Z`** 入 **`metrics_result/`**；登记 **A-stage2-wikitext-grid-v1** |
 | 2026-04-09 | **A2-S2 R2**：**`TAG=stage2_fused_r2`** **`STAMP=20260409T1110Z`**；**Mamba2 峰值与 R1 一致** |
+| 2026-04-09 | **dim256 四格**：**`STAMP=20260409T1137Z`**；登记 **A-stage2-wikitext-dim256-v1**；**§1** 系统 bullet 补链 |
+| 2026-04-09 | **32 叶 c8 dim128** 单点；**headcheck** 登记 **X-20260409-wikitext-headcheck** |
