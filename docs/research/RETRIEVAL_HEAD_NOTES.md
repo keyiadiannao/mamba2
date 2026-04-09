@@ -30,10 +30,12 @@
 ## 4. 探针脚手架（B-S2，已落地）
 
 - **脚本**：`scripts/research/probe_retrieval_correlation.py`  
-  - 对 **`sshleifer/tiny-gpt2`**（可换 `--model`）各层 **mean-pool** 隐状态，训练 **岭线性二分类**（NumPy 闭式解，无 sklearn）。  
-  - **标签**：`--label-mode marker`（合成子串 **`RETRVPROBE`**）、`digit`（合成插入 **`42`**）、`random`（打乱标签作对照）。  
-  - 默认另输出 **`random_label_control`**：与 **marker** 相同文本、**打乱标签** 的每层 test acc（应接近 **0.5**；若 **marker ≫ random**，仅说明「隐状态线性可读」，**不等于** 真实检索头）。  
-  - **`--out-json`**：含 `git_sha`、`torch_version`、`layers[].train_acc` / `test_acc`。
+  - 对 **`sshleifer/tiny-gpt2`**（可换 **`--model gpt2`** 等）各层 **mean-pool** 隐状态，训练 **岭线性二分类**（NumPy 闭式解，无 sklearn）。  
+  - **标签**：`marker`（子串 **`RETRVPROBE`**）、`digit`（插入 **`42`**）、**`topic`**（**STEM vs 生活/文艺** 模板，**无** 单一合成标记词）、`random`（打乱 `y`）。  
+  - **`topic` 与数据泄漏**：若对句子做 **i.i.d. train/test**，同一模板句可 **同时出现在 train 与 test**，岭探针会接近 **100%**（虚高）。**默认** `--topic-split heldout`：按 **模板 id 留出**，test 仅为 **训练未见过的整句**（更难、更可信）；对照用 **`--topic-split sample`**。  
+  - **`random_label_control`**：固定划分下 **打乱标签**；test acc 应近 **0.5**。  
+  - **归档示例**：`probe_retrieval_linear_gpt2_topic_heldout_cpu.json`（**heldout**）、`…_topic_sample_cpu.json`（**泄漏对照**）、`…_gpt2_cpu.json`（**marker**）。  
+  - **`--out-json`**：含 `git_sha`、`torch_version`、`topic_split`（若适用）、各层 acc。
 - **登记**：**`EXPERIMENT_REGISTRY`** 行 **`X-20260410-retrieval-linear-probe`**（占位，可本地复跑 JSON）。
 - **与计时实验分离**：不改变 **A2** harness JSON；探针 JSON 字段独立。
 
@@ -45,6 +47,6 @@
 ## 6. 下一步（B-S2 深化）
 
 - **文献**：§2 已列 **入口引用**；精读时把每篇的 **探测/识别算法** 记到本节附录式 bullet（可选新开 `RETRIEVAL_HEAD_NOTES_APPENDIX.md`，避免主文件过长）。  
-- **实验**：在 **path reader 表征**（或 **树上路径文档**）上复用 **`probe_retrieval_correlation.py` 的岭探针思路**。**已归档**：`results/metrics/probe_retrieval_linear_gpt2_cpu.json`（**`--model gpt2`**、CPU、`n_samples=160`）；**`tiny-gpt2`** 示例见 `probe_retrieval_linear_demo.json`。  
+- **实验**：在 **path reader 表征**（或 **树上路径文档**）上复用 **`probe_retrieval_correlation.py` 的岭探针思路**。**已归档（gpt2）**：**marker** → `probe_retrieval_linear_gpt2_cpu.json`；**topic heldout** → `probe_retrieval_linear_gpt2_topic_heldout_cpu.json`；**topic sample（泄漏对照）** → `probe_retrieval_linear_gpt2_topic_sample_cpu.json`；**tiny-gpt2** → `probe_retrieval_linear_demo.json`。  
 - **头级分析**：当前脚本为 **层 mean-pool**；若对齐 2404.15574 风格，需在 Transformer 内取 **per-head** 统计量再探针（工作量 +1，**B-S3** 级）。  
 - **主线并行**：**A2-S2**（Wikitext 小网格，**3090 fused**）仍按 **`NEXT_RESEARCH_PLAN`**，与探针 **独立登记**。

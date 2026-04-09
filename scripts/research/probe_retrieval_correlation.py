@@ -2,9 +2,9 @@
 """
 B-S2：对 **HF 小因果 LM** 各层隐状态做 **二分类线性探针**（岭回归闭式解，NumPy only）。
 
-目的不是宣称「已发现检索头」，而是提供 **可复现脚手架**：同一批文本上比较 **结构化标签**
-（合成 **marker** 子串）与 **随机标签** 的 **test 准确率**；若前者显著高于后者，说明隐状态
-**携带** 与标签相关的线性可读信息（文献中常见探针设定；与 **path-batch 延迟** 不可混读）。
+目的不是宣称「已发现检索头」，而是提供 **可复现脚手架**：同一批文本上比较 **任务标签**
+（**marker** / **digit** 等 **字面线索**，或 **topic** 等 **无语义捷径子串** 的粗主题）与 **随机标签**
+的 **test 准确率**；若前者显著高于后者，说明隐状态 **携带** 线性可读信息（与 **path-batch 延迟** 不可混读）。
 
   conda run -n mamba2 python scripts/research/probe_retrieval_correlation.py --cpu --out-json results/metrics/probe_retrieval_linear_demo.json
 
@@ -108,6 +108,91 @@ def _build_texts_marker(n_samples: int, seed: int) -> tuple[list[str], np.ndarra
     return texts, y
 
 
+def _split_template_ids(n_templates: int, test_frac: float, rng: np.random.Generator) -> tuple[set[int], set[int]]:
+    """Partition template indices into train / test sets (disjoint)."""
+    perm = rng.permutation(n_templates)
+    n_test = max(1, min(n_templates - 1, int(round(n_templates * test_frac))))
+    test_ids = set(perm[:n_test].tolist())
+    train_ids = set(perm[n_test:].tolist())
+    return train_ids, test_ids
+
+
+def _build_texts_topic(
+    n_samples: int, seed: int, holdout_templates: bool
+) -> tuple[list[str], np.ndarray, np.ndarray | None, int, int]:
+    """
+    Balanced coarse **semantic** classes: no shared synthetic marker token.
+    Class 0 = STEM / systems / ML; class 1 = daily life / arts / food / travel.
+
+    If ``holdout_templates``, each sample records which **template index** within its
+    class was drawn; evaluation should split by **template id** so test sentences are
+    **never seen** during training (harder than repeating the same 20 sentences).
+    Returns ``(texts, y, tid_within_class)`` where ``tid_within_class[i]`` is the template
+    index for sample ``i`` (meaningful for class ``y[i]``); or ``tid_within_class=None``
+    if not used.
+    """
+    rng = np.random.default_rng(seed)
+    stem = [
+        "Gradient descent adjusts weights to minimize the empirical risk.",
+        "Sparse attention reduces quadratic cost on long input sequences.",
+        "The optimizer tracks momentum estimates for each parameter tensor.",
+        "CUDA kernels fuse elementwise ops to improve memory bandwidth.",
+        "A state space layer maps hidden states with structured recurrence.",
+        "The tokenizer maps unicode text to integer ids for the embedding table.",
+        "Backpropagation propagates error signals through the computation graph.",
+        "KV caches store key and value tensors for autoregressive decoding.",
+        "正则化项抑制过拟合并稳定训练过程中的权重范数。",
+        "矩阵乘法是 Transformer 前馈层与注意力中的核心算子。",
+        "Dropout randomly zeros activations during training to reduce co-adaptation.",
+        "Layer normalization stabilizes the scale of hidden vectors across depth.",
+        "A convolutional stem can downsample patches before the transformer stack.",
+        "Mixed precision training stores master weights in float32 for stability.",
+        "The learning rate schedule warms up then decays over the training horizon.",
+        "对比学习拉近正样本对在表示空间中的距离。",
+        "量化把浮点权重映射到较低比特以压缩部署体积。",
+    ]
+    life = [
+        "The baker folded butter into the dough for flaky morning croissants.",
+        "Rowers synchronized their strokes as the shell cut through misty water.",
+        "Watercolor brushes left soft edges where pigment met damp paper.",
+        "Hikers paused at the saddle to drink and watch clouds below the ridge.",
+        "The choir rehearsed harmonics before the evening candlelight service.",
+        "Grandmother simmered broth with ginger while rain tapped the window.",
+        "周末市集上手工陶杯与亚麻围巾摆满了橡树下的长桌。",
+        "小提琴手在站台上调弦，列车进站时琴声与刹车声短暂重叠。",
+        "猫在午后的阳光里蜷成一圈，尾巴尖偶尔轻拍木地板。",
+        "园丁修剪蔷薇时把剪下的枝条堆在堆肥箱旁等待腐熟。",
+        "The lighthouse beam swept slowly across black waves under cold stars.",
+        "Potters center clay on the wheel before pulling walls thin and even.",
+        "Saffron threads stained the rice gold while cumin scented the kitchen air.",
+        "Skaters traced slow circles as the rink lights flickered at closing time.",
+        "折纸艺人把正方形纸折成鹤，指尖压出对称的翼角。",
+        "茶农在清明前后采摘一芽一叶，竹篓里渐渐堆起浅绿的香气。",
+        "旧书页在阁楼里泛黄，批注墨迹与蠹虫细痕叠在同一段落旁。",
+    ]
+    half = n_samples // 2
+    texts: list[str] = []
+    labels: list[int] = []
+    tids: list[int] = []
+    for _ in range(half):
+        j = int(rng.integers(0, len(stem)))
+        texts.append(stem[j])
+        labels.append(0)
+        tids.append(j)
+    for _ in range(n_samples - half):
+        j = int(rng.integers(0, len(life)))
+        texts.append(life[j])
+        labels.append(1)
+        tids.append(j)
+    perm = rng.permutation(len(texts))
+    y = np.array([labels[i] for i in perm], dtype=np.int64)
+    texts = [texts[i] for i in perm]
+    tid_arr = np.array([tids[i] for i in perm], dtype=np.int64)
+    if holdout_templates:
+        return texts, y, tid_arr, len(stem), len(life)
+    return texts, y, None, len(stem), len(life)
+
+
 def _build_texts_digit(n_samples: int, seed: int) -> tuple[list[str], np.ndarray]:
     """Balanced: class 1 iff substring contains an ASCII digit (synthetic)."""
     rng = np.random.default_rng(seed)
@@ -162,9 +247,16 @@ def main() -> int:
     p.add_argument(
         "--label-mode",
         type=str,
-        choices=("marker", "digit", "random"),
+        choices=("marker", "digit", "topic", "random"),
         default="marker",
-        help="marker: synthetic RETRVPROBE; digit: any digit in text; random: shuffle labels (control)",
+        help="marker: RETRVPROBE; digit: insert 42; topic: STEM vs life/arts (no marker); random: shuffle y (control)",
+    )
+    p.add_argument(
+        "--topic-split",
+        type=str,
+        choices=("heldout", "sample"),
+        default="heldout",
+        help="topic only: heldout=test only on unseen sentence templates (default, harder); sample=i.i.d. stratified split (same sentence may appear in train and test)",
     )
     p.add_argument("--no-random-control", action="store_true", help="skip second pass with shuffled labels")
     p.add_argument("--out-json", type=str, default="", help="write metrics JSON (UTF-8)")
@@ -184,8 +276,15 @@ def main() -> int:
     model.eval()
     model.to(device)
 
+    topic_tids: np.ndarray | None = None
+
     if args.label_mode == "digit":
         texts, y = _build_texts_digit(args.n_samples, args.seed)
+    elif args.label_mode == "topic":
+        holdout = args.topic_split == "heldout"
+        texts, y, topic_tids, topic_n_stem, topic_n_life = _build_texts_topic(
+            args.n_samples, args.seed, holdout
+        )
     else:
         texts, y = _build_texts_marker(args.n_samples, args.seed)
     if args.label_mode == "random":
@@ -225,7 +324,44 @@ def main() -> int:
     X_layers = [np.concatenate(chunks, axis=0) for chunks in per_layer_h]
     y_pm = np.where(y == 1, 1.0, -1.0).astype(np.float64)
 
-    train_idx, test_idx = _stratified_indices(y, args.test_frac, args.seed + 1)
+    if (
+        args.label_mode == "topic"
+        and topic_tids is not None
+        and args.topic_split == "heldout"
+    ):
+        stem_tr, stem_te = _split_template_ids(
+            topic_n_stem, args.test_frac, np.random.default_rng(args.seed + 17)
+        )
+        life_tr, life_te = _split_template_ids(
+            topic_n_life, args.test_frac, np.random.default_rng(args.seed + 18)
+        )
+        train_idx = np.array(
+            [
+                i
+                for i in range(len(y))
+                if (y[i] == 0 and topic_tids[i] in stem_tr) or (y[i] == 1 and topic_tids[i] in life_tr)
+            ],
+            dtype=np.int64,
+        )
+        test_idx = np.array(
+            [
+                i
+                for i in range(len(y))
+                if (y[i] == 0 and topic_tids[i] in stem_te) or (y[i] == 1 and topic_tids[i] in life_te)
+            ],
+            dtype=np.int64,
+        )
+        if len(train_idx) < 8 or len(test_idx) < 8:
+            print(
+                "ERROR: topic heldout split too few samples; increase --n-samples or lower --test-frac",
+                file=sys.stderr,
+            )
+            return 1
+        if len(np.unique(y[train_idx])) < 2 or len(np.unique(y[test_idx])) < 2:
+            print("ERROR: topic heldout split missing a class in train or test", file=sys.stderr)
+            return 1
+    else:
+        train_idx, test_idx = _stratified_indices(y, args.test_frac, args.seed + 1)
 
     def run_probe(X: np.ndarray, y_signed: np.ndarray, tr: np.ndarray, te: np.ndarray) -> dict:
         Xtr, Xte = X[tr], X[te]
@@ -278,6 +414,11 @@ def main() -> int:
         "ridge_lambda": args.ridge_lambda,
         "layers": layers_out,
     }
+    if args.label_mode == "topic":
+        payload["label_notes"] = (
+            "class0=STEM/ML/systems templates, class1=daily/arts/nature/culture; no synthetic marker token"
+        )
+        payload["topic_split"] = args.topic_split
     if random_layers_out is not None:
         payload["random_label_control"] = {"layers": random_layers_out}
 
