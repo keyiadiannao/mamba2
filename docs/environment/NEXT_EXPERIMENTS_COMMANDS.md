@@ -198,7 +198,7 @@ done
 
 **若用 ``--pair-split stratified``**：再扫 **`--split-seed`** 才有意义（train/test **叶对** 划分会变）。
 
-**跑后**：汇总各 JSON 的 **`ridge_concat.*.test_acc`**（及 **`raw_concat`** 若需要），在 **`EXPERIMENT_REGISTRY.md`** **新开一行**（勿并入 **A-stage2-wikitext-grid-v1**）；成文与 **path-batch** **分列**（见 **`FIGURE_CAPTIONS_STAGE1.md`** 五轴）。
+**跑后**：将 **`$MAMBA2_RESULTS_ROOT/metrics/task_wikitext_sibling*_initseed*.json`** 拷到本仓 **`results/metrics/`**，运行 **`python scripts/research/aggregate_task_wikitext_path_pair_json.py -g 'results/metrics/task_wikitext_sibling16_c8_leafheldout6_initseed*.json'`**（**32** 同理）汇总 **mean/std**；登记见 **`EXPERIMENT_REGISTRY`** **A-stage2-wikitext-path-pair-initseed5-3090-v1**；成文与 **path-batch** **分列**（**`FIGURE_CAPTIONS_STAGE1.md`** 五轴）。
 
 ---
 
@@ -208,6 +208,7 @@ done
 |------|------|
 | 2026-04-09 | 初版：公共前置、HEAD 单格、**dim256** 脚本、n32 可选、B-S2+、成文指针 |
 | 2026-04-09 | **§9**：**A2-S3** + **leaf_heldout**；**§0** **`metrics/`**；**多种子 = `--init-seed`**（非 **`--split-seed`**） |
+| 2026-04-09 | **§9 跑后**：**`aggregate_task_wikitext_path_pair_json.py`**；登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1** |
 | 2026-04-09 | **已跑通**：**dim256** **`STAMP=20260409T1137Z`**；**n32** 单点；**headcheck** **`20260409T1135Z`** — 见 **`EXPERIMENT_REGISTRY`** |
 | 2026-04-07 | **叶数扫描** **`run_server_wikitext_leavescale.sh`**、**§7 depth 5–6** **`run_server_section7_depth_sweep.sh`**；**`SERVER_SWEEP_RUNBOOK` §2f–§2g**；本节重编号 §4–§8 |
 | 2026-04-09 | **已跑通叶数扫描**：**`TAG=stage2_leavescale`** **`STAMP=20260409T1257Z`** → **`benchmark_wikitext_stage2_leavescale_*`**；登记 **A-stage2-wikitext-leavescale-v1**；**`SERVER_SWEEP_RUNBOOK` §1** 补 **GitHub TLS / PyCharm** |

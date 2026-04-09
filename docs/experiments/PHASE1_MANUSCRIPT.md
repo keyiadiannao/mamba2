@@ -66,6 +66,7 @@
 | **阶段 2 叶数 XL** | `benchmark_wikitext_stage2_leavescale_xl_*_{1322Z_n128,1324Z_n256}_c8.json`、`…_grid_n128_n256_combined.csv` | **A-stage2-wikitext-leavescale-xl-v1** |
 | **阶段 2 dim256 四格** | `benchmark_wikitext_stage2_dim256_20260409T1137Z_*` + grid CSV | **A-stage2-wikitext-dim256-v1** |
 | **§7 depth 5–6** | `stage2_leavescale_xl_s{1..4}_*_d{5,6}_20260409T1341Z.json`（前缀见 **§4** 脚注）、`…_manifest_20260409T1341Z.txt` | **X-section7-depth-extension-v1** |
+| **A2-S3 init×5（3090）** | `results/metrics/task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_<STAMP>.json` | **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**`aggregate_task_wikitext_path_pair_json.py`** 汇总 **test_acc** |
 
 **历史归档**（仍在 `results/metrics/`）：`**_20260421.json** 系列，与 **X-20260421-*** 登记一一对应；与 `metrics_result` 中 **STAMP** 文件 **并存**，便于 diff。
 
@@ -139,11 +140,11 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 ## 10 下一阶段与文档指针
 
-**本版成文**：**§8.4** 与 **§5** 已收口 **A2-S2 / dim256 / 叶数 8–256 / §7 depth 5–6** 的登记路径；**§3** 增 **path-batch 表述边界**；**§4** 增 **depth 扩展**。**下一步实验（按优先级）**：
+**本版成文**：**§8.4** 与 **§5** 已收口 **A2-S2 / dim256 / 叶数 8–256 / §7 depth 5–6**；**A2-S3** **3090** **`init_seed`×5**（**n16/n32**、**H=6**）已登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**（JSON 须从服务器拷至 **`results/metrics/`**）。**下一步实验（按优先级）**：
 
-1. **A2-S3 加深（不占或轻占 3090）**：**`task_wikitext_path_pair.py`** — **leaf_heldout**（**H≥6**）下多种子请扫 **`--init-seed`**（**`--split-seed` 不改变** 叶对划分）；**stratified** 下 **`--split-seed`** 才影响划分。固定 **16 或 32 叶**，出 **ridge test_acc** 小表；**bash** 见 **`NEXT_EXPERIMENTS_COMMANDS.md` §9**；**新开登记行** 与 path-batch **分列**。  
-2. **机制线 B（可选）**：若要将 **检索头** 抬为主贡献 — **3090** 上 **1 个** **B-S2+** 登记级 JSON（**`probe_path_reader_linear`** 或 **`probe_retrieval_correlation`**），**`EXPERIMENT_REGISTRY`** **另开一行**，**禁止**与 path-batch 混表。  
-3. **可选成文 polish**：**S5「同轨迹」总表**（**`RESEARCH_NOTES` §7**）、**主图 PNG 入仓**、**平面 RAG smoke** — 视篇幅与审稿。  
+1. **机制线 B（推荐）**：**3090** 上 **1 条** **B-S2+** 登记级 JSON（**`probe_path_reader_linear.py`** 无 **`--cpu`**，或 **`probe_retrieval_correlation.py`**），**`EXPERIMENT_REGISTRY`** **另开一行**；与 path-batch **混表禁止**；见 **`RETRIEVAL_HEAD_NOTES.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md` §6**。  
+2. **A2-S3 可选加压**：**更大 `heldout-leaves`**（**test 叶对** **C(H,2)** 变大）、**`--cohort root_child`**、或 **stratified + `split-seed` 扫描** — 与已完成 **init-seed** 行 **分列** 说明即可。  
+3. **可选成文 polish**：**S5「同轨迹」总表**（**`RESEARCH_NOTES` §7**）、**主图 PNG 入仓**、**平面 RAG smoke**。  
 4. **总览与计划**：**`RESEARCH_STATUS_AND_DIRECTION.md`**、**`NEXT_RESEARCH_PLAN.md`**。  
 5. **操作手册**：**`SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**；**§7 一键**：**`RUN_AUTOADL_SECTION7_NOW.md`**。  
 6. **阶段 2 草稿与图注**：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**。
@@ -168,3 +169,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-09 | **§8.3**：**dim256 四格**、**32 叶单点**、**headcheck**；新登记 **A-stage2-wikitext-dim256-v1**、**n32-c8**、**X-20260409-wikitext-headcheck** |
 | 2026-04-09 | **成文收口**：摘要/§3/§4/§5/**§8.3 压缩**/**§8.4 新增**/**§10 下一步**；叶数扫描、XL、§7 **depth 5–6** 入表；**§10** 增 **A2-S3 → `NEXT_EXPERIMENTS_COMMANDS` §9** |
 | 2026-04-09 | **§8.2 / §10**：**leaf_heldout** 多种子 = **`--init-seed`**；**`split-seed`** 仅 **`stratified`** |
+| 2026-04-09 | **§5 / §10**：**A2-S3** **3090 init×5** 入 **`EXPERIMENT_REGISTRY`**；**`aggregate_task_wikitext_path_pair_json.py`**；**§10** 下一步以 **B-S2+** 为先 |
