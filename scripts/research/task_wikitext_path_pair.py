@@ -27,7 +27,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 import subprocess
 import sys
 from pathlib import Path
@@ -41,6 +40,13 @@ import torch
 
 from src.rag_tree.from_text import build_bottom_up_text_tree
 from src.rag_tree.hf_corpus import wikitext2_leaf_chunks
+from src.rag_tree.path_pair_geometry import (
+    all_unordered_pairs,
+    block_size,
+    depth_edges,
+    pair_same_cohort_label,
+    pairs_within_leaf_range,
+)
 from src.rag_tree.readers import GRUPathReader, Mamba2PathReader, TransformerPathReader, mamba2_path_reader_available
 from src.rag_tree.tree import batched_paths
 
@@ -57,40 +63,6 @@ def _git_short_sha(repo: Path) -> str:
     if r.returncode == 0 and r.stdout.strip():
         return r.stdout.strip()
     return "unknown"
-
-
-def _depth_edges(num_leaves: int, fanout: int) -> int:
-    d = math.log(num_leaves) / math.log(fanout)
-    if abs(d - round(d)) > 1e-9:
-        raise ValueError(f"num_leaves={num_leaves} must be fanout**integer_depth for fanout={fanout}")
-    return int(round(d))
-
-
-def _block_size(cohort: str, fanout: int, depth: int, custom: int | None) -> int:
-    if cohort == "custom":
-        if custom is None or custom < 1:
-            raise ValueError("--block-size required when --cohort custom")
-        return int(custom)
-    if cohort == "root_child":
-        return fanout ** (depth - 1)
-    if cohort == "sibling":
-        if depth < 2:
-            raise ValueError("sibling cohort needs depth>=2")
-        return fanout
-    raise ValueError(cohort)
-
-
-def _pair_label(i: int, j: int, block: int) -> int:
-    return 1 if (i // block) == (j // block) else 0
-
-
-def _all_pairs(n: int) -> list[tuple[int, int]]:
-    return [(i, j) for i in range(n) for j in range(i + 1, n)]
-
-
-def _pairs_within_leaf_range(lo: int, hi: int) -> list[tuple[int, int]]:
-    """All unordered pairs (i,j) with lo <= i < j < hi."""
-    return [(i, j) for i in range(lo, hi) for j in range(i + 1, hi)]
 
 
 def _stratified_pair_split(
@@ -197,7 +169,7 @@ def main() -> int:
 
     n = args.num_leaves
     fanout = args.fanout
-    depth = _depth_edges(n, fanout)
+    depth = depth_edges(n, fanout)
 
     try:
         leaves = wikitext2_leaf_chunks(n, args.chars_per_leaf, config=args.wikitext_config)
@@ -206,7 +178,7 @@ def main() -> int:
         return 1
 
     try:
-        block = _block_size(args.cohort, fanout, depth, args.block_size)
+        block = block_size(args.cohort, fanout, depth, custom=args.block_size)
     except ValueError as e:
         print(f"ERROR: {e}", file=sys.stderr)
         return 1
@@ -226,11 +198,11 @@ def main() -> int:
         if h < 2 or n_tr < 2:
             print("ERROR: need heldout_leaves>=2 and num_leaves-heldout_leaves>=2.", file=sys.stderr)
             return 1
-        pairs_train = _pairs_within_leaf_range(0, n_tr)
-        pairs_test = _pairs_within_leaf_range(n_tr, n)
+        pairs_train = pairs_within_leaf_range(0, n_tr)
+        pairs_test = pairs_within_leaf_range(n_tr, n)
         pairs = pairs_train + pairs_test
-        y_train = np.array([_pair_label(i, j, block) for i, j in pairs_train], dtype=np.int64)
-        y_test = np.array([_pair_label(i, j, block) for i, j in pairs_test], dtype=np.int64)
+        y_train = np.array([pair_same_cohort_label(i, j, block) for i, j in pairs_train], dtype=np.int64)
+        y_test = np.array([pair_same_cohort_label(i, j, block) for i, j in pairs_test], dtype=np.int64)
         if len(np.unique(y_train)) < 2 or len(np.unique(y_test)) < 2:
             print(
                 "ERROR: leaf_heldout split has single class in train or test; "
@@ -250,8 +222,8 @@ def main() -> int:
             "n_test_pairs": int(len(pairs_test)),
         }
     else:
-        pairs = _all_pairs(n)
-        y = np.array([_pair_label(i, j, block) for i, j in pairs], dtype=np.int64)
+        pairs = all_unordered_pairs(n)
+        y = np.array([pair_same_cohort_label(i, j, block) for i, j in pairs], dtype=np.int64)
         if len(np.unique(y)) < 2:
             print("ERROR: single class for all pairs; choose another --cohort or num-leaves.", file=sys.stderr)
             return 1

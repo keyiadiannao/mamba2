@@ -33,6 +33,10 @@
 2. **与 Transformer/GRU 的相对位置**：在 **5060 + naive Mamba** 等设定下，Mamba-2 的峰值与步耗可 **显著劣于** 同网格的 Transformer/GRU（动机数据，见本地扫参 CSV）；**3090 主文**以 **同机 pair** 为准。  
 3. **语料泛化（浅树）**：在 **Wikitext-2 叶块** 构造的浅树上使用 **同一 reader 槽位**（登记 **A-20260408-wikitext-3090-fused**），支持「不止合成树」的叙述。
 
+### 3.1 阶段 2 本地补充（5060 CUDA，**非主表**）
+
+在 **本机 RTX 5060、HF naive Mamba** 上，对 Wikitext 浅树 **`benchmark_wikitext_tree.py`** 跑 **`n∈{8,16}` × `chunk_len∈{8,12}`** 共 **四格**，`dim=128`，`WARMUP=2`，`REPS=5`。**Mamba2 `peak_alloc_mib`** 约在 **1.1GiB（8 叶）** 与 **2.2GiB（16 叶）** 两档；**`chunk_len` 8↔12** 对峰值 **影响很小**，与阶段 1「叶 batch 主导峰值」的叙述 **一致**。原始 JSON 与 **汇总 CSV** 见 **`results/metrics_result/benchmark_wikitext_5060_cuda_*_20260407.json`**、**`benchmark_wikitext_5060_cuda_grid_20260407.csv`**（**`PHASE2_DRAFT.md` §1.1** 表）。**禁止**与 **3090 fused** 主文表 **无标注混点**。**效果 proxy**（叶对 cohort、ridge）见 **`task_wikitext_path_pair.py`** 与 **`PHASE2_DRAFT.md` §2**，与 path-batch **分列**。
+
 ---
 
 ## 4 与 §7 玩具协议的关系（一段话）
@@ -53,7 +57,7 @@
 | **主图** | `../metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png` | 与 **pair** 登记对应 |
 | **§7 复跑（2026-04-08）** | `mamba2_cache_snap_segments_depth4_cuda_20260408T1617Z.json` 等 6 文件 | S1–S4 + branchdemo；另含 `*_20260408T1030Z` 为同协议早次复跑 |
 | **Wikitext** | `benchmark_wikitext_3090_fused_20260408T0846Z.json` | 浅树 fused |
-| **Wikitext（5060 CUDA，动机）** | `benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json` | **HF naive** Mamba **2×2** 网格；汇总表 **`PHASE2_DRAFT.md` §1.1**；**不可**与上行 3090 fused **同表混点** |
+| **Wikitext（5060 CUDA，动机）** | `benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`、`benchmark_wikitext_5060_cuda_grid_20260407.csv` | **HF naive** Mamba **2×2**；**`aggregate_wikitext_5060_cuda_grid.py`** 可重生成 CSV；**不可**与 3090 fused **同表混点** |
 | **大叶数研究** | `sweep_research_large_leaves_*_research_lg_v1.csv` + manifest | 登记 **A-20260408-research-large-leaves-3090** |
 
 **历史归档**（仍在 `results/metrics/`）：`**_20260421.json** 系列，与 **X-20260421-*** 登记一一对应；与 `metrics_result` 中 **STAMP** 文件 **并存**，便于 diff。
@@ -90,3 +94,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-07 | §5 增 **5060 CUDA** Wikitext **n16/c12** 动机 JSON |
 | 2026-04-07 | §5 增 **5060 CUDA** Wikitext **n16/c8** 动机 JSON |
 | 2026-04-07 | §5：**5060 CUDA** Wikitext **2×2** 四 JSON + 指针 **`PHASE2_DRAFT` §1.1** |
+| 2026-04-07 | §3.1 **5060** 四格动机段；§5 增 **grid CSV**；**`path_pair_geometry`** + 单测；**A2-S3** `chunk_len=12` leaf_heldout |

@@ -72,6 +72,7 @@
 - [x] **B-S2+ path reader 探针**：**`probe_path_reader_linear.py`**（默认 **16 叶 heldout**、**`ridge_untrained`**；可选 **`bce_reader_train` / `bce_head_only_train`**）；归档 **`results/metrics/probe_path_reader_linear_text16_*.json`**。  
 - [x] **A2-S3 任务 smoke 扩展**：**`task_wikitext_path_pair.py`** — **`task_wikitext_path_pair_sibling16_cpu.json`**、**`task_wikitext_path_pair_rootchild16_cpu.json`**（**CPU**，`split_seed=1`）；总览 **RESEARCH_STATUS** §3 第五条轴、**`PHASE2_DRAFT.md`** §2。  
 - [x] **A2-S3 叶级 heldout**：**`--pair-split leaf_heldout --heldout-leaves 4`**（16 叶 sibling）→ **`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**；见 **`PHASE2_DRAFT.md`**（小 **test** 叶对数、CPU/CUDA ridge 波动）。  
+- [x] **本地收尾**：**`path_pair_geometry.py`** + **`tests/test_path_pair_geometry.py`**；**`aggregate_wikitext_5060_cuda_grid.py`** → **`benchmark_wikitext_5060_cuda_grid_20260407.csv`**；**A2-S3** **`chunk_len=12`** **`…_c12_leafheldout6_*.json`**；**`PHASE1_MANUSCRIPT` §3.1**。  
 - [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
 
 ### 文档与代码检查纪要（2026-04-09）

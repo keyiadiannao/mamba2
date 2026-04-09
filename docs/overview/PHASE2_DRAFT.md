@@ -15,7 +15,7 @@
 | **8** | m2_peak **≈1142** MiB | **≈1144** MiB |
 | **16** | **≈2248** MiB | **≈2254** MiB |
 
-（表中为 **`mamba2.peak_alloc_mib`**，四份 JSON 同期 **`git_sha`** 以各文件内为准；**TF/GRU** 多在 **数十 MiB**，见原 JSON。）**结论（动机）**：在本机 **naive** 下 **叶数 8→16** 使 Mamba2 峰值 **约翻倍**；**chunk_len 8↔12** 对峰值 **影响很小**（主要随路径 token 总长略变）。
+（表中为 **`mamba2.peak_alloc_mib`**，四份 JSON 同期 **`git_sha`** 以各文件内为准；**TF/GRU** 多在 **数十 MiB**，见原 JSON。）**结论（动机）**：在本机 **naive** 下 **叶数 8→16** 使 Mamba2 峰值 **约翻倍**；**chunk_len 8↔12** 对峰值 **影响很小**（主要随路径 token 总长略变）。**扁平 CSV**（便于贴表）：**`results/metrics_result/benchmark_wikitext_5060_cuda_grid_20260407.csv`**，由 **`scripts/benchmarks/aggregate_wikitext_5060_cuda_grid.py`** 生成。
 - **任务（A2-S3）**：在 **同一棵树、同一叶序** 上增加 **至少一个** 可复现的 **效果 proxy**。当前落地脚本：**`scripts/research/task_wikitext_path_pair.py`**。
 
 ---
@@ -32,7 +32,7 @@
 
 **已知限制（v0）**：**`root_child`** 在 **16 叶** 上块较大，**确定性 hash 叶嵌入 + 父节点拼接** 可能使 **raw mean 拼接** 已线性可分，读者 **test_acc≈1** 不一定有区分度——后续可换 **更细 cohort**、**heldout 叶**、或 **cloze / 检索** 任务加压。
 
-**叶级 heldout（`--pair-split leaf_heldout --heldout-leaves H`）**：训练叶对仅来自叶索引 **`[0, n-H)`**，测试叶对仅来自 **`[n-H, n)`**，**避免**同一叶同时出现在 train/test 叶对中（仍是一次前向算全体叶嵌入）。归档例：**`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**（**6** test 叶对）、**`…_leafheldout6_*.json`**（**15** test 叶对，**CPU/CUDA** 更同向）。**test 叶对数**为 **C(H,2)**；**H** 小时 **ridge test_acc** 方差大；主文宜 **较大 H**、**多 seed**，或看 **三 reader 相对排序**。
+**叶级 heldout（`--pair-split leaf_heldout --heldout-leaves H`）**：训练叶对仅来自叶索引 **`[0, n-H)`**，测试叶对仅来自 **`[n-H, n)`**，**避免**同一叶同时出现在 train/test 叶对中（仍是一次前向算全体叶嵌入）。归档例：**`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**（**6** test 叶对）、**`…_leafheldout6_{cpu,cuda5060}.json`**（**15** test 叶对）、**`…_c12_leafheldout6_*.json`**（**`chunk_len=12`**，与 **c=8** 分列对比）。**test 叶对数**为 **C(H,2)**；**H** 小时 **ridge test_acc** 方差大；主文宜 **较大 H**、**多 seed**，或看 **三 reader 相对排序**。几何标签（块大小、叶对枚举）实现见 **`src/rag_tree/path_pair_geometry.py`**（**`tests/test_path_pair_geometry.py`**）。
 
 ---
 
@@ -58,3 +58,4 @@
 | 2026-04-07 | **B-S2+ BCE**：`probe_path_reader_linear_text16_heldout_{train50,headonly50}_cuda5060.json`（与 CPU **train50 / headonly50** 对齐） |
 | 2026-04-07 | **leaf_heldout H=6**：`task_wikitext_sibling16_leafheldout6_{cpu,cuda5060}.json`（15 test 叶对） |
 | 2026-04-07 | **5060 CUDA** Wikitext 2×2：`benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`；**§1.1** 汇总表 |
+| 2026-04-07 | **`benchmark_wikitext_5060_cuda_grid_20260407.csv`**；**`path_pair_geometry`**；**A2-S3** **`chunk_len=12`** leaf_heldout H=6 |

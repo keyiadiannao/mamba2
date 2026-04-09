@@ -1,0 +1,74 @@
+{
+  "kind": "task_wikitext_path_pair",
+  "stage": "A2-S3",
+  "git_sha": "8a52544",
+  "torch_version": "2.11.0+cu128",
+  "device": "cpu",
+  "dataset": "wikitext",
+  "wikitext_config": "wikitext-2-raw-v1",
+  "tree_kind": "wikitext2_bottom_up",
+  "task": {
+    "name": "leaf_pair_same_cohort",
+    "cohort": "sibling",
+    "block_size": 2,
+    "depth_edges": 4,
+    "description": "y=1 iff floor(i/block)==floor(j/block) in left-to-right leaf order (block=2; root_child/sibling per NEXT_RESEARCH_PLAN A2-S3)."
+  },
+  "num_leaves": 16,
+  "fanout": 2,
+  "chunk_len": 12,
+  "dim": 128,
+  "num_pairs": 60,
+  "pair_class_balance": {
+    "positives": 8,
+    "negatives": 52
+  },
+  "split": {
+    "pair_split": "leaf_heldout",
+    "heldout_leaves": 6,
+    "train_leaf_range": [
+      0,
+      10
+    ],
+    "test_leaf_range": [
+      10,
+      16
+    ],
+    "n_train_pairs": 45,
+    "n_test_pairs": 15
+  },
+  "n_train_pairs": 45,
+  "n_test_pairs": 15,
+  "test_frac": null,
+  "split_seed": null,
+  "ridge_lambda": 0.01,
+  "init_seed": 42,
+  "readers_included": [
+    "transformer",
+    "gru",
+    "mamba2"
+  ],
+  "ridge_concat": {
+    "baseline_raw_mean_concat": {
+      "train_acc": 0.9333333333333333,
+      "test_acc": 0.2,
+      "feature_dim": 256
+    },
+    "transformer": {
+      "train_acc": 0.9333333333333333,
+      "test_acc": 0.3333333333333333,
+      "feature_dim": 256
+    },
+    "gru": {
+      "train_acc": 0.9333333333333333,
+      "test_acc": 0.6666666666666666,
+      "feature_dim": 256
+    },
+    "mamba2": {
+      "train_acc": 0.9333333333333333,
+      "test_acc": 0.26666666666666666,
+      "feature_dim": 256
+    }
+  },
+  "notes": "A2-S3 path-pair task; same corpus/tree build as benchmark_wikitext_tree.py. Do not merge with phase-1 wall-clock or 3090 fused grids without labeling columns. pair_split leaf_heldout: train/test pairs use disjoint leaf index sets; embeddings for all leaves still from one forward over the full tree."
+}
