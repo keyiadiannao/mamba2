@@ -99,7 +99,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 **特征与读出**：对每个叶路径做 path reader，**池化**得 \(z_i\)，拼接 **\([z_i,z_j]\)**，**岭回归** 二分类；并报告 **raw mean-pool 拼接** 基线。**脚本**：**`scripts/research/task_wikitext_path_pair.py`**；**JSON** 字段 **`ridge_concat.*.test_acc`** 等，归档 **`results/metrics/task_wikitext_*.json`**（登记 **A-20260407-stage2-wikitext-path-pair**）。
 
-**划分协议**：默认 **`stratified`** 对全体叶对分层抽样 train/test；推荐 **`--pair-split leaf_heldout --heldout-leaves H`** — train 叶对仅来自 **`[0,n-H)`**，test 仅来自 **`[n-H,n)`**，**避免**同一叶同时出现在 train/test 叶对中（仍对 **全树** 一次前向算嵌入）。**test 叶对数**为 **C(H,2)**，**H** 过小时 ridge **test** 方差大；归档含 **H=4/6** 及 **`chunk_len=12`** 等变体。
+**划分协议**：默认 **`stratified`** 对全体叶对分层抽样 train/test（**`--split-seed`** 只在此模式影响 **哪些叶对** 进 train/test）；推荐 **`--pair-split leaf_heldout --heldout-leaves H`** — train 叶对仅来自 **`[0,n-H)`**，test 仅来自 **`[n-H,n)`**，**避免**同一叶同时出现在 train/test 叶对中（仍对 **全树** 一次前向算嵌入）。**leaf_heldout** 下划分 **完全确定**，多种子试验应扫 **`--init-seed`**（随机化 reader 权重；叶块嵌入仍由文本哈希决定）。**test 叶对数**为 **C(H,2)**，**H** 过小时 ridge **test** 方差大；归档含 **H=4/6** 及 **`chunk_len=12`** 等变体。
 
 **与 §3–§5 的关系**：本任务报告 **准确率类标量**，**不是** path-batch 的 **wall-clock / m2_peak**；正文应 **分列子表或脚注**，**不得**与 **`paper_main_*`** 无标注合并。
 
@@ -141,7 +141,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 **本版成文**：**§8.4** 与 **§5** 已收口 **A2-S2 / dim256 / 叶数 8–256 / §7 depth 5–6** 的登记路径；**§3** 增 **path-batch 表述边界**；**§4** 增 **depth 扩展**。**下一步实验（按优先级）**：
 
-1. **A2-S3 加深（不占或轻占 3090）**：**`task_wikitext_path_pair.py`** — **多种子**、**leaf_heldout**（**H≥6**），固定 **16 或 32 叶**，出 **ridge test_acc** 小表；**可复制 bash** 见 **`NEXT_EXPERIMENTS_COMMANDS.md` §9**；**新开登记行或附录** 与 path-batch **分列**。  
+1. **A2-S3 加深（不占或轻占 3090）**：**`task_wikitext_path_pair.py`** — **leaf_heldout**（**H≥6**）下多种子请扫 **`--init-seed`**（**`--split-seed` 不改变** 叶对划分）；**stratified** 下 **`--split-seed`** 才影响划分。固定 **16 或 32 叶**，出 **ridge test_acc** 小表；**bash** 见 **`NEXT_EXPERIMENTS_COMMANDS.md` §9**；**新开登记行** 与 path-batch **分列**。  
 2. **机制线 B（可选）**：若要将 **检索头** 抬为主贡献 — **3090** 上 **1 个** **B-S2+** 登记级 JSON（**`probe_path_reader_linear`** 或 **`probe_retrieval_correlation`**），**`EXPERIMENT_REGISTRY`** **另开一行**，**禁止**与 path-batch 混表。  
 3. **可选成文 polish**：**S5「同轨迹」总表**（**`RESEARCH_NOTES` §7**）、**主图 PNG 入仓**、**平面 RAG smoke** — 视篇幅与审稿。  
 4. **总览与计划**：**`RESEARCH_STATUS_AND_DIRECTION.md`**、**`NEXT_RESEARCH_PLAN.md`**。  
@@ -167,3 +167,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-09 | **§8.3**：**A2-S2 R2**（**`STAMP=20260409T1110Z`** **`stage2_fused_r2`**）；峰值与 R1 一致；登记册合并叙述 |
 | 2026-04-09 | **§8.3**：**dim256 四格**、**32 叶单点**、**headcheck**；新登记 **A-stage2-wikitext-dim256-v1**、**n32-c8**、**X-20260409-wikitext-headcheck** |
 | 2026-04-09 | **成文收口**：摘要/§3/§4/§5/**§8.3 压缩**/**§8.4 新增**/**§10 下一步**；叶数扫描、XL、§7 **depth 5–6** 入表；**§10** 增 **A2-S3 → `NEXT_EXPERIMENTS_COMMANDS` §9** |
+| 2026-04-09 | **§8.2 / §10**：**leaf_heldout** 多种子 = **`--init-seed`**；**`split-seed`** 仅 **`stratified`** |

@@ -17,7 +17,9 @@ Example::
     --num-leaves 8 --cohort sibling --out-json results/metrics/task_wikitext_path_pair_sibling8_smoke.json
 
 **Leaf heldout** (recommended for less pair leakage): train pairs use only leaves
-``0..n-h-1``, test pairs only ``n-h..n-1`` (disjoint leaf sets; same tree build)::
+``0..n-h-1``, test pairs only ``n-h..n-1`` (disjoint leaf sets; same tree build).
+**``--split-seed`` does not affect** this split (deterministic by leaf index). For **multiple
+random trials**, vary ``--init-seed`` (reader weight init); tree embeddings stay text-deterministic.
 
   ... --pair-split leaf_heldout --heldout-leaves 4 --num-leaves 16 --cohort sibling
 
@@ -213,13 +215,15 @@ def main() -> int:
         y = np.concatenate([y_train, y_test])
         train_idx = np.arange(len(pairs_train), dtype=np.int64)
         test_idx = np.arange(len(pairs_train), len(pairs), dtype=np.int64)
-        split_meta: dict[str, object] = {
+        split_meta = {
             "pair_split": "leaf_heldout",
             "heldout_leaves": h,
             "train_leaf_range": [0, n_tr],
             "test_leaf_range": [n_tr, n],
             "n_train_pairs": int(len(pairs_train)),
             "n_test_pairs": int(len(pairs_test)),
+            # ``--split-seed`` does not reshuffle leaf_heldout; use ``--init-seed`` for multi-seed reader inits.
+            "split_seed_used_for_pair_indices": False,
         }
     else:
         pairs = all_unordered_pairs(n)
@@ -240,6 +244,7 @@ def main() -> int:
             "heldout_leaves": None,
             "test_frac": args.test_frac,
             "split_seed": args.split_seed,
+            "split_seed_used_for_pair_indices": True,
             "n_train_pairs": int(len(train_idx)),
             "n_test_pairs": int(len(test_idx)),
         }
@@ -326,7 +331,7 @@ def main() -> int:
         "n_train_pairs": split_meta["n_train_pairs"],
         "n_test_pairs": split_meta["n_test_pairs"],
         "test_frac": args.test_frac if args.pair_split == "stratified" else None,
-        "split_seed": args.split_seed if args.pair_split == "stratified" else None,
+        "split_seed": args.split_seed,
         "ridge_lambda": args.ridge_lambda,
         "init_seed": args.init_seed,
         "readers_included": list(readers.keys()),
