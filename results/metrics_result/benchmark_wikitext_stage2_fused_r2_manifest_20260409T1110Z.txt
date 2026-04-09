@@ -1,0 +1,11 @@
+kind=stage2_wikitext_fused_grid
+grid=full
+tag=stage2_fused_r2
+stamp=20260409T1110Z
+warmup=2 reps=8
+utc=2026-04-09T11:10:00Z
+git_sha=6fa7873
+HF_ENDPOINT=https://hf-mirror.com (typical)
+gpu=NVIDIA GeForce RTX 3090, driver 580.105.08, 49152 MiB
+torch=2.11.0+cu126 cuda=True
+note=R2 repeat; mamba2 peak_alloc_mib matches R1 (20260409T1035Z) to 0.01 MiB; wall times vary slightly; JSON git_sha still 6fa7873 — pull latest mamba2 repo on server if HEAD alignment needed

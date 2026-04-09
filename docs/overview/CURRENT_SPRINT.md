@@ -76,7 +76,7 @@
 - [x] **P1 成文并入主稿**：**`PHASE1_MANUSCRIPT.md` §8–§10**（阶段 2 系统+A2-S3、检索头/Mamba 边界、文档指针）；**`FIGURE_CAPTIONS_STAGE1.md`** 五条测量轴表；**`PHASE2_DRAFT.md`** 顶注指向主稿。  
 - [x] **仓库梳理（代码/文档）**：**`src/rag_tree/__init__.py`** 惰性导出（**`test_path_pair_geometry`** 可不加载 **torch**）；根目录 **`pytest.ini`**；**`PHASE1_MANUSCRIPT` §5** 主图路径改为 **`results/metrics/figures/`**；**`scripts/README.md`** 补 **aggregate** / **task_wikitext**；**`docs/README.md`** 补 **PHASE2_DRAFT** 链；根 **`README.md`** 单测分层说明。  
 - [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
-- [ ] **A2-S2 第二轮（3090 fused）**：**`git pull`** → **`TAG=stage2_fused_r2`** → **`./scripts/benchmarks/run_server_stage2_wikitext_grid.sh`**（**`SERVER_SWEEP_RUNBOOK.md` §2e**）；登记 **A-stage2-wikitext-grid-v1** 追加 **R2**（**`STAMP`、新 `git_sha`、路径**），新指标拉回仓库。
+- [x] **A2-S2 第二轮（3090 fused）**：**`TAG=stage2_fused_r2`** **`STAMP=20260409T1110Z`**；**Mamba2 峰值与 R1 一致**；**`git_sha` JSON 内仍为 `6fa7873`**；归档 **`metrics_result/benchmark_wikitext_stage2_fused_r2_*`**；登记 **A-stage2** 已更新。
 
 ### 文档与代码检查纪要（2026-04-09）
 

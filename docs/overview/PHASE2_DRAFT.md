@@ -61,3 +61,4 @@
 | 2026-04-07 | **5060 CUDA** Wikitext 2×2：`benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`；**§1.1** 汇总表 |
 | 2026-04-07 | **`benchmark_wikitext_5060_cuda_grid_20260407.csv`**；**`path_pair_geometry`**；**A2-S3** **`chunk_len=12`** leaf_heldout H=6 |
 | 2026-04-09 | **A2-S2**：3090 fused 四格 **`STAMP=20260409T1035Z`** 入 **`metrics_result/`**；登记 **A-stage2-wikitext-grid-v1** |
+| 2026-04-09 | **A2-S2 R2**：**`TAG=stage2_fused_r2`** **`STAMP=20260409T1110Z`**；**Mamba2 峰值与 R1 一致** |

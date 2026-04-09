@@ -1,0 +1,13 @@
+json_file,num_leaves,chunk_len,reader,peak_alloc_mib,per_step_s,elapsed_s,batch_paths,tokens_per_path,dim,device,git_sha
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n8_c8.json,8,8,gru,26.55,0.001372,0.010975,8,32,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n8_c8.json,8,8,mamba2,53.12,0.012473,0.099787,8,32,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n8_c8.json,8,8,transformer,24.17,0.004128,0.033021,8,32,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n8_c12.json,8,12,gru,28.69,0.001338,0.010706,8,48,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n8_c12.json,8,12,mamba2,55.32,0.011499,0.091994,8,48,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n8_c12.json,8,12,transformer,26.58,0.003832,0.030659,8,48,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n16_c8.json,16,8,gru,34.07,0.001274,0.010194,16,40,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n16_c8.json,16,8,mamba2,72.59,0.009841,0.078729,16,40,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n16_c8.json,16,8,transformer,31.53,0.003869,0.030953,16,40,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n16_c12.json,16,12,gru,39.82,0.001469,0.011752,16,60,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n16_c12.json,16,12,mamba2,78.42,0.01182,0.09456,16,60,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_fused_r2_20260409T1110Z_n16_c12.json,16,12,transformer,37.85,0.004231,0.03385,16,60,128,cuda,6fa7873

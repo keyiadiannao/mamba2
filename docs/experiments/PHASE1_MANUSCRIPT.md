@@ -104,7 +104,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | **3090 fused** | **`mamba_ssm` / fused**；登记 **A-20260408-wikitext-3090-fused** 等 |
 | **A2-S3 JSON** | **任务名、划分（stratified / leaf_heldout）、`chunk_len`** |
 
-**A2-S2（3090 fused，已归档）**：**`TAG=stage2_fused`** **`STAMP=20260409T1035Z`**，**`WARMUP=2` `REPS=8`**，机器 **RTX 3090 48G**、驱动 **580.105.08**，**`torch 2.11.0+cu126`**，JSON **`git_sha=6fa7873`**。文件：**`results/metrics_result/benchmark_wikitext_stage2_fused_20260409T1035Z_n{8,16}_c{8,12}.json`**、汇总 **``benchmark_wikitext_stage2_fused_grid_20260409T1035Z.csv``**、**`benchmark_wikitext_stage2_fused_manifest_20260409T1035Z.txt`**。**Mamba2 `peak_alloc_mib`** 四格约 **53→78 MiB**，与 **5060 HF naive 同拓扑（GiB 级）** **分列**对照。复跑：**`run_server_stage2_wikitext_grid.sh`**（**`SERVER_SWEEP_RUNBOOK.md` §2d**）。**Hub**：**n8c12** 曾遇 **hf-mirror** 超时后 **datasets** 重试成功；可选 **`HF_TOKEN`** 减限速告警。
+**A2-S2（3090 fused，已归档）**：**`WARMUP=2` `REPS=8`**，**RTX 3090**、驱动 **580.105.08**，**`torch 2.11.0+cu126`**。**R1**：**`TAG=stage2_fused`** **`STAMP=20260409T1035Z`** — **`benchmark_wikitext_stage2_fused_20260409T1035Z_n{8,16}_c{8,12}.json`**、**`…_grid_20260409T1035Z.csv`**、manifest。**R2（复跑）**：**`TAG=stage2_fused_r2`** **`STAMP=20260409T1110Z`** — **`benchmark_wikitext_stage2_fused_r2_20260409T1110Z_*`**、**`…_r2_grid_20260409T1110Z.csv`**。**Mamba2 `peak_alloc_mib` 两轮四格一致**（**53.12 / 55.32 / 72.59 / 78.42**）；**墙钟** 有小幅抖动属正常。**JSON `git_sha` 仍为 `6fa7873`**（与 **paper_main** 同提交）；若正文要对齐 **当前文档/脚本 HEAD**，需在服务器 **`git pull`** 后再记新 JSON。**5060 naive** 同拓扑须 **分列**。**复跑命令**：**`SERVER_SWEEP_RUNBOOK.md` §2d / §2e**。
 
 ---
 
@@ -141,3 +141,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-07 | **P1 成文**：新增 **§8** 阶段 2（系统+A2-S3）、**§9** 检索头/Mamba 讨论边界；**§10** 指针；摘要/英文摘要各增一句；原 **§8** 下移为 **§10** |
 | 2026-04-07 | **§8.3**：**A2-S2** 待云端段落改为 **`run_server_stage2_wikitext_grid.sh`** + **`SERVER_SWEEP_RUNBOOK` §2d** |
 | 2026-04-09 | **§8.3**：**A2-S2** 实测归档（**`STAMP=20260409T1035Z`**）+ **`EXPERIMENT_REGISTRY` A-stage2-wikitext-grid-v1** 更新 |
+| 2026-04-09 | **§8.3**：**A2-S2 R2**（**`STAMP=20260409T1110Z`** **`stage2_fused_r2`**）；峰值与 R1 一致；登记册合并叙述 |
