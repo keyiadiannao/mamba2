@@ -27,6 +27,7 @@
 | **path-batch 主文** | 3090 **同机** naive vs fused；CSV + 三张主图；结论：**Mamba 峰值强烈依赖 fused** | 登记 **A-20260408-paper-main-3090-***；数据 **`results/metrics_result/paper_main_*.csv`**；图 **`results/metrics/figures/mamba_3090_naive_vs_fused_*.png`** |
 | **真语料浅树（效率）** | Wikitext-2 叶块 + **同一 reader harness** | **A-20260408-wikitext-3090-fused**；JSON 在 **`metrics_result/`** |
 | **阶段 2 本地试跑（5060）** | Wikitext **`n∈{8,16}` × `chunk_len∈{8,12}`** 共 **4** 点，`WARMUP=2` `REPS=5`；**HF naive** Mamba | **`benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`**（**`PHASE2_DRAFT.md` §1.1** 表）；旧名 **`benchmark_wikitext_local5060_n16_*`** 仍可对照；**禁止与 3090 fused 混表**（见 **§6**） |
+| **阶段 2 A2-S2（3090 fused）** | 与上 **同拓扑四格**，**`WARMUP=2` `REPS=8`**；**mamba_ssm** 融合路径 | **`benchmark_wikitext_stage2_fused_20260409T1035Z_n*_c*.json`** + **`benchmark_wikitext_stage2_fused_grid_20260409T1035Z.csv`**；登记 **A-stage2-wikitext-grid-v1** |
 | **§7 玩具协议 S1–S4** | 3090 CUDA 归档 + **串行复跑**通过；与 **§7.3.1** 同阶 | **X-20260421-***；`**_20260421.json`** + **`*_20260408T1617Z.json`** |
 | **SSGS × Mamba** | DFS + `DynamicCache` 导航环可复现 | **X-20260421-ssgs-mamba-dfs-demo** |
 | **叙事边界** | 主图 / §7 / SSGS / 真 LM / **阶段 2 任务** **五线不混读**（测量轴见 **§3**） | **`FIGURE_CAPTIONS_STAGE1.md`**（篇首 **P0** + **五条测量轴** 表）、`**RESEARCH_NOTES**` §7.0；任务细节 **`PHASE2_DRAFT.md`**（与 **`PHASE1_MANUSCRIPT` §8** 并行） |
@@ -45,7 +46,7 @@
 
 | 项 | 与主叙事的关系 |
 |----|----------------|
-| **阶段 2：真语料 + 任务指标** | **A2-S3** 与 **5060 CUDA 2×2** 动机已归档；**成文（P1）** 已入 **`PHASE1_MANUSCRIPT` §8–§9**；**仍缺**：**A2-S2**（3090 **fused** 上 Wikitext **小网格**计时，与阶段 1 同量级）— 依赖 **AutoDL** |
+| **阶段 2：真语料 + 任务指标** | **A2-S3**、**5060 CUDA 四格**、**3090 fused 四格（A2-S2）** 已归档（**`A-stage2-wikitext-grid-v1`**，**`STAMP=20260409T1035Z`**）；**成文（P1）** 见 **`PHASE1_MANUSCRIPT` §8–§9**；扩展 **dim/叶数** 另开登记 |
 | **检索头 B（分析）** | 支撑贡献候选 **②**；**B-S2**（GPT-2 岭探针 + topic heldout）+ **`RETRIEVAL_HEAD_NOTES` §2 / §5**；**B-S2+**（**`probe_path_reader_linear`**：16 叶 heldout、可选 BCE / **`--train-head-only`**）已本地归档；**per-head / 大模型** 仍待 **B-S3** 与机时 |
 | **检索头 C（注入训练）** | 依赖 B 与稳定 harness；**48G** |
 | **§7.5 S5 汇总表** | 支撑贡献候选 **③** 的「一句话表」；**可做可不做**，视篇幅 |
@@ -155,3 +156,4 @@
 | 2026-04-09 | 初版：现状 + 方向 + 决策 + 推荐顺序 |
 | 2026-04-09 | **§6**：公平性边界 + **何时换更大模型**（三档推进） |
 | 2026-04-07 | **§2–§3 / §7**：**P1 成文** 与 **A2-S2 待云端** 在 **§2.1 / §2.3** 分列；测量轴与 **`PHASE1_MANUSCRIPT` §8–§9**、**FIGURE_CAPTIONS** 五轴表、文档地图对齐 |
+| 2026-04-09 | **§2.3**：**A2-S2**（3090 fused 四格）已登记；**`metrics_result/benchmark_wikitext_stage2_fused_*_20260409T1035Z.*`** |

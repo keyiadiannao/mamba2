@@ -104,7 +104,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | **3090 fused** | **`mamba_ssm` / fused**；登记 **A-20260408-wikitext-3090-fused** 等 |
 | **A2-S3 JSON** | **任务名、划分（stratified / leaf_heldout）、`chunk_len`** |
 
-**待云端（A2-S2）**：在 **3090 fused** 上跑与 **5060 四格**同拓扑的 Wikitext **path-batch**（默认 **`WARMUP=2` `REPS=8`**，可对齐 5060 设 **`REPS=5`**）。**一键**：**`scripts/benchmarks/run_server_stage2_wikitext_grid.sh`**；说明与可复制命令：**`docs/environment/SERVER_SWEEP_RUNBOOK.md` §2d**。跑完更新 **`EXPERIMENT_REGISTRY`** 行 **A-stage2-wikitext-grid-v1**（**`TAG`/`STAMP`**、路径）。
+**A2-S2（3090 fused，已归档）**：**`TAG=stage2_fused`** **`STAMP=20260409T1035Z`**，**`WARMUP=2` `REPS=8`**，机器 **RTX 3090 48G**、驱动 **580.105.08**，**`torch 2.11.0+cu126`**，JSON **`git_sha=6fa7873`**。文件：**`results/metrics_result/benchmark_wikitext_stage2_fused_20260409T1035Z_n{8,16}_c{8,12}.json`**、汇总 **``benchmark_wikitext_stage2_fused_grid_20260409T1035Z.csv``**、**`benchmark_wikitext_stage2_fused_manifest_20260409T1035Z.txt`**。**Mamba2 `peak_alloc_mib`** 四格约 **53→78 MiB**，与 **5060 HF naive 同拓扑（GiB 级）** **分列**对照。复跑：**`run_server_stage2_wikitext_grid.sh`**（**`SERVER_SWEEP_RUNBOOK.md` §2d**）。**Hub**：**n8c12** 曾遇 **hf-mirror** 超时后 **datasets** 重试成功；可选 **`HF_TOKEN`** 减限速告警。
 
 ---
 
@@ -140,3 +140,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-07 | §3.1 **5060** 四格动机段；§5 增 **grid CSV**；**`path_pair_geometry`** + 单测；**A2-S3** `chunk_len=12` leaf_heldout |
 | 2026-04-07 | **P1 成文**：新增 **§8** 阶段 2（系统+A2-S3）、**§9** 检索头/Mamba 讨论边界；**§10** 指针；摘要/英文摘要各增一句；原 **§8** 下移为 **§10** |
 | 2026-04-07 | **§8.3**：**A2-S2** 待云端段落改为 **`run_server_stage2_wikitext_grid.sh`** + **`SERVER_SWEEP_RUNBOOK` §2d** |
+| 2026-04-09 | **§8.3**：**A2-S2** 实测归档（**`STAMP=20260409T1035Z`**）+ **`EXPERIMENT_REGISTRY` A-stage2-wikitext-grid-v1** 更新 |

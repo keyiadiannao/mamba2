@@ -7,7 +7,7 @@
 
 ## 1. 阶段 2 要报告什么
 
-- **系统**：在 **Wikitext-2 叶块 → 自底向上平衡树** 上，沿用 **`benchmark_wikitext_tree.py`** 的 **同一 reader 槽位**（TF / GRU / Mamba2 path reader），扩展 **网格**（`num_leaves`、`chunk_len`、`dim` 等见 **`NEXT_RESEARCH_PLAN.md`** 与 **`EXPERIMENT_REGISTRY`** 行 **`A-stage2-wikitext-grid-v1`**）。**5060 CUDA、HF naive Mamba** 的 **墙钟 / m2_peak** 见 **`metrics_result/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`**（与 **3090 fused** **分列**，见 **§3**）。
+- **系统**：在 **Wikitext-2 叶块 → 自底向上平衡树** 上，沿用 **`benchmark_wikitext_tree.py`** 的 **同一 reader 槽位**（TF / GRU / Mamba2 path reader），扩展 **网格**（`num_leaves`、`chunk_len`、`dim` 等见 **`NEXT_RESEARCH_PLAN.md`** 与 **`EXPERIMENT_REGISTRY`** 行 **`A-stage2-wikitext-grid-v1`**）。**5060 CUDA、HF naive Mamba** 的 **墙钟 / m2_peak** 见 **`metrics_result/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`**。**3090 fused 同拓扑四格**（**A2-S2**）见 **`benchmark_wikitext_stage2_fused_20260409T1035Z_n*_c*.json`** 与 **`benchmark_wikitext_stage2_fused_grid_20260409T1035Z.csv`**（与 naive **分列**，见 **§3**）。
 
 ### 1.1 本地 5060 CUDA：Wikitext 浅树 2×2（**HF naive** Mamba，`dim=128`，`WARMUP=2` `REPS=5`）
 
@@ -60,3 +60,4 @@
 | 2026-04-07 | **leaf_heldout H=6**：`task_wikitext_sibling16_leafheldout6_{cpu,cuda5060}.json`（15 test 叶对） |
 | 2026-04-07 | **5060 CUDA** Wikitext 2×2：`benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`；**§1.1** 汇总表 |
 | 2026-04-07 | **`benchmark_wikitext_5060_cuda_grid_20260407.csv`**；**`path_pair_geometry`**；**A2-S3** **`chunk_len=12`** leaf_heldout H=6 |
+| 2026-04-09 | **A2-S2**：3090 fused 四格 **`STAMP=20260409T1035Z`** 入 **`metrics_result/`**；登记 **A-stage2-wikitext-grid-v1** |

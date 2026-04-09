@@ -1,0 +1,11 @@
+kind=stage2_wikitext_fused_grid
+grid=full
+tag=stage2_fused
+stamp=20260409T1035Z
+warmup=2 reps=8
+utc=2026-04-09T10:35:00Z
+git_sha=6fa7873
+HF_ENDPOINT=https://hf-mirror.com (typical)
+gpu=NVIDIA GeForce RTX 3090, driver 580.105.08, 49152 MiB
+torch=2.11.0+cu126 cuda=True
+note=n8_c12 run: hf-mirror HEAD timeout, datasets retried OK; HF_TOKEN unset (Hub rate-limit warning)
