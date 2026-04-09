@@ -1,6 +1,6 @@
 # 下一步研究计划（展开）
 
-> **先读**：**`RESEARCH_STATUS_AND_DIRECTION.md`**（整体方向、现状、决策原则与本文件 **§5 顺序** 的对应关系）。  
+> **先读**：**`RESEARCH_STATUS_AND_DIRECTION.md`**（整体方向、现状、决策原则、**§6 公平性与何时换更大模型**、与本文件 **推荐顺序** 的对应）。  
 > **前置**：阶段 1 已收束（**`PHASE1_MANUSCRIPT.md`**、**`results/metrics_result/`**、§7 复跑验收）。本文将 **`ROADMAP.md` 阶段 2 入口** 与 **`PROJECT_MASTER_PLAN.md`** 工作分解 **展开为可执行任务**；**周期勾选**仍以 **`CURRENT_SPRINT.md`** 为准。
 
 ---
