@@ -1,0 +1,46 @@
+{
+  "kind": "probe_path_reader_linear",
+  "git_sha": "1f38561",
+  "torch_version": "2.11.0+cu128",
+  "device": "cpu",
+  "label": "topic8_leaf: first 4 leaves STEM templates, last 4 life/arts templates",
+  "tree": {
+    "num_leaves": 8,
+    "fanout": 2,
+    "chunk_len": 8,
+    "dim": 128,
+    "path_shape": [
+      8,
+      32,
+      128
+    ]
+  },
+  "test_frac": 0.25,
+  "n_train": 6,
+  "n_test": 2,
+  "ridge_lambda": 0.01,
+  "init_seed": 42,
+  "readers": {
+    "baseline_raw_mean_pool": {
+      "train_acc": 1.0,
+      "test_acc": 1.0,
+      "output_dim": 128
+    },
+    "transformer": {
+      "train_acc": 1.0,
+      "test_acc": 1.0,
+      "output_dim": 128
+    },
+    "gru": {
+      "train_acc": 1.0,
+      "test_acc": 0.5,
+      "output_dim": 128
+    },
+    "mamba2": {
+      "train_acc": 1.0,
+      "test_acc": 1.0,
+      "output_dim": 128
+    }
+  },
+  "notes": "Readers are randomly initialized (same as cold start); compare to baseline_raw_mean_pool on hash embeddings. Trained readers would be a separate experiment. Not GPT-2; not retrieval-head identification."
+}

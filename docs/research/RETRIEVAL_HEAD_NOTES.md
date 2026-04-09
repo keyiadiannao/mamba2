@@ -39,14 +39,23 @@
 - **登记**：**`EXPERIMENT_REGISTRY`** 行 **`X-20260410-retrieval-linear-probe`**（占位，可本地复跑 JSON）。
 - **与计时实验分离**：不改变 **A2** harness JSON；探针 JSON 字段独立。
 
-## 5. 明确不做的事
+## 5. 叙事定位：B 线 vs 导航线 vs「Mamba 检索式机制」初衷
+
+- **导航线（X-20260423 / 24 / 25）**：在 **同一 tiny 因果 LM + 固定文本树** 上比较 **启发式 argmin** 与 **可学习子指针 / SSGS**——结论是 **任务策略与学习信号** 问题（例如 **reach_rate** 提升），**不**回答「隐状态里是否已有检索头」。
+- **B 线（岭探针 + 文献）**：在 **冻结 LM** 或 **路径读出向量** 上问「**线性可读的二元标签**」——**不设导航训练**；与「可学习导航更好」**并行、不矛盾**。
+- **与 Mamba「检索式机制」初衷的对齐**：文献中的 **retrieval heads** 多针对 **Transformer 自注意力**；当前 **`probe_retrieval_correlation.py`（GPT-2）** 尚未进入 **`Mamba2PathReader`**。要对齐初衷，有价值的下一步是 **同 harness 下** 对 **path reader 表征**（及可选 **per-layer Mamba 内部状态**，若 API 允许）做 **与 GPT-2 探针可并列、但不可混读** 的对照，而不是在 **纯 GPT-2** 上无限加难模板。
+- **边际收益判断**：在 **通用 LM** 上继续堆模板 / 换大模型的 **边际收益** 递减；**边际收益更高** 的是把探针 **接到 path-batch / Mamba 路径**（见 **§7** 本地脚本 **`probe_path_reader_linear.py`**）。
+- **辅线节流**（与 **`RESEARCH_STATUS_AND_DIRECTION.md`** 一致）：B 线 **不**抢占 **A2**（真语料网格 + 任务指标）的默认机时；**B-S3**（per-head / 大显存）仍 **按需**。
+
+## 6. 明确不做的事
 
 - 不在本阶段将检索头结论写进 **主文定理** 或 **path-batch 公平性** 段落。
 - 不把 **5060 vs 3090** 或 **path-batch vs §7** 的混点说成「检索头」问题。
 
-## 6. 下一步（B-S2 深化）
+## 7. 下一步（B-S2 深化）
 
 - **文献**：§2 已列 **入口引用**；精读时把每篇的 **探测/识别算法** 记到本节附录式 bullet（可选新开 `RETRIEVAL_HEAD_NOTES_APPENDIX.md`，避免主文件过长）。  
 - **实验**：在 **path reader 表征**（或 **树上路径文档**）上复用 **`probe_retrieval_correlation.py` 的岭探针思路**。**已归档（gpt2）**：**marker** → `probe_retrieval_linear_gpt2_cpu.json`；**topic heldout** → `probe_retrieval_linear_gpt2_topic_heldout_cpu.json`；**topic sample（泄漏对照）** → `probe_retrieval_linear_gpt2_topic_sample_cpu.json`；**tiny-gpt2** → `probe_retrieval_linear_demo.json`。  
 - **头级分析**：当前脚本为 **层 mean-pool**；若对齐 2404.15574 风格，需在 Transformer 内取 **per-head** 统计量再探针（工作量 +1，**B-S3** 级）。  
 - **主线并行**：**A2-S2**（Wikitext 小网格，**3090 fused**）仍按 **`NEXT_RESEARCH_PLAN`**，与探针 **独立登记**。
+- **path reader 本地探针**：`scripts/research/probe_path_reader_linear.py` — 8 叶 **文本形树**、叶级 **STEM vs 生活/文艺** 标签；岭分类 **baseline_raw_mean_pool**（hash 嵌入时间上均值）vs **transformer / gru / mamba2** 读出向量；**reader 默认随机初始化**，与计时 harness **同结构**，**非**训练后表征；结果 JSON 与 **GPT-2 探针** **分列解读**。
