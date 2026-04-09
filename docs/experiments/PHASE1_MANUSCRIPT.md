@@ -46,7 +46,7 @@
 
 **depth 扩展（登记 X-section7-depth-extension-v1）**：在 **`tree_depth_param ∈ {5,6}`**（路径 **6 / 7** 节点；与 **32 / 64 叶** 同深）上各跑 **S1–S4** 全套，**`STAMP=20260409T1341Z`**。**TF-KV** 末段 **`kv_cache_nbytes`** 在 **d5→d6** 上由 **约 96 KiB → 约 112 KiB** 量级抬升；**S1** **Mamba cache** **clone_nbytes** 仍 **约 41 KiB/段**（与 **depth=4** 归档同阶）。产出文件名曾因 shell **残留 `TAG`** 带 **`stage2_leavescale_xl_`** 前缀，**`manifest` 的 `kind=section7_s1_s4_depth_sweep`** 可据以识别；详见 **`EXPERIMENT_REGISTRY`** 该行脚注。此后脚本改用 **`SECTION7_TAG`**，见 **`RUN_AUTOADL_SECTION7_NOW.md`**。
 
-**SSGS（State-Snapshot Guided Search）与 Mamba cache**：**`dfs_ssgs_mamba`** 在 **DFS 试错序** 下以 **token 步进** 驱动 **HF `Mamba2Model` + `DynamicCache`**，并用 **clone / zero_ / copy_** 做快照与回滚；已以 **演示级 JSON** 归档（**X-20260421-ssgs-mamba-dfs-demo**）。**同一文本 8 叶树** 上 **SSGS 必达** 与 **tiny-gpt2 子头贪心** 的并列指标见 **X-20260425**。上述线与 **path-batch**（整段路径嵌入、批量前向）及 **§7 单列毫秒表** **均非同一实验**；正文宜 **附录或讨论** 交代，图注遵循 **`FIGURE_CAPTIONS_STAGE1.md`** **五条测量轴**。**是否继续加 SSGS 实验**：当前登记已支撑 **「状态快照式导航环」概念验证**；若审稿要求 **与 Wikitext path reader 同树的 SSGS 接线**、**更深树的代价曲线** 或 **与 §7 同深度的并排表**，再 **另开登记行** — **非**主文效率故事的 **阻塞项**（**§10**）。
+**SSGS（State-Snapshot Guided Search）与 Mamba cache**：**`dfs_ssgs_mamba`** 在 **DFS 试错序** 下以 **token 步进** 驱动 **HF `Mamba2Model` + `DynamicCache`**，并用 **clone / zero_ / copy_** 做快照与回滚；已以 **演示级 JSON** 归档（**X-20260421-ssgs-mamba-dfs-demo**）。**同一文本 8 叶树** 上 **SSGS 必达** 与 **tiny-gpt2 子头贪心** 的并列指标见 **X-20260425**。上述线与 **path-batch**（整段路径嵌入、批量前向）及 **§7 单列毫秒表** **均非同一实验**；正文宜 **附录或讨论** 交代，图注遵循 **`FIGURE_CAPTIONS_STAGE1.md`** **五条测量轴**。**是否继续加 SSGS 实验**：当前登记已支撑 **「状态快照式导航环」概念验证**；**与 Wikitext path reader 同树的 SSGS 接线** 见 **`demo_ssgs_mamba_wikitext.py`**（登记 **X-20260407-ssgs-mamba-wikitext-tree**）。若需 **更深树的 snapshots/rollbacks 曲线** 或 **与 §7 同深度的并排表**，再 **另开登记行** — **非**主文效率故事的 **阻塞项**（**§10**）。
 
 ---
 
@@ -154,7 +154,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 2. **可选机制线 B**：若要加强 **「检索头 / 表征可读」** 讨论或 **第二贡献** — **3090** 上 **1 条** **B-S2+** JSON（**`probe_path_reader_linear.py`** 去 **`--cpu`** 等），**新开登记行**；**非**主线阻塞；**`RETRIEVAL_HEAD_NOTES.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md` §6**。  
 3. **A2-S3 可选加压**：更大 **`heldout-leaves`**、**`root_child`**、**stratified + `split-seed`** — 与 **init×5** **分列** 说明。  
 4. **Polish**：**S5 总表**（**`RESEARCH_NOTES` §7**）、主图入仓、平面 RAG smoke。  
-5. **SSGS（可选续作，非阻塞）**：若需 **与 Wikitext 同树** 的 **`dfs_ssgs_mamba`**、**更深树** 的 **snapshots/rollbacks** 曲线、或 **与 path-batch 同 dim/深度** 的对照表 — **另开登记**；当前 **X-20260421 / X-20260425** 已足 **附录级** 叙述。  
+5. **SSGS（可选续作，非阻塞）**：**与 Wikitext 同树** 的 **`dfs_ssgs_mamba`** 已由 **`demo_ssgs_mamba_wikitext.py`** 接线（登记 **X-20260407-ssgs-mamba-wikitext-tree**）；若需 **更深树** 的 **snapshots/rollbacks** 曲线或 **与 path-batch 同 dim** 的并排表 — **另开登记**；玩具树 **X-20260421**、LM 并列 **X-20260425** 仍足 **附录级** 基线。  
 6. **总览**：**`RESEARCH_STATUS_AND_DIRECTION.md`**、**`NEXT_RESEARCH_PLAN.md`**；手册：**`SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**、**`RUN_AUTOADL_SECTION7_NOW.md`**；草稿：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**。
 
 ---
@@ -180,3 +180,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-09 | **§5 / §10**：**A2-S3** **3090 init×5** 入 **`EXPERIMENT_REGISTRY`**；**`aggregate_task_wikitext_path_pair_json.py`** |
 | 2026-04-09 | **§10**：**`STAMP=20260409T1438Z`** 归档 **`metrics_result/`**；**主线成文优先**；**B-S2+** 标为 **可选机制线** |
 | 2026-04-09 | **精修**：摘要/结论/英摘；**§4** 增 **SSGS** 定位与 **是否续做**；**§8.2** 增 **1438Z** 聚合一句；**§10** 增 **SSGS 可选续作** |
+| 2026-04-07 | **§10 / §4 SSGS**：**Wikitext 同树** — **`demo_ssgs_mamba_wikitext.py`**、登记 **X-20260407-ssgs-mamba-wikitext-tree** |

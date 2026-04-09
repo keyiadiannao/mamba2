@@ -202,6 +202,38 @@ done
 
 ---
 
+## 10. 【辅线】SSGS × Mamba × **Wikitext 同建树**
+
+与 **`benchmark_wikitext_tree.py`** **同一** **`wikitext2_leaf_chunks` → `build_bottom_up_text_tree`** 流程，在树上跑 **`dfs_ssgs_mamba`**（**token 步进** + **`DynamicCache`** 快照）。**测量轴**：与 **path-batch 墙钟**、**§7 单列毫秒** **分列**；JSON **`kind=ssgs_mamba_wikitext_tree`**。登记 **X-20260407-ssgs-mamba-wikitext-tree**。
+
+**前置**：**§0**（**`HF_ENDPOINT`**、**datasets** 可拉 **Wikitext-2**）。CUDA 上 **`build_toy_mamba2_for_ssgs`** 行为与 **`demo_ssgs_mamba_dfs.py`** 一致（见 **`SERVER_SWEEP_RUNBOOK`** **SSGS** 段）。
+
+```bash
+cd /root/autodl-tmp/mamba2
+STAMP=$(date -u +%Y%m%dT%H%MZ)
+python scripts/research/demo_ssgs_mamba_wikitext.py \
+  --num-leaves 8 --fanout 2 --chunk-len 8 --dim 128 --layers 2 \
+  --target-leaf-index -1 \
+  --out-json "$MAMBA2_RESULTS_ROOT/metrics_result/ssgs_mamba_wikitext_n8_c8_${STAMP}.json"
+```
+
+本机 **CPU smoke**（小模型，快）：加 **`--cpu`**，**`--dim 64 --chunk-len 4`** 亦可。单测：**`pytest tests/test_ssgs_mamba_wikitext.py`**（**Windows** 上 **PyTorch DLL 损坏** 时 **`_mamba2_available`** 会 **skip**，不阻塞 **`pytest` 收集**）。
+
+**多份 JSON → 一张表**（与 path-batch 的 grid CSV 并列归档；默认 **只写本次 glob 匹配的文件**；**`--append`** 则与已有 CSV **按 `json_path` 合并**）：
+
+```bash
+cd /root/autodl-tmp/mamba2
+python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
+  -g "$MAMBA2_RESULTS_ROOT/metrics_result/ssgs_mamba_wikitext_*.json" \
+  --out-csv "$MAMBA2_RESULTS_ROOT/metrics_result/ssgs_mamba_wikitext_grid.csv"
+# 若 grid 已存在、只想追加新 STAMP：
+#   同上命令加 --append
+```
+
+单测（无 torch）：**`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`**。
+
+---
+
 ## 修订记录
 
 | 日期 | 说明 |
@@ -215,3 +247,5 @@ done
 | 2026-04-09 | **已跑通叶数扫描**：**`TAG=stage2_leavescale`** **`STAMP=20260409T1257Z`** → **`benchmark_wikitext_stage2_leavescale_*`**；登记 **A-stage2-wikitext-leavescale-v1**；**`SERVER_SWEEP_RUNBOOK` §1** 补 **GitHub TLS / PyCharm** |
 | 2026-04-09 | **§4** 末：**128/256 叶** 建议；**`run_server_wikitext_leavescale.sh`** 支持 **`CHARS_PER_LEAF`**；**`SERVER_SWEEP_RUNBOOK` §2f** 大叶数段 |
 | 2026-04-09 | **已跑通 XL**：**`TAG=stage2_leavescale_xl`** **`STAMP=20260409T1322Z`（n128）**、**`20260409T1324Z`（n256）**；**`benchmark_wikitext_stage2_leavescale_xl_grid_n128_n256_combined.csv`**；**A-stage2-wikitext-leavescale-xl-v1** |
+| 2026-04-07 | **§10**：**`demo_ssgs_mamba_wikitext.py`** + 登记 **X-20260407-ssgs-mamba-wikitext-tree** |
+| 2026-04-07 | **§10**：**`aggregate_ssgs_mamba_wikitext_json.py`** → **`ssgs_mamba_wikitext_grid.csv`** |

@@ -35,6 +35,7 @@
 | **§7 depth 5–6（S1–S4）** | **单路径玩具协议**，与 path-batch **分列** | **`STAMP=20260409T1341Z`**；**`stage2_leavescale_xl_s{1..4}_*_d{5,6}_*.json`**（前缀因 **TAG** 残留误用，见 **登记册脚注**）+ manifest；登记 **X-section7-depth-extension-v1** |
 | **§7 玩具协议 S1–S4** | 3090 CUDA 归档 + **串行复跑**通过；与 **§7.3.1** 同阶 | **X-20260421-***；`**_20260421.json`** + **`*_20260408T1617Z.json`** |
 | **SSGS × Mamba** | DFS + `DynamicCache` 导航环可复现 | **X-20260421-ssgs-mamba-dfs-demo** |
+| **SSGS × Mamba（Wikitext 同树）** | 与 **`benchmark_wikitext_tree`** **同建树** 上 **`dfs_ssgs_mamba`**；**path-batch** 与 **SSGS** 桥接 | **`scripts/research/demo_ssgs_mamba_wikitext.py`**；登记 **X-20260407-ssgs-mamba-wikitext-tree**；**`tests/test_ssgs_mamba_wikitext.py`** |
 | **叙事边界** | 主图 / §7 / SSGS / 真 LM / **阶段 2 任务** **五线不混读**（测量轴见 **§3**） | **`FIGURE_CAPTIONS_STAGE1.md`**（篇首 **P0** + **五条测量轴** 表）、`**RESEARCH_NOTES**` §7.0；任务细节 **`PHASE2_DRAFT.md`**（与 **`PHASE1_MANUSCRIPT` §8** 并行） |
 | **阶段 1 成文** | 可贴正文的一节（含摘要/方法/结果/§7 关系/归档索引） | **`PHASE1_MANUSCRIPT.md`** |
 | **阶段 2 成文（P1）** | **真语料动机 + A2-S3 协议 + 公平性** 已并入主稿 **§8**；**检索头 / Mamba 讨论边界** 见 **§9**；指针 **§10** | **`PHASE1_MANUSCRIPT.md` §8–§10**；**`RETRIEVAL_HEAD_NOTES.md` §8** |
@@ -66,7 +67,7 @@
 |----|----------|-----------------|
 | **Path-batch 主图** | 固定路径集合上 **三 reader 批量前向** 的 **时间与 m2_peak** | **A-20260408-paper-main-3090-pair** |
 | **§7 玩具表** | **单路径**上 **clone / restore / TF-R1 / TF-KV** 等 **分列毫秒** | **X-20260421-*** |
-| **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照 | **X-20260421-ssgs-mamba-dfs-demo** |
+| **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照 | **X-20260421-ssgs-mamba-dfs-demo**；**Wikitext 同树** **X-20260407-ssgs-mamba-wikitext-tree** |
 | **真 LM 线** | **tiny-gpt2** 上 **CE / 导航指标**；**非** path-batch harness | **X-20260422–25** |
 | **阶段 2 任务（A2-S3）** | 同 Wikitext 树上的 **效果 proxy**（例：叶对 cohort **ridge 准确率**）；**非**主图纵轴、**非** §7 毫秒 | **A-20260407-stage2-wikitext-path-pair**；**`PHASE2_DRAFT.md`**；成文并入 **`PHASE1_MANUSCRIPT.md` §8–§9** |
 

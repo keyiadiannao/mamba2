@@ -410,6 +410,17 @@ python scripts/research/demo_ssgs_mamba_dfs.py --device cpu
 python scripts/research/demo_ssgs_mamba_dfs.py --device cuda
 ```
 
+**SSGS × Mamba × Wikitext 浅树**（与 **`benchmark_wikitext_tree`** **同建树**；JSON **`kind=ssgs_mamba_wikitext_tree`**；登记 **X-20260407-ssgs-mamba-wikitext-tree**；详 **`NEXT_EXPERIMENTS_COMMANDS.md` §10**）：
+
+```bash
+STAMP=$(date -u +%Y%m%dT%H%MZ)
+python scripts/research/demo_ssgs_mamba_wikitext.py \
+  --num-leaves 8 --fanout 2 --chunk-len 8 --dim 128 --layers 2 \
+  --out-json "${MAMBA2_RESULTS_ROOT:-results}/metrics_result/ssgs_mamba_wikitext_n8_c8_${STAMP}.json"
+```
+
+**合并多份 JSON → CSV**（**`NEXT_EXPERIMENTS_COMMANDS.md` §10**）：**`aggregate_ssgs_mamba_wikitext_json.py -g '…/ssgs_mamba_wikitext_*.json' --out-csv …/ssgs_mamba_wikitext_grid.csv`**。
+
 **一键复跑 S1–S4（CUDA）**（时间戳文件名写入 ``metrics/``；未设 ``MAMBA2_RESULTS_ROOT`` 时用仓库内 ``results/metrics/``）：
 
 ```bash
