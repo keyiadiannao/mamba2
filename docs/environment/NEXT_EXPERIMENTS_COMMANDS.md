@@ -179,7 +179,7 @@ git push origin master
 
 与 **`PHASE1_MANUSCRIPT.md` §10** 第 1 条一致：**`split-seed`** 扫 **5–10** 个，固定 **`--cohort sibling`**（或另开 **`root_child`** 登记），**`--pair-split leaf_heldout --heldout-leaves 6`**（**16 叶** 时 test 叶对 **C(6,2)=15**；**32 叶** 更稳）。
 
-**前置**：**§0**（**`conda activate mamba2`**、**`MAMBA2_RESULTS_ROOT`**、**`HF_ENDPOINT`**）。
+**前置**：**§0**（**`conda activate mamba2`**、**`MAMBA2_RESULTS_ROOT`**、**`HF_ENDPOINT`**）。若报 **`causal_conv1d` … strides … multiples of 8**：先 **`git pull`** — `Mamba2PathReader` 默认已改为 **fused 友好** 的 **num_heads≥8** 拆分（见 **`src/rag_tree/readers.py`**）。
 
 **16 叶 × chunk8 × dim128**（示例）：
 

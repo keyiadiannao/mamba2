@@ -66,12 +66,34 @@ class GRUPathReader(nn.Module):
         return self.out_proj(last)
 
 
+def _mamba2_head_split(inner: int, head_dim: int | None) -> tuple[int, int]:
+    """Return ``(num_heads, head_dim)`` for HF ``Mamba2Config`` (``inner = mamba_hidden * expand``).
+
+    Fused ``causal_conv1d`` on CUDA often fails when ``num_heads < 8`` (stride/layout constraints);
+    see ``SERVER_SWEEP_RUNBOOK.md`` and ``probe_mamba2_outputs.py``. When ``head_dim`` is ``None``,
+    pick the **smallest** ``num_heads >= 8`` dividing ``inner`` so ``head_dim`` stays reasonably large.
+    """
+    if head_dim is not None:
+        if inner % head_dim != 0:
+            raise ValueError(f"mamba_hidden*expand ({inner}) must be divisible by head_dim ({head_dim})")
+        return inner // head_dim, head_dim
+    for nh in range(8, inner + 1):
+        if inner % nh == 0:
+            return nh, inner // nh
+    for nh in range(7, 0, -1):
+        if inner % nh == 0:
+            return nh, inner // nh
+    raise ValueError(f"cannot split inner={inner} into integer heads")
+
+
 class Mamba2PathReader(nn.Module):
     """
     Mamba-2 stack on path embeddings [B, T, D] using `inputs_embeds` (no token embedding).
 
     Internal width `mamba_hidden` uses a small SSD-consistent config (expand=2, n_groups=1).
     Requires: pip install transformers (5.x for Mamba2).
+
+    Default ``head_dim=None`` picks a fused-friendly **num_heads ≥ 8** split when possible.
     """
 
     def __init__(
@@ -82,16 +104,14 @@ class Mamba2PathReader(nn.Module):
         num_layers: int = 2,
         state_size: int = 16,
         vocab_size: int = 32000,
-        head_dim: int = 64,
+        head_dim: int | None = None,
         expand: int = 2,
     ) -> None:
         super().__init__()
         from transformers import Mamba2Config, Mamba2Model
 
         inner = mamba_hidden * expand
-        if inner % head_dim != 0:
-            raise ValueError(f"mamba_hidden*expand ({inner}) must be divisible by head_dim ({head_dim})")
-        num_heads = inner // head_dim
+        num_heads, head_dim = _mamba2_head_split(inner, head_dim)
         self.mamba_hidden = mamba_hidden
         self.in_proj = nn.Linear(dim, mamba_hidden) if dim != mamba_hidden else nn.Identity()
         cfg = Mamba2Config(
@@ -114,6 +134,7 @@ class Mamba2PathReader(nn.Module):
             h = x
         else:
             h = self.in_proj(x)
+        h = h.contiguous()
         y = self.core(inputs_embeds=h).last_hidden_state
         pooled = y.mean(dim=1)
         return self.out_proj(pooled)
