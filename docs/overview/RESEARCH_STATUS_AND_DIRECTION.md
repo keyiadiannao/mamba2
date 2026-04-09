@@ -51,7 +51,7 @@
 
 | 项 | 与主叙事的关系 |
 |----|----------------|
-| **阶段 2：真语料 + 任务指标** | **A2-S3**、**5060 CUDA 四格**、**3090 fused 四格（A2-S2）** 已归档（**`A-stage2-wikitext-grid-v1`**，**`STAMP=20260409T1035Z`**）；**成文（P1）** 见 **`PHASE1_MANUSCRIPT` §8–§9**；扩展 **dim/叶数** 另开登记 |
+| **阶段 2：真语料 + 任务指标** | **5060 CUDA 四格**、**3090 fused 四格（A2-S2）**、**dim256**、**叶数 8–64 / XL 128–256**、**§7 depth 5–6** 均已归档（各 **EXPERIMENT_REGISTRY** 行）；**A2-S3 v0** 已有 JSON；**成文** 见 **`PHASE1_MANUSCRIPT` §8–§9** |
 | **检索头 B（分析）** | 支撑贡献候选 **②**；**B-S2**（GPT-2 岭探针 + topic heldout）+ **`RETRIEVAL_HEAD_NOTES` §2 / §5**；**B-S2+**（**`probe_path_reader_linear`**：16 叶 heldout、可选 BCE / **`--train-head-only`**）已本地归档；**per-head / 大模型** 仍待 **B-S3** 与机时 |
 | **检索头 C（注入训练）** | 依赖 B 与稳定 harness；**48G** |
 | **§7.5 S5 汇总表** | 支撑贡献候选 **③** 的「一句话表」；**可做可不做**，视篇幅 |
