@@ -10,6 +10,9 @@ Typical **A2-S2** (after **``run_server_stage2_wikitext_grid.sh``**)::
   python scripts/benchmarks/aggregate_wikitext_tree_json_grid.py \\
     --glob 'results/metrics_result/benchmark_wikitext_stage2_fused_*_n*_c*.json' \\
     --out-csv results/metrics_result/benchmark_wikitext_stage2_fused_grid_SUMMARY.csv
+
+**叶数扫描** (after **``run_server_wikitext_leavescale.sh``**) uses the same **``n*_c*``** filename
+convention; point **``--glob``** at **``benchmark_wikitext_<TAG>_<STAMP>_n*_c*.json``**.
 """
 from __future__ import annotations
 

@@ -8,6 +8,9 @@ Requires: pip install datasets
   python scripts/benchmarks/benchmark_wikitext_tree.py --num-leaves 8 --fanout 2
   python ... --out-json results/metrics_result/benchmark_wikitext_stage2_smoke.json  # 归档 JSON（仍默认 stdout）
 
+**Reader 语义**：路径张量 **[B, T, D]** 上 **``TransformerPathReader``** 为 **整段** ``TransformerEncoder``
+（**O(T²)**）；**GRU**、**Mamba2PathReader** 为 **O(T)** 量级递归/SSM。与 §7 玩具协议里 **TF-KV 增量** 脚本 **不同**，勿混读。
+
 AutoDL / 无法直连 huggingface.co 时，在运行前任选其一::
 
   export HF_ENDPOINT=https://hf-mirror.com

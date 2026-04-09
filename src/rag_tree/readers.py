@@ -16,7 +16,11 @@ def mamba2_path_reader_available() -> bool:
 
 
 class TransformerPathReader(nn.Module):
-    """Full-sequence self-attention over the concatenated path tokens."""
+    """Full-sequence self-attention over the concatenated path tokens.
+
+    Complexity is **O(T²)** in path length **T** (and linear in batch of paths). This is **not** the
+    incremental **TF-KV** trunk used in ``scripts/research/benchmark_tf_kv_path_segments.py`` (§7.2).
+    """
 
     def __init__(self, dim: int, nhead: int, num_layers: int, ff_mult: int = 4, dropout: float = 0.0) -> None:
         super().__init__()

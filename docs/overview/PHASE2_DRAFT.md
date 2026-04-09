@@ -7,7 +7,7 @@
 
 ## 1. 阶段 2 要报告什么
 
-- **系统**：在 **Wikitext-2 叶块 → 自底向上平衡树** 上，沿用 **`benchmark_wikitext_tree.py`** 的 **同一 reader 槽位**（TF / GRU / Mamba2 path reader），扩展 **网格**（`num_leaves`、`chunk_len`、`dim` 等见 **`NEXT_RESEARCH_PLAN.md`** 与 **`EXPERIMENT_REGISTRY`** 行 **`A-stage2-wikitext-grid-v1`**）。**5060 CUDA、HF naive Mamba** 的 **墙钟 / m2_peak** 见 **`metrics_result/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`**。**3090 fused 同拓扑四格 `dim=128`**（**A2-S2**）见 **`benchmark_wikitext_stage2_fused_20260409T1035Z_n*_c*.json`** 与 **`benchmark_wikitext_stage2_fused_grid_20260409T1035Z.csv`**。**同 harness `dim=256`** 四格见 **`benchmark_wikitext_stage2_dim256_20260409T1137Z_*`** 与 **`…_grid_20260409T1137Z.csv`**（登记 **A-stage2-wikitext-dim256-v1**）。**大叶数单点**（**32 叶**、**c8**、**dim128**）见 **`benchmark_wikitext_fused_n32_c8_20260409T1140Z.json`**。以上与 **5060 naive** **分列**（见 **§3**）。
+- **系统**：在 **Wikitext-2 叶块 → 自底向上平衡树** 上，沿用 **`benchmark_wikitext_tree.py`** 的 **同一 reader 槽位**（TF / GRU / Mamba2 path reader），扩展 **网格**（`num_leaves`、`chunk_len`、`dim` 等见 **`NEXT_RESEARCH_PLAN.md`** 与 **`EXPERIMENT_REGISTRY`** 行 **`A-stage2-wikitext-grid-v1`**）。**5060 CUDA、HF naive Mamba** 的 **墙钟 / m2_peak** 见 **`metrics_result/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`**。**3090 fused 同拓扑四格 `dim=128`**（**A2-S2**）见 **`benchmark_wikitext_stage2_fused_20260409T1035Z_n*_c*.json`** 与 **`benchmark_wikitext_stage2_fused_grid_20260409T1035Z.csv`**。**同 harness `dim=256`** 四格见 **`benchmark_wikitext_stage2_dim256_20260409T1137Z_*`** 与 **`…_grid_20260409T1137Z.csv`**（登记 **A-stage2-wikitext-dim256-v1**）。**大叶数单点**（**32 叶**、**c8**、**dim128**）见 **`benchmark_wikitext_fused_n32_c8_20260409T1140Z.json`**。**叶数扫描**（**`n∈{8,16,32,64}`**、固定 **c8 dim128**）用 **`run_server_wikitext_leavescale.sh`**（**`SERVER_SWEEP_RUNBOOK` §2f**），登记 **A-stage2-wikitext-leavescale-v1**。以上与 **5060 naive** **分列**（见 **§3**）。
 
 ### 1.1 本地 5060 CUDA：Wikitext 浅树 2×2（**HF naive** Mamba，`dim=128`，`WARMUP=2` `REPS=5`）
 
@@ -64,3 +64,4 @@
 | 2026-04-09 | **A2-S2 R2**：**`TAG=stage2_fused_r2`** **`STAMP=20260409T1110Z`**；**Mamba2 峰值与 R1 一致** |
 | 2026-04-09 | **dim256 四格**：**`STAMP=20260409T1137Z`**；登记 **A-stage2-wikitext-dim256-v1**；**§1** 系统 bullet 补链 |
 | 2026-04-09 | **32 叶 c8 dim128** 单点；**headcheck** 登记 **X-20260409-wikitext-headcheck** |
+| 2026-04-07 | **§1** 系统 bullet：**叶数扫描** 脚本指针；**登记册** 占位 **A-stage2-wikitext-leavescale-v1** |

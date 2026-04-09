@@ -13,7 +13,10 @@ cd /root/autodl-tmp/mamba2
 git pull origin master
 
 find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'
-chmod +x scripts/benchmarks/run_server_stage2_wikitext_grid.sh scripts/benchmarks/run_server_wikitext_dim256_grid.sh
+chmod +x scripts/benchmarks/run_server_stage2_wikitext_grid.sh \
+  scripts/benchmarks/run_server_wikitext_dim256_grid.sh \
+  scripts/benchmarks/run_server_wikitext_leavescale.sh \
+  scripts/benchmarks/run_server_section7_depth_sweep.sh
 
 source /root/miniconda3/etc/profile.d/conda.sh
 conda activate mamba2
@@ -94,7 +97,46 @@ python scripts/benchmarks/benchmark_wikitext_tree.py \
 
 ---
 
-## 4. 【本机 / CPU】机制线 **B-S2+**（不占 3090）
+## 4. 【系统扩展】叶数扫描 **{8,16,32,64}** × **chunk=8** × **dim=128**（**path-batch**）
+
+**目的**：看 **m2_peak / per_step** 随 **叶数** 变化；**TF** 为 **整段 SA O(T²)**，大树时相对 **GRU/Mamba2** 往往更吃亏（见 **`readers.TransformerPathReader`**）。
+
+```bash
+cd /root/autodl-tmp/mamba2
+export TAG=stage2_leavescale
+unset STAMP
+./scripts/benchmarks/run_server_wikitext_leavescale.sh
+```
+
+**省时 / 降显存**（不要 64 叶）：
+
+```bash
+LEAVES="8 16 32" ./scripts/benchmarks/run_server_wikitext_leavescale.sh
+```
+
+**产出**：**`benchmark_wikitext_<TAG>_<STAMP>_n*_c8.json`** + **`…_grid_<STAMP>.csv`** + manifest。登记 **A-stage2-wikitext-leavescale-v1**（**`SERVER_SWEEP_RUNBOOK.md` §2f**）。
+
+---
+
+## 5. 【§7 玩具协议】**depth 5–6** 扩展（**S1–S4**，与 path-batch **分列**）
+
+```bash
+cd /root/autodl-tmp/mamba2
+unset STAMP
+./scripts/benchmarks/run_server_section7_depth_sweep.sh
+```
+
+**含 depth=4 对照**（与 **20260421** 归档同深度再跑）：
+
+```bash
+DEPTHS="4 5 6" ./scripts/benchmarks/run_server_section7_depth_sweep.sh
+```
+
+登记 **X-section7-depth-extension-v1**；详见 **`SERVER_SWEEP_RUNBOOK.md` §2g**。
+
+---
+
+## 6. 【本机 / CPU】机制线 **B-S2+**（不占 3090）
 
 与 **path-batch** 分列；见 **`RETRIEVAL_HEAD_NOTES.md` §4 / §7**。
 
@@ -109,13 +151,13 @@ python scripts\research\probe_path_reader_linear.py --cpu --out-json results\met
 
 ---
 
-## 5. 【无命令】成文收口
+## 7. 【无命令】成文收口
 
 在 **`PHASE1_MANUSCRIPT.md` §8** 或 **`PHASE2_DRAFT.md`** 增加 **5060 naive 四格** vs **3090 fused dim128（R1/R2）** 对照子表；勿与 **paper_main 合成树** 无标注混表。
 
 ---
 
-## 6. 拉回 Windows 并入 Git（示例）
+## 8. 拉回 Windows 并入 Git（示例）
 
 ```powershell
 cd d:\cursor_try\mamba2
@@ -134,3 +176,4 @@ git push origin master
 |------|------|
 | 2026-04-09 | 初版：公共前置、HEAD 单格、**dim256** 脚本、n32 可选、B-S2+、成文指针 |
 | 2026-04-09 | **已跑通**：**dim256** **`STAMP=20260409T1137Z`**；**n32** 单点；**headcheck** **`20260409T1135Z`** — 见 **`EXPERIMENT_REGISTRY`** |
+| 2026-04-07 | **叶数扫描** **`run_server_wikitext_leavescale.sh`**、**§7 depth 5–6** **`run_server_section7_depth_sweep.sh`**；**`SERVER_SWEEP_RUNBOOK` §2f–§2g**；本节重编号 §4–§8 |

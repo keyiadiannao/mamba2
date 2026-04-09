@@ -93,6 +93,7 @@
 | **5** | **A2-S3**：任务指标（**v0**：**`task_wikitext_path_pair.py`** 已落地；cloze / 检索等仍可选） | 主文出现 **非纯延迟** 的 **一行结果**；与 **4** 分列 |
 | **6** | **成文**：**阶段 2 半页**（可 **`PHASE2_DRAFT.md`** 或接 **MANUSCRIPT**） | **投稿级** 结构闭环 |
 | **7** | **可选**：主图 **PNG 入仓**；**S5** 表；**平面 RAG** smoke | **篇幅与审稿反馈** 驱动 |
+| **4b** | **`run_server_wikitext_leavescale.sh`** + **`run_server_section7_depth_sweep.sh`**（**`SERVER_SWEEP_RUNBOOK` §2f–§2g**） | **Wikitext** 叶数 **{8,16,32,64}** 与 §7 **S1–S4** **depth 5–6**；登记 **A-stage2-wikitext-leavescale-v1**、**X-section7-depth-extension-v1** |
 
 **并行**：**2** 与 **3** 可同周；**4** 建议在 **2** 绿之后；**5（A2-S3 v0）** 已与 **2** 同 harness 落地（叶对 cohort 标签），**cloze / 检索** 等仍可选；**4** 与 **5** 正文 **分列**。
 
@@ -161,3 +162,4 @@
 | 2026-04-09 | **§2.3**：**A2-S2**（3090 fused 四格）已登记；**`metrics_result/benchmark_wikitext_stage2_fused_*_20260409T1035Z.*`** |
 | 2026-04-09 | **§2.1**：**A2-S2 R2** **`stage2_fused_r2` `20260409T1110Z`** 归档；与 **R1** 峰值一致 |
 | 2026-04-09 | **§2.1**：**dim256 四格** **`20260409T1137Z`**；**32 叶 c8** 单点；**headcheck** 记 **X-20260409-wikitext-headcheck** |
+| 2026-04-07 | **§5**：推荐顺序增 **4b**（**`run_server_wikitext_leavescale.sh`**、**`run_server_section7_depth_sweep.sh`**）；登记占位 **A-stage2-wikitext-leavescale-v1**、**X-section7-depth-extension-v1** |

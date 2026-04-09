@@ -207,6 +207,61 @@ python scripts\benchmarks\aggregate_wikitext_tree_json_grid.py `
 
 （将 **`--glob`** 换成你实际的 **`TAG`/`STAMP`** 模式。若 JSON 在数据盘 **`MAMBA2_RESULTS_ROOT\results\metrics_result`**，再加 **`--base-dir`** 指向 **`MAMBA2_RESULTS_ROOT\results`**，且 **`--glob`** 用相对形式 **`metrics_result\...`**。）
 
+### 2f. **叶数扫描**（固定 **chunk_len**、**dim**，**path-batch**）
+
+**目的**：在 **真语料 Wikitext 浅树**、**fused** 环境下，固定 **`chunk_len`**（默认 **8**）与 **`dim`**（默认 **128**），扫描 **`num_leaves ∈ {8,16,32,64}`**（**fanout=2**），观察 **`m2_peak` / `per_step_s`** 随 **叶数与路径长度** 的变化。与 **四格网格**（**§2d**）**分列登记**（建议 id **`A-stage2-wikitext-leavescale-v1`**）。
+
+**叙事要点**：**`TransformerPathReader`** 对每条路径做 **整段 self-attention**（**O(T²)**）；随深度增加 **TF** 往往比 **GRU / Mamba2** 涨得更陡。详见 **`src/rag_tree/readers.py`**、**`benchmark_wikitext_tree.py`** 模块说明。
+
+**一键**（仓库根目录）：
+
+```bash
+cd /path/to/mamba2
+git pull origin master
+find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'
+chmod +x scripts/benchmarks/run_server_wikitext_leavescale.sh
+source /root/miniconda3/etc/profile.d/conda.sh && conda activate mamba2
+export HF_ENDPOINT=https://hf-mirror.com
+export MAMBA2_RESULTS_ROOT=/root/autodl-tmp/mamba2_results
+mkdir -p "$MAMBA2_RESULTS_ROOT/metrics_result"
+
+export TAG=stage2_leavescale
+unset STAMP
+./scripts/benchmarks/run_server_wikitext_leavescale.sh
+```
+
+**可选环境变量**：
+
+| 变量 | 默认 | 说明 |
+|------|------|------|
+| `LEAVES` | `8 16 32 64` | 空格分隔；**64 叶** 较慢、**TF** 更重；显存紧张时可 **`LEAVES="8 16 32"`** |
+| `CHUNK_LEN` | `8` | 与阶段 2 主网格一致 |
+| `DIM` | `128` | 与 **A2-S2** 主表一致；勿与 **§2f** 的 **dim256 四格**无说明混表 |
+| `WARMUP` / `REPS` | `2` / `8` | 与 **paper_main** 习惯一致 |
+
+**产出**：**`benchmark_wikitext_<TAG>_<STAMP>_n{8,16,32,64}_c<CHUNK_LEN>.json`** + **`…_grid_<STAMP>.csv`** + manifest。
+
+### 2g. §7 协议 **S1–S4** 按 **树深度** 扩展（**单路径**，与 path-batch **分列**）
+
+**目的**：在已归档 **`depth=4`**（**`X-20260421-*`**，`RESEARCH_NOTES` / **§7**）之外，对 **`depth ∈ {5,6}`**（路径 **6 / 7** 个节点；**fanout=2** 对应 **32 / 64 叶**）各跑 **S1 Mamba clone**、**S2 TF-R1 重算**、**S3 TF-KV**、**S4 Mamba restore**，便于看 **KV 字节 / 增量步耗时 / restore** 随深度趋势。与 **`benchmark_wikitext_tree`** **不同 harness**，**禁止**与 **§2d/§2f** 无脚注同表。
+
+```bash
+cd /path/to/mamba2
+git pull origin master
+find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'
+chmod +x scripts/benchmarks/run_server_section7_depth_sweep.sh
+source /root/miniconda3/etc/profile.d/conda.sh && conda activate mamba2
+export MAMBA2_RESULTS_ROOT=/root/autodl-tmp/mamba2_results
+mkdir -p "$MAMBA2_RESULTS_ROOT/metrics_result"
+
+unset STAMP
+./scripts/benchmarks/run_server_section7_depth_sweep.sh
+```
+
+**可选**：**`DEPTHS="4 5 6"`** 与仓内 **20260421** JSON 同参再跑一遍（**STAMP** 新）；**`KV_REPS` / `RESTORE_REPS`** 与 Python 脚本默认一致（**20**）。
+
+**产出**（**`metrics_result/`**）：**`section7_depth_s{1,2,3,4}_*_d<depth>_<STAMP>.json`** + **`section7_depth_manifest_<STAMP>.txt`**。登记建议 id **`X-section7-depth-extension-v1`**。
+
 ---
 
 ## 3. 拉回本机合并 / 出图
