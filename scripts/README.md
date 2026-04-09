@@ -8,7 +8,7 @@
 | | `smoke_mamba_minimal.py` | HF `Mamba2Model` / `MambaModel` 小配置前向 |
 | **[benchmarks/](benchmarks/)** | `benchmark_tree_walk.py` | 玩具树路径 reader 微基准 |
 | | `benchmark_text_tree.py` | 文本形叶 + 自底向上建树 |
-| | `benchmark_wikitext_tree.py` | Wikitext-2 叶块 + 同 harness |
+| | `benchmark_wikitext_tree.py` | Wikitext-2 叶块 + 同 harness；**`--out-json`**、**`git_sha`** / **`torch_version`** |
 | | `sweep_tree_benchmark.py` | 扫参 CSV / jsonl |
 | | `merge_sweep_csv.py` | 多机 CSV 合并 |
 | | `plot_tree_reader_sweep.py` | 扫参 CSV → 延迟/显存图（需 `matplotlib`） |

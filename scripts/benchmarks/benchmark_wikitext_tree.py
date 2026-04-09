@@ -6,6 +6,7 @@ bottom-up `TreeNode` -> same TF / GRU / Mamba2 path reader benchmark.
 Requires: pip install datasets
 
   python scripts/benchmarks/benchmark_wikitext_tree.py --num-leaves 8 --fanout 2
+  python ... --out-json results/metrics_result/benchmark_wikitext_stage2_smoke.json  # 归档 JSON（仍默认 stdout）
 
 AutoDL / 无法直连 huggingface.co 时，在运行前任选其一::
 
@@ -20,6 +21,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import subprocess
 import sys
 from pathlib import Path
 
@@ -33,6 +35,20 @@ from src.rag_tree.benchmark_core import run_reader_benchmark_on_paths
 from src.rag_tree.from_text import build_bottom_up_text_tree
 from src.rag_tree.hf_corpus import wikitext2_leaf_chunks
 from src.rag_tree.tree import batched_paths
+
+
+def _git_short_sha(repo: Path) -> str:
+    r = subprocess.run(
+        ["git", "rev-parse", "--short", "HEAD"],
+        cwd=str(repo),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        text=True,
+        check=False,
+    )
+    if r.returncode == 0 and r.stdout.strip():
+        return r.stdout.strip()
+    return "unknown"
 
 
 def _depth_edges(num_leaves: int, fanout: int) -> int:
@@ -55,6 +71,20 @@ def main() -> int:
     p.add_argument("--reps", type=int, default=10)
     p.add_argument("--cpu", action="store_true")
     p.add_argument("--no-mamba2", action="store_true")
+    p.add_argument(
+        "--out-json",
+        type=Path,
+        default=None,
+        metavar="PATH",
+        help="write the same JSON payload to PATH (UTF-8); parent dirs are created",
+    )
+    p.add_argument(
+        "--git-sha",
+        type=str,
+        default=None,
+        metavar="SHA",
+        help="record git short SHA in payload; default: auto from repo root",
+    )
     p.add_argument("--seed", type=int, default=0, help="reserved for future sampling")
     args = p.parse_args()
     _ = args.seed
@@ -91,8 +121,16 @@ def main() -> int:
     out["depth"] = depth_edges
     out["chars_per_leaf"] = args.chars_per_leaf
     out["chunk_len"] = args.chunk_len
+    out["kind"] = "benchmark_wikitext_tree"
+    sha = args.git_sha if args.git_sha is not None else _git_short_sha(_REPO_ROOT)
+    out["git_sha"] = sha
+    out["torch_version"] = torch.__version__
 
-    print(json.dumps(out, indent=2))
+    text = json.dumps(out, indent=2)
+    print(text)
+    if args.out_json is not None:
+        args.out_json.parent.mkdir(parents=True, exist_ok=True)
+        args.out_json.write_text(text + "\n", encoding="utf-8")
     return 0
 
 

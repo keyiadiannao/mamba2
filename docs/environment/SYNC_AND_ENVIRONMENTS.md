@@ -11,6 +11,18 @@
 
 **本机项目环境（Windows）**：conda 环境 **`mamba2`**，解释器 `C:\Users\26433\miniconda3\envs\mamba2\python.exe`。创建与 PyTorch 版本（**5060 需 `+cu128`**）见 `environment/MAMBA2.md`。仓库根目录执行 `python scripts/smoke/smoke_local.py` 做冒烟。
 
+**PowerShell 中激活 `mamba2`**（Miniconda 安装路径以本机为准；若已执行 **`conda init powershell`** 并重开终端，亦可直接使用 **`conda activate mamba2`**）：
+
+```powershell
+& "C:\Users\26433\miniconda3\Scripts\Activate.ps1" mamba2
+```
+
+非交互脚本或 CI 中可不依赖激活，改用：
+
+```powershell
+& "C:\Users\26433\miniconda3\Scripts\conda.exe" run -n mamba2 python scripts\smoke\smoke_local.py
+```
+
 ---
 
 ## 2. 什么走 Git，什么不走

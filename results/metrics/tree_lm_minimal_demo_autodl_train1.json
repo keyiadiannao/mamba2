@@ -1,6 +1,5 @@
 {
   "kind": "tree_lm_minimal_demo",
-  "git_sha": "82eacf7",
   "model": "sshleifer/tiny-gpt2",
   "device": "cuda",
   "num_paths": 8,

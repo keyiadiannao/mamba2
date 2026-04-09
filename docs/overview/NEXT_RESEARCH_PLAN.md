@@ -41,7 +41,7 @@
 
 ### 2.4 建议首条命令（Smoke）
 
-当前 **`benchmark_wikitext_tree.py`** 将结果 **打印到 stdout**（JSON），请 **重定向** 到 `results/metrics_result/`：
+**`benchmark_wikitext_tree.py`** 默认仍 **打印 JSON 到 stdout**；归档时请使用 **`--out-json PATH`**（与 **`demo_tree_lm_minimal.py`** 一致写入 **`git_sha`**、**`torch_version`**）：
 
 ```bash
 # 仓库根，conda activate mamba2；HF 不通时：
@@ -52,10 +52,10 @@ STAMP=$(date -u +%Y%m%dT%H%MZ)
 python scripts/benchmarks/benchmark_wikitext_tree.py \
   --num-leaves 8 --fanout 2 --chunk-len 8 --dim 128 \
   --warmup 2 --reps 5 \
-  > "results/metrics_result/benchmark_wikitext_stage2_smoke_${STAMP}.json"
+  --out-json "results/metrics_result/benchmark_wikitext_stage2_smoke_${STAMP}.json"
 ```
 
-（后续可为该脚本增加 **`--out-json`** 与 **`git_sha`** 字段，与 **`demo_tree_lm_minimal.py`** 对齐。）
+（仍可用 shell 重定向代替 **`--out-json`**，但推荐后者以便 **父目录自动创建** 与 **与 stdout 同一份** 校验。）
 
 ---
 
