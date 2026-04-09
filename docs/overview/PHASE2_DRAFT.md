@@ -6,7 +6,16 @@
 
 ## 1. 阶段 2 要报告什么
 
-- **系统**：在 **Wikitext-2 叶块 → 自底向上平衡树** 上，沿用 **`benchmark_wikitext_tree.py`** 的 **同一 reader 槽位**（TF / GRU / Mamba2 path reader），扩展 **网格**（`num_leaves`、`chunk_len`、`dim` 等见 **`NEXT_RESEARCH_PLAN.md`** 与 **`EXPERIMENT_REGISTRY`** 行 **`A-stage2-wikitext-grid-v1`**）。**5060 CUDA、HF naive Mamba** 的 **墙钟 / m2_peak** 动机样例见 **`results/metrics_result/benchmark_wikitext_5060_cuda_n8_c12_20260407.json`**、**`…_n16_c8_20260407.json`**、**`…_n16_c12_20260407.json`**（与 **3090 fused** **分列**，见 **§3**）。
+- **系统**：在 **Wikitext-2 叶块 → 自底向上平衡树** 上，沿用 **`benchmark_wikitext_tree.py`** 的 **同一 reader 槽位**（TF / GRU / Mamba2 path reader），扩展 **网格**（`num_leaves`、`chunk_len`、`dim` 等见 **`NEXT_RESEARCH_PLAN.md`** 与 **`EXPERIMENT_REGISTRY`** 行 **`A-stage2-wikitext-grid-v1`**）。**5060 CUDA、HF naive Mamba** 的 **墙钟 / m2_peak** 见 **`metrics_result/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`**（与 **3090 fused** **分列**，见 **§3**）。
+
+### 1.1 本地 5060 CUDA：Wikitext 浅树 2×2（**HF naive** Mamba，`dim=128`，`WARMUP=2` `REPS=5`）
+
+| `num_leaves` \\ `chunk_len` | **8** | **12** |
+|-----------------------------|------:|-------:|
+| **8** | m2_peak **≈1142** MiB | **≈1144** MiB |
+| **16** | **≈2248** MiB | **≈2254** MiB |
+
+（表中为 **`mamba2.peak_alloc_mib`**，四份 JSON 同期 **`git_sha`** 以各文件内为准；**TF/GRU** 多在 **数十 MiB**，见原 JSON。）**结论（动机）**：在本机 **naive** 下 **叶数 8→16** 使 Mamba2 峰值 **约翻倍**；**chunk_len 8↔12** 对峰值 **影响很小**（主要随路径 token 总长略变）。
 - **任务（A2-S3）**：在 **同一棵树、同一叶序** 上增加 **至少一个** 可复现的 **效果 proxy**。当前落地脚本：**`scripts/research/task_wikitext_path_pair.py`**。
 
 ---
@@ -48,4 +57,4 @@
 | 2026-04-07 | **5060 CUDA**：`task_wikitext_path_pair_sibling16_cuda5060.json`；**B-S2+** `probe_path_reader_linear_text16_heldout_cuda5060.json`（与 CPU 岭探针 **分列登记**） |
 | 2026-04-07 | **B-S2+ BCE**：`probe_path_reader_linear_text16_heldout_{train50,headonly50}_cuda5060.json`（与 CPU **train50 / headonly50** 对齐） |
 | 2026-04-07 | **leaf_heldout H=6**：`task_wikitext_sibling16_leafheldout6_{cpu,cuda5060}.json`（15 test 叶对） |
-| 2026-04-07 | **5060 CUDA** Wikitext 计时：`benchmark_wikitext_5060_cuda_{n8_c12,n16_c8,n16_c12}_20260407.json`（**metrics_result/**） |
+| 2026-04-07 | **5060 CUDA** Wikitext 2×2：`benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`；**§1.1** 汇总表 |
