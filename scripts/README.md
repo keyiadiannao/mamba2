@@ -36,6 +36,7 @@
 | **Linux** | `benchmarks/run_server_paper_main_sweep.sh` | **同机主文扫参 fused**（统一 `WARMUP`/`REPS` + manifest） |
 | **Linux** | `benchmarks/run_server_paper_main_sweep_naive.sh` | **同机主文扫参 HF naive**（需无 `mamba-ssm`/`causal-conv1d` 的环境；网格与上者相同） |
 | **Linux** | `benchmarks/run_server_stage2_wikitext_grid.sh` | **A2-S2**：Wikitext 浅树 **fused** 四格（或 **`GRID=minimal`**）；见 **`SERVER_SWEEP_RUNBOOK` §2d** |
+| **Linux** | `benchmarks/run_server_wikitext_dim256_grid.sh` | Wikitext **dim=256** 同拓扑四格（**`TAG` 默认 `stage2_dim256`**）；见 **`NEXT_EXPERIMENTS_COMMANDS.md`** |
 
 示例：
 
