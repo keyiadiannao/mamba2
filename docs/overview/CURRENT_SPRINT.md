@@ -69,6 +69,7 @@
 - [x] **指标归档**：主文 CSV、Wikitext JSON、§7 复跑 `*_20260408T1617Z.json`、大叶数扫参等已集中于 **`results/metrics_result/`**（本机 `D:\cursor_try\mamba2\results\metrics_result`），并已纳入 **Git** 与 **§6.5** 表。  
 - [x] **阶段 2 开工**：按 **`NEXT_RESEARCH_PLAN.md` §2** — **A2-S0** 登记占位 + **A2-S1** `benchmark_wikitext_tree.py` smoke（**`--out-json`** 至 **`results/metrics_result/`**，见该文档 **§2.4**）；**B-S1** **`docs/research/RETRIEVAL_HEAD_NOTES.md`**。  
 - [x] **检索头 B-S2（本地可完成）**：**`probe_retrieval_correlation.py`** + **`RETRIEVAL_HEAD_NOTES.md` §2** 文献入口表（与 2404.15574 等对照）；**per-head / 大模型** 仍待 **B-S3** 与 GPU。  
+- [x] **B-S2+ path reader 探针**：**`probe_path_reader_linear.py`**（默认 **16 叶 heldout**、**`ridge_untrained`**；可选 **`bce_reader_train` / `bce_head_only_train`**）；归档 **`results/metrics/probe_path_reader_linear_text16_*.json`**。  
 - [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
 
 ### 文档与代码检查纪要（2026-04-09）

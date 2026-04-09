@@ -8,7 +8,8 @@
 
   conda run -n mamba2 python scripts/research/probe_path_reader_linear.py --cpu --n-leaves 16 --leaf-split heldout --out-json results/metrics/probe_path_reader_linear_text16_heldout_cpu.json
   conda run -n mamba2 python scripts/research/probe_path_reader_linear.py --cpu --n-leaves 16 --leaf-split heldout --train-steps 50 --train-lr 3e-3 --out-json results/metrics/probe_path_reader_linear_text16_heldout_train50_cpu.json
-  # 8 叶对照：--n-leaves 8；句级随机划分：--leaf-split sample
+  conda run -n mamba2 python scripts/research/probe_path_reader_linear.py --cpu --n-leaves 16 --leaf-split heldout --train-steps 50 --train-head-only --out-json results/metrics/probe_path_reader_linear_text16_heldout_headonly50_cpu.json
+  # 8 叶：--n-leaves 8；句级随机：--leaf-split sample
 
 依赖：``torch``、``transformers``（Mamba2 reader）、``numpy``。
 """
@@ -175,12 +176,19 @@ def _train_binary_head(
     steps: int,
     lr: float,
     device: torch.device,
+    head_only: bool,
 ) -> tuple[float, float]:
-    """Train ``Linear(dim,1)`` on reader output; optimize **reader + head** together."""
+    """Train ``Linear(dim,1)`` on reader output; optimize **reader + head** or **head only** (frozen reader)."""
     dim = x.shape[2]
     head = nn.Linear(dim, 1).to(device)
-    opt = torch.optim.AdamW(list(reader.parameters()) + list(head.parameters()), lr=lr)
-    reader.train()
+    if head_only:
+        for p in reader.parameters():
+            p.requires_grad = False
+        reader.eval()
+        opt = torch.optim.AdamW(head.parameters(), lr=lr)
+    else:
+        opt = torch.optim.AdamW(list(reader.parameters()) + list(head.parameters()), lr=lr)
+        reader.train()
     yf = y01.float()
     tr = train_idx.to(device)
     te = test_idx.to(device)
@@ -234,7 +242,12 @@ def main() -> int:
     p.add_argument("--mamba-hidden", type=int, default=128)
     p.add_argument("--test-frac", type=float, default=0.25, help="only for leaf-split sample")
     p.add_argument("--ridge-lambda", type=float, default=1e-2)
-    p.add_argument("--train-steps", type=int, default=0, help="if >0, train reader+linear head on train_idx only")
+    p.add_argument("--train-steps", type=int, default=0, help="if >0, BCE train on train_idx only")
+    p.add_argument(
+        "--train-head-only",
+        action="store_true",
+        help="with --train-steps: only optimize Linear head; freeze reader (cheaper ablation vs full finetune)",
+    )
     p.add_argument("--train-lr", type=float, default=3e-3)
     p.add_argument("--no-mamba2", action="store_true")
     p.add_argument("--out-json", type=str, default="", help="write JSON (UTF-8)")
@@ -344,12 +357,14 @@ def main() -> int:
                 steps=args.train_steps,
                 lr=args.train_lr,
                 device=device,
+                head_only=args.train_head_only,
             )
             trained[name] = {
                 "train_acc": tr_acc,
                 "test_acc": te_acc,
                 "train_steps": args.train_steps,
                 "train_lr": args.train_lr,
+                "train_target": "head_only" if args.train_head_only else "reader_plus_head",
             }
 
     payload: dict[str, object] = {
@@ -374,13 +389,14 @@ def main() -> int:
         "init_seed": args.init_seed,
         "ridge_untrained": results_ridge,
         "notes": (
-            "ridge_untrained: linear classifier in weight space (ridge), not BCE head. "
-            "trained: separate reader re-init + BCE on train indices only. "
+            "ridge_untrained: ridge on pooled vectors, not BCE. "
+            "bce_* : re-init readers; BCE on train indices; train_target=head_only freezes reader. "
             "Not GPT-2; not retrieval-head ID."
         ),
     }
     if trained is not None:
-        payload["bce_reader_train"] = trained
+        key = "bce_head_only_train" if args.train_head_only else "bce_reader_train"
+        payload[key] = trained
 
     text = json.dumps(payload, indent=2)
     print(text)
