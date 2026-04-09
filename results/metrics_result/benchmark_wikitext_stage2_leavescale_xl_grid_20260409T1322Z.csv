@@ -1,0 +1,4 @@
+json_file,num_leaves,chunk_len,reader,peak_alloc_mib,per_step_s,elapsed_s,batch_paths,tokens_per_path,dim,device,git_sha
+results/metrics_result/benchmark_wikitext_stage2_leavescale_xl_20260409T1322Z_n128_c8.json,128,8,gru,183.08,0.001308,0.01046,128,64,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_leavescale_xl_20260409T1322Z_n128_c8.json,128,8,mamba2,281.55,0.012234,0.09787,128,64,128,cuda,6fa7873
+results/metrics_result/benchmark_wikitext_stage2_leavescale_xl_20260409T1322Z_n128_c8.json,128,8,transformer,184.83,0.004743,0.037943,128,64,128,cuda,6fa7873

@@ -181,3 +181,4 @@ git push origin master
 | 2026-04-07 | **叶数扫描** **`run_server_wikitext_leavescale.sh`**、**§7 depth 5–6** **`run_server_section7_depth_sweep.sh`**；**`SERVER_SWEEP_RUNBOOK` §2f–§2g**；本节重编号 §4–§8 |
 | 2026-04-09 | **已跑通叶数扫描**：**`TAG=stage2_leavescale`** **`STAMP=20260409T1257Z`** → **`benchmark_wikitext_stage2_leavescale_*`**；登记 **A-stage2-wikitext-leavescale-v1**；**`SERVER_SWEEP_RUNBOOK` §1** 补 **GitHub TLS / PyCharm** |
 | 2026-04-09 | **§4** 末：**128/256 叶** 建议；**`run_server_wikitext_leavescale.sh`** 支持 **`CHARS_PER_LEAF`**；**`SERVER_SWEEP_RUNBOOK` §2f** 大叶数段 |
+| 2026-04-09 | **已跑通 XL**：**`TAG=stage2_leavescale_xl`** **`STAMP=20260409T1322Z`（n128）**、**`20260409T1324Z`（n256）**；**`benchmark_wikitext_stage2_leavescale_xl_grid_n128_n256_combined.csv`**；**A-stage2-wikitext-leavescale-xl-v1** |

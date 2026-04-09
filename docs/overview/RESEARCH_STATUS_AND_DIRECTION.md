@@ -31,6 +31,7 @@
 | **阶段 2 扩维（dim256）** | 同拓扑四格 **`dim=256`** **fused** | **`benchmark_wikitext_stage2_dim256_20260409T1137Z_*`** + grid CSV；登记 **A-stage2-wikitext-dim256-v1** |
 | **阶段 2 大叶数单点（3090）** | **32 叶**、**dim128**、**c8** **fused** | **`benchmark_wikitext_fused_n32_c8_*.json`**；登记 **A-stage2-wikitext-n32-c8-3090-v1** |
 | **阶段 2 叶数扫描（3090 fused）** | **固定 c8 dim128**，**`n∈{8,16,32,64}`**；**`WARMUP=2` `REPS=8`** | **`benchmark_wikitext_stage2_leavescale_20260409T1257Z_*`** + **`…_grid_20260409T1257Z.csv`**；登记 **A-stage2-wikitext-leavescale-v1** |
+| **阶段 2 叶数 XL（128/256 叶）** | **同上 harness**，**`TAG=stage2_leavescale_xl`** | **n128** **`20260409T1322Z`**、**n256** **`20260409T1324Z`**；**`benchmark_wikitext_stage2_leavescale_xl_*`** + **`…_grid_n128_n256_combined.csv`**；登记 **A-stage2-wikitext-leavescale-xl-v1** |
 | **§7 玩具协议 S1–S4** | 3090 CUDA 归档 + **串行复跑**通过；与 **§7.3.1** 同阶 | **X-20260421-***；`**_20260421.json`** + **`*_20260408T1617Z.json`** |
 | **SSGS × Mamba** | DFS + `DynamicCache` 导航环可复现 | **X-20260421-ssgs-mamba-dfs-demo** |
 | **叙事边界** | 主图 / §7 / SSGS / 真 LM / **阶段 2 任务** **五线不混读**（测量轴见 **§3**） | **`FIGURE_CAPTIONS_STAGE1.md`**（篇首 **P0** + **五条测量轴** 表）、`**RESEARCH_NOTES**` §7.0；任务细节 **`PHASE2_DRAFT.md`**（与 **`PHASE1_MANUSCRIPT` §8** 并行） |
@@ -165,3 +166,4 @@
 | 2026-04-09 | **§2.1**：**dim256 四格** **`20260409T1137Z`**；**32 叶 c8** 单点；**headcheck** 记 **X-20260409-wikitext-headcheck** |
 | 2026-04-07 | **§5**：推荐顺序增 **4b**（**`run_server_wikitext_leavescale.sh`**、**`run_server_section7_depth_sweep.sh`**）；登记占位 **A-stage2-wikitext-leavescale-v1**、**X-section7-depth-extension-v1** |
 | 2026-04-09 | **§2.1**：**叶数扫描** 归档 **`STAMP=20260409T1257Z`** **`TAG=stage2_leavescale`**；**`EXPERIMENT_REGISTRY` A-stage2-wikitext-leavescale-v1** 补全指标；**§1** 增 **GitHub TLS 失败 / PyCharm 同步** 说明（**`SERVER_SWEEP_RUNBOOK` §1**） |
+| 2026-04-09 | **§2.1**：**128/256 叶 XL** **`stage2_leavescale_xl`** **`1322Z`/`1324Z`**；**`A-stage2-wikitext-leavescale-xl-v1`**；**Mamba2 峰值** **≈282 / 562 MiB** |
