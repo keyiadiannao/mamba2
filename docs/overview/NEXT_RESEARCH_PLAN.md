@@ -70,7 +70,7 @@ python scripts/benchmarks/benchmark_wikitext_tree.py \
 | 代号 | 内容 | 产出 |
 |------|------|------|
 | **B-S1** | 文献与设计空间 **半页**（Hidden Attention / RAD 等 **引用 + 本文差异**） | `docs/research/RETRIEVAL_HEAD_NOTES.md`（新建） |
-| **B-S2** | **探针脚本**：对 **HF 小因果 LM** 或 **path reader 表征** 抽层向量，算与 **人工标签**（如「含实体名」）的 **线性可分性** | `scripts/research/probe_retrieval_correlation.py`（占位名）+ JSON |
+| **B-S2** | **探针脚本**：对 **HF 小因果 LM** 或 **path reader 表征** 抽层向量，算与 **合成 / 随机标签** 的 **岭线性可分性**（对照 **random_label_control**） | `scripts/research/probe_retrieval_correlation.py` + **`--out-json`** |
 | **B-S3** | **48G 窗口**：换 **更大 reader 或更深树** 复测 **趋势是否保持** | 登记新行 **B-stage2-probe-*** |
 
 **依赖**：可与 **A2-S1** 并行；**不必**等任务指标 A2-S3。

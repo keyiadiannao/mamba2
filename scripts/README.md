@@ -17,6 +17,7 @@
 | **[data/](data/)** | `prepare_leaves_from_corpus.py` | 从目录生成叶文本文件 |
 | **[sync/](sync/)** | `sync_example.ps1`, `sync_example.sh` | 双机同步命令模板 |
 | **[research/](research/)** | `probe_mamba2_outputs.py` | §7.5 S1：探针 `Mamba2Model` 的 `forward` 输出字段（含可选 `use_cache`） |
+| | `probe_retrieval_correlation.py` | **B-S2**：小因果 LM **层隐状态** 岭线性二分类（marker/digit vs **random** 对照）；`--out-json` |
 | | `benchmark_mamba2_cache_snapshot_segments.py` | §7.5 S1：单路径上每多读一个节点对**累积** `inputs_embeds` 整段前向，边界处 **clone cache** nbytes/ms（段间不传 cache，兼容 fused CUDA） |
 | | `benchmark_tf_r1_path_segments.py` | §7.5 S2 / §7.2 **TF-R1**：同路径设定下 `TransformerPathReader` **仅前向**、无 KV；每边界 `forward_mean_ms` + CUDA `peak_alloc_mib` |
 | | `benchmark_tf_kv_path_segments.py` | §7.5 S3 / §7.2 **TF-KV**：Pre-LN 因果 trunk + MHA KV cache；`kv_cache_nbytes`、`increment_last_chunk_mean_ms`；可选 `--branch-truncate-demo` |

@@ -7,7 +7,7 @@
 | **[overview/](overview/)** | 项目总览、总体规划、**`RESEARCH_STATUS_AND_DIRECTION`（现状+方向+推荐顺序）**、周历 `ROADMAP`、当前迭代 `CURRENT_SPRINT`、**`NEXT_RESEARCH_PLAN`（任务展开）** |
 | **[experiments/](experiments/)** | 实验登记 `EXPERIMENT_REGISTRY`、阶段 1 验证计划、**`PHASE1_MANUSCRIPT`（成文稿）**、**`PHASE1_COMPLETE_SUMMARY`（存档 + §7 复跑指令）**、**`FIGURE_CAPTIONS_STAGE1`（主图图注）**、数据与样例 `DATASETS` |
 | **[environment/](environment/)** | 双机同步、AutoDL、`MAMBA_SSM_INSTALL_LINUX`、`SERVER_SWEEP_RUNBOOK`、**`SH_CRLF_LINUX`（`bash\r` / CRLF）**、`GIT_SERVER_MERGE_UNTRACKED`（pull 冲突） |
-| **[research/](research/)** | 研究笔记（隐状态快照 vs KV / SSGS）；**`RETRIEVAL_HEAD_NOTES.md`**（检索头提纲，**B-S1**）；脚本见 `scripts/research/`（如 Mamba2 探针） |
+| **[research/](research/)** | 研究笔记（隐状态快照 vs KV / SSGS）；**`RETRIEVAL_HEAD_NOTES.md`**（检索头提纲，**B-S1**；**B-S2** 探针见 §4）；脚本见 `scripts/research/`（Mamba2 探针、`probe_retrieval_correlation.py`） |
 
 常用直达：
 

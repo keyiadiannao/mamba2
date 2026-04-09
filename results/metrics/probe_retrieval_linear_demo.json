@@ -1,0 +1,55 @@
+{
+  "kind": "probe_retrieval_correlation",
+  "git_sha": "e7f9de5",
+  "torch_version": "2.11.0+cu128",
+  "model": "sshleifer/tiny-gpt2",
+  "device": "cpu",
+  "label_mode": "marker",
+  "seed": 0,
+  "n_samples": 80,
+  "max_length": 128,
+  "test_frac": 0.2,
+  "ridge_lambda": 0.01,
+  "layers": [
+    {
+      "layer_index": 0,
+      "hidden_dim": 2,
+      "train_acc": 0.703125,
+      "test_acc": 0.75
+    },
+    {
+      "layer_index": 1,
+      "hidden_dim": 2,
+      "train_acc": 0.703125,
+      "test_acc": 0.75
+    },
+    {
+      "layer_index": 2,
+      "hidden_dim": 2,
+      "train_acc": 0.453125,
+      "test_acc": 0.375
+    }
+  ],
+  "random_label_control": {
+    "layers": [
+      {
+        "layer_index": 0,
+        "hidden_dim": 2,
+        "train_acc": 0.546875,
+        "test_acc": 0.5
+      },
+      {
+        "layer_index": 1,
+        "hidden_dim": 2,
+        "train_acc": 0.546875,
+        "test_acc": 0.5
+      },
+      {
+        "layer_index": 2,
+        "hidden_dim": 2,
+        "train_acc": 0.5625,
+        "test_acc": 0.4375
+      }
+    ]
+  }
+}
