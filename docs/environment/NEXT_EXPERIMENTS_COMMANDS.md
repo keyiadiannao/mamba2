@@ -1,6 +1,6 @@
 # 下一阶段：记录模板 + 运行指令
 
-> **用途**：**A2-S2（dim128）** 已归档后，按优先级继续 **扩规模 / 对齐 HEAD / 机制探针**。  
+> **用途**：**A2-S2（dim128）** 与 **叶数 / dim256 / §7 depth** 已归档后，优先跑 **A2-S3 多种子**（轻负载），可选 **机制探针 B-S2+**。  
 > **登记**：每次新网格 **新开 `EXPERIMENT_REGISTRY` 行**（勿与 **`A-stage2-wikitext-grid-v1`** 无说明合并）。  
 > **公平性**：**5060 naive** 与 **3090 fused**、**dim128** 与 **dim256** 均须 **分列 + 脚注**（见 **`RESEARCH_STATUS` §6**、**`FIGURE_CAPTIONS`** 五轴）。
 
@@ -23,7 +23,7 @@ conda activate mamba2
 
 export HF_ENDPOINT=https://hf-mirror.com
 export MAMBA2_RESULTS_ROOT=/root/autodl-tmp/mamba2_results
-mkdir -p "$MAMBA2_RESULTS_ROOT/metrics_result"
+mkdir -p "$MAMBA2_RESULTS_ROOT/metrics_result" "$MAMBA2_RESULTS_ROOT/metrics"
 
 # 可选：降低 Hub 匿名限速告警
 # export HF_TOKEN=hf_你的token
@@ -175,11 +175,37 @@ git push origin master
 
 ---
 
+## 9. 【优先】**A2-S3** 多种子 + **leaf_heldout**（**3090 fused**，与 path-batch **分列**）
+
+与 **`PHASE1_MANUSCRIPT.md` §10** 第 1 条一致：**`split-seed`** 扫 **5–10** 个，固定 **`--cohort sibling`**（或另开 **`root_child`** 登记），**`--pair-split leaf_heldout --heldout-leaves 6`**（**16 叶** 时 test 叶对 **C(6,2)=15**；**32 叶** 更稳）。
+
+**前置**：**§0**（**`conda activate mamba2`**、**`MAMBA2_RESULTS_ROOT`**、**`HF_ENDPOINT`**）。
+
+**16 叶 × chunk8 × dim128**（示例）：
+
+```bash
+cd /root/autodl-tmp/mamba2
+STAMP=$(date -u +%Y%m%dT%H%MZ)
+for S in 0 1 2 3 4; do
+  python scripts/research/task_wikitext_path_pair.py \
+    --num-leaves 16 --fanout 2 --chunk-len 8 --dim 128 \
+    --cohort sibling --pair-split leaf_heldout --heldout-leaves 6 --split-seed "$S" \
+    --out-json "$MAMBA2_RESULTS_ROOT/metrics/task_wikitext_sibling16_c8_leafheldout6_splitseed${S}_${STAMP}.json"
+done
+```
+
+**32 叶**（把 **`--num-leaves 32`**，文件名里 **`sibling32`**；**heldout 6** 仍合法）。
+
+**跑后**：汇总各 JSON 的 **`ridge_concat.*.test_acc`**（及 **`raw_concat`** 若需要），在 **`EXPERIMENT_REGISTRY.md`** **新开一行**（勿并入 **A-stage2-wikitext-grid-v1**）；成文与 **path-batch** **分列**（见 **`FIGURE_CAPTIONS_STAGE1.md`** 五轴）。
+
+---
+
 ## 修订记录
 
 | 日期 | 说明 |
 |------|------|
 | 2026-04-09 | 初版：公共前置、HEAD 单格、**dim256** 脚本、n32 可选、B-S2+、成文指针 |
+| 2026-04-09 | **§9**：**A2-S3** 多种子 + **leaf_heldout** 服务器命令；**§0** 增 **`metrics/`**；用途段补 **A2-S3** |
 | 2026-04-09 | **已跑通**：**dim256** **`STAMP=20260409T1137Z`**；**n32** 单点；**headcheck** **`20260409T1135Z`** — 见 **`EXPERIMENT_REGISTRY`** |
 | 2026-04-07 | **叶数扫描** **`run_server_wikitext_leavescale.sh`**、**§7 depth 5–6** **`run_server_section7_depth_sweep.sh`**；**`SERVER_SWEEP_RUNBOOK` §2f–§2g**；本节重编号 §4–§8 |
 | 2026-04-09 | **已跑通叶数扫描**：**`TAG=stage2_leavescale`** **`STAMP=20260409T1257Z`** → **`benchmark_wikitext_stage2_leavescale_*`**；登记 **A-stage2-wikitext-leavescale-v1**；**`SERVER_SWEEP_RUNBOOK` §1** 补 **GitHub TLS / PyCharm** |
