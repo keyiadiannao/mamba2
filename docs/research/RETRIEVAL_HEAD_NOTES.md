@@ -45,6 +45,6 @@
 ## 6. 下一步（B-S2 深化）
 
 - **文献**：§2 已列 **入口引用**；精读时把每篇的 **探测/识别算法** 记到本节附录式 bullet（可选新开 `RETRIEVAL_HEAD_NOTES_APPENDIX.md`，避免主文件过长）。  
-- **实验**：在 **path reader 表征**（或 **树上路径文档**）上复用 **`probe_retrieval_correlation.py` 的岭探针思路**；建议先用 **`--model gpt2`**（或与本机显存匹配的因果 LM）重跑，替换 **`tiny-gpt2` 玩具维** 的示例 JSON。  
+- **实验**：在 **path reader 表征**（或 **树上路径文档**）上复用 **`probe_retrieval_correlation.py` 的岭探针思路**。**已归档**：`results/metrics/probe_retrieval_linear_gpt2_cpu.json`（**`--model gpt2`**、CPU、`n_samples=160`）；**`tiny-gpt2`** 示例见 `probe_retrieval_linear_demo.json`。  
 - **头级分析**：当前脚本为 **层 mean-pool**；若对齐 2404.15574 风格，需在 Transformer 内取 **per-head** 统计量再探针（工作量 +1，**B-S3** 级）。  
 - **主线并行**：**A2-S2**（Wikitext 小网格，**3090 fused**）仍按 **`NEXT_RESEARCH_PLAN`**，与探针 **独立登记**。
