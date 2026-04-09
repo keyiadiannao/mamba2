@@ -13,3 +13,4 @@ matplotlib>=3.7
 # pyyaml
 # Local minimal Mamba (no mamba-ssm on Windows): transformers>=4.45, accelerate
 # mamba-ssm + causal-conv1d  # Linux/AutoDL for fused kernels — after torch matches CUDA
+# pytest>=8  # optional: `python -m pytest tests/` (installed in mamba2 on dev machine)
