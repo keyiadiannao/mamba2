@@ -53,6 +53,7 @@
 | **主图** | `../metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png` | 与 **pair** 登记对应 |
 | **§7 复跑（2026-04-08）** | `mamba2_cache_snap_segments_depth4_cuda_20260408T1617Z.json` 等 6 文件 | S1–S4 + branchdemo；另含 `*_20260408T1030Z` 为同协议早次复跑 |
 | **Wikitext** | `benchmark_wikitext_3090_fused_20260408T0846Z.json` | 浅树 fused |
+| **Wikitext（5060 CUDA，动机）** | `benchmark_wikitext_5060_cuda_n8_c12_20260407.json` | **HF naive** Mamba；**不可**与上行 3090 fused **同表混点** |
 | **大叶数研究** | `sweep_research_large_leaves_*_research_lg_v1.csv` + manifest | 登记 **A-20260408-research-large-leaves-3090** |
 
 **历史归档**（仍在 `results/metrics/`）：`**_20260421.json** 系列，与 **X-20260421-*** 登记一一对应；与 `metrics_result` 中 **STAMP** 文件 **并存**，便于 diff。
@@ -73,8 +74,9 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 ## 8. 下一阶段（指针）
 
-1. **总览（先读）**：**`docs/overview/RESEARCH_STATUS_AND_DIRECTION.md`** — 现状、整体方向、决策规则、**推荐执行顺序**。  
-2. **任务展开**：**`docs/overview/NEXT_RESEARCH_PLAN.md`** — 里程碑 A2-S0…、B-S1…、命令与风险。
+1. **总览（先读）**：**`docs/overview/RESEARCH_STATUS_AND_DIRECTION.md`** — 现状、整体方向、决策规则、**推荐执行顺序**（含 **五条测量轴**）。  
+2. **任务展开**：**`docs/overview/NEXT_RESEARCH_PLAN.md`** — 里程碑 A2-S0…、B-S1…、命令与风险。  
+3. **阶段 2 叙事与任务（效果 proxy）**：**`docs/overview/PHASE2_DRAFT.md`** — 真语料树 + **A2-S3**（**`scripts/research/task_wikitext_path_pair.py`**；归档 **`results/metrics/task_wikitext_*.json`**）；与本文 path-batch **分列**，见草稿 **§2–§3**。
 
 ---
 
@@ -84,3 +86,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 |------|------|
 | 2026-04-09 | 初稿：与 `CURRENT_SPRINT` 主线收束、`metrics_result` 归档同步 |
 | 2026-04-09 | 增加 §8 指向 **`NEXT_RESEARCH_PLAN.md`** |
+| 2026-04-07 | §5 增 **5060 CUDA** Wikitext **n8/c12** 动机 JSON；§8 增 **`PHASE2_DRAFT.md`** / A2-S3 指针 |
