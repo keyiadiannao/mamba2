@@ -23,7 +23,7 @@
 
 **已知限制（v0）**：**`root_child`** 在 **16 叶** 上块较大，**确定性 hash 叶嵌入 + 父节点拼接** 可能使 **raw mean 拼接** 已线性可分，读者 **test_acc≈1** 不一定有区分度——后续可换 **更细 cohort**、**heldout 叶**、或 **cloze / 检索** 任务加压。
 
-**叶级 heldout（`--pair-split leaf_heldout --heldout-leaves H`）**：训练叶对仅来自叶索引 **`[0, n-H)`**，测试叶对仅来自 **`[n-H, n)`**，**避免**同一叶同时出现在 train/test 叶对中（仍是一次前向算全体叶嵌入）。归档例：**`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**。**test 叶对数**随 **H** 为 **C(H,2)**（如 H=4 仅 **6** 对），**CPU/CUDA** 浮点差异可能使 **ridge test_acc** 波动；主文宜报 **多 seed 或更大 H**，或看 **三 reader 相对排序** 而非单点。
+**叶级 heldout（`--pair-split leaf_heldout --heldout-leaves H`）**：训练叶对仅来自叶索引 **`[0, n-H)`**，测试叶对仅来自 **`[n-H, n)`**，**避免**同一叶同时出现在 train/test 叶对中（仍是一次前向算全体叶嵌入）。归档例：**`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**（**6** test 叶对）、**`…_leafheldout6_*.json`**（**15** test 叶对，**CPU/CUDA** 更同向）。**test 叶对数**为 **C(H,2)**；**H** 小时 **ridge test_acc** 方差大；主文宜 **较大 H**、**多 seed**，或看 **三 reader 相对排序**。
 
 ---
 
@@ -47,3 +47,4 @@
 | 2026-04-07 | **16 叶** `sibling` / `root_child` JSON 归档；§2 **已知限制**（root_child×16 可能近平凡） |
 | 2026-04-07 | **5060 CUDA**：`task_wikitext_path_pair_sibling16_cuda5060.json`；**B-S2+** `probe_path_reader_linear_text16_heldout_cuda5060.json`（与 CPU 岭探针 **分列登记**） |
 | 2026-04-07 | **B-S2+ BCE**：`probe_path_reader_linear_text16_heldout_{train50,headonly50}_cuda5060.json`（与 CPU **train50 / headonly50** 对齐） |
+| 2026-04-07 | **leaf_heldout H=6**：`task_wikitext_sibling16_leafheldout6_{cpu,cuda5060}.json`（15 test 叶对） |
