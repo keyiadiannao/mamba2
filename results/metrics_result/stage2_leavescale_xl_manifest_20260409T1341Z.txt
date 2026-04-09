@@ -1,0 +1,8 @@
+kind=section7_s1_s4_depth_sweep
+tag=stage2_leavescale_xl stamp=20260409T1341Z
+depths=5 6 chunk_len=8 dim=128 device=cuda
+kv_warmup=3 kv_reps=20 restore_warmup=3 restore_reps=20
+utc=2026-04-09T13:41:15Z
+git_sha=6fa78733cf6b75d2f9a492c73c65503bedba5b2a
+torch 2.11.0+cu126 cuda True
+NVIDIA GeForce RTX 3090, 580.105.08, 49152 MiB

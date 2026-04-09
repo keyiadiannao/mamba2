@@ -7,13 +7,16 @@
 # 复含 depth=4（与仓内 20260421 归档同参对照）::
 #   DEPTHS="4 5 6" ./scripts/benchmarks/run_server_section7_depth_sweep.sh
 #
+# 输出前缀默认 **section7_depth**（**SECTION7_TAG**）；**不**读取通用 **TAG=**（避免与 **leavescale_xl** 等混名）。
+#
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 export PYTHONUNBUFFERED=1
 
 STAMP="${STAMP:-$(date -u +%Y%m%dT%H%MZ)}"
-TAG="${TAG:-section7_depth}"
+# 输出文件名前缀：**勿**复用其它流水线留在 shell 里的 **TAG=**（例：**stage2_leavescale_xl**）。自定义前缀请设 **SECTION7_TAG=my_tag**。
+TAG="${SECTION7_TAG:-section7_depth}"
 PYTHON="${PYTHON:-python}"
 DEPTHS="${DEPTHS:-5 6}"
 CHUNK_LEN="${CHUNK_LEN:-8}"

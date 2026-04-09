@@ -1,0 +1,66 @@
+{
+  "kind": "tf_r1_path_segments",
+  "baseline": "TF-R1",
+  "git_sha": "6fa7873",
+  "device": "cuda",
+  "tree_depth_param": 6,
+  "path_nodes": 7,
+  "chunk_len": 8,
+  "dim": 128,
+  "tf_layers": 2,
+  "nhead": 8,
+  "warmup": 3,
+  "reps": 20,
+  "per_segment": [
+    {
+      "segment_index": 0,
+      "nodes_on_path": 7,
+      "seq_len": 8,
+      "forward_mean_ms": 0.556793,
+      "peak_alloc_mib": 11.228
+    },
+    {
+      "segment_index": 1,
+      "nodes_on_path": 7,
+      "seq_len": 16,
+      "forward_mean_ms": 0.528734,
+      "peak_alloc_mib": 11.2593
+    },
+    {
+      "segment_index": 2,
+      "nodes_on_path": 7,
+      "seq_len": 24,
+      "forward_mean_ms": 0.571957,
+      "peak_alloc_mib": 11.2905
+    },
+    {
+      "segment_index": 3,
+      "nodes_on_path": 7,
+      "seq_len": 32,
+      "forward_mean_ms": 0.568381,
+      "peak_alloc_mib": 11.3218
+    },
+    {
+      "segment_index": 4,
+      "nodes_on_path": 7,
+      "seq_len": 40,
+      "forward_mean_ms": 0.567152,
+      "peak_alloc_mib": 11.353
+    },
+    {
+      "segment_index": 5,
+      "nodes_on_path": 7,
+      "seq_len": 48,
+      "forward_mean_ms": 0.570541,
+      "peak_alloc_mib": 11.3843
+    },
+    {
+      "segment_index": 6,
+      "nodes_on_path": 7,
+      "seq_len": 56,
+      "forward_mean_ms": 0.565321,
+      "peak_alloc_mib": 11.4155
+    }
+  ],
+  "note": "Each row: one full TransformerPathReader forward on cumulative prefix [1, seq_len, dim]; no KV cache \u2014 \u00a77.2 TF-R1 recompute cost at that tree boundary. Compare S1 Mamba cache clone JSON."
+}

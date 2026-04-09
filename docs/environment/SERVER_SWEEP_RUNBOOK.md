@@ -268,7 +268,7 @@ unset STAMP
 
 **目的**：在已归档 **`depth=4`**（**`X-20260421-*`**，`RESEARCH_NOTES` / **§7**）之外，对 **`depth ∈ {5,6}`**（路径 **6 / 7** 个节点；**fanout=2** 对应 **32 / 64 叶**）各跑 **S1 Mamba clone**、**S2 TF-R1 重算**、**S3 TF-KV**、**S4 Mamba restore**，便于看 **KV 字节 / 增量步耗时 / restore** 随深度趋势。与 **`benchmark_wikitext_tree`** **不同 harness**，**禁止**与 **§2d/§2f** 无脚注同表。
 
-**脚本说明**：**`run_server_section7_depth_sweep.sh`** 已将 JSON **标准输出丢弃**（只写文件）；**进度** 打在 **stderr**（**`-> S1 …`** 等）。可用环境变量 **`PYTHON`**（默认 **`python`**）指向 conda 解释器。
+**脚本说明**：**`run_server_section7_depth_sweep.sh`** 已将 JSON **标准输出丢弃**（只写文件）；**进度** 打在 **stderr**（**`-> S1 …`** 等）。可用环境变量 **`PYTHON`**（默认 **`python`**）指向 conda 解释器。**文件名前缀** 由 **`SECTION7_TAG`** 决定（默认 **`section7_depth`**）；**不会**再继承 shell 里残留的 **`TAG=stage2_leavescale_xl`** 等（若用旧脚本误跑，会得到 **`stage2_leavescale_xl_s*_…`**，**`ls section7_depth_*`** 会空）。
 
 ```bash
 cd /path/to/mamba2
@@ -279,13 +279,14 @@ source /root/miniconda3/etc/profile.d/conda.sh && conda activate mamba2
 export MAMBA2_RESULTS_ROOT=/root/autodl-tmp/mamba2_results
 mkdir -p "$MAMBA2_RESULTS_ROOT/metrics_result"
 
+unset TAG
 unset STAMP
 ./scripts/benchmarks/run_server_section7_depth_sweep.sh
 ```
 
 **可选**：**`DEPTHS="4 5 6"`** 与仓内 **20260421** JSON 同参再跑一遍（**STAMP** 新）；**`KV_REPS` / `RESTORE_REPS`** 与 Python 脚本默认一致（**20**）。
 
-**产出**（**`metrics_result/`**）：**`section7_depth_s{1,2,3,4}_*_d<depth>_<STAMP>.json`** + **`section7_depth_manifest_<STAMP>.txt`**。登记建议 id **`X-section7-depth-extension-v1`**。
+**产出**（**`metrics_result/`**）：**`section7_depth_s{1,2,3,4}_*_d<depth>_<STAMP>.json`** + **`section7_depth_manifest_<STAMP>.txt`**（**跑前请 `unset TAG`**，见上）。登记建议 id **`X-section7-depth-extension-v1`**。
 
 ---
 

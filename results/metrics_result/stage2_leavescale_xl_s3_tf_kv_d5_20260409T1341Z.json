@@ -1,0 +1,66 @@
+{
+  "kind": "tf_kv_path_segments",
+  "baseline": "TF-KV",
+  "git_sha": "6fa7873",
+  "device": "cuda",
+  "tree_depth_param": 5,
+  "path_nodes": 6,
+  "chunk_len": 8,
+  "dim": 128,
+  "tf_layers": 2,
+  "nhead": 8,
+  "ff_mult": 4,
+  "warmup": 3,
+  "reps": 20,
+  "per_segment": [
+    {
+      "segment_index": 0,
+      "nodes_on_path": 6,
+      "seq_len": 8,
+      "kv_cache_nbytes": 16384,
+      "increment_last_chunk_mean_ms": 1.974205,
+      "peak_alloc_mib": 10.9629
+    },
+    {
+      "segment_index": 1,
+      "nodes_on_path": 6,
+      "seq_len": 16,
+      "kv_cache_nbytes": 32768,
+      "increment_last_chunk_mean_ms": 6.250665,
+      "peak_alloc_mib": 10.9941
+    },
+    {
+      "segment_index": 2,
+      "nodes_on_path": 6,
+      "seq_len": 24,
+      "kv_cache_nbytes": 49152,
+      "increment_last_chunk_mean_ms": 7.332055,
+      "peak_alloc_mib": 11.0146
+    },
+    {
+      "segment_index": 3,
+      "nodes_on_path": 6,
+      "seq_len": 32,
+      "kv_cache_nbytes": 65536,
+      "increment_last_chunk_mean_ms": 7.889475,
+      "peak_alloc_mib": 11.0381
+    },
+    {
+      "segment_index": 4,
+      "nodes_on_path": 6,
+      "seq_len": 40,
+      "kv_cache_nbytes": 81920,
+      "increment_last_chunk_mean_ms": 10.013854,
+      "peak_alloc_mib": 11.0625
+    },
+    {
+      "segment_index": 5,
+      "nodes_on_path": 6,
+      "seq_len": 48,
+      "kv_cache_nbytes": 98304,
+      "increment_last_chunk_mean_ms": 12.666292,
+      "peak_alloc_mib": 11.0859
+    }
+  ],
+  "note": "Pre-LN causal trunk with per-layer MHA KV cache; per row: state after nodes 0..k; increment_last_chunk_mean_ms = time to run only chunk k given cache for 0..k-1. \u00a77.2 TF-KV KV bytes + incremental continue cost (linear path). Optional --branch-truncate-demo for wrong-child \u2192 truncate \u2192 sibling."
+}

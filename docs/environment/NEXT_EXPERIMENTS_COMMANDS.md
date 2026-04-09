@@ -126,6 +126,7 @@ LEAVES="8 16 32" ./scripts/benchmarks/run_server_wikitext_leavescale.sh
 
 ```bash
 cd /root/autodl-tmp/mamba2
+unset TAG
 unset STAMP
 ./scripts/benchmarks/run_server_section7_depth_sweep.sh
 ```

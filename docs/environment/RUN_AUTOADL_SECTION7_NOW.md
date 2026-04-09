@@ -23,13 +23,16 @@ mkdir -p "$MAMBA2_RESULTS_ROOT/metrics_result"
 # 与 conda 一致（可选）
 export PYTHON=python
 
+# **必须**：去掉其它扫参残留的 **TAG**（否则 §7 JSON 会误命名为 **stage2_leavescale_xl_***，且 **ls section7_depth_*** 会失败）
+unset TAG
+
 # 默认 DEPTHS="5 6"；需与 20260421 归档同 depth=4 对照时用下行代替 unset STAMP 块：
 # export DEPTHS="4 5 6"
 
 unset STAMP
 ./scripts/benchmarks/run_server_section7_depth_sweep.sh
 
-ls -la "$MAMBA2_RESULTS_ROOT/metrics_result/section7_depth_"* 2>/dev/null
+ls -la "$MAMBA2_RESULTS_ROOT/metrics_result/section7_depth_"*
 ```
 
 ---
@@ -47,3 +50,7 @@ ls -la "$MAMBA2_RESULTS_ROOT/metrics_result/section7_depth_"* 2>/dev/null
 
 - 只跑 **depth=5**：**`export DEPTHS="5"`**  
 - 降低 TF-KV 重复：**`export KV_REPS=5`**（登记时注明）
+
+## 若曾误用残留 **TAG**（文件名已是 **stage2_leavescale_xl_s*_…**）
+
+**内容仍为 §7**（**`kind=section7_s1_s4_depth_sweep`**）。登记时用 **实际文件名**；下次跑前 **`unset TAG`** 或 **`export SECTION7_TAG=section7_depth`**（脚本 **≥ 当前 master** 默认 **不再继承** 无关 **TAG**）。
