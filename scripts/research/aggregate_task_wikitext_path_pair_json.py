@@ -10,10 +10,16 @@ Example::
 from __future__ import annotations
 
 import argparse
+import glob
 import json
 import statistics
 import sys
 from pathlib import Path
+
+
+def _glob_paths(pattern: str) -> list[Path]:
+    recursive = "**" in pattern
+    return [Path(s) for s in glob.glob(pattern, recursive=recursive)]
 
 
 def _load(path: Path) -> dict:
@@ -40,7 +46,7 @@ def main() -> int:
     args = p.parse_args()
     files: list[Path] = []
     for pat in args.glob:
-        files.extend(Path(".").glob(pat))
+        files.extend(_glob_paths(pat))
     files.extend(args.paths)
     files = sorted({f.resolve() for f in files if f.is_file()})
     if not files:

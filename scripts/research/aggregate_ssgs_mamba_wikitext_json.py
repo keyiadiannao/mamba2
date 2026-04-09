@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import glob
 import json
 import sys
 from pathlib import Path
@@ -74,6 +75,12 @@ def _row_from_json(abs_path: Path, data: dict) -> dict[str, object]:
     }
 
 
+def _glob_paths(pattern: str) -> list[Path]:
+    """Expand a glob; supports absolute paths (``pathlib.Path.glob`` does not on Py3.11+)."""
+    recursive = "**" in pattern
+    return [Path(s) for s in glob.glob(pattern, recursive=recursive)]
+
+
 def _read_existing_csv(path: Path) -> dict[str, dict[str, object]]:
     if not path.is_file():
         return {}
@@ -101,7 +108,7 @@ def main() -> int:
         action="append",
         default=[],
         metavar="PATTERN",
-        help="Glob under cwd (repeatable)",
+        help="Glob pattern (repeatable); relative to cwd or absolute, e.g. $ROOT/metrics_result/*.json",
     )
     p.add_argument(
         "--out-csv",
@@ -118,7 +125,7 @@ def main() -> int:
 
     files: list[Path] = []
     for pat in args.glob:
-        files.extend(Path(".").glob(pat))
+        files.extend(_glob_paths(pat))
     files.extend(args.paths)
     files = sorted({f.resolve() for f in files if f.is_file()})
     if not files:
