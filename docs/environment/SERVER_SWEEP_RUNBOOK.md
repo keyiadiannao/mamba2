@@ -16,6 +16,8 @@ source /root/miniconda3/etc/profile.d/conda.sh   # 避免「Run conda init befor
 conda activate mamba2
 ```
 
+**若 `git pull` 失败**（例：**`GnuTLS recv error (-110)`**、TLS 被机房掐断）：在 **本机** **`git pull`** 后，用 **PyCharm SFTP / 部署** 把仓库同步到服务器即可。此时服务器上 **`git rev-parse HEAD`** 可能 **仍显示旧提交**（**`.git` 未更新**），属预期；**benchmark JSON** 里的 **`git_sha`** 会与 **`rev-parse --short`** 一致、**但不一定等于 GitHub 最新主线**。**登记**时以 **本次跑出的 manifest 全 SHA**、**结果文件路径** 与 **你在正文写的代码版本说明** 为准；需要 **`HF_TOKEN`** 时可降 Hub 匿名限速告警（见 **`HF_ENDPOINT`** 与 Hub 文档）。
+
 确认融合路径生效（**不应**再刷「fast path is not available」一整段；或 `python -c "import mamba_ssm"` 无错）：
 
 ```bash

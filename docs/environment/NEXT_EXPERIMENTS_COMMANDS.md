@@ -10,7 +10,7 @@
 
 ```bash
 cd /root/autodl-tmp/mamba2
-git pull origin master
+git pull origin master   # 若 TLS 失败：本机 pull + PyCharm 同步；见 **SERVER_SWEEP_RUNBOOK** §1
 
 find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'
 chmod +x scripts/benchmarks/run_server_stage2_wikitext_grid.sh \
@@ -177,3 +177,4 @@ git push origin master
 | 2026-04-09 | 初版：公共前置、HEAD 单格、**dim256** 脚本、n32 可选、B-S2+、成文指针 |
 | 2026-04-09 | **已跑通**：**dim256** **`STAMP=20260409T1137Z`**；**n32** 单点；**headcheck** **`20260409T1135Z`** — 见 **`EXPERIMENT_REGISTRY`** |
 | 2026-04-07 | **叶数扫描** **`run_server_wikitext_leavescale.sh`**、**§7 depth 5–6** **`run_server_section7_depth_sweep.sh`**；**`SERVER_SWEEP_RUNBOOK` §2f–§2g**；本节重编号 §4–§8 |
+| 2026-04-09 | **已跑通叶数扫描**：**`TAG=stage2_leavescale`** **`STAMP=20260409T1257Z`** → **`benchmark_wikitext_stage2_leavescale_*`**；登记 **A-stage2-wikitext-leavescale-v1**；**`SERVER_SWEEP_RUNBOOK` §1** 补 **GitHub TLS / PyCharm** |

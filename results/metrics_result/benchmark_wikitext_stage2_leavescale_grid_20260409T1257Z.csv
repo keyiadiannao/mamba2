@@ -1,0 +1,13 @@
+json_file,num_leaves,chunk_len,reader,peak_alloc_mib,per_step_s,elapsed_s,batch_paths,tokens_per_path,dim,device,git_sha
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n8_c8.json,8,8,gru,26.55,0.00244,0.019523,8,32,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n8_c8.json,8,8,mamba2,53.12,0.013262,0.106098,8,32,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n8_c8.json,8,8,transformer,24.17,0.005681,0.045448,8,32,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n16_c8.json,16,8,gru,34.07,0.001369,0.010952,16,40,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n16_c8.json,16,8,mamba2,72.59,0.011939,0.095513,16,40,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n16_c8.json,16,8,transformer,31.53,0.004037,0.0323,16,40,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n32_c8.json,32,8,gru,50.99,0.0019,0.015199,32,48,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n32_c8.json,32,8,mamba2,97.98,0.013242,0.10594,32,48,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n32_c8.json,32,8,transformer,51.67,0.005993,0.047941,32,48,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n64_c8.json,64,8,gru,91.64,0.001431,0.011445,64,56,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n64_c8.json,64,8,mamba2,152.48,0.012222,0.097774,64,56,128,cuda,6fa7873
+metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n64_c8.json,64,8,transformer,92.47,0.004325,0.034598,64,56,128,cuda,6fa7873
