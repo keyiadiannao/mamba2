@@ -66,7 +66,7 @@
 | **阶段 2 叶数 XL** | `benchmark_wikitext_stage2_leavescale_xl_*_{1322Z_n128,1324Z_n256}_c8.json`、`…_grid_n128_n256_combined.csv` | **A-stage2-wikitext-leavescale-xl-v1** |
 | **阶段 2 dim256 四格** | `benchmark_wikitext_stage2_dim256_20260409T1137Z_*` + grid CSV | **A-stage2-wikitext-dim256-v1** |
 | **§7 depth 5–6** | `stage2_leavescale_xl_s{1..4}_*_d{5,6}_20260409T1341Z.json`（前缀见 **§4** 脚注）、`…_manifest_20260409T1341Z.txt` | **X-section7-depth-extension-v1** |
-| **A2-S3 init×5（3090）** | `results/metrics/task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_<STAMP>.json` | **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**`aggregate_task_wikitext_path_pair_json.py`** 汇总 **test_acc** |
+| **A2-S3 init×5（3090）** | `results/metrics_result/task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json` | **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**`aggregate_task_wikitext_path_pair_json.py`** |
 
 **历史归档**（仍在 `results/metrics/`）：`**_20260421.json** 系列，与 **X-20260421-*** 登记一一对应；与 `metrics_result` 中 **STAMP** 文件 **并存**，便于 diff。
 
@@ -140,14 +140,17 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 ## 10 下一阶段与文档指针
 
-**本版成文**：**§8.4** 与 **§5** 已收口 **A2-S2 / dim256 / 叶数 8–256 / §7 depth 5–6**；**A2-S3** **3090** **`init_seed`×5**（**n16/n32**、**H=6**）已登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**（JSON 须从服务器拷至 **`results/metrics/`**）。**下一步实验（按优先级）**：
+**本版成文**：**§8.4** 与 **§5** 已收口 **A2-S2 / dim256 / 叶数 8–256 / §7 depth 5–6**；**A2-S3** **3090** **`init_seed`×5**（**n16/n32**、**H=6**）JSON 已入仓 **`results/metrics_result/*_20260409T1438Z.json`**，登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**。
 
-1. **机制线 B（推荐）**：**3090** 上 **1 条** **B-S2+** 登记级 JSON（**`probe_path_reader_linear.py`** 无 **`--cpu`**，或 **`probe_retrieval_correlation.py`**），**`EXPERIMENT_REGISTRY`** **另开一行**；与 path-batch **混表禁止**；见 **`RETRIEVAL_HEAD_NOTES.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md` §6**。  
-2. **A2-S3 可选加压**：**更大 `heldout-leaves`**（**test 叶对** **C(H,2)** 变大）、**`--cohort root_child`**、或 **stratified + `split-seed` 扫描** — 与已完成 **init-seed** 行 **分列** 说明即可。  
-3. **可选成文 polish**：**S5「同轨迹」总表**（**`RESEARCH_NOTES` §7**）、**主图 PNG 入仓**、**平面 RAG smoke**。  
-4. **总览与计划**：**`RESEARCH_STATUS_AND_DIRECTION.md`**、**`NEXT_RESEARCH_PLAN.md`**。  
-5. **操作手册**：**`SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**；**§7 一键**：**`RUN_AUTOADL_SECTION7_NOW.md`**。  
-6. **阶段 2 草稿与图注**：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**。
+**主线是否继续？** — **系统主线**（path-batch **效率**、真语料 **Wikitext 扫参**、**§7 玩具协议**、**A2-S3 任务 proxy**）在 **登记级材料** 上 **已闭环**；**不是**弃题，而是 **不必为同一故事无限加格点**。后续工时优先 **把已有数字写进论文/报告**（主文+附录+脚注），其次才是 **可选实验**。
+
+**下一步（按优先级）**：
+
+1. **成文整合（主线收尾）**：把 **`PHASE1_MANUSCRIPT` §8**、**`EXPERIMENT_REGISTRY`**、**`metrics_result`** 中表与 JSON **对齐成投稿版**（含 **五轴图注**、**5060 vs 3090** 分列）。  
+2. **可选机制线 B**：若要加强 **「检索头 / 表征可读」** 讨论或 **第二贡献** — **3090** 上 **1 条** **B-S2+** JSON（**`probe_path_reader_linear.py`** 去 **`--cpu`** 等），**新开登记行**；**非**主线阻塞；**`RETRIEVAL_HEAD_NOTES.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md` §6**。  
+3. **A2-S3 可选加压**：更大 **`heldout-leaves`**、**`root_child`**、**stratified + `split-seed`** — 与 **init×5** **分列** 说明。  
+4. **Polish**：**S5 总表**、主图入仓、平面 RAG smoke。  
+5. **总览**：**`RESEARCH_STATUS_AND_DIRECTION.md`**、**`NEXT_RESEARCH_PLAN.md`**；手册：**`SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**、**`RUN_AUTOADL_SECTION7_NOW.md`**；草稿：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**。
 
 ---
 
@@ -169,4 +172,5 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-09 | **§8.3**：**dim256 四格**、**32 叶单点**、**headcheck**；新登记 **A-stage2-wikitext-dim256-v1**、**n32-c8**、**X-20260409-wikitext-headcheck** |
 | 2026-04-09 | **成文收口**：摘要/§3/§4/§5/**§8.3 压缩**/**§8.4 新增**/**§10 下一步**；叶数扫描、XL、§7 **depth 5–6** 入表；**§10** 增 **A2-S3 → `NEXT_EXPERIMENTS_COMMANDS` §9** |
 | 2026-04-09 | **§8.2 / §10**：**leaf_heldout** 多种子 = **`--init-seed`**；**`split-seed`** 仅 **`stratified`** |
-| 2026-04-09 | **§5 / §10**：**A2-S3** **3090 init×5** 入 **`EXPERIMENT_REGISTRY`**；**`aggregate_task_wikitext_path_pair_json.py`**；**§10** 下一步以 **B-S2+** 为先 |
+| 2026-04-09 | **§5 / §10**：**A2-S3** **3090 init×5** 入 **`EXPERIMENT_REGISTRY`**；**`aggregate_task_wikitext_path_pair_json.py`** |
+| 2026-04-09 | **§10**：**`STAMP=20260409T1438Z`** 归档 **`metrics_result/`**；**主线成文优先**；**B-S2+** 标为 **可选机制线** |

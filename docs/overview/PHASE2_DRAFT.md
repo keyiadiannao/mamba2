@@ -35,7 +35,7 @@
 
 **叶级 heldout（`--pair-split leaf_heldout --heldout-leaves H`）**：训练叶对仅来自叶索引 **`[0, n-H)`**，测试叶对仅来自 **`[n-H, n)`**，**避免**同一叶同时出现在 train/test 叶对中（仍是一次前向算全体叶嵌入）。归档例：**`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**（**6** test 叶对）、**`…_leafheldout6_{cpu,cuda5060}.json`**（**15** test 叶对）、**`…_c12_leafheldout6_*.json`**（**`chunk_len=12`**，与 **c=8** 分列对比）。**test 叶对数**为 **C(H,2)**；**H** 小时 **ridge test_acc** 方差大；主文宜 **较大 H**、**多 seed**，或看 **三 reader 相对排序**。几何标签（块大小、叶对枚举）实现见 **`src/rag_tree/path_pair_geometry.py`**（**`tests/test_path_pair_geometry.py`**）。
 
-**3090 CUDA fused：`init_seed` 扫描（5 种子 × n16 / n32）**：**`task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_<STAMP>.json`**（服务器 **`MAMBA2_RESULTS_ROOT/metrics/`** → 本仓 **`results/metrics/`**）；登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**多种子须用 `--init-seed`**（**`--split-seed` 不改变** **leaf_heldout** 划分）。汇总：**`scripts/research/aggregate_task_wikitext_path_pair_json.py`**。
+**3090 CUDA fused：`init_seed` 扫描（5 种子 × n16 / n32）**：**`results/metrics_result/task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json`**（服务器可写 **`$MAMBA2_RESULTS_ROOT/metrics/`** 或 **`metrics_result/`**，本仓与 **path-batch JSON** 同 hub **`metrics_result/`** 即可）；登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**多种子须用 `--init-seed`**。汇总：**`aggregate_task_wikitext_path_pair_json.py -g 'results/metrics_result/task_wikitext_sibling16_c8_leafheldout6_initseed*_20260409T1438Z.json'`**。
 
 ---
 
@@ -70,3 +70,4 @@
 | 2026-04-09 | **§1**：**`STAMP=20260409T1257Z`** 归档文件名 + **Mamba2 峰值** 一句；与 **登记册** **A-stage2-wikitext-leavescale-v1** 对齐 |
 | 2026-04-09 | **§1**：**XL 128/256** **`1322Z`/`1324Z`** + **combined CSV**；**A-stage2-wikitext-leavescale-xl-v1** |
 | 2026-04-09 | **§2**：**3090** **A2-S3** **`init_seed`×5**（**n16/n32**、**H=6**）登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**`aggregate_task_wikitext_path_pair_json.py`** |
+| 2026-04-09 | **§2**：**`STAMP=20260409T1438Z`** → **`results/metrics_result/`**（**10** JSON） |

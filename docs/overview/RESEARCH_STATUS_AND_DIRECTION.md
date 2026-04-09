@@ -39,7 +39,7 @@
 | **阶段 1 成文** | 可贴正文的一节（含摘要/方法/结果/§7 关系/归档索引） | **`PHASE1_MANUSCRIPT.md`** |
 | **阶段 2 成文（P1）** | **真语料动机 + A2-S3 协议 + 公平性** 已并入主稿 **§8**；**检索头 / Mamba 讨论边界** 见 **§9**；指针 **§10** | **`PHASE1_MANUSCRIPT.md` §8–§10**；**`RETRIEVAL_HEAD_NOTES.md` §8** |
 | **阶段 2 任务指标（A2-S3 v0）** | Wikitext 浅树 + **叶对同 cohort** 二分类（**ridge / concat 池化**）；与 path-batch **分列**，**非**墙钟 | **`task_wikitext_path_pair.py`**（**stratified** 或 **leaf_heldout**）；登记 **A-20260407-stage2-wikitext-path-pair**；含 **`…_leafheldout4_{cpu,cuda5060}.json`** 等 |
-| **A2-S3 init×5（3090 CUDA）** | **leaf_heldout H=6**、**sibling**、**c8 dim128**、**`init_seed∈{0..4}`**，**n∈{16,32}**；**test 15 叶对** | **`results/metrics/task_wikitext_sibling{16,32}_c8_leafheldout6_initseed*_*.json`**；登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**`aggregate_task_wikitext_path_pair_json.py`** 汇总 |
+| **A2-S3 init×5（3090 CUDA）** | **leaf_heldout H=6**、**sibling**、**c8 dim128**、**`init_seed∈{0..4}`**，**n∈{16,32}**；**test 15 叶对** | **`results/metrics_result/task_wikitext_sibling{16,32}_c8_leafheldout6_initseed*_20260409T1438Z.json`**（**10** 文件）；登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**`aggregate_task_wikitext_path_pair_json.py`** |
 
 ### 2.2 已完成但定位为「辅线」（默认不增投）
 
@@ -52,7 +52,7 @@
 
 | 项 | 与主叙事的关系 |
 |----|----------------|
-| **阶段 2：真语料 + 任务指标** | **5060 CUDA 四格**、**3090 fused 四格（A2-S2）**、**dim256**、**叶数 8–64 / XL 128–256**、**§7 depth 5–6**、**A2-S3 init×5（3090）** 均已登记（**JSON 从服务器拷入 `results/metrics/`**）；**成文** 见 **`PHASE1_MANUSCRIPT` §8–§9** |
+| **阶段 2：真语料 + 任务指标** | **5060 CUDA 四格**、**3090 fused 四格（A2-S2）**、**dim256**、**叶数 8–64 / XL 128–256**、**§7 depth 5–6**、**A2-S3 init×5（3090）** 均已登记（**A2-S3 init×5** JSON：**`metrics_result/*_20260409T1438Z.json`**）；**成文** 见 **`PHASE1_MANUSCRIPT` §8–§9** |
 | **检索头 B（分析）** | 支撑贡献候选 **②**；**B-S2**（GPT-2 岭探针 + topic heldout）+ **`RETRIEVAL_HEAD_NOTES` §2 / §5**；**B-S2+**（**`probe_path_reader_linear`**：16 叶 heldout、可选 BCE / **`--train-head-only`**）已本地归档；**per-head / 大模型** 仍待 **B-S3** 与机时 |
 | **检索头 C（注入训练）** | 依赖 B 与稳定 harness；**48G** |
 | **§7.5 S5 汇总表** | 支撑贡献候选 **③** 的「一句话表」；**可做可不做**，视篇幅 |
