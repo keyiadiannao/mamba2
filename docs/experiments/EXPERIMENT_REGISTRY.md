@@ -62,3 +62,4 @@
 |--------|-----|------|
 | P0 | — | （已完成）同机 paper_main：见登记表 **A-20260408-paper-main-3090-*** |
 | P1 | S1–S4 + SSGS×Mamba + 树×因果 LM + 启发式导航 | S1–S4；**SSGS×Mamba** **X-20260421-ssgs-mamba-dfs-demo**；**X-20260422** + **X-20260423**（**reach_rate**）；大叶数 **A-20260408-research-large-leaves-3090**、探针 **X-20260408-probe-mamba2-3090-fused** |
+| **P1** | **A-stage2-wikitext-grid-v1（R2）** | **3090 fused** 四格 **复跑**：**`git pull`** 后 **`TAG=stage2_fused_r2`**，**`STAMP` 自动生成**；完整命令 **``SERVER_SWEEP_RUNBOOK.md`` §2e**；跑完在登记表 **A-stage2** 追加 **R2** 段并提交新 **`metrics_result/*`** |
