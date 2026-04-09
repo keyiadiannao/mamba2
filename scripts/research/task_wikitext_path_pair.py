@@ -331,7 +331,8 @@ def main() -> int:
         "n_train_pairs": split_meta["n_train_pairs"],
         "n_test_pairs": split_meta["n_test_pairs"],
         "test_frac": args.test_frac if args.pair_split == "stratified" else None,
-        "split_seed": args.split_seed,
+        # Only stratified splits consume ``--split-seed``; leaf_heldout: use ``null`` (not argparse default 0).
+        "split_seed": args.split_seed if args.pair_split == "stratified" else None,
         "ridge_lambda": args.ridge_lambda,
         "init_seed": args.init_seed,
         "readers_included": list(readers.keys()),
