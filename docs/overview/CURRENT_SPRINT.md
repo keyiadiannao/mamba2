@@ -73,6 +73,8 @@
 - [x] **A2-S3 任务 smoke 扩展**：**`task_wikitext_path_pair.py`** — **`task_wikitext_path_pair_sibling16_cpu.json`**、**`task_wikitext_path_pair_rootchild16_cpu.json`**（**CPU**，`split_seed=1`）；总览 **RESEARCH_STATUS** §3 第五条轴、**`PHASE2_DRAFT.md`** §2。  
 - [x] **A2-S3 叶级 heldout**：**`--pair-split leaf_heldout --heldout-leaves 4`**（16 叶 sibling）→ **`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**；见 **`PHASE2_DRAFT.md`**（小 **test** 叶对数、CPU/CUDA ridge 波动）。  
 - [x] **本地收尾**：**`path_pair_geometry.py`** + **`tests/test_path_pair_geometry.py`**；**`aggregate_wikitext_5060_cuda_grid.py`** → **`benchmark_wikitext_5060_cuda_grid_20260407.csv`**；**A2-S3** **`chunk_len=12`** **`…_c12_leafheldout6_*.json`**；**`PHASE1_MANUSCRIPT` §3.1**。  
+- [x] **P1 成文并入主稿**：**`PHASE1_MANUSCRIPT.md` §8–§10**（阶段 2 系统+A2-S3、检索头/Mamba 边界、文档指针）；**`FIGURE_CAPTIONS_STAGE1.md`** 五条测量轴表；**`PHASE2_DRAFT.md`** 顶注指向主稿。  
+- [x] **仓库梳理（代码/文档）**：**`src/rag_tree/__init__.py`** 惰性导出（**`test_path_pair_geometry`** 可不加载 **torch**）；根目录 **`pytest.ini`**；**`PHASE1_MANUSCRIPT` §5** 主图路径改为 **`results/metrics/figures/`**；**`scripts/README.md`** 补 **aggregate** / **task_wikitext**；**`docs/README.md`** 补 **PHASE2_DRAFT** 链；根 **`README.md`** 单测分层说明。  
 - [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
 
 ### 文档与代码检查纪要（2026-04-09）
@@ -83,6 +85,14 @@
 | **`run_path_protocol_cuda.sh`** | 已 **LF** + **`set -eu` / `set -o pipefail` 分行**；**`.gitattributes`** 已约束 `*.sh eol=lf`。 |
 | **其它 `.sh`** | 共 7 个；若从 Windows 上传覆盖，仍可能 CRLF — 用 **`SH_CRLF_LINUX.md`** 批量 `sed`。 |
 | **§7 基准脚本** | `benchmark_*_path_segments.py` 等向 **stdout 打 JSON** 属预期；与 **`--out-json`** 写入文件并行。 |
+
+### 文档与代码检查纪要（2026-04-07，续）
+
+| 项 | 结论 |
+|----|------|
+| **路径** | **`PHASE1_MANUSCRIPT` §5** 主图路径修正为相对仓库根 **`results/metrics/figures/`**（原 `../metrics/…` 从 `docs/experiments/` 会误解析）。 |
+| **导入** | **`src.rag_tree`** 包级不再在 **`__init__`** 中强依赖 **`torch`**；**`tests/test_path_pair_geometry.py`** 可在无可用 PyTorch DLL 的环境完成收集与通过。 |
+| **索引** | **`scripts/README`**、**`docs/README`**、**`RESEARCH_STATUS`** 与 **P1 成文**、**A2-S2 待办** 对齐。 |
 
 ### 支线（延后，非本周期默认）
 
@@ -102,7 +112,7 @@
 
 | 优先级 | 方向 | 可执行项 |
 |--------|------|----------|
-| P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **EXPERIMENT_REGISTRY** 对齐；**`PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 仅作 **口径护栏**（已完成大部，剩审计与截稿前润色） |
+| P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **EXPERIMENT_REGISTRY** 对齐；**`PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 作 **口径护栏**；**`PHASE1_MANUSCRIPT.md`** 已含 **阶段 2 §8–§10** 与 **五轴** 交叉引用（截稿前仍可润色） |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT`；**A-20260408-wikitext-3090-fused** — 主线引用时标明 **与合成树同一 harness** |
 | P1 | **主线：§7 协议** | **复跑已通过**（见 sprint §7 勾选 + **`PHASE1_COMPLETE_SUMMARY` 附录 B**）；正文仍须与主图 **分列声明**（§7.3.1） |
 | P1 | **SSGS（协议层）** | **X-20260421-*** 张量 + **`dfs_ssgs_mamba`** demo；**不等于** 真 LM 导航线 |

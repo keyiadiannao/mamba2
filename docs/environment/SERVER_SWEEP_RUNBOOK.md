@@ -115,6 +115,52 @@ python scripts\benchmarks\plot_mamba_naive_vs_fused.py `
 
 **conda 分工（避免误卸主环境）**：`pip uninstall mamba-ssm causal-conv1d` **只应在 `mamba2_naive` 里做**。主环境 **`mamba2`** 保留融合栈，用于 `run_server_paper_main_sweep.sh`、`run_server_sweep_aligned.sh` 等。naive 跑完后若要再跑 fused：`conda activate mamba2` 即可；若曾在 **`mamba2` 主环境**误卸融合包，需按 **`MAMBA_SSM_INSTALL_LINUX.md`** 装回。
 
+### 2d. 阶段 2 **A2-S2**：Wikitext 浅树 **fused** 小网格（与 5060 四格同拓扑）
+
+**目的**：在 **真语料浅树**、`dim=128`、`fanout=2` 下，对 **`(num_leaves, chunk_len) ∈ {8,16}×{8,12}`**（默认 **四格**）跑 **TF / GRU / Mamba2 path reader** 的 **path-batch** 计时与 **`m2_peak`**，环境为 **3090 + fused `mamba_ssm`**。与 **5060 HF naive** 的 **`benchmark_wikitext_5060_cuda_*.json`** **分列对照**，**禁止**无脚注同表（见 **`PHASE2_DRAFT.md` §3**、**`FIGURE_CAPTIONS_STAGE1.md`** 五轴表）。
+
+**一键（仓库根目录）**：
+
+```bash
+cd /path/to/mamba2
+git pull origin master
+find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'   # 若遇 bash\r
+chmod +x scripts/benchmarks/run_server_stage2_wikitext_grid.sh
+source /root/miniconda3/etc/profile.d/conda.sh && conda activate mamba2
+export HF_ENDPOINT=https://hf-mirror.com    # Hub 不可达时，见 AUTODL_SETUP §2b
+export MAMBA2_RESULTS_ROOT=/root/autodl-tmp/mamba2_results   # 可选；不设则写入仓库内 results/
+./scripts/benchmarks/run_server_stage2_wikitext_grid.sh
+```
+
+**常用环境变量**（脚本头注释有全文）：
+
+| 变量 | 默认 | 说明 |
+|------|------|------|
+| `WARMUP` | `2` | 与 **paper_main** 一致 |
+| `REPS` | `8` | 与 **paper_main** 同量级；若要与 **5060 四格**完全同 repetitions，设 **`REPS=5`** |
+| `TAG` | `stage2_fused` | 输出文件名前缀；多轮跑区分用 |
+| `STAMP` | `date -u +%Y%m%dT%H%MZ` | 单次会话内四格共用同一时间戳 |
+| `GRID` | `full` | **`minimal`** = 只跑 3 格（8×8、16×8、16×12），省时间 |
+
+**产出**（在 **`$MAMBA2_RESULTS_ROOT/metrics_result`** 或 **`results/metrics_result`**）：
+
+- 每格一份 JSON：`benchmark_wikitext_<TAG>_<STAMP>_n{leaves}_c{chunk}.json`
+- 汇总 CSV：`benchmark_wikitext_<TAG>_grid_<STAMP>.csv`（脚本末尾自动调用 **`aggregate_wikitext_tree_json_grid.py`**）
+- Manifest：`benchmark_wikitext_<TAG>_manifest_<STAMP>.txt`
+
+**跑完后**：把 **`TAG` / `STAMP` / `git_sha` / GPU 型号 / 上述路径** 写回 **`EXPERIMENT_REGISTRY.md`** 行 **`A-stage2-wikitext-grid-v1`**。
+
+**本机仅重汇总 CSV**（JSON 已下载到仓库）：
+
+```powershell
+cd d:\cursor_try\mamba2
+python scripts\benchmarks\aggregate_wikitext_tree_json_grid.py `
+  --glob "results/metrics_result/benchmark_wikitext_stage2_fused_*_n*_c*.json" `
+  --out-csv results\metrics_result\benchmark_wikitext_stage2_fused_grid_manual.csv
+```
+
+（将 **`--glob`** 换成你实际的 **`TAG`/`STAMP`** 模式。若 JSON 在数据盘 **`MAMBA2_RESULTS_ROOT\results\metrics_result`**，再加 **`--base-dir`** 指向 **`MAMBA2_RESULTS_ROOT\results`**，且 **`--glob`** 用相对形式 **`metrics_result\...`**。）
+
 ---
 
 ## 3. 拉回本机合并 / 出图

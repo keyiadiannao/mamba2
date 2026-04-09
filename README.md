@@ -109,7 +109,21 @@ python scripts\research\demo_ssgs_lm_nav_compare.py --cpu --epochs 250 --out-jso
 
 登记 **X-20260425-ssgs-lm-nav-compare**。叙事边界见 `docs\experiments\FIGURE_CAPTIONS_STAGE1.md` 篇首。
 
-## 单测（SSGS 草稿）
+## 单测
+
+**无 PyTorch 依赖**（叶对几何，A2-S3）：`src/rag_tree/__init__.py` 对 `tree` 做 **惰性导出**，仅跑下列文件时不应加载 `torch`。
+
+```powershell
+py -m pytest tests/test_path_pair_geometry.py -q
+```
+
+**其余 `tests/`**（SSGS、LM 导航等）需要 **能正常 `import torch` 的环境**（推荐 **`conda activate mamba2`**）；在错误 CUDA 栈或 base 环境上可能在 DLL 初始化阶段失败。
+
+```powershell
+py -m pytest tests -q
+```
+
+或（SSGS 草稿）：
 
 ```powershell
 python -m unittest tests.test_ssgs -v

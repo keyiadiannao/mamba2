@@ -14,7 +14,7 @@ Features: **concat** of path-reader pooled vectors ``[z_i, z_j]`` (+ raw mean-po
 Example::
 
   conda run -n mamba2 python scripts/research/task_wikitext_path_pair.py --cpu \\
-    --num-leaves 8 --cohort sibling --out-json results/metrics/task_wikitext_path_pair_sibling8_cpu.json
+    --num-leaves 8 --cohort sibling --out-json results/metrics/task_wikitext_path_pair_sibling8_smoke.json
 
 **Leaf heldout** (recommended for less pair leakage): train pairs use only leaves
 ``0..n-h-1``, test pairs only ``n-h..n-1`` (disjoint leaf sets; same tree build)::

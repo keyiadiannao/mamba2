@@ -14,6 +14,26 @@
 
 **正文可粘贴的一句边界**：主文图呈现 **path-batch 系统级曲线**；§7 表呈现 **分解尺上的玩具对照**；SSGS demo 呈现 **状态快照式 DFS 的可行性**，三者口径须在段落中显式区分。
 
+---
+
+## 五条测量轴（与 `RESEARCH_STATUS_AND_DIRECTION.md` §3 一致；防混读）
+
+正文 **禁止**把下列 **不同轴** 的纵轴或列 **当作同一物理量** 相减、同图并列无标注、或一句里混谈。
+
+| 轴 | 回答什么 | 代表登记 / 文件 |
+|----|----------|-----------------|
+| **Path-batch 主图** | 固定路径集合上 **三 reader 批量前向** 的 **时间与 m2_peak** | **A-20260408-paper-main-3090-pair**；`paper_main_*.csv` |
+| **§7 玩具表** | **单路径**上 **clone / restore / TF-R1 / TF-KV** 等 **分列毫秒** | **X-20260421-***；`*_20260421.json` |
+| **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照 | **X-20260421-ssgs-mamba-dfs-demo** |
+| **真 LM 线** | **tiny-gpt2** 上 **CE / 导航指标**；**非** path-batch harness | **X-20260422–25** |
+| **阶段 2 任务（A2-S3）** | 同 Wikitext 树上的 **效果 proxy**（例：叶对 cohort **ridge 准确率**）；**非**主图纵轴、**非** §7 毫秒 | **A-20260407-stage2-wikitext-path-pair**；`task_wikitext_*.json` |
+
+**阶段 2 效率补充（5060 Wikitext 2×2）**：**不是** 主图上的新曲线，而是 **本地动机表**（**HF naive**、`m2_peak_mib`）；数据 **`benchmark_wikitext_5060_cuda_grid_20260407.csv`** 与四份 JSON；**禁止**与 **3090 fused** 主文格点 **无脚注同表**。若正文出现「5060 + A2-S3」同段，须 **分列**（左：效率/m2_peak；右：任务 test_acc）或 **分子表**，并各注 **device / naive·fused / split**。
+
+**与 `PHASE1_MANUSCRIPT.md` 的对照**：阶段 2 **成文素材**见 **`PHASE1_MANUSCRIPT.md` §8**；**检索头 / Mamba 不可机械对应** 见 **§9** 与 **`docs/research/RETRIEVAL_HEAD_NOTES.md` §8**。
+
+---
+
 **真 LM 玩具导航（登记 X-20260422–24）**：路径文本上的 **teacher-forcing / 子文档 CE / 目标叶条件可学习子头**，**都不是**主图 path-batch，也**不是** SSGS 里 **Mamba `DynamicCache` + token 步进 DFS** 的同一条实验。**X-20260424** 在默认 8 叶、冻结 **tiny-gpt2** 与浅线性头下 **reach_rate 仍 &lt; 1**（登记约 **0.375**），正文**不应**写成「已解决全树导航」；要强宣称需另给架构、数据或训练设定。**与 SSGS 的并列对照**（同文本树、按 goal 统计 DFS 代价 vs 子头贪心）见 `scripts/research/demo_ssgs_lm_nav_compare.py`，登记 **X-20260425-ssgs-lm-nav-compare**。
 
 ---

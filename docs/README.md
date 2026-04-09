@@ -5,7 +5,7 @@
 | 目录 | 内容 |
 |------|------|
 | **[overview/](overview/)** | 项目总览、总体规划、**`RESEARCH_STATUS_AND_DIRECTION`（现状+方向+推荐顺序）**、周历 `ROADMAP`、当前迭代 `CURRENT_SPRINT`、**`NEXT_RESEARCH_PLAN`（任务展开）** |
-| **[experiments/](experiments/)** | 实验登记 `EXPERIMENT_REGISTRY`、阶段 1 验证计划、**`PHASE1_MANUSCRIPT`（成文稿）**、**`PHASE1_COMPLETE_SUMMARY`（存档 + §7 复跑指令）**、**`FIGURE_CAPTIONS_STAGE1`（主图图注）**、数据与样例 `DATASETS` |
+| **[experiments/](experiments/)** | 实验登记 `EXPERIMENT_REGISTRY`、阶段 1 验证计划、**`PHASE1_MANUSCRIPT`（成文稿，含阶段 2 §8–§9）**、**`PHASE1_COMPLETE_SUMMARY`（存档 + §7 复跑指令）**、**`FIGURE_CAPTIONS_STAGE1`（主图图注 + 五轴护栏）**、数据与样例 `DATASETS` |
 | **[environment/](environment/)** | 双机同步、AutoDL、`MAMBA_SSM_INSTALL_LINUX`、`SERVER_SWEEP_RUNBOOK`、**`SH_CRLF_LINUX`（`bash\r` / CRLF）**、`GIT_SERVER_MERGE_UNTRACKED`（pull 冲突） |
 | **[research/](research/)** | 研究笔记（隐状态快照 vs KV / SSGS）；**`RETRIEVAL_HEAD_NOTES.md`**（**§5** 叙事定位：B 线 / 导航线 / Mamba 初衷；**B-S2** 见 §4、§7）；脚本：`probe_retrieval_correlation.py`、`probe_path_reader_linear.py` |
 
@@ -17,4 +17,5 @@
 - 下一步研究（阶段 2 / 检索头 / S5）：`[overview/NEXT_RESEARCH_PLAN.md](overview/NEXT_RESEARCH_PLAN.md)`
 - 实验登记表：`[experiments/EXPERIMENT_REGISTRY.md](experiments/EXPERIMENT_REGISTRY.md)`
 - 阶段 1 成稿：`[experiments/PHASE1_MANUSCRIPT.md](experiments/PHASE1_MANUSCRIPT.md)`
+- 阶段 2 草稿（表数字与修订日志）：`[overview/PHASE2_DRAFT.md](overview/PHASE2_DRAFT.md)`
 - 阶段 1 存档与 §7 复跑：`[experiments/PHASE1_COMPLETE_SUMMARY.md](experiments/PHASE1_COMPLETE_SUMMARY.md)`

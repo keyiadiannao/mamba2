@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
-Flatten **5060 CUDA** Wikitext benchmark JSONs (2×2: n8/n16 × c8/c12) into one CSV.
+Flatten **benchmark_wikitext_tree** JSON files (any machine / tag) into one CSV.
 
-  python scripts/benchmarks/aggregate_wikitext_5060_cuda_grid.py \\
-    --glob 'results/metrics_result/benchmark_wikitext_5060_cuda_n*_c*_20260407.json' \\
-    --out-csv results/metrics_result/benchmark_wikitext_5060_cuda_grid_20260407.csv
+Filenames must contain ``n{num_leaves}_c{chunk_len}`` (e.g. ``n16_c12``), same
+convention as **5060** grid files — see **``aggregate_wikitext_5060_cuda_grid.py``**.
 
-Requires filenames to contain ``n{num}_c{chunk}`` (e.g. ``n16_c12``).
-**A2-S2（3090 fused）** 多文件汇总见 **``aggregate_wikitext_tree_json_grid.py``**。
+Typical **A2-S2** (after **``run_server_stage2_wikitext_grid.sh``**)::
+
+  python scripts/benchmarks/aggregate_wikitext_tree_json_grid.py \\
+    --glob 'results/metrics_result/benchmark_wikitext_stage2_fused_*_n*_c*.json' \\
+    --out-csv results/metrics_result/benchmark_wikitext_stage2_fused_grid_SUMMARY.csv
 """
 from __future__ import annotations
 
@@ -34,19 +36,30 @@ def main() -> int:
     p.add_argument(
         "--glob",
         type=str,
-        default="results/metrics_result/benchmark_wikitext_5060_cuda_n*_c*_20260407.json",
-        help="glob under repo root",
+        default="results/metrics_result/benchmark_wikitext_stage2_fused_*_n*_c*.json",
+        help="glob under repo root (quote for shell)",
     )
     p.add_argument(
         "--out-csv",
         type=Path,
-        default=Path("results/metrics_result/benchmark_wikitext_5060_cuda_grid_20260407.csv"),
+        default=Path("results/metrics_result/benchmark_wikitext_stage2_fused_grid.csv"),
         metavar="PATH",
+    )
+    p.add_argument(
+        "--base-dir",
+        type=Path,
+        default=None,
+        metavar="DIR",
+        help="directory for relative --glob (default: repo root). Use when JSON is under MAMBA2_RESULTS_ROOT/results",
     )
     args = p.parse_args()
 
-    root = _REPO_ROOT
-    paths = sorted(root.glob(args.glob))
+    base = args.base_dir.resolve() if args.base_dir is not None else _REPO_ROOT
+    glob_part = args.glob
+    if Path(glob_part).is_absolute():
+        print("ERROR: --glob must be relative to --base-dir", file=sys.stderr)
+        return 1
+    paths = sorted(base.glob(glob_part))
     rows: list[dict[str, object]] = []
     for path in paths:
         nc = _parse_nc(path)
@@ -63,7 +76,7 @@ def main() -> int:
                 continue
             rows.append(
                 {
-                    "json_file": str(path.relative_to(root)).replace("\\", "/"),
+                    "json_file": str(path.resolve().relative_to(base.resolve())).replace("\\", "/"),
                     "num_leaves": n_leaves,
                     "chunk_len": chunk_len,
                     "reader": reader,
