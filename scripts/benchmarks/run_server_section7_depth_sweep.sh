@@ -14,6 +14,7 @@ export PYTHONUNBUFFERED=1
 
 STAMP="${STAMP:-$(date -u +%Y%m%dT%H%MZ)}"
 TAG="${TAG:-section7_depth}"
+PYTHON="${PYTHON:-python}"
 DEPTHS="${DEPTHS:-5 6}"
 CHUNK_LEN="${CHUNK_LEN:-8}"
 DIM="${DIM:-128}"
@@ -36,27 +37,31 @@ MANIFEST="$OUT/${TAG}_manifest_${STAMP}.txt"
   echo "kv_warmup=$KV_WARMUP kv_reps=$KV_REPS restore_warmup=$RESTORE_WARMUP restore_reps=$RESTORE_REPS"
   echo "utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   echo "git_sha=$(git rev-parse HEAD 2>/dev/null || echo unknown)"
-  python -c "import torch; print('torch', torch.__version__, 'cuda', torch.cuda.is_available())"
+  "$PYTHON" -c "import torch; print('torch', torch.__version__, 'cuda', torch.cuda.is_available())"
   nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader 2>/dev/null || true
 } | tee "$MANIFEST"
 
 for d in $DEPTHS; do
-  echo "======== depth=$d (tree_depth_param; path has d+1 nodes) ========"
-  py() { python "$@" >/dev/null; }
+  echo "======== depth=$d (tree_depth_param; path has d+1 nodes) ========" >&2
+  py() { "$PYTHON" "$@" >/dev/null; }
 
+  echo "  -> S1 Mamba2 cache snap (JSON to metrics_result)" >&2
   py scripts/research/benchmark_mamba2_cache_snapshot_segments.py \
     --device "$DEVICE" --depth "$d" --chunk-len "$CHUNK_LEN" --dim "$DIM" \
     --out-json "$OUT/${TAG}_s1_mamba2_snap_d${d}_${STAMP}.json"
 
+  echo "  -> S2 TF-R1" >&2
   py scripts/research/benchmark_tf_r1_path_segments.py \
     --device "$DEVICE" --depth "$d" --chunk-len "$CHUNK_LEN" --dim "$DIM" \
     --out-json "$OUT/${TAG}_s2_tf_r1_d${d}_${STAMP}.json"
 
+  echo "  -> S3 TF-KV" >&2
   py scripts/research/benchmark_tf_kv_path_segments.py \
     --device "$DEVICE" --depth "$d" --chunk-len "$CHUNK_LEN" --dim "$DIM" \
     --warmup "$KV_WARMUP" --reps "$KV_REPS" \
     --out-json "$OUT/${TAG}_s3_tf_kv_d${d}_${STAMP}.json"
 
+  echo "  -> S4 Mamba2 restore" >&2
   py scripts/research/benchmark_mamba2_cache_restore_segments.py \
     --device "$DEVICE" --depth "$d" --chunk-len "$CHUNK_LEN" --dim "$DIM" \
     --snapshot-device same \

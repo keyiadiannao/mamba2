@@ -264,7 +264,11 @@ unset STAMP
 
 ### 2g. §7 协议 **S1–S4** 按 **树深度** 扩展（**单路径**，与 path-batch **分列**）
 
+**一键粘贴（AutoDL 默认路径）**：专文 **`RUN_AUTOADL_SECTION7_NOW.md`**（含 **`sed` 去 `\r`**、**`conda`**、**`MAMBA2_RESULTS_ROOT`**、跑后登记步骤）。
+
 **目的**：在已归档 **`depth=4`**（**`X-20260421-*`**，`RESEARCH_NOTES` / **§7**）之外，对 **`depth ∈ {5,6}`**（路径 **6 / 7** 个节点；**fanout=2** 对应 **32 / 64 叶**）各跑 **S1 Mamba clone**、**S2 TF-R1 重算**、**S3 TF-KV**、**S4 Mamba restore**，便于看 **KV 字节 / 增量步耗时 / restore** 随深度趋势。与 **`benchmark_wikitext_tree`** **不同 harness**，**禁止**与 **§2d/§2f** 无脚注同表。
+
+**脚本说明**：**`run_server_section7_depth_sweep.sh`** 已将 JSON **标准输出丢弃**（只写文件）；**进度** 打在 **stderr**（**`-> S1 …`** 等）。可用环境变量 **`PYTHON`**（默认 **`python`**）指向 conda 解释器。
 
 ```bash
 cd /path/to/mamba2

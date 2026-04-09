@@ -122,6 +122,8 @@ LEAVES="8 16 32" ./scripts/benchmarks/run_server_wikitext_leavescale.sh
 
 ## 5. 【§7 玩具协议】**depth 5–6** 扩展（**S1–S4**，与 path-batch **分列**）
 
+**推荐**：整段复制 **`docs/environment/RUN_AUTOADL_SECTION7_NOW.md`**（含 **`sed`/`conda`/`MAMBA2_RESULTS_ROOT`**）。
+
 ```bash
 cd /root/autodl-tmp/mamba2
 unset STAMP
