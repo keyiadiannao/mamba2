@@ -1,0 +1,41 @@
+{
+  "device": "cuda",
+  "depth": 4,
+  "fanout": 2,
+  "num_leaves": 16,
+  "chunk_len": 8,
+  "transformer": {
+    "reader": "transformer",
+    "elapsed_s": 0.029463,
+    "per_step_s": 0.005893,
+    "peak_alloc_mib": 31.53,
+    "batch_paths": 16,
+    "tokens_per_path": 40,
+    "dim": 128
+  },
+  "gru": {
+    "reader": "gru",
+    "elapsed_s": 0.010699,
+    "per_step_s": 0.00214,
+    "peak_alloc_mib": 50.26,
+    "batch_paths": 16,
+    "tokens_per_path": 40,
+    "dim": 128
+  },
+  "mamba2": {
+    "reader": "mamba2",
+    "elapsed_s": 0.668897,
+    "per_step_s": 0.133779,
+    "peak_alloc_mib": 2247.86,
+    "batch_paths": 16,
+    "tokens_per_path": 40,
+    "dim": 128
+  },
+  "tree_kind": "wikitext2_bottom_up",
+  "dataset": "wikitext",
+  "wikitext_config": "wikitext-2-raw-v1",
+  "chars_per_leaf": 600,
+  "kind": "benchmark_wikitext_tree",
+  "git_sha": "968a6fd",
+  "torch_version": "2.11.0+cu128"
+}

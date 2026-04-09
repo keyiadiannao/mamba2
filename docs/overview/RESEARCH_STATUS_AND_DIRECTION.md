@@ -26,6 +26,7 @@
 |----|------|------|
 | **path-batch 主文** | 3090 **同机** naive vs fused；CSV + 三张主图；结论：**Mamba 峰值强烈依赖 fused** | 登记 **A-20260408-paper-main-3090-***；数据 **`results/metrics_result/paper_main_*.csv`**；图 **`results/metrics/figures/mamba_3090_naive_vs_fused_*.png`** |
 | **真语料浅树（效率）** | Wikitext-2 叶块 + **同一 reader harness** | **A-20260408-wikitext-3090-fused**；JSON 在 **`metrics_result/`** |
+| **阶段 2 本地试跑（5060）** | **`n_leaves=16`** × **`chunk_len` 8/12**，`WARMUP=2` `REPS=5`；日志为 **HF naive** Mamba（本机无 fused 快路径） | **`benchmark_wikitext_local5060_n16_c8_stage2_try.json`**、**`…_c12_…`**；**禁止与 3090 fused 混表**（见 **§6**） |
 | **§7 玩具协议 S1–S4** | 3090 CUDA 归档 + **串行复跑**通过；与 **§7.3.1** 同阶 | **X-20260421-***；`**_20260421.json`** + **`*_20260408T1617Z.json`** |
 | **SSGS × Mamba** | DFS + `DynamicCache` 导航环可复现 | **X-20260421-ssgs-mamba-dfs-demo** |
 | **叙事边界** | 主图 / §7 / SSGS / 真 LM **四线不混读** | **`FIGURE_CAPTIONS_STAGE1.md`**、`**RESEARCH_NOTES**` §7.0 |
