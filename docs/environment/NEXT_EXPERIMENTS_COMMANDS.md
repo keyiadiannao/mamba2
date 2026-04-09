@@ -116,6 +116,8 @@ LEAVES="8 16 32" ./scripts/benchmarks/run_server_wikitext_leavescale.sh
 
 **产出**：**`benchmark_wikitext_<TAG>_<STAMP>_n*_c8.json`** + **`…_grid_<STAMP>.csv`** + manifest。登记 **A-stage2-wikitext-leavescale-v1**（**`SERVER_SWEEP_RUNBOOK.md` §2f**）。
 
+**128 / 256 叶（可选，建议晚于 8–64）**：**新 `TAG`**（如 **`stage2_leavescale_xl`**），**先 `LEAVES="128"`** 再 **`256`**；语料不够时用 **`CHARS_PER_LEAF=400`**。见 **`SERVER_SWEEP_RUNBOOK` §2f** 末段。
+
 ---
 
 ## 5. 【§7 玩具协议】**depth 5–6** 扩展（**S1–S4**，与 path-batch **分列**）
@@ -178,3 +180,4 @@ git push origin master
 | 2026-04-09 | **已跑通**：**dim256** **`STAMP=20260409T1137Z`**；**n32** 单点；**headcheck** **`20260409T1135Z`** — 见 **`EXPERIMENT_REGISTRY`** |
 | 2026-04-07 | **叶数扫描** **`run_server_wikitext_leavescale.sh`**、**§7 depth 5–6** **`run_server_section7_depth_sweep.sh`**；**`SERVER_SWEEP_RUNBOOK` §2f–§2g**；本节重编号 §4–§8 |
 | 2026-04-09 | **已跑通叶数扫描**：**`TAG=stage2_leavescale`** **`STAMP=20260409T1257Z`** → **`benchmark_wikitext_stage2_leavescale_*`**；登记 **A-stage2-wikitext-leavescale-v1**；**`SERVER_SWEEP_RUNBOOK` §1** 补 **GitHub TLS / PyCharm** |
+| 2026-04-09 | **§4** 末：**128/256 叶** 建议；**`run_server_wikitext_leavescale.sh`** 支持 **`CHARS_PER_LEAF`**；**`SERVER_SWEEP_RUNBOOK` §2f** 大叶数段 |

@@ -69,3 +69,4 @@
 | P1 | S1–S4 + SSGS×Mamba + 树×因果 LM + 启发式导航 | S1–S4；**SSGS×Mamba** **X-20260421-ssgs-mamba-dfs-demo**；**X-20260422** + **X-20260423**（**reach_rate**）；大叶数 **A-20260408-research-large-leaves-3090**、探针 **X-20260408-probe-mamba2-3090-fused** |
 | **P1** | ~~**A-stage2-wikitext-grid-v1（R2）**~~ | **（已完成 2026-04-09）** **`STAMP=20260409T1110Z`**、**`TAG=stage2_fused_r2`**；见登记表 **A-stage2** |
 | **P1** | ~~**A-stage2-wikitext-leavescale-v1**~~ **（已完成 `STAMP=20260409T1257Z`）** + **X-section7-depth-extension-v1** | §7 深度扩展仍待跑：**`run_server_section7_depth_sweep.sh`**（**`SERVER_SWEEP_RUNBOOK` §2g**） |
+| **P2** | **128 / 256 叶 path-batch**（可选） | **`TAG=stage2_leavescale_xl`**、**先 128 后 256**；登记建议 **A-stage2-wikitext-leavescale-xl-v1**；**`SERVER_SWEEP_RUNBOOK` §2f** 大叶数段 |

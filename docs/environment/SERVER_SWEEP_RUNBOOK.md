@@ -240,8 +240,25 @@ unset STAMP
 | `CHUNK_LEN` | `8` | 与阶段 2 主网格一致 |
 | `DIM` | `128` | 与 **A2-S2** 主表一致；勿与 **§2f** 的 **dim256 四格**无说明混表 |
 | `WARMUP` / `REPS` | `2` / `8` | 与 **paper_main** 习惯一致 |
+| `CHARS_PER_LEAF` | `600` | **128/256 叶** 若语料不够可降低（与 **`benchmark_wikitext_tree.py --chars-per-leaf`** 一致） |
 
 **产出**：**`benchmark_wikitext_<TAG>_<STAMP>_n{8,16,32,64}_c<CHUNK_LEN>.json`** + **`…_grid_<STAMP>.csv`** + manifest。
+
+**大叶数可选（128 / 256 叶）**：
+
+- **合法性**：**`fanout=2`** 时 **128=2⁷**、**256=2⁸**，脚本 **`LEAVES`** 可任意空格分隔幂次。
+- **语料**：默认 **`chars_per_leaf=600`** → **128 叶** 需 **76800** 字符、**256 叶** 需 **153600**；一般 **Wikitext-2 raw** 够。若 **`RuntimeError: wikitext slice too short`**，设 **`CHARS_PER_LEAF=400`**（或更小）再跑（脚本已支持环境变量 **`CHARS_PER_LEAF`**）。
+- **怎么做更合适**：**先 128 单点**（观察 **`m2_peak` / 是否 OOM / 墙钟**），**再 256**；不要与已归档 **8–64** 混在同一 **`TAG`**（建议 **`TAG=stage2_leavescale_xl`**），登记册 **另开一行**（如 **`A-stage2-wikitext-leavescale-xl-v1`**）。**256 叶** 上 **TF 整段 SA** + **大 batch_paths** 压力最大，若不稳可先 **`REPS=4`** 或 **`nvidia-smi -l 1`** 盯显存。
+- **示例**（**128** 单会话）：
+
+```bash
+export TAG=stage2_leavescale_xl
+export LEAVES="128"
+unset STAMP
+./scripts/benchmarks/run_server_wikitext_leavescale.sh
+```
+
+**256**（**128 绿** 后再跑）：**`export LEAVES="256"`**，其余同上；或 **`LEAVES="128 256"`** 同 **STAMP** 一次产出 **2 JSON + 1 CSV**。
 
 ### 2g. §7 协议 **S1–S4** 按 **树深度** 扩展（**单路径**，与 path-batch **分列**）
 
