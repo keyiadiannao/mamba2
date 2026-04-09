@@ -105,7 +105,7 @@
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT`；**A-20260408-wikitext-3090-fused** — 主线引用时标明 **与合成树同一 harness** |
 | P1 | **主线：§7 协议** | **复跑已通过**（见 sprint §7 勾选 + **`PHASE1_COMPLETE_SUMMARY` 附录 B**）；正文仍须与主图 **分列声明**（§7.3.1） |
 | P1 | **SSGS（协议层）** | **X-20260421-*** 张量 + **`dfs_ssgs_mamba`** demo；**不等于** 真 LM 导航线 |
-| P2 | **阶段 2 执行** | **`NEXT_RESEARCH_PLAN.md`** 轨道 **A**：**A2-S3** + **5060 CUDA** Wikitext **`n8_c12` / `n16_c12`**（**`metrics_result/benchmark_wikitext_5060_cuda_*_20260407.json`**）；**A2-S2** fused 仍待 **AutoDL** |
+| P2 | **阶段 2 执行** | **`NEXT_RESEARCH_PLAN.md`** 轨道 **A**：**A2-S3** + **5060 CUDA** Wikitext **`n8_c12` / `n16_c12`**（**`metrics_result/benchmark_wikitext_5060_cuda_{n8_c12,n16_c8,n16_c12}_20260407.json`**）；**A2-S2** fused 仍待 **AutoDL** |
 | P2 | **检索头 B** | 探针与层/头报告（与主线并行，需 **48G** 窗口） |
 | 延后 | **真 LM 支线 B** | **X-20260424** 子头加强、**X-20260425** wall-clock；**非**阶段 1 unblock |
 | 延后 | **大叶数扩展** | **A-20260408-research-large-leaves-3090** 已归档；新网格另开 **TAG** |
