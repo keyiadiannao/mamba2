@@ -217,9 +217,11 @@ python scripts\benchmarks\aggregate_wikitext_tree_json_grid.py `
 
 **一键**（仓库根目录）：
 
+若出现 **`/usr/bin/env: 'bash\r': No such file or directory`**，说明 `.sh` 为 **Windows CRLF**（**PyCharm 上传** 覆盖后常见）。在仓库根 **每次上传后** 执行一次 **`find … sed`** 再去跑脚本：
+
 ```bash
 cd /path/to/mamba2
-git pull origin master
+git pull origin master   # 若不可用可跳过；见 §1
 find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'
 chmod +x scripts/benchmarks/run_server_wikitext_leavescale.sh
 source /root/miniconda3/etc/profile.d/conda.sh && conda activate mamba2
