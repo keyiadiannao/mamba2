@@ -70,6 +70,8 @@
 - [x] **阶段 2 开工**：按 **`NEXT_RESEARCH_PLAN.md` §2** — **A2-S0** 登记占位 + **A2-S1** `benchmark_wikitext_tree.py` smoke（**`--out-json`** 至 **`results/metrics_result/`**，见该文档 **§2.4**）；**B-S1** **`docs/research/RETRIEVAL_HEAD_NOTES.md`**。  
 - [x] **检索头 B-S2（本地可完成）**：**`probe_retrieval_correlation.py`** + **`RETRIEVAL_HEAD_NOTES.md` §2** 文献入口表（与 2404.15574 等对照）；**per-head / 大模型** 仍待 **B-S3** 与 GPU。  
 - [x] **B-S2+ path reader 探针**：**`probe_path_reader_linear.py`**（默认 **16 叶 heldout**、**`ridge_untrained`**；可选 **`bce_reader_train` / `bce_head_only_train`**）；归档 **`results/metrics/probe_path_reader_linear_text16_*.json`**。  
+- [x] **A2-S3 任务 smoke 扩展**：**`task_wikitext_path_pair.py`** — **`task_wikitext_path_pair_sibling16_cpu.json`**、**`task_wikitext_path_pair_rootchild16_cpu.json`**（**CPU**，`split_seed=1`）；总览 **RESEARCH_STATUS** §3 第五条轴、**`PHASE2_DRAFT.md`** §2。  
+- [x] **A2-S3 叶级 heldout**：**`--pair-split leaf_heldout --heldout-leaves 4`**（16 叶 sibling）→ **`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**；见 **`PHASE2_DRAFT.md`**（小 **test** 叶对数、CPU/CUDA ridge 波动）。  
 - [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
 
 ### 文档与代码检查纪要（2026-04-09）
@@ -103,7 +105,7 @@
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT`；**A-20260408-wikitext-3090-fused** — 主线引用时标明 **与合成树同一 harness** |
 | P1 | **主线：§7 协议** | **复跑已通过**（见 sprint §7 勾选 + **`PHASE1_COMPLETE_SUMMARY` 附录 B**）；正文仍须与主图 **分列声明**（§7.3.1） |
 | P1 | **SSGS（协议层）** | **X-20260421-*** 张量 + **`dfs_ssgs_mamba`** demo；**不等于** 真 LM 导航线 |
-| P2 | **阶段 2 执行** | **`NEXT_RESEARCH_PLAN.md`** 轨道 **A**（A2-S0→S4）；Wikitext smoke → 小网格 → **+1 任务指标** |
+| P2 | **阶段 2 执行** | **`NEXT_RESEARCH_PLAN.md`** 轨道 **A**：**A2-S3 v0**（`task_wikitext_path_pair.py`，8/16 叶 JSON 已归档）；**A2-S2** 小网格仍待 **AutoDL** |
 | P2 | **检索头 B** | 探针与层/头报告（与主线并行，需 **48G** 窗口） |
 | 延后 | **真 LM 支线 B** | **X-20260424** 子头加强、**X-20260425** wall-clock；**非**阶段 1 unblock |
 | 延后 | **大叶数扩展** | **A-20260408-research-large-leaves-3090** 已归档；新网格另开 **TAG** |

@@ -43,7 +43,7 @@
 
 - **导航线（X-20260423 / 24 / 25）**：在 **同一 tiny 因果 LM + 固定文本树** 上比较 **启发式 argmin** 与 **可学习子指针 / SSGS**——结论是 **任务策略与学习信号** 问题（例如 **reach_rate** 提升），**不**回答「隐状态里是否已有检索头」。
 - **B 线（岭探针 + 文献）**：在 **冻结 LM** 或 **路径读出向量** 上问「**线性可读的二元标签**」——**不设导航训练**；与「可学习导航更好」**并行、不矛盾**。
-- **与 Mamba「检索式机制」初衷的对齐**：文献中的 **retrieval heads** 多针对 **Transformer 自注意力**；当前 **`probe_retrieval_correlation.py`（GPT-2）** 尚未进入 **`Mamba2PathReader`**。要对齐初衷，有价值的下一步是 **同 harness 下** 对 **path reader 表征**（及可选 **per-layer Mamba 内部状态**，若 API 允许）做 **与 GPT-2 探针可并列、但不可混读** 的对照，而不是在 **纯 GPT-2** 上无限加难模板。
+- **与 Mamba「检索式机制」初衷的对齐**：文献中的 **retrieval heads** 多针对 **Transformer 自注意力**；当前 **`probe_retrieval_correlation.py`（GPT-2）** 尚未进入 **`Mamba2PathReader`**。要对齐初衷，有价值的下一步是 **同 harness 下** 对 **path reader 表征**（及可选 **per-layer Mamba 内部状态**，若 API 允许）做 **与 GPT-2 探针可并列、但不可混读** 的对照，而不是在 **纯 GPT-2** 上无限加难模板。**Mamba 上能否「看到检索头」** 的精确定义与边界见 **§8**。
 - **边际收益判断**：在 **通用 LM** 上继续堆模板 / 换大模型的 **边际收益** 递减；**边际收益更高** 的是把探针 **接到 path-batch / Mamba 路径**（见 **§7** 本地脚本 **`probe_path_reader_linear.py`**）。
 - **辅线节流**（与 **`RESEARCH_STATUS_AND_DIRECTION.md`** 一致）：B 线 **不**抢占 **A2**（真语料网格 + 任务指标）的默认机时；**B-S3**（per-head / 大显存）仍 **按需**。
 
@@ -59,3 +59,28 @@
 - **头级分析**：当前脚本为 **层 mean-pool**；若对齐 2404.15574 风格，需在 Transformer 内取 **per-head** 统计量再探针（工作量 +1，**B-S3** 级）。  
 - **主线并行**：**A2-S2**（Wikitext 小网格，**3090 fused**）仍按 **`NEXT_RESEARCH_PLAN`**，与探针 **独立登记**。
 - **path reader 本地探针**：`scripts/research/probe_path_reader_linear.py` — **默认 16 叶**、**`--leaf-split heldout`**（每类留出最后 **K** 个叶模板到 test，`--heldout-per-class` 默认 2）；**`ridge_untrained`**：岭回归 on **未训练** reader 输出；可选 **`--train-steps`**：**`bce_reader_train`**（**reader + 线性头**）或 **`--train-head-only`** → **`bce_head_only_train`**（**冻结 reader**，仅头）。归档例：`…_text16_heldout_cpu.json`、`…_text16_heldout_train50_cpu.json`；**8 叶 heldout**：`…_text8_heldout_cpu.json`。与 **GPT-2 探针** **分列解读**。
+
+---
+
+## 8. Mamba / SSM 与「检索头」能否一一对应？
+
+**短答**：文献（如 2404.15574）里的 **retrieval head** 是 **解码器 multi-head self-attention** 里、可用 **注意力图** 定位的少数 **头**；**Mamba-2 路径编码器** 里 **没有** 与之同构的「对全序列位置的 QK 注意力矩阵」，因此 **不能** 在同一意义上「数出几个检索头」或做 **同款头级因果剪枝**。
+
+**稍展开**：
+
+1. **对象不同**  
+   - **GPT-2 / 标准 Transformer**：每层有 **H 个注意力头**，每层可抽出 **attn(Q,K)**（或等价的注意力权重），这是 **retrieval heads** 论文里 **识别、干预** 的直接对象。  
+   - **`Mamba2PathReader`**（`src/rag_tree/readers.py`）：内部是 **`Mamba2Model`** 在 **path 嵌入** `[B,T,D]` 上前向，输出再 **mean-pool + 线性**。配置中的 **`num_heads` / `head_dim`** 属于 **SSD/Mamba-2 块内部** 的张量划分，**不是**「对 token–token 依赖画热力图」的那种 **自注意力头**。
+
+2. **本仓库里已经能「检测」什么（性价比高）**  
+   - **`probe_path_reader_linear.py`**：对 **含 `mamba2` 分支** 的 **池化向量** 做 **岭二分类 / BCE**（与 TF、GRU **并列**）。这测的是 **表征是否线性可读某合成标签**（如 STEM vs 生活），属于 **B-S2 / B-S2+** 的 **间接**「信息是否在向量里」——**不是** 头级检索机制。  
+   - **`probe_retrieval_correlation.py`**：面向 **冻结 GPT-2**，同样是 **层 mean-pool + 岭**，与 **path reader** 结果 **不可混表**（见 §4、§5）。
+
+3. **若要做「更像文献」的分析（成本更高，≈ B-S3）**  
+   - 在 **Transformer path reader** 上可设想 **per-head** 统计量 + 探针或掩码（对齐 §7「头级分析」）。  
+   - 对 **纯 Mamba 栈**：可走 **逐层 `last_hidden_state`** 的探针、或 **hook 中间状态**，看 **层间** 是否出现 **可分性变化**；这仍是对 **连续状态演化** 的描述，**除非**另建操作定义，否则不宜称为 **retrieval head**。
+
+4. **与 §7 / 玩具协议的关系**  
+   - **`probe_mamba2_outputs.py`**、cache 分段脚本等：帮助观察 **张量形状与快照成本**；**不**自动推出「语义检索」。
+
+**写作建议**：若主线涉及 Mamba，用 **「表示中是否含可线性读取的路由/主题信息」** 或 **「层状探针」**，避免写 **「我们发现 Mamba 的检索头」**，除非按 **新定义**（例如某类门控或子空间）单独立项并对照文献。

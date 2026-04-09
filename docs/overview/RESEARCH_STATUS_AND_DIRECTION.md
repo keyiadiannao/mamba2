@@ -29,8 +29,9 @@
 | **阶段 2 本地试跑（5060）** | **`n_leaves=16`** × **`chunk_len` 8/12**，`WARMUP=2` `REPS=5`；日志为 **HF naive** Mamba（本机无 fused 快路径） | **`benchmark_wikitext_local5060_n16_c8_stage2_try.json`**、**`…_c12_…`**；**禁止与 3090 fused 混表**（见 **§6**） |
 | **§7 玩具协议 S1–S4** | 3090 CUDA 归档 + **串行复跑**通过；与 **§7.3.1** 同阶 | **X-20260421-***；`**_20260421.json`** + **`*_20260408T1617Z.json`** |
 | **SSGS × Mamba** | DFS + `DynamicCache` 导航环可复现 | **X-20260421-ssgs-mamba-dfs-demo** |
-| **叙事边界** | 主图 / §7 / SSGS / 真 LM **四线不混读** | **`FIGURE_CAPTIONS_STAGE1.md`**、`**RESEARCH_NOTES**` §7.0 |
+| **叙事边界** | 主图 / §7 / SSGS / 真 LM / **阶段 2 任务** **五线不混读**（测量轴见 **§3**） | **`FIGURE_CAPTIONS_STAGE1.md`**、`**RESEARCH_NOTES**` §7.0；任务列 **`PHASE2_DRAFT.md`** |
 | **阶段 1 成文** | 可贴正文的一节 | **`PHASE1_MANUSCRIPT.md`** |
+| **阶段 2 任务指标（A2-S3 v0）** | Wikitext 浅树 + **叶对同 cohort** 二分类（**ridge / concat 池化**）；与 path-batch **分列**，**非**墙钟 | **`task_wikitext_path_pair.py`**（**stratified** 或 **leaf_heldout**）；登记 **A-20260407-stage2-wikitext-path-pair**；含 **`…_leafheldout4_{cpu,cuda5060}.json`** 等 |
 
 ### 2.2 已完成但定位为「辅线」（默认不增投）
 
@@ -43,7 +44,7 @@
 
 | 项 | 与主叙事的关系 |
 |----|----------------|
-| **阶段 2：真语料 + 任务指标** | **效果** 与 **树上任务** 的第一块实证；**主文若只有效率缺任务，故事偏薄** |
+| **阶段 2：真语料 + 任务指标** | **A2-S3 v0**（叶对 cohort + ridge）已脚本化；**`--pair-split leaf_heldout`** 本地已跑 **16 叶 / H=4** 归档；**A2-S2** 效率小网格仍依赖 **AutoDL** |
 | **检索头 B（分析）** | 支撑贡献候选 **②**；**B-S2**（GPT-2 岭探针 + topic heldout）+ **`RETRIEVAL_HEAD_NOTES` §2 / §5**；**B-S2+**（**`probe_path_reader_linear`**：16 叶 heldout、可选 BCE / **`--train-head-only`**）已本地归档；**per-head / 大模型** 仍待 **B-S3** 与机时 |
 | **检索头 C（注入训练）** | 依赖 B 与稳定 harness；**48G** |
 | **§7.5 S5 汇总表** | 支撑贡献候选 **③** 的「一句话表」；**可做可不做**，视篇幅 |
@@ -51,7 +52,7 @@
 
 ---
 
-## 3. 四条测量轴（防混读）
+## 3. 测量轴（防混读；五条）
 
 | 轴 | 回答什么 | 代表登记 / 文件 |
 |----|----------|-----------------|
@@ -59,6 +60,7 @@
 | **§7 玩具表** | **单路径**上 **clone / restore / TF-R1 / TF-KV** 等 **分列毫秒** | **X-20260421-*** |
 | **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照 | **X-20260421-ssgs-mamba-dfs-demo** |
 | **真 LM 线** | **tiny-gpt2** 上 **CE / 导航指标**；**非** path-batch harness | **X-20260422–25** |
+| **阶段 2 任务（A2-S3）** | 同 Wikitext 树上的 **效果 proxy**（例：叶对 cohort **ridge 准确率**）；**非**主图纵轴、**非** §7 毫秒 | **A-20260407-stage2-wikitext-path-pair**；**`PHASE2_DRAFT.md`** |
 
 **规则**：正文 **禁止**把 §7 某一列与主图纵轴 **当作同一物理「一步」** 相减或混谈。
 
@@ -84,11 +86,11 @@
 | **2** | **A2-S1**：`benchmark_wikitext_tree.py` **smoke** → JSON 入 **`results/metrics_result/`** | 验证 **HF + fused + harness** 在阶段 2 网格上仍 **可跑通** |
 | **3** | **B-S1 / B-S2 / B-S2+**：**`RETRIEVAL_HEAD_NOTES.md`**（§2 / §4 GPT-2 探针；§5 叙事；§7 **path reader** 探针） | **机制线** 与 **系统线** 对齐；**per-head** 仍属 **B-S3** |
 | **4** | **A2-S2**：AutoDL **小网格**（2–3 个配置）→ 更新登记 **指标** | 真语料上 **效率曲线/表** 有 **多点** |
-| **5** | **A2-S3**：择一 **任务指标**（路径二分类 / cloze / 小集合检索）最小实现 | 主文出现 **非纯延迟** 的 **一行结果** |
+| **5** | **A2-S3**：任务指标（**v0**：**`task_wikitext_path_pair.py`** 已落地；cloze / 检索等仍可选） | 主文出现 **非纯延迟** 的 **一行结果**；与 **4** 分列 |
 | **6** | **成文**：**阶段 2 半页**（可 **`PHASE2_DRAFT.md`** 或接 **MANUSCRIPT**） | **投稿级** 结构闭环 |
 | **7** | **可选**：主图 **PNG 入仓**；**S5** 表；**平面 RAG** smoke | **篇幅与审稿反馈** 驱动 |
 
-**并行**：**2** 与 **3** 可同周；**4** 建议在 **2** 绿之后；**5** 可与 **4** 后半重叠（需先定 **标签从哪来**）。
+**并行**：**2** 与 **3** 可同周；**4** 建议在 **2** 绿之后；**5（A2-S3 v0）** 已与 **2** 同 harness 落地（叶对 cohort 标签），**cloze / 检索** 等仍可选；**4** 与 **5** 正文 **分列**。
 
 ---
 
