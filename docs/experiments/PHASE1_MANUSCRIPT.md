@@ -224,3 +224,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-10 | **§5**：**5060 CUDA** Wikitext **n8 c8** smoke（**`benchmark_wikitext_local5060_cuda_*_n8_c8.json`**）；登记 **X-20260410-benchmark-wikitext-local5060-cuda-n8c8** |
 | 2026-04-10 | **§4 / §5 / §5.1 / §8.2**：本机 **5060 CPU** **A2-S3 n8 stratified** + **SSGS c4 d64** 跑例入表；登记 **X-20260410-local5060-a2s3-n8-strat**、**X-20260410-local5060-ssgs-wikitext-n8-c4d64** |
 | 2026-04-10 | **§5**：本机 **B-S2+ train50**（**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**）、**Wikitext CPU smoke**（**`benchmark_wikitext_local5060_cpu_*_n8_c8.json`**）；登记 **X-20260410-local5060-bs2plus-train50-n16**、**X-20260410-local5060-wikitext-cpu-n8c8** |
+| 2026-04-10 | **§10 指针**：**`NEXT_RESEARCH_PLAN.md`** 增 **「项目现状快照」**、**「后续方向」**；本机 **5060** 轨道 **无阻塞项**；全量 **`pytest tests/`** **20** passed |

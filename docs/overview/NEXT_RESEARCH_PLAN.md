@@ -5,6 +5,50 @@
 
 ---
 
+## 项目现状快照（文档 + 实验；**本站 `HEAD`** 以 **`git rev-parse --short HEAD`** 为准）
+
+### 1. 主线材料（成文可引用；登记见 **`EXPERIMENT_REGISTRY.md`**）
+
+| 轴 | 状态 |
+|----|------|
+| **Path-batch 主文** | **3090** fused vs naive **`paper_main_*` CSV** + **`results/metrics/figures/mamba_3090_naive_vs_fused_dim*.png`**；**5060 HF naive** Wikitext 动机与 **3090 fused** **须分列脚注** |
+| **阶段 2 Wikitext 效率** | **3090** 四格、**dim256**、**叶数扫描 8→64**、**XL 128/256** 等 **JSON/CSV/manifest** 已归档 **`results/metrics_result/`** |
+| **§7 玩具协议** | **S1–S4** + **depth 5–6** 扩展已归档；与 path-batch **分列**（**`FIGURE_CAPTIONS_STAGE1.md`** **五轴**） |
+| **A2-S3** | **3090** **`init_seed`×5**（**n16/n32**、**leaf_heldout**）；**本机** **stratified n8**（**`task_wikitext_sibling8_local5060_cpu_20260410.json`** 等） |
+| **机制 B-S2+** | **本机** ridge **n8/n16**、**BCE train50**（**`probe_path_reader_*_local5060.json`**）；**3090 CUDA 同脚本去 `--cpu`** 仍为 **待补对照行** |
+| **SSGS × Wikitext** | **`metrics_result`** **grid（n8–64，c8 dim128）**；**本机** 另存 **c4 dim64** 轻量 JSON（**分列**） |
+
+### 2. 本机（RTX 5060 / **`mamba2`**）已跑通项（与云端 **分列**）
+
+手册：**`docs/environment/LOCAL_5060_RUNBOOK.md`**。**B-S2+**（ridge + 可选 train50）、**A2-S3 n8**、**Wikitext path-batch**（**CUDA 峰值 smoke** + **CPU 可跑性**）、**SSGS 轻量**、登记 id **`X-20260410-local5060-*`** / **`X-20260407-local5060-bs2plus-rerun`** —— **本轨道已无未跑阻塞项**；新数字仅属 **可选扩展**（如 **`probe_retrieval_correlation.py`**、更大 **A2-S3** 格点）。
+
+### 3. 测试与仓库卫生
+
+- **`pytest tests/`**（须 **`mamba2`** 等有 **torch** 的环境）：**20 passed**（全量；约 **15 s** 量级，以本机为准）。
+- **`py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q`**：**无 torch** 亦可跑（**2** 条），见 **`LOCAL_5060_RUNBOOK` §5**。
+- **`git status`**：提交前自检应保持 **干净**；勿手改污染 **`metrics_result/`** 归档。
+
+### 4. 仍依赖云端（AutoDL / **RTX 3090**）
+
+1. **B-S2+ CUDA**：**`probe_path_reader_linear.py`** **去掉 `--cpu`** 一条 JSON → **与 `PHASE1_MANUSCRIPT` §9.1 本机 CPU 分列**。  
+2. **SSGS**：**`git pull` 后** **`demo_ssgs_mamba_wikitext.py` n8**（**c8 dim128**，与 grid 一致）刷新 **`git_sha`**。  
+3. **SSGS n128** + **`aggregate_ssgs_mamba_wikitext_json.py`**（辅线，非阻塞）。
+
+---
+
+## 后续方向（推荐优先级）
+
+| 优先级 | 内容 | 说明 |
+|--------|------|------|
+| **P0** | **成文整合** | **`PHASE1_MANUSCRIPT`** / **`FIGURE_CAPTIONS_STAGE1`** / **`EXPERIMENT_REGISTRY`** 对齐投稿版；**§7.5 S5** 总表 **视截稿篇幅** |
+| **P1** | **3090：B-S2+ CUDA 一条** | 与 **本机 B-S2+ CPU** **分列**；**`NEXT_EXPERIMENTS_COMMANDS.md` §6** |
+| **P2** | **SSGS 辅线** | **sha 刷新**、**n128**；**非**主线阻塞 |
+| **P3** | **A2-S3 可选加压** | **`root_child`**、**`leaf_heldout`**、**`split-seed`** 等；与 **init×5** **分列** 说明 |
+
+**原则**：**不**在无脚注下混表 **5060 naive** 与 **3090 fused**；**不**混读 **path-batch 毫秒/峰值**、**§7 单列毫秒**、**SSGS 快照计数**、**A2-S3 准确率**（**`PHASE1_MANUSCRIPT` §5.1**）。
+
+---
+
 ## 当前收口清单（工作台整理；与 **`PHASE1_MANUSCRIPT.md` §10** 对齐）
 
 **成文（优先，不占 GPU）**
@@ -15,7 +59,7 @@
 
 **仓库与数据 hygiene**
 
-- [ ] **`git status`** 干净（提交前自检）；勿让 Excel/手改 **污染** 已归档 **`benchmark_wikitext_stage2_*`** / **`…leavescale_xl_*`**（误改用 **`git restore results/metrics_result/<file>`** 回滚）。
+- [x] **`git status`** 干净（提交前自检；更新本快照时 **已验证**）；勿让 Excel/手改 **污染** 已归档 **`benchmark_wikitext_stage2_*`** / **`…leavescale_xl_*`**（误改用 **`git restore results/metrics_result/<file>`** 回滚）。
 - [x] **SSGS Wikitext**：以 **`ssgs_mamba_wikitext_grid.csv`** + **`ssgs_mamba_wikitext_*.json`** 为准；**勿**保留 **`…grid-Copy1.csv`** 等重复副本。
 
 **本机 5060 已完成（2026-04-10；与登记册、`PHASE1_MANUSCRIPT` §4/§5/§8.2 对齐）**
@@ -24,7 +68,7 @@
 - [x] **SSGS × Wikitext（轻量）**：**`demo_ssgs_mamba_wikitext.py`** **`--cpu`** **n8 c4 dim64** → **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**X-20260410-local5060-ssgs-wikitext-n8-c4d64**；**snapshots 7 / rollbacks 11 / leaf_checks 8**）。与 **`metrics_result` 归档 grid（c8 dim128）** **分列**。
 - [x] **B-S2+ BCE 50 步（本机）**：**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**（**X-20260410-local5060-bs2plus-train50-n16**；与 **`LOCAL_5060_RUNBOOK` §2** 可选行一致）。
 - [x] **Wikitext path-batch CPU smoke**：**`benchmark_wikitext_local5060_cpu_20260410T1220Z_n8_c8.json`**（**`WARMUP=1` `REPS=2`**；**X-20260410-local5060-wikitext-cpu-n8c8**）。
-- [x] **无 GPU 回归**：**`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`** 通过（本机 **`py -3`**）。
+- [x] **回归**：**`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`**（**2** passed，**`py -3`** 可无 torch）；**`pytest tests/`** 全量（**20** passed，**`mamba2` Python**，约 **15 s**）。
 
 **服务器有空时（可选一条即可；建议优先级自上而下）**
 

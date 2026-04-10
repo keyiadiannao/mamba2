@@ -115,15 +115,25 @@ python scripts/research/demo_ssgs_mamba_wikitext.py --cpu --num-leaves 8 --chunk
 
 ---
 
-## 5. 无 GPU 回归（CI / 本地）
+## 5. 回归（CI / 本地）
+
+**无 torch（快）** — 聚合脚本单测：
 
 ```powershell
 cd D:\cursor_try\mamba2
 py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q
 ```
 
+**全量（须 `mamba2` 或同等 torch 环境）**：
+
+```powershell
+& "C:\Users\26433\miniconda3\envs\mamba2\python.exe" -m pytest tests/ -q
+```
+
+**已验证**：**20 passed**（**`HEAD`≥`1533b08`**，耗时约 **15 s** 量级）。
+
 ---
 
 ## 6. 与总清单的对应
 
-**`NEXT_RESEARCH_PLAN.md`** 篇首 **「当前收口清单」**、**「本机 RTX 5060 可推进」** 表；**服务器** 空闲后再跑 **3090 登记级** 与 **`NEXT_EXPERIMENTS_COMMANDS.md` §0–§10** 云端命令。
+**`NEXT_RESEARCH_PLAN.md`** 篇首 **「项目现状快照」**、**「后续方向」**、**「当前收口清单」**、**「本机 RTX 5060 可推进」** 表；**服务器** 空闲后再跑 **3090 登记级** 与 **`NEXT_EXPERIMENTS_COMMANDS.md` §0–§10** 云端命令。
