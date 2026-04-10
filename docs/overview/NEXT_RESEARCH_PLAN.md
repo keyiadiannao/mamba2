@@ -5,6 +5,29 @@
 
 ---
 
+## 当前收口清单（工作台整理；与 **`PHASE1_MANUSCRIPT.md` §10** 对齐）
+
+**成文（优先，不占 GPU）**
+
+- [ ] 通读 **`PHASE1_MANUSCRIPT.md` §8–§10**，把 **登记册**（**`EXPERIMENT_REGISTRY.md`**）与 **`results/metrics_result/`** 里 **已引用文件名** 核对一遍，五轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
+- [ ] **5060 vs 3090**、**naive vs fused**、**path-batch vs §7 vs SSGS vs A2-S3** 四类数字 **分列脚注** 写进正文/附录（禁止无标注混表）。
+- [ ] 主图 PNG 是否入仓、**§7.5 S5** 总表是否补 —— **视截稿篇幅**（**`PHASE1_MANUSCRIPT` §10** 第 4 条）。
+
+**仓库与数据 hygiene**
+
+- [ ] **`git status`** 干净；勿让 Excel/手改 **污染** 已归档 **`benchmark_wikitext_stage2_*`** / **`…leavescale_xl_*`**（误改用 **`git restore results/metrics_result/<file>`** 回滚）。
+- [ ] **SSGS Wikitext** 以 **`ssgs_mamba_wikitext_grid.csv`** + **`ssgs_mamba_wikitext_*.json`** 为准；勿保留 **`…grid-Copy1.csv`** 等重复副本在 **`metrics_result/`**。
+
+**服务器有空时（可选一条即可）**
+
+- [ ] **`git pull` 后** 在 3090 上 **重跑 `demo_ssgs_mamba_wikitext.py` n8 一格**，刷新 JSON **`git_sha`**（与正文 **HEAD** 对齐）。
+- [ ] **B-S2+**：**`probe_path_reader_linear.py`** **CUDA** 一条 JSON，**新开登记行**（**`NEXT_EXPERIMENTS_COMMANDS.md` §6**）。
+- [ ] **SSGS n128**（**`--num-leaves 128`**，CUDA）+ **`aggregate_ssgs_mamba_wikitext_json.py --append`** —— **辅线延长**，非主线阻塞（**`NEXT_EXPERIMENTS_COMMANDS.md` §10**）。
+
+**已就绪（无需再跑也能写）**：阶段 2 **path-batch** 叶数扫描与 XL、**§7 depth 5–6**、**A2-S3 init×5**、**Wikitext SSGS grid（n8–64）** —— 见 **登记册** 与 **`PHASE1_MANUSCRIPT` §5** 表。
+
+---
+
 ## 1. 总目标（接下来 4–8 周）
 
 在 **不推翻阶段 1 harness** 的前提下：
