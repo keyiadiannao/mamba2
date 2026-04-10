@@ -4,12 +4,12 @@
 
 **文档**：分层索引 **`docs/README.md`**（先读谁、成文、规划、环境）。**脚本**：`scripts/README.md`。
 
-- **研究现状与方向**（建议先读）：`docs/overview/RESEARCH_STATUS_AND_DIRECTION.md`
-- **当前迭代**：`docs/overview/CURRENT_SPRINT.md`；**任务展开**：`docs/overview/NEXT_RESEARCH_PLAN.md`
-- 全局目标、A/B/C/X 与仓库树：`docs/overview/PROJECT_OVERVIEW.md`；月级规划：`docs/overview/PROJECT_MASTER_PLAN.md`
-- 实验登记：`docs/experiments/EXPERIMENT_REGISTRY.md`；阶段 1 成稿：`docs/experiments/PHASE1_MANUSCRIPT.md`；阶段 2 表数字草稿：`docs/experiments/PHASE2_DRAFT.md`；投稿包：`docs/overview/SUBMISSION_PACK.md`
-- **指标归档**：`results/metrics_result/`；数据说明：`docs/experiments/DATASETS.md`；早期验证规划：`docs/experiments/PHASE1_VALIDATION_PLAN.md`
-- 双机与 AutoDL：`docs/environment/SYNC_AND_ENVIRONMENTS.md`、`docs/environment/AUTODL_SETUP.md`
+- **研究现状与方向**（建议先读）：`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`
+- **当前迭代**：`docs/overview/execution/CURRENT_SPRINT.md`；**任务展开**：`docs/overview/execution/NEXT_RESEARCH_PLAN.md`
+- 全局目标、A/B/C/X 与仓库树：`docs/overview/planning/PROJECT_OVERVIEW.md`；月级规划：`docs/overview/planning/PROJECT_MASTER_PLAN.md`
+- 实验登记：`docs/experiments/planning/EXPERIMENT_REGISTRY.md`；阶段 1 成稿：`docs/experiments/phases/PHASE1_MANUSCRIPT.md`；阶段 2 表数字草稿：`docs/experiments/phases/PHASE2_DRAFT.md`；投稿包：`docs/overview/execution/SUBMISSION_PACK.md`
+- **指标归档**：`results/metrics_result/`；数据说明：`docs/experiments/planning/DATASETS.md`；早期验证规划：`docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`
+- 双机与 AutoDL：`docs/environment/runbooks/SYNC_AND_ENVIRONMENTS.md`、`docs/environment/runbooks/AUTODL_SETUP.md`
 
 ## 本机 Conda 环境 `mamba2`（推荐）
 
@@ -53,7 +53,7 @@ python scripts\benchmarks\benchmark_tree_walk.py --depth 6 --fanout 2
 python scripts\benchmarks\sweep_tree_benchmark.py --preset local --out-csv results\metrics\sweep_tree_reader_local.csv
 ```
 
-自定义网格见 `docs/experiments/PHASE1_VALIDATION_PLAN.md`（`--depths`、`--chunk-lens`、`--max-leaves` 等）。
+自定义网格见 `docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`（`--depths`、`--chunk-lens`、`--max-leaves` 等）。
 
 多机 CSV 合并：
 
@@ -131,7 +131,7 @@ python -m unittest tests.test_ssgs -v
 python scripts\benchmarks\benchmark_ssgs_tensor_overhead.py --dim 256 --micro-iters 50000
 ```
 
-阶段 1 叙事与 **naive vs fused** 对比图（详见 `docs/experiments/PHASE1_VALIDATION_PLAN.md` §6）：
+阶段 1 叙事与 **naive vs fused** 对比图（详见 `docs/experiments/planning/PHASE1_VALIDATION_PLAN.md` §6）：
 
 ```powershell
 python scripts\benchmarks\plot_mamba_naive_vs_fused.py --csv-a results\metrics\sweep_tree_reader_20260410_local5060.csv --label-a "5060 HF naive" --csv-b results\metrics\sweep_autodl_fused.csv --label-b "3090 fused" --out results\metrics\figures\mamba_naive_vs_fused_peak.png

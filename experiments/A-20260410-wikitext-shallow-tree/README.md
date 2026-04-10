@@ -9,4 +9,4 @@ pip install datasets   # 若未装
 python scripts/benchmarks/benchmark_wikitext_tree.py --num-leaves 8 --fanout 2 --chars-per-leaf 600
 ```
 
-**登记**：见 `docs/experiments/EXPERIMENT_REGISTRY.md` 对应行。
+**登记**：见 `docs/experiments/planning/EXPERIMENT_REGISTRY.md` 对应行。

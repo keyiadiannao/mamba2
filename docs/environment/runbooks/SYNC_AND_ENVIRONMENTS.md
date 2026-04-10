@@ -70,7 +70,7 @@ $env:MAMBA2_RESULTS_ROOT = "D:\cursor_try\mamba2_results"
 
 ## 5. 上传下载纪律（避免乱）
 
-- 每次上传数据/模型前：在 `docs/experiments/EXPERIMENT_REGISTRY.md` 记 **文件名 + 目标路径 + 用途**。
+- 每次上传数据/模型前：在 `docs/experiments/planning/EXPERIMENT_REGISTRY.md` 记 **文件名 + 目标路径 + 用途**。
 - 训练产出目录命名：`${MAMBA2_CKPT_ROOT}/run_{YYYYMMDD}_{exp_id}/`。
 - 回传本地时只取**登记过的 run**，避免磁盘被占满。
 
@@ -87,7 +87,7 @@ $env:MAMBA2_RESULTS_ROOT = "D:\cursor_try\mamba2_results"
 
 ## 7. AutoDL 快速上手
 
-分步命令见 **`docs/environment/AUTODL_SETUP.md`**（克隆、`conda`、PyTorch、`smoke`、扫参、CSV 回传与合并）。
+分步命令见 **`docs/environment/runbooks/AUTODL_SETUP.md`**（克隆、`conda`、PyTorch、`smoke`、扫参、CSV 回传与合并）。
 
 ---
 

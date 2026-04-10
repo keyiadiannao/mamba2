@@ -30,7 +30,7 @@ python scripts\benchmarks\benchmark_tree_walk.py --depth 6 --fanout 2 --out-json
 python scripts\benchmarks\sweep_tree_benchmark.py --preset local --out-csv results\metrics\sweep_tree_reader_local.csv
 ```
 
-规划与网格说明：`docs/experiments/PHASE1_VALIDATION_PLAN.md`。
+规划与网格说明：`docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`。
 
 ## 结论（本地一次样例）
 

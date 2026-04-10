@@ -1,24 +1,23 @@
 # 当前迭代（滚动）
 
-> **方向与现状总览**（读后再勾选）：**`RESEARCH_STATUS_AND_DIRECTION.md`**（含 **§3.5 对外叙事批判性接收、L1–L4 证据层级、P★ L3 PoC**）。  
-> 每 1–2 周更新一次「周期」与勾选；完成后把结论一行写入 `docs/experiments/EXPERIMENT_REGISTRY.md`。
+> **方向与现状总览**（读后再勾选）：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**（含 **§3.5 对外叙事批判性接收、L1–L4 证据层级、P★ L3 PoC**）。  
+> 每 1–2 周更新一次「周期」与勾选；完成后把结论一行写入 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`**。
 
 ## 周期
 
 **开始**：2026-04-07  
-**当前滚动至**：**2026-04-10** 起 — **云端暂不可用**；**标准顺序不变**：**P0 成文** → **云端恢复后** **P1/P2**（见 **`NEXT_RESEARCH_PLAN.md`** **「无云端时：标准推进」** + **「后续方向」**）。**P★（L3 PoC）** **不纳入** 本周期必做。
+**当前滚动至**：**2026-04-10** 起 — **AutoDL / 3090 已可用**；**默认并行**：**P0 成文** 与 **P1（B-S2+ CUDA）/ P2（SSGS sha·n128）** 可交错排期（详见 **`NEXT_RESEARCH_PLAN.md`** **§2** + **「后续方向」**）。**P★（L3 PoC）** **不纳入** 本周期必做。
 
 ---
 
-## 本周期焦点（无云端；**P0**）
+## 本周期焦点（**P0 ∥ P1/P2**）
 
 | 优先级 | 动作 |
 |--------|------|
-| **1** | **成文**：按 **`docs/overview/SUBMISSION_PACK.md`**（**A1–A4**）推进；再全表核对 **`PHASE1_MANUSCRIPT` §5.1** |
-| **2** | **（可选）** **`probe_retrieval_correlation.py --cpu`** 或 **§7 CPU 玩具** — 仅附录需要时，见 **`NEXT_RESEARCH_PLAN`** **§无云端 B** |
-| **3** | **`pytest tests/`** 提交前 **smoke** |
-
-**暂缓**：**P1** B-S2+ CUDA、**P2** SSGS 云端 —— 见 **`NEXT_RESEARCH_PLAN`** **「服务器有空时」**。
+| **1** | **成文**：按 **`SUBMISSION_PACK.md`**（**A1–A4**）推进；再全表核对 **`PHASE1_MANUSCRIPT` §5.1** |
+| **2** | **3090 登记项**：**P1** B-S2+ CUDA、**P2** SSGS（见 **`NEXT_RESEARCH_PLAN` §2** 与 **`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`**） |
+| **3** | **（可选）** **`probe_retrieval_correlation.py --cpu`** 或 **§7 CPU 玩具** — 仅附录需要时，见 **`NEXT_RESEARCH_PLAN`** **「算力不可用时的备选推进」§B** |
+| **4** | **`pytest tests/`** 提交前 **smoke** |
 
 ---
 
@@ -28,7 +27,7 @@
 
 - **已完成**：**X-20260422–25**（最小 LM 闭环、启发式导航、goal 子头、叙事收束、**SSGS×LM** 并列；**CUDA** 指标与 `ssgs_lm_nav_compare_default8_cuda.json` 已登记 **EXPERIMENT_REGISTRY**）。  
 - **定位**：该支线 **不替代** 主文 **path-batch 三 reader** harness；用于 **边界叙事** 与日后 **检索头 / 策略** 接口参考（见 `FIGURE_CAPTIONS_STAGE1.md` P0、`RESEARCH_NOTES` §7.0 / §7.4）。  
-- **共识**：**优先回到主线** — `PROJECT_MASTER_PLAN` **§1.1** 树内 **Mamba vs Transformer** 与阶段 1 **曲线/表** 的核查与成文；**B（MLP / 解冻 LM 抬 reach_rate）** **整体延后**，仅在单独排期或升格为正式子课题时再做。
+- **共识**：**优先回到主线** — **`docs/overview/planning/PROJECT_MASTER_PLAN.md` §1.1** 树内 **Mamba vs Transformer** 与阶段 1 **曲线/表** 的核查与成文；**B（MLP / 解冻 LM 抬 reach_rate）** **整体延后**，仅在单独排期或升格为正式子课题时再做。
 
 ---
 
@@ -40,18 +39,18 @@
 
 ## 任务清单
 
-- [x] 总体规划文档 `docs/overview/PROJECT_MASTER_PLAN.md`
+- [x] 总体规划文档 `docs/overview/planning/PROJECT_MASTER_PLAN.md`
 - [x] 扫参 CSV 增强：`gpu_name`、`torch_version`；合并多机 CSV 脚本 `scripts/benchmarks/merge_sweep_csv.py`
 - [x] **文本形浅树**：样例叶文本 + 自底向上建树 + `scripts/benchmarks/benchmark_text_tree.py` + `run_reader_benchmark_on_paths`（确定性嵌入，非神经 encoder）
-- [x] **数据约定**：`data/raw/sample/` 8 段合成 `.txt` + `docs/experiments/DATASETS.md`；`scripts/data/prepare_leaves_from_corpus.py` 生成叶文件
-- [x] **AutoDL 文档**：`docs/environment/AUTODL_SETUP.md` + `SYNC` 索引；**已在 3090 实例跑通** smoke + `sweep_autodl.csv`（见 `EXPERIMENT_REGISTRY`）
+- [x] **数据约定**：`data/raw/sample/` 8 段合成 `.txt` + `docs/experiments/planning/DATASETS.md`；`scripts/data/prepare_leaves_from_corpus.py` 生成叶文件
+- [x] **AutoDL 文档**：`docs/environment/runbooks/AUTODL_SETUP.md` + `SYNC` 索引；**已在 3090 实例跑通** smoke + `sweep_autodl.csv`（见 `EXPERIMENT_REGISTRY`）
 - [x] **本地最小 Mamba**：`transformers.MambaModel` 小配置 smoke（无需 `mamba-ssm`），见 `scripts/smoke/smoke_mamba_minimal.py`
 - [x] （可选）**mamba-ssm**：AutoDL 已装；**同机 naive 对照**见 `run_server_paper_main_sweep_naive.sh` + `SERVER_SWEEP_RUNBOOK` §2c（`mamba2_naive` 克隆环境卸融合栈）
 - [x] **树路径三 reader**：`Mamba2PathReader` 接入 `benchmark_core` / `sweep` / `benchmark_text_tree`（默认开启，`--no-mamba2` 可关）
 - [x] **公开语料浅树**：Wikitext-2（HF `datasets`）→ `hf_corpus.wikitext2_leaf_chunks` → `scripts/benchmarks/benchmark_wikitext_tree.py`（与合成叶同一 reader 槽位）
 - [x] **3090 主文扫参（同机）**：`run_server_paper_main_sweep.sh`（fused）+ `run_server_paper_main_sweep_naive.sh`（`mamba2_naive`）；CSV 归档示例见本机 `results/metrics_result/`；图 `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`
 - [x] **3090 Wikitext 浅树（fused + 镜像）**：`benchmark_wikitext_tree.py`；`results/metrics_result/benchmark_wikitext_3090_fused_20260408T0846Z.json`；登记 **A-20260408-wikitext-3090-fused**
-- [x] **主文图注模板**：`docs/experiments/FIGURE_CAPTIONS_STAGE1.md`
+- [x] **主文图注模板**：`docs/experiments/phases/FIGURE_CAPTIONS_STAGE1.md`
 - [x] **§7.5 接线路线图** + **SSGS 固定 JSON**：`RESEARCH_NOTES.md`；**X-20260421-ssgs-tensor-overhead-fixed**；`benchmark_ssgs_tensor_overhead.py --out-json`
 - [x] **3090 大叶数研究扫参**：`run_server_research_large_leaves.sh`，`TAG=research_lg_v1`；登记 **A-20260408-research-large-leaves-3090**
 - [x] **S1 分段 cache 基准**：`benchmark_mamba2_cache_snapshot_segments.py`；**X-20260421-mamba2-cache-segments-cpu** + **X-20260421-mamba2-cache-segments-cuda**（`results/metrics/mamba2_cache_snap_segments_depth4_cuda_20260421.json`）
@@ -77,7 +76,7 @@
 
 ### 后续两周执行计划（主线，可勾选）
 
-- [x] **成文**：**`docs/experiments/PHASE1_MANUSCRIPT.md`**（摘要—方法—结果—§7 关系—**`results/metrics_result/`** 索引—结论文本—英文摘要）；正文可整节迁移或按需截取 **§6** 与 **`FIGURE_CAPTIONS_STAGE1.md`** 句稿。  
+- [x] **成文**：**`docs/experiments/phases/PHASE1_MANUSCRIPT.md`**（摘要—方法—结果—§7 关系—**`results/metrics_result/`** 索引—结论文本—英文摘要）；正文可整节迁移或按需截取 **§6** 与 **`FIGURE_CAPTIONS_STAGE1.md`** 句稿。  
 - [x] **指标归档**：主文 CSV、Wikitext JSON、§7 复跑 `*_20260408T1617Z.json`、大叶数扫参等已集中于 **`results/metrics_result/`**（本机 `D:\cursor_try\mamba2\results\metrics_result`），并已纳入 **Git** 与 **§6.5** 表。  
 - [x] **阶段 2 开工**：按 **`NEXT_RESEARCH_PLAN.md` §2** — **A2-S0** 登记占位 + **A2-S1** `benchmark_wikitext_tree.py` smoke（**`--out-json`** 至 **`results/metrics_result/`**，见该文档 **§2.4**）；**B-S1** **`docs/research/RETRIEVAL_HEAD_NOTES.md`**。  
 - [x] **检索头 B-S2（本地可完成）**：**`probe_retrieval_correlation.py`** + **`RETRIEVAL_HEAD_NOTES.md` §2** 文献入口表（与 2404.15574 等对照）；**per-head / 大模型** 仍待 **B-S3** 与 GPU。  
@@ -103,7 +102,7 @@
 
 | 项 | 结论 |
 |----|------|
-| **路径** | **`PHASE1_MANUSCRIPT` §5** 主图路径修正为相对仓库根 **`results/metrics/figures/`**（原 `../metrics/…` 从 `docs/experiments/` 会误解析）。 |
+| **路径** | **`PHASE1_MANUSCRIPT` §5** 主图路径修正为相对仓库根 **`results/metrics/figures/`**（原 `../metrics/…` 从 `docs/experiments/phases/` 会误解析）。 |
 | **导入** | **`src.rag_tree`** 包级不再在 **`__init__`** 中强依赖 **`torch`**；**`tests/test_path_pair_geometry.py`** 可在无可用 PyTorch DLL 的环境完成收集与通过。 |
 | **索引** | **`scripts/README`**、**`docs/README`**、**`RESEARCH_STATUS`** 与 **P1 成文**、**A2-S2 待办** 对齐。 |
 
@@ -115,7 +114,7 @@
 
 ## 阻塞项
 
-- **AutoDL / 3090 实例**：**当前时段算力紧张**（用户侧 **暂时忙碌**）。**依赖云端的新登记数字**（如阶段 2 **A2-S2 小网格**、大规模扩 `dim`）**延后至实例可用后再跑**；**不阻塞** 本地可完成项：**A2-S0 登记**、**A2-S1** `benchmark_wikitext_tree.py`（**5060 CPU/CUDA smoke**）、**B-S1 `RETRIEVAL_HEAD_NOTES.md`**、成文改稿。可用时 **更新本行或删去**。
+- **AutoDL / 3090**：**实例当前可用**（**2026-04**）；**P1/P2** 按 **`NEXT_RESEARCH_PLAN` §2** 与 **`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`** 执行即可。若再次断档，改回 **「算力不可用时的备选推进」**（**`NEXT_RESEARCH_PLAN`**）并 **更新本行日期**。
 - **云端算力（常设）**：**按需开机**；主环境 **`conda activate mamba2`** 下 fused 已验证。**检索头训练**等仍受机时与预算约束。
 - **仅本机 5060 时**：无法复现 3090 fused 数字；以登记册与图为准，不混填表格。
 
@@ -125,16 +124,16 @@
 
 | 优先级 | 方向 | 可执行项 |
 |--------|------|----------|
-| P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **EXPERIMENT_REGISTRY** 对齐；**`PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 作 **口径护栏**；**`PHASE1_MANUSCRIPT.md`** 已含 **阶段 2 §8–§10** 与 **五轴** 交叉引用（截稿前仍可润色） |
+| P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 对齐；**`docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`docs/experiments/phases/FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 作 **口径护栏**；**`docs/experiments/phases/PHASE1_MANUSCRIPT.md`** 已含 **阶段 2 §8–§10** 与 **五轴** 交叉引用（截稿前仍可润色） |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT`；**A-20260408-wikitext-3090-fused** — 主线引用时标明 **与合成树同一 harness** |
 | P1 | **主线：§7 协议** | **复跑已通过**（见 sprint §7 勾选 + **`PHASE1_COMPLETE_SUMMARY` 附录 B**）；正文仍须与主图 **分列声明**（§7.3.1） |
 | P1 | **SSGS（协议层）** | **X-20260421-*** 张量 + **`dfs_ssgs_mamba`** demo；**不等于** 真 LM 导航线 |
-| P2 | **阶段 2 执行** | **`NEXT_RESEARCH_PLAN.md`** 轨道 **A**：**A2-S3** + **5060 CUDA** Wikitext **`n8_c12` / `n16_c12`**（**`metrics_result/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`** + **`PHASE2_DRAFT` §1.1**）；**A2-S2** fused 仍待 **AutoDL** |
+| P2 | **阶段 2 执行** | **`NEXT_RESEARCH_PLAN.md`** 轨道 **A**：**A2-S3** + **5060 CUDA** Wikitext **`n8_c12` / `n16_c12`**（**`metrics_result/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`** + **`PHASE2_DRAFT` §1.1**）；**A2-S2 fused** 已有归档，**新格点** 在 **3090 可用时** 按 **`SERVER_SWEEP_RUNBOOK`** 续跑 |
 | P2 | **检索头 B** | 探针与层/头报告（与主线并行，需 **48G** 窗口） |
 | 延后 | **真 LM 支线 B** | **X-20260424** 子头加强、**X-20260425** wall-clock；**非**阶段 1 unblock |
 | 延后 | **大叶数扩展** | **A-20260408-research-large-leaves-3090** 已归档；新网格另开 **TAG** |
 
-**讨论结论（写入此表的目的）**：主故事仍是 **`PROJECT_MASTER_PLAN.md` §1.1 树内 Mamba vs Transformer**；**X-20260422–25** 为 **辅线登记**，回归主线后 **默认不增投** 直至阶段 2/检索头需要接口演示。
+**讨论结论（写入此表的目的）**：主故事仍是 **`docs/overview/planning/PROJECT_MASTER_PLAN.md` §1.1 树内 Mamba vs Transformer**；**X-20260422–25** 为 **辅线登记**，回归主线后 **默认不增投** 直至阶段 2/检索头需要接口演示。
 
 ---
 

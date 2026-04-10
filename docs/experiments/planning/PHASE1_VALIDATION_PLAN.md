@@ -1,6 +1,6 @@
 # 阶段 1 验证：规划与扫参说明
 
-> 与 `docs/overview/PROJECT_OVERVIEW.md` 阶段 1 对齐；执行记录进 `docs/experiments/EXPERIMENT_REGISTRY.md`；主文 CSV / §7 复跑等归档见 **`results/metrics_result/`**。  
+> 与 `docs/overview/planning/PROJECT_OVERVIEW.md` 阶段 1 对齐；执行记录进 `docs/experiments/planning/EXPERIMENT_REGISTRY.md`；主文 CSV / §7 复跑等归档见 **`results/metrics_result/`**。  
 > **阶段 1 一页式存档 + §7 CUDA 复跑指令**：**`PHASE1_COMPLETE_SUMMARY.md`**。**可贴正文成稿**：**`PHASE1_MANUSCRIPT.md`**。
 
 ---
@@ -11,7 +11,7 @@
 2. **叙事**：若递归式在 **长路径 / 多叶 batch** 下相对更稳或更省（或反之），为论文「树导航 + 状态模型」提供 **可画图的数据**；若差异不大，则提前收紧假设或改评测设定（例如更长序列、更大 `dim`）。
 3. **工程**：固定可复现脚本与 CSV 格式，便于 **5060 本地扫参** 与 **AutoDL 48G 补点**（更大 `depth` / `fanout`）。
 
-**注**：课题级「主对照 / 平面 RAG 消融 / 是否必须绑 Transformer+平面」的取舍见 **`docs/overview/PROJECT_MASTER_PLAN.md` §1.1**；阶段 1 **只解决树内** reader 类型 harness，**不强制**在此阶段接平面 RAG 基线。
+**注**：课题级「主对照 / 平面 RAG 消融 / 是否必须绑 Transformer+平面」的取舍见 **`docs/overview/planning/PROJECT_MASTER_PLAN.md` §1.1**；阶段 1 **只解决树内** reader 类型 harness，**不强制**在此阶段接平面 RAG 基线。
 
 ---
 
@@ -48,7 +48,7 @@
 ## 4. 产出物与命名
 
 - **CSV**：`results/metrics/sweep_tree_reader_<YYYYMMDD>_<optional_tag>.csv`（或置于 `MAMBA2_RESULTS_ROOT/metrics/`）。
-- **登记**：在 `docs/experiments/EXPERIMENT_REGISTRY.md` 增加一行，注明 CSV 路径、`git` commit、`device` 名称。
+- **登记**：在 `docs/experiments/planning/EXPERIMENT_REGISTRY.md` 增加一行，注明 CSV 路径、`git` commit、`device` 名称。
 - **可选**：同一次扫参附带 `jsonl` 每行一条完整 JSON（脚本 `--out-jsonl`）。
 
 ---
@@ -113,7 +113,7 @@
 
 ## 8. 与总体规划的关系
 
-阶段 1 对应 `docs/overview/PROJECT_MASTER_PLAN.md` 中的 **阶段 1（系统验证）**；当前两周任务见 `docs/overview/CURRENT_SPRINT.md`。
+阶段 1 对应 `docs/overview/planning/PROJECT_MASTER_PLAN.md` 中的 **阶段 1（系统验证）**；当前两周任务见 `docs/overview/execution/CURRENT_SPRINT.md`。
 
 ---
 

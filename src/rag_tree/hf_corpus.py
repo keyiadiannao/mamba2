@@ -14,7 +14,7 @@ def _apply_hf_mirror_env() -> None:
     - **This repo**: ``export MAMBA2_USE_HF_MIRROR=1`` → sets ``HF_ENDPOINT`` to
       ``MAMBA2_HF_ENDPOINT`` if set, else ``https://hf-mirror.com``.
 
-    See ``docs/environment/AUTODL_SETUP.md`` §「Hugging Face 镜像」.
+    See ``docs/environment/runbooks/AUTODL_SETUP.md`` §「Hugging Face 镜像」.
     """
     flag = os.environ.get("MAMBA2_USE_HF_MIRROR", "").strip().lower()
     if flag not in ("1", "true", "yes"):

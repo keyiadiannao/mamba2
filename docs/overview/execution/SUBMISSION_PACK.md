@@ -1,7 +1,7 @@
 # 投稿成文包（P0：A1–A7）
 
-> **用途**：把 **`PHASE1_MANUSCRIPT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**、**`EXPERIMENT_REGISTRY.md`** 压成 **可粘贴** 的叙事与脚注；**登记真相**仍以 **`EXPERIMENT_REGISTRY.md`** 为准。  
-> **生成**：按 **`NEXT_RESEARCH_PLAN.md`** **「无云端时：标准推进」** §A 维护；路径核对 **已扫仓库**（**2026-04-10**）。
+> **用途**：把 **`docs/experiments/phases/PHASE1_MANUSCRIPT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**、**`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 压成 **可粘贴** 的叙事与脚注；**登记真相**仍以 **登记册** 为准。  
+> **生成**：与 **`NEXT_RESEARCH_PLAN.md`** **「算力不可用时的备选推进」** §A 对齐（**P0 成文** 主路径相同）；路径核对 **已扫仓库**（**2026-04-10**）。
 
 ---
 
@@ -113,7 +113,7 @@
 
 **4 讨论与局限**  
 - **实现依赖性**：主结论为 **可观测效率依赖融合实现**，非「Mamba 对 Transformer 绝对优劣」。  
-- **规模**：小 encoder、浅 reader；**不**直接外推 **7B+ 端到端 RAG**（见 **`RESEARCH_STATUS_AND_DIRECTION.md` §6**）。  
+- **规模**：小 encoder、浅 reader；**不**直接外推 **7B+ 端到端 RAG**（见 **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §6**）。  
 - **检索头表述**：见 **§A4**；**B-S2/B-S2+** 为 **表征级** 探针。  
 - **§7 / SSGS**：机制与导航 **过程量**；**禁止**与主图毫秒/峰值 **无标注混读**。
 
@@ -128,14 +128,14 @@
 
 ---
 
-## A7 · 本机实验：高性价比 vs 搁置（无云端）
+## A7 · 本机实验：高性价比 vs 搁置（仅本机 / 算力紧张时）
 
 | 策略 | 内容 |
 |------|------|
 | **值得做** | **§7 与 S1 对称的微基准**（如 **S2 TF-R1 CPU**）、**B-S2 一次复跑**、**`pytest tests/`** —— **成本低**，且 **补附录/脚注** 与 **`RESEARCH_NOTES` §7** 对齐。 |
 | **搁置（性价比低）** | **重复** path-batch / A2-S3 / B-S2+ **已有 JSON**；**CPU 上大规模 Wikitext 全网格**；**TF-KV / S4 restore CPU 全量**（与 **3090 已归档** 重复、本机耗时高）；**SSGS n128 CPU**；**topic `sample` 与 `heldout` 双份** 若无审稿需求。 |
 
-**云端恢复后优先**：**P1** B-S2+ CUDA 一行；**P2** SSGS sha / n128（**CUDA**）。
+**3090 可用时优先**：**P1** B-S2+ CUDA 一行；**P2** SSGS sha / n128（**CUDA**）。
 
 ---
 
@@ -143,7 +143,7 @@
 
 | 日期 | 说明 |
 |------|------|
-| 2026-04-10 | 初版：A1–A4；对接 **`NEXT_RESEARCH_PLAN`** **无云端 §A** |
+| 2026-04-10 | 初版：A1–A4；对接 **`NEXT_RESEARCH_PLAN`** **备选推进 §A** |
 | 2026-04-10 | **A1b** 中英摘要/引言提示；**A2** 全表 **✅** 存在性扫描（paper_main 6 CSV、5060 四 JSON+grid、leavescale n8–64、SSGS grid） |
 | 2026-04-10 | **提交前检查**表（pytest / git）；与 **`LOCAL_5060_RUNBOOK` §5.1** 对齐 |
 | 2026-04-10 | **A5–A7**：正文骨架（引言/方法/结果/讨论）、**A6** 结果句模板、**A7** 本机 **高性价比/搁置** |

@@ -2,7 +2,7 @@
 
 > **周期**：约 6 个月（2026-04 — 2026-09，可按答辩/截稿调整）  
 > **算力**：本地 RTX 5060 8GB（调试与小规模）；AutoDL 48GB（训练与主实验）  
-> **代码真相源**：GitHub 仓库；大数据与 checkpoint 不入库，见 `docs/environment/SYNC_AND_ENVIRONMENTS.md`
+> **代码真相源**：GitHub 仓库；大数据与 checkpoint 不入库，见 `docs/environment/runbooks/SYNC_AND_ENVIRONMENTS.md`
 
 ---
 
@@ -31,7 +31,7 @@
 
 **论文级贡献候选（从中选 1–2 条做主故事，其余作附录或 future work）**：
 
-1. **系统**：树路径 **path-reader** 设定下，**Mamba-2 vs Transformer vs GRU** 的延迟/显存随 **叶数 batch、chunk、实现（HF naive vs `mamba_ssm` fused）** 的变化；结论已显示 **高度实现敏感**，而非「SSM 必然更省」——详见 **`docs/experiments/PHASE1_VALIDATION_PLAN.md` §6**。  
+1. **系统**：树路径 **path-reader** 设定下，**Mamba-2 vs Transformer vs GRU** 的延迟/显存随 **叶数 batch、chunk、实现（HF naive vs `mamba_ssm` fused）** 的变化；结论已显示 **高度实现敏感**，而非「SSM 必然更省」——详见 **`docs/experiments/planning/PHASE1_VALIDATION_PLAN.md` §6**。  
 2. **机制**：**检索头**的发现、注入与与树导航决策的对齐（分析 + 轻量训练）。  
 3. **协议**：树导航中的**状态快照 / 廉价回溯**相对 KV 重算或全量重编码的优势边界（**path reader 与全 LLM KV 须分项声明**）。  
 
@@ -68,7 +68,7 @@
 | 阶段 | 时间（约） | 目标 | 完成标志 |
 |------|------------|------|----------|
 | **0 基建** | 第 1–2 周 | 双机环境、Git、smoke、实验登记规范 | `scripts/smoke/smoke_local.py` + lock 文件 + registry |
-| **1 系统验证（玩具→文本形→扫参）** | 第 2–5 周 | 证明「树 × reader 类型」在效率上有可写差异或明确无差异 | 曲线/表 + `docs/experiments/PHASE1_VALIDATION_PLAN.md` 结论段 |
+| **1 系统验证（玩具→文本形→扫参）** | 第 2–5 周 | 证明「树 × reader 类型」在效率上有可写差异或明确无差异 | 曲线/表 + `docs/experiments/planning/PHASE1_VALIDATION_PLAN.md` 结论段 |
 | **2 真数据浅层树** | 第 4–8 周 | 小语料 RAPTOR 式或层次聚类树 + 同一 harness | 可复现建树脚本 + 1 个 QA/导航任务指标 |
 | **3 Mamba-2 接入** | 第 6–10 周 | 第三套 reader；与 TF/GRU(占位) 同网格对比 | 同 CSV 列规范 + registry |
 | **4 检索头 B** | 第 8–12 周 | 探针与报告 | 内部技术报告一节可进论文 |
@@ -82,7 +82,7 @@
 ## 5. 里程碑产出物
 
 - **工程**：`src/rag_tree/` 建树与 reader 基准；`src/retrieval_head/`；配置与脚本；`results/metrics/*.csv`。  
-- **文档**：本文件；**分层索引与「单一权威」矩阵**：**`docs/README.md`**；**当前迭代勾选**：**`docs/overview/CURRENT_SPRINT.md`**；**周历模板**（勿与 sprint 双写）：**`docs/overview/ROADMAP.md`**；**`docs/experiments/PHASE1_VALIDATION_PLAN.md`**；**`docs/experiments/EXPERIMENT_REGISTRY.md`**。  
+- **文档**：本文件；**分层索引与「单一权威」矩阵**：**`docs/README.md`**；**当前迭代勾选**：**`docs/overview/execution/CURRENT_SPRINT.md`**；**周历模板**（勿与 sprint 双写）：**`docs/overview/planning/ROADMAP.md`**；**`docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`**；**`docs/experiments/planning/EXPERIMENT_REGISTRY.md`**。  
 - **学术**：1 篇主投（系统 + 机制）或 1 系统 + 1 机制短文；具体在阶段 1 结束后根据数据定题。
 
 ---
@@ -123,4 +123,4 @@
 
 ## 10. 当前进度快照（维护方式）
 
-**唯一滚动维护**：**`docs/overview/CURRENT_SPRINT.md`**。本文件为 **月级规划**，不在此重复 sprint 勾选。
+**唯一滚动维护**：**`docs/overview/execution/CURRENT_SPRINT.md`**。本文件为 **月级规划**，不在此重复 sprint 勾选。

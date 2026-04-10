@@ -57,5 +57,5 @@ sed -n '1p' scripts/benchmarks/run_server_paper_main_sweep.sh | od -c | head -1
 
 ## 另见
 
-- 扫参流程里顺带提到：`docs/environment/SERVER_SWEEP_RUNBOOK.md`
-- Git 合并与离线同步：`docs/environment/GIT_SERVER_MERGE_UNTRACKED.md`
+- 扫参流程里顺带提到：`docs/environment/runbooks/SERVER_SWEEP_RUNBOOK.md`
+- Git 合并与离线同步：`docs/environment/troubleshooting/GIT_SERVER_MERGE_UNTRACKED.md`

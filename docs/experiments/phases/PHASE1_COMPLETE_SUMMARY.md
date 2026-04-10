@@ -39,7 +39,7 @@
 ## 4. 遗留与下一阶段
 
 - **§7 串行复跑**：见下文 **附录 A**（新 GPU 上建议跑一遍，生成带时间戳 JSON，与 `*_20260421.json` 对照）。  
-- **阶段 2**：真数据浅层树 + **同一 reader 槽位** + **至少一个任务指标** — 见 **`docs/overview/NEXT_RESEARCH_PLAN.md` §1–§2**（**`ROADMAP.md`** 仅保留指针，不重复表）。
+- **阶段 2**：真数据浅层树 + **同一 reader 槽位** + **至少一个任务指标** — 见 **`docs/overview/execution/NEXT_RESEARCH_PLAN.md` §1–§2**（**`docs/overview/planning/ROADMAP.md`** 仅保留指针，不重复表）。
 
 ---
 
@@ -47,7 +47,7 @@
 
 **环境**：**Linux**（AutoDL / 3090 等），已装 **NVIDIA 驱动 + CUDA**；仓库已 `git clone`；**bash** 可用。脚本路径：`scripts/research/run_path_protocol_cuda.sh`。
 
-**若在 Windows 本机**：请 **不要** 用 PowerShell 直接跑 `.sh`；应在 **WSL2** 或 **上传到 AutoDL** 后执行。若从 Windows 克隆的脚本报 **`$'\r': command not found`**，见 **`docs/environment/SH_CRLF_LINUX.md`**（换行符需 LF）。
+**若在 Windows 本机**：请 **不要** 用 PowerShell 直接跑 `.sh`；应在 **WSL2** 或 **上传到 AutoDL** 后执行。若从 Windows 克隆的脚本报 **`$'\r': command not found`**，见 **`docs/environment/troubleshooting/SH_CRLF_LINUX.md`**（换行符需 LF）。
 
 ### A.1 推荐：AutoDL / 服务器一次性执行
 
@@ -91,7 +91,7 @@ bash scripts/research/run_path_protocol_cuda.sh
   ```bash
   sed -i 's/\r$//' scripts/research/run_path_protocol_cuda.sh
   ```
-  然后重跑 `bash scripts/research/run_path_protocol_cuda.sh`。长期做法见 **`docs/environment/SH_CRLF_LINUX.md`**；仓内 **`.gitattributes`** 已设 `*.sh text eol=lf`，**`git pull` 最新脚本**后应不再出现。
+  然后重跑 `bash scripts/research/run_path_protocol_cuda.sh`。长期做法见 **`docs/environment/troubleshooting/SH_CRLF_LINUX.md`**；仓内 **`.gitattributes`** 已设 `*.sh text eol=lf`，**`git pull` 最新脚本**后应不再出现。
 
 ### A.3 与阶段 1 叙事的关系
 

@@ -1,6 +1,6 @@
 # 项目总览与推进计划
 
-> **文档导航**：分层索引与「先读谁」以 **`docs/README.md`** 为准。本文保留 **目标、A/B/C/X 分类、仓库目录树、阶段全景**；**可执行周任务**以 **`docs/overview/CURRENT_SPRINT.md`** 为准，**实验登记**以 **`docs/experiments/EXPERIMENT_REGISTRY.md`** 为准（不必与 **`ROADMAP.md`** 重复勾选同一批项）。
+> **文档导航**：分层索引与「先读谁」以 **`docs/README.md`** 为准。本文保留 **目标、A/B/C/X 分类、仓库目录树、阶段全景**；**可执行周任务**以 **`docs/overview/execution/CURRENT_SPRINT.md`** 为准，**实验登记**以 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 为准（不必与 **`ROADMAP.md`** 重复勾选同一批项）。
 
 ---
 
@@ -34,9 +34,15 @@
 ```
 mamba2/
 ├── docs/                    # 见 docs/README.md
-│   ├── overview/            # 总览、总体规划、ROADMAP、CURRENT_SPRINT
-│   ├── experiments/         # EXPERIMENT_REGISTRY、PHASE1/2 成文稿与草稿、DATASETS
-│   ├── environment/         # SYNC、AUTODL、mamba-ssm 安装说明
+│   ├── overview/
+│   │   ├── planning/        # 总体规划：MASTER_PLAN、RESEARCH_STATUS、PROJECT_OVERVIEW、ROADMAP
+│   │   └── execution/       # 实施：NEXT_RESEARCH_PLAN、CURRENT_SPRINT、SUBMISSION_PACK
+│   ├── experiments/
+│   │   ├── planning/        # 登记册、DATASETS、PHASE1_VALIDATION_PLAN
+│   │   └── phases/          # 阶段成稿：PHASE*、FIGURE_CAPTIONS、COMPLETE_SUMMARY
+│   ├── environment/
+│   │   ├── runbooks/        # 执行手册：5060、AutoDL、扫参、同步、安装步骤
+│   │   └── troubleshooting/ # 排障：CRLF、Git 合并等
 │   └── research/            # 研究笔记（如 SSGS）
 ├── configs/                 # 实验 YAML（超参、路径占位符，不含密钥）
 ├── src/                     # 可复用库代码（按 A/B/C/X 分子包）
@@ -63,8 +69,8 @@ mamba2/
 
 ## 5. 文档维护规则
 
-- **改代码必改登记**：新实验在 `docs/experiments/EXPERIMENT_REGISTRY.md` 增一行；重要结论复制到对应 `experiments/.../README.md`。
-- **周度（可执行勾选）**：**`docs/overview/CURRENT_SPRINT.md`**。**周历模板 / 历史**：**`docs/overview/ROADMAP.md`**（勿与 sprint 重复维护同一批勾选项）。
+- **改代码必改登记**：新实验在 `docs/experiments/planning/EXPERIMENT_REGISTRY.md` 增一行；重要结论复制到对应 `experiments/.../README.md`。
+- **周度（可执行勾选）**：**`docs/overview/execution/CURRENT_SPRINT.md`**。**周历模板 / 历史**：**`docs/overview/planning/ROADMAP.md`**（勿与 sprint 重复维护同一批勾选项）。
 - **月度**：在 **`PROJECT_MASTER_PLAN.md`** 或 **`RESEARCH_STATUS_AND_DIRECTION.md`** 补一句「本月结论与下月假设」，或写入 sprint 顶注。
 
 ---

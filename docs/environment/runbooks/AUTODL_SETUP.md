@@ -81,7 +81,7 @@ python scripts/smoke/smoke_mamba_minimal.py
 python scripts/benchmarks/sweep_tree_benchmark.py --preset local --out-csv results/metrics/sweep_autodl.csv
 ```
 
-**服务器空闲后、与本地 naive 网格对齐的批量扫参**：见 **`docs/environment/SERVER_SWEEP_RUNBOOK.md`** 与 `scripts/benchmarks/run_server_sweep_aligned.sh`。
+**服务器空闲后、与本地 naive 网格对齐的批量扫参**：见 **`docs/environment/runbooks/SERVER_SWEEP_RUNBOOK.md`** 与 `scripts/benchmarks/run_server_sweep_aligned.sh`。
 
 ### 本机合并 CSV（路径怎么填？）
 
@@ -106,7 +106,7 @@ python scripts\benchmarks\merge_sweep_csv.py results\metrics\merged_5060_3090.cs
 
 ## 5. mamba-ssm（可选，建议 Linux 上做）
 
-**分步说明与收益**见 **`docs/environment/MAMBA_SSM_INSTALL_LINUX.md`**（含 `causal-conv1d` 顺序、验证命令、常见问题）。成功后在 `docs/experiments/EXPERIMENT_REGISTRY.md` 再记一条带 `mamba_ssm` 的扫参或 `benchmark_tree_walk` 对比。
+**分步说明与收益**见 **`docs/environment/runbooks/MAMBA_SSM_INSTALL_LINUX.md`**（含 `causal-conv1d` 顺序、验证命令、常见问题）。成功后在 `docs/experiments/planning/EXPERIMENT_REGISTRY.md` 再记一条带 `mamba_ssm` 的扫参或 `benchmark_tree_walk` 对比。
 
 ## 6. Git 身份与私有仓库
 

@@ -122,7 +122,7 @@ LEAVES="8 16 32" ./scripts/benchmarks/run_server_wikitext_leavescale.sh
 
 ## 5. 【§7 玩具协议】**depth 5–6** 扩展（**S1–S4**，与 path-batch **分列**）
 
-**推荐**：整段复制 **`docs/environment/RUN_AUTOADL_SECTION7_NOW.md`**（含 **`sed`/`conda`/`MAMBA2_RESULTS_ROOT`**）。
+**推荐**：整段复制 **`docs/environment/runbooks/RUN_AUTOADL_SECTION7_NOW.md`**（含 **`sed`/`conda`/`MAMBA2_RESULTS_ROOT`**）。
 
 ```bash
 cd /root/autodl-tmp/mamba2
@@ -168,7 +168,7 @@ python scripts\research\probe_path_reader_linear.py --cpu --out-json results\met
 cd d:\cursor_try\mamba2
 # 将服务器 metrics_result 中新文件拷到 results\metrics_result\
 git add results/metrics_result/benchmark_wikitext_stage2_dim256_*.json results/metrics_result/benchmark_wikitext_stage2_dim256_*.csv results/metrics_result/benchmark_wikitext_stage2_dim256_*.txt
-# 编辑 docs/experiments/EXPERIMENT_REGISTRY.md 后
+# 编辑 docs/experiments/planning/EXPERIMENT_REGISTRY.md 后
 git commit -m "metrics: Wikitext dim256 fused grid + registry"
 git push origin master
 ```
@@ -238,7 +238,7 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 
 ## 11. 本机 **RTX 5060**（Windows；服务器忙时）
 
-**全文**：**`docs/environment/LOCAL_5060_RUNBOOK.md`**（**conda `mamba2`**、**B-S2+**、**Wikitext smoke**、**SSGS CPU**、**pytest**）。与 **§6**（B-S2+）互补：**§6** 给单行示例，**`LOCAL_5060_RUNBOOK`** 含 **WinError 1114 / base torch** 说明与 **多组 out-json 名**。
+**全文**：**`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md`**（**conda `mamba2`**、**B-S2+**、**Wikitext smoke**、**SSGS CPU**、**pytest**）。与 **§6**（B-S2+）互补：**§6** 给单行示例，**`LOCAL_5060_RUNBOOK`** 含 **WinError 1114 / base torch** 说明与 **多组 out-json 名**。
 
 ---
 

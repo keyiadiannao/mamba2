@@ -316,7 +316,7 @@ python scripts\benchmarks\plot_mamba_naive_vs_fused.py `
 
 ## 4. 登记
 
-在 **`docs/experiments/EXPERIMENT_REGISTRY.md`** 新增一行：`commit`、`TAG`、GPU 名、`mamba_ssm` 版本（如有）、四份 CSV 路径、与 §6 叙事一致的一句话结论。
+在 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 新增一行：`commit`、`TAG`、GPU 名、`mamba_ssm` 版本（如有）、四份 CSV 路径、与 §6 叙事一致的一句话结论。
 
 ---
 

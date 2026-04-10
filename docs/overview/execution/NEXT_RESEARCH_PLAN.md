@@ -1,13 +1,13 @@
 # 下一步研究计划（展开）
 
-> **先读**：**`RESEARCH_STATUS_AND_DIRECTION.md`**（整体方向、现状、**§3.5 对外叙事批判性接收与证据层级**、决策原则、**§6 公平性与何时换更大模型**、与本文件 **推荐顺序** 的对应）。  
-> **前置**：阶段 1 已收束（**`PHASE1_MANUSCRIPT.md`**、**`results/metrics_result/`**、§7 复跑验收）。本文将 **`PROJECT_MASTER_PLAN.md`** 工作分解 **展开为可执行任务**（**`ROADMAP.md`** 仅保留 **阶段 2 入口指针**，不重复里程碑表）；**周期勾选**仍以 **`CURRENT_SPRINT.md`** 为准。
+> **先读**：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**（整体方向、现状、**§3.5**、决策原则、**§6**、与本文件 **推荐顺序** 的对应）。  
+> **前置**：阶段 1 已收束（**`docs/experiments/phases/PHASE1_MANUSCRIPT.md`**、**`results/metrics_result/`**、§7 复跑验收）。本文将 **`docs/overview/planning/PROJECT_MASTER_PLAN.md`** 工作分解 **展开为可执行任务**（**`docs/overview/planning/ROADMAP.md`** 仅保留 **阶段 2 入口指针**）；**周期勾选**仍以 **`docs/overview/execution/CURRENT_SPRINT.md`** 为准。
 
 ---
 
 ## 项目现状快照
 
-**主线材料、完成度大表、五轴防混读**：**唯一权威** **`RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**（不在此重复表格）。**本机可复制命令**：**唯一权威** **`docs/environment/LOCAL_5060_RUNBOOK.md`**。
+**主线材料、完成度大表、五轴防混读**：**唯一权威** **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**（不在此重复表格）。**本机可复制命令**：**唯一权威** **`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md`**。
 
 ### 1. 测试与仓库卫生
 
@@ -15,7 +15,9 @@
 - **`py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q`**：**无 torch** 亦可跑（**2** 条），见 **`LOCAL_5060_RUNBOOK` §5**。
 - **`git status`**：提交前自检应保持 **干净**；勿手改污染 **`metrics_result/`** 归档。
 
-### 2. 仍依赖云端（AutoDL / **RTX 3090**）
+### 2. 须在 **3090 / AutoDL** 上完成的登记项（**P1–P3**）
+
+**（2026-04 起服务器已恢复可用；以下按 **`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`** 执行并新开登记行。）**
 
 1. **B-S2+ CUDA**：**`probe_path_reader_linear.py`** **去掉 `--cpu`** 一条 JSON → **与 `PHASE1_MANUSCRIPT` §9.1 本机 CPU 分列**。  
 2. **SSGS**：**`git pull` 后** **`demo_ssgs_mamba_wikitext.py` n8**（**c8 dim128**，与 grid 一致）刷新 **`git_sha`**。  
@@ -28,28 +30,28 @@
 | 优先级 | 内容 | 说明 |
 |--------|------|------|
 | **P0** | **成文整合** | **`PHASE1_MANUSCRIPT`** / **`FIGURE_CAPTIONS_STAGE1`** / **`EXPERIMENT_REGISTRY`** 对齐投稿版；**§7.5 S5** 总表 **视截稿篇幅** |
-| **P1** | **3090：B-S2+ CUDA 一条** | **云端可用后**；与 **本机 B-S2+ CPU** **分列**；**`NEXT_EXPERIMENTS_COMMANDS.md` §6** |
-| **P2** | **SSGS 辅线** | **云端可用后**：**sha 刷新**、**n128**；**非**主线阻塞 |
+| **P1** | **3090：B-S2+ CUDA 一条** | **在 3090 上执行**；与 **本机 B-S2+ CPU** **分列**；**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §6** |
+| **P2** | **SSGS 辅线** | **sha 刷新**、**n128**；**非**主线阻塞 |
 | **P3** | **A2-S3 可选加压** | **云端或本机 CPU**（视脚本）；**`root_child`**、**`leaf_heldout`**、**`split-seed`** 等；与 **init×5** **分列** 说明 |
-| **P★** | **（可选 breakthrough）L3 语义 PoC** | 见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5**；**不纳入** 下表「无云端标准顺序」；**独立 1–2 周窗口**再排，**不抢 P0 工时**。 |
+| **P★** | **（可选 breakthrough）L3 语义 PoC** | 见 **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §3.5**；**不纳入** 下表默认里程碑；**独立 1–2 周窗口**再排，**不抢 P0 工时**。 |
 
 **默认里程碑顺序（与 `PROJECT_MASTER_PLAN`、`RESEARCH_STATUS` §5 一致；不因 §3.5 讨论而改变）**
 
-1. **P0 成文**（主线，**当前无云端时唯一必做**）。  
-2. **云端恢复后**：**P1** → **P2**（辅）→ **P3**（可选加压）。  
+1. **P0 成文**（主线；**与 P1/P2 可交错**：不占 GPU 的段落先写，**有卡时**跑登记命令）。  
+2. **3090 可用时**：**P1** → **P2**（辅）→ **P3**（可选加压）。**（实例当前可用；以你实际上机为准。）**  
 3. **P★**：仅当 **主动选择**「叙事升级 + 有整块时间」时启动；**否则** 可全程 **不选**。
 
 **原则**：**不**在无脚注下混表 **5060 naive** 与 **3090 fused**；**不**混读 **path-batch 毫秒/峰值**、**§7 单列毫秒**、**SSGS 快照计数**、**A2-S3 准确率**（**`PHASE1_MANUSCRIPT` §5.1**）。**§3.5** 对外部讨论的批判性接收 **不改变** 上述顺序。
 
 ---
 
-## 无云端时：标准推进（成文 + 本机可执行）
+## 算力不可用时的备选推进（成文 + 本机可执行）
 
-**定位**：**云端不可用时**，按 **`RESEARCH_STATUS_AND_DIRECTION.md` §4–§5** 与 **`PROJECT_MASTER_PLAN`** 的 **正常节奏** 推进；**不**把 **P★** 插入本段。
+**定位**：**仅当 AutoDL/3090 暂时不可用时** 使用；按 **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §4–§5** 与 **`PROJECT_MASTER_PLAN`** 的 **正常节奏** 推进；**不**把 **P★** 插入本段。**服务器可用时** 以 **§2「须在 3090 上完成的登记项」** 与 **`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`** 为主。
 
 ### A. 成文（P0，优先）
 
-**成文包（A1–A4 正文与脚注草稿）**：**`docs/overview/SUBMISSION_PACK.md`**（一页故事线、路径核对表、可粘贴边界句、检索头短段；**§A1b** 摘要/引言草稿）。
+**成文包（A1–A4 正文与脚注草稿）**：**`docs/overview/execution/SUBMISSION_PACK.md`**（一页故事线、路径核对表、可粘贴边界句、检索头短段；**§A1b** 摘要/引言草稿）。
 
 | 顺序 | 任务 | 产出/自检 |
 |------|------|-----------|
@@ -61,19 +63,19 @@
 
 ### B. 本机可补的实验（**非**必须；仅当成文需要「附录多一行」）
 
-**环境**：**`LOCAL_5060_RUNBOOK.md`**；解释器 **`mamba2`**。**登记**：新 JSON 须 **`EXPERIMENT_REGISTRY` 新行**。
+**环境**：**`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md`**；解释器 **`mamba2`**。**登记**：新 JSON 须 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md` 新行**。
 
 | 顺序 | 内容 | 说明 |
 |------|------|------|
 | **B1** | **`probe_retrieval_correlation.py --cpu`** | **B-S2** 附录；**`RETRIEVAL_HEAD_NOTES.md` §2**；与 path-batch **分列** |
-| **B2** | **`benchmark_mamba2_cache_snapshot_segments.py --device cpu`** | §7 **S1** 本机复现/更新 JSON（与 **`SERVER_SWEEP_RUNBOOK`** 协议一致） |
+| **B2** | **`benchmark_mamba2_cache_snapshot_segments.py --device cpu`** | §7 **S1** 本机复现/更新 JSON（与 **`docs/environment/runbooks/SERVER_SWEEP_RUNBOOK.md`** 协议一致） |
 | **B3** | **`pytest tests/`** | **20 passed** 量级；提交前 **smoke** |
 
 **已跑满时不必重复**：本机 **B-S2+**、**A2-S3 n8**、**Wikitext CPU/CUDA smoke**、**SSGS 轻量** 等见 **「本机 5060 已完成」** 清单。
 
-### C. 云端恢复后（接 **`服务器有空时`** 小节）
+### C. 算力恢复后
 
-**P1** B-S2+ CUDA、**P2** SSGS sha / n128 —— **原顺序不变**，见上文 **「服务器有空时」** 列表。
+**P1** B-S2+ CUDA、**P2** SSGS sha / n128 —— **原顺序不变**，见上文 **§2** 与 **「当前收口清单」** 中 **「服务器有空时」** 列表。
 
 ---
 
@@ -100,13 +102,13 @@
 
 **服务器有空时（可选一条即可；建议优先级自上而下）**
 
-1. **B-S2+ CUDA（3090）** — **首选**：**`probe_path_reader_linear.py`** **去掉 `--cpu`**，与 **`LOCAL_5060_RUNBOOK` §2** 同 **n-leaves / heldout**，**`--out-json`** 到 **`results/metrics_result/`** 或 **`results/metrics/`**，**新开登记行**（**`NEXT_EXPERIMENTS_COMMANDS.md` §6**）；与 **本机 5060 CPU**（**`PHASE1_MANUSCRIPT` §9.1**、**X-20260407-local5060-bs2plus-rerun**）**分列**。  
+1. **B-S2+ CUDA（3090）** — **首选**：**`probe_path_reader_linear.py`** **去掉 `--cpu`**，与 **`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md` §2** 同 **n-leaves / heldout**，**`--out-json`** 到 **`results/metrics_result/`** 或 **`results/metrics/`**，**新开登记行**（**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §6**）；与 **本机 5060 CPU**（**`PHASE1_MANUSCRIPT` §9.1**、**X-20260407-local5060-bs2plus-rerun**）**分列**。  
 2. **`git pull` 后** 在 3090 上 **重跑 `demo_ssgs_mamba_wikitext.py` n8 一格**（**c8 dim128** 与归档 grid 一致），刷新 JSON **`git_sha`**（与正文 **HEAD** 对齐）。  
-3. **SSGS n128**（**`--num-leaves 128`**，CUDA）+ **`aggregate_ssgs_mamba_wikitext_json.py --append`** —— **辅线延长**，非主线阻塞（**`NEXT_EXPERIMENTS_COMMANDS.md` §10**）。
+3. **SSGS n128**（**`--num-leaves 128`**，CUDA）+ **`aggregate_ssgs_mamba_wikitext_json.py --append`** —— **辅线延长**，非主线阻塞（**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §10**）。
 
 **已就绪（无需再跑也能写）**：阶段 2 **path-batch** 叶数扫描与 XL、**§7 depth 5–6**、**A2-S3 init×5**、**Wikitext SSGS grid（n8–64）** —— 见 **登记册** 与 **`PHASE1_MANUSCRIPT` §5** 表。
 
-**本机 5060 可复制命令**（含 B-S2+ / Wikitext / SSGS / §7 CPU）：**唯一权威** **`docs/environment/LOCAL_5060_RUNBOOK.md`**；**勿**在此文件维护第二份命令表。
+**本机 5060 可复制命令**（含 B-S2+ / Wikitext / SSGS / §7 CPU）：**唯一权威** **`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md`**；**勿**在此文件维护第二份命令表。
 
 ---
 
@@ -138,7 +140,7 @@
 | **A2-S2** | **小网格**：默认 **四格** `{8,16}×{8,12}`（与 5060 naive 动机同拓扑），**fused**；**`WARMUP`/`REPS`** 默认与 **paper_main** 一致（可 **`REPS=5`** 对齐 5060） | JSON + 汇总 CSV + manifest；**`SERVER_SWEEP_RUNBOOK.md` §2d** + **`run_server_stage2_wikitext_grid.sh`** | AutoDL |
 | **A2-S2b** | **叶数扫描**：固定 **chunk_len**、**dim=128**，**`num_leaves ∈ {8,16,32,64}`**；**`run_server_wikitext_leavescale.sh`**（**`SERVER_SWEEP_RUNBOOK` §2f**）；登记 **A-stage2-wikitext-leavescale-v1** | 同 **A2-S2** harness；**TF** 为 **O(T²)** 整段 SA | AutoDL |
 | **A2-S3** | **任务指标 +1**（择一落地）：<br>• **浅层路径分类**：给定叶对 / 节点对，预测是否同子树（需 **自动生成标签** 脚本）；<br>• **固定句填空 / 选词**：用叶块文本构造 **cloze**，读路径后 MLP 头预测（最小可用 **tiny LM 或池化+logreg**）；<br>• **检索式**：query → 哪片叶最相关（小候选集上的 **top-1 acc**）。 | **最小实现（v0）**：**`task_wikitext_path_pair.py`**（叶对 **同 cohort**、ridge on **concat(z_i,z_j)**；**`--pair-split leaf_heldout`** 减叶对泄漏；登记 **A-20260407-stage2-wikitext-path-pair**；**`PHASE2_DRAFT.md`** §2）。其余选项仍可用 notebook 另开。 | 48G 优先；**CPU/smoke** 可跑 v0 |
-| **A2-S4** | **成文段落**：在 **`PHASE1_MANUSCRIPT.md`** 后续或 **`docs/experiments/PHASE2_DRAFT.md`** 补 **半页「真语料 + 任务」**；图注沿用 **`FIGURE_CAPTIONS_STAGE1.md`** 边界句式 | 文档 PR | — |
+| **A2-S4** | **成文段落**：在 **`PHASE1_MANUSCRIPT.md`** 后续或 **`docs/experiments/phases/PHASE2_DRAFT.md`** 补 **半页「真语料 + 任务」**；图注沿用 **`FIGURE_CAPTIONS_STAGE1.md`** 边界句式 | 文档 PR | — |
 
 ### 2.3 技术注意
 
@@ -214,7 +216,7 @@ flowchart LR
 
 ## 6. 建议的最近两周
 
-**唯一维护处**：**`docs/overview/CURRENT_SPRINT.md`**。请勿在本节复制粘贴周任务（曾与 sprint **双写**）。
+**唯一维护处**：**`CURRENT_SPRINT.md`**（与本文件同目录）。请勿在本节复制粘贴周任务（曾与 sprint **双写**）。
 
 ---
 
@@ -222,6 +224,7 @@ flowchart LR
 
 | 日期 | 说明 |
 |------|------|
+| 2026-04-07 | **docs 目录重组** + **3090 可用**：`environment`→**runbooks/**·**troubleshooting/**，`overview`→**planning/**·**execution/**，`experiments`→**planning/**·**phases/**；原 **「无云端时」** 更名为 **「算力不可用时的备选推进」**；默认 **P0 成文** 与 **P1/P2（3090）** 可并行 |
 | 2026-04-09 | 初版：阶段 2 / 检索头 B / 成文与 S5 展开 |
 | 2026-04-10 | **B-S2**：`probe_retrieval_correlation.py`；**RETRIEVAL_HEAD_NOTES** §2 文献入口表（2404.15574 / 2406.15765 / 2209.11895 / 2508.02184 / 2410.10819） |
 | 2026-04-10 | **B-S2+**：`--label-mode topic`、`--topic-split heldout`（模板留出，避免句级划分虚高）；gpt2 归档 `probe_retrieval_linear_gpt2_topic_{heldout,sample}_cpu.json` |
@@ -234,9 +237,9 @@ flowchart LR
 | 2026-04-07 | **A2-S2b** 叶数扫描 **`run_server_wikitext_leavescale.sh`**；§7 **depth 5–6** **`run_server_section7_depth_sweep.sh`**（**`SERVER_SWEEP_RUNBOOK` §2f–§2g**） |
 | 2026-04-09 | **A2-S2b** 已归档：**`TAG=stage2_leavescale`** **`STAMP=20260409T1257Z`**；**`EXPERIMENT_REGISTRY` A-stage2-wikitext-leavescale-v1** |
 | 2026-04-09 | **A2-S2b XL**：**`stage2_leavescale_xl`** **n128/n256** **`1322Z`/`1324Z`**；**A-stage2-wikitext-leavescale-xl-v1** |
-| 2026-04-10 | **§3.5 指针**；**「后续方向」** 增 **P★ L3 语义 PoC**、**已决策略**（主线保底 / 叙事升级可选 / 动机≠证据）；见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5** |
-| 2026-04-10 | **「无云端时：标准推进」**：**A 成文**（A1–A5）+ **B 本机可选**（B1–B3）；**默认里程碑** **P0→P1→P2→P3**，**P★** 不插入；**`LOCAL_5060_RUNBOOK`** / **`CURRENT_SPRINT`** 对齐 |
+| 2026-04-10 | **§3.5 指针**；**「后续方向」** 增 **P★ L3 语义 PoC**、**已决策略**（主线保底 / 叙事升级可选 / 动机≠证据）；见 **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §3.5** |
+| 2026-04-10 | **（旧称「无云端时：标准推进」）** **A 成文**（A1–A5）+ **B 本机可选**（B1–B3）；**默认里程碑** **P0→P1→P2→P3**，**P★** 不插入；**`LOCAL_5060_RUNBOOK`** / **`CURRENT_SPRINT`** 对齐 |
 | 2026-04-10 | **`SUBMISSION_PACK.md`**：**A1–A4** 成文包初版（故事线、路径核对、脚注句、检索头短段） |
 | 2026-04-10 | **`SUBMISSION_PACK.md`**：**§A1b** 摘要/引言；**§A2** 主文 6 CSV + 5060 grid 等 **存在性 ✅** |
-| 2026-04-10 | **无云端 §B**：本机 **§7 S1** + **B-S2 gpt2 topic heldout** 复跑 JSON；**`SUBMISSION_PACK`** **提交前检查**；**`LOCAL_5060_RUNBOOK` §5.1** |
+| 2026-04-10 | **备选推进 §B**（旧称无云端 §B）：本机 **§7 S1** + **B-S2 gpt2 topic heldout** 复跑 JSON；**`SUBMISSION_PACK`** **提交前检查**；**`LOCAL_5060_RUNBOOK` §5.1** |
 | 2026-04-10 | **P0**：**`SUBMISSION_PACK` A5–A7** 成文骨架与搁置表；**§B**：本机 **§7 S2 TF-R1 CPU** 确认 JSON |

@@ -1,83 +1,84 @@
 # 文档索引（主表）
 
-对外入口：仓库根目录 **`README.md`**。本文件按**职责**分层，减少在 `overview/` 多份总览之间的重复阅读。
+对外入口：仓库根目录 **`README.md`**。目录已按 **总体规划 / 实施**、**执行手册 / 排障** 分层；**单一权威**矩阵避免双写。
+
+## 文件夹结构（速查）
+
+| 路径 | 类别 | 内容 |
+|------|------|------|
+| **`docs/overview/planning/`** | 总体规划 | 月级叙事、现状大表、项目总览、周历模板 |
+| **`docs/overview/execution/`** | 实施与迭代 | 下一步任务展开、当前 sprint 勾选、投稿包 |
+| **`docs/experiments/planning/`** | 实验总体规划 | 登记册、数据约定、阶段 1 验证计划 |
+| **`docs/experiments/phases/`** | 阶段成稿与素材 | 阶段 1/2 手稿、图注、阶段总结 |
+| **`docs/environment/runbooks/`** | 执行手册 | 本机 5060、AutoDL、云端扫参、同步、安装步骤 |
+| **`docs/environment/troubleshooting/`** | 问题与解决 | CRLF、`bash\r`、Git 合并与未跟踪冲突等 |
+| **`docs/research/`** | 研究笔记 | SSGS、§7、检索头叙事 |
 
 ## 单一权威（避免双写）
 
-以下主题**只在该处维护长文/长表**；其他文档仅**链接**，不复制同一段落。
-
 | 主题 | 唯一权威 |
 |------|----------|
-| 叙事框架、基线对照、A/B/C/X 四条线、月级阶段表 | [`overview/PROJECT_MASTER_PLAN.md`](overview/PROJECT_MASTER_PLAN.md) |
-| **现状**大表、五轴防混读、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/RESEARCH_STATUS_AND_DIRECTION.md`](overview/RESEARCH_STATUS_AND_DIRECTION.md) |
-| 轨道里程碑（A2-S*、B-S*）、**当前收口清单**、P0–P3 / 无云端 §A–§C | [`overview/NEXT_RESEARCH_PLAN.md`](overview/NEXT_RESEARCH_PLAN.md) |
-| **本周**勾选、阻塞、周期说明 | [`overview/CURRENT_SPRINT.md`](overview/CURRENT_SPRINT.md) |
-| 本机 5060 **可复制命令**与章节索引 | [`environment/LOCAL_5060_RUNBOOK.md`](environment/LOCAL_5060_RUNBOOK.md) |
-| 云端扫参 shell、§7 depth、**TAG/STAMP** 约定 | [`environment/SERVER_SWEEP_RUNBOOK.md`](environment/SERVER_SWEEP_RUNBOOK.md) + [`environment/NEXT_EXPERIMENTS_COMMANDS.md`](environment/NEXT_EXPERIMENTS_COMMANDS.md) |
-| 实验 id、路径、结论一行 | [`experiments/EXPERIMENT_REGISTRY.md`](experiments/EXPERIMENT_REGISTRY.md) |
-| 周历**模板**、历史一行记录 | [`overview/ROADMAP.md`](overview/ROADMAP.md)（可执行项见 **CURRENT_SPRINT**） |
+| 叙事框架、基线对照、A/B/C/X、月级阶段表 | [`overview/planning/PROJECT_MASTER_PLAN.md`](overview/planning/PROJECT_MASTER_PLAN.md) |
+| **现状**大表、五轴、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
+| 轨道里程碑、**当前收口清单**、P0–P3、后备推进 § | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
+| **本周**勾选、阻塞 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
+| 本机 5060 **可复制命令** | [`environment/runbooks/LOCAL_5060_RUNBOOK.md`](environment/runbooks/LOCAL_5060_RUNBOOK.md) |
+| 云端扫参 shell、§7 depth、命令模板 | [`environment/runbooks/SERVER_SWEEP_RUNBOOK.md`](environment/runbooks/SERVER_SWEEP_RUNBOOK.md) + [`environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`](environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md) |
+| 实验 id、路径、结论一行 | [`experiments/planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md) |
+| 周历**模板**与历史 | [`overview/planning/ROADMAP.md`](overview/planning/ROADMAP.md)（勾选以 **CURRENT_SPRINT** 为准） |
 
 ## 0. 三分钟：该读哪份？
 
 | 目的 | 文件 |
 |------|------|
-| 现状、证据、推荐推进顺序 | [`overview/RESEARCH_STATUS_AND_DIRECTION.md`](overview/RESEARCH_STATUS_AND_DIRECTION.md) |
-| 本周在做什么、阻塞项 | [`overview/CURRENT_SPRINT.md`](overview/CURRENT_SPRINT.md) |
-| 任务拆条（轨道 A/B、阶段 2、检索头） | [`overview/NEXT_RESEARCH_PLAN.md`](overview/NEXT_RESEARCH_PLAN.md) |
-| 投稿用草稿块与检查清单 | [`overview/SUBMISSION_PACK.md`](overview/SUBMISSION_PACK.md) |
-| 实验登记与指标文件名 | [`experiments/EXPERIMENT_REGISTRY.md`](experiments/EXPERIMENT_REGISTRY.md) |
+| 现状、证据、推荐推进顺序 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
+| 本周在做什么、阻塞项 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
+| 任务拆条、收口清单 | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
+| 投稿草稿块与检查清单 | [`overview/execution/SUBMISSION_PACK.md`](overview/execution/SUBMISSION_PACK.md) |
+| 实验登记 | [`experiments/planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md) |
 
-## 1. 成文与图表
-
-| 文件 | 说明 |
-|------|------|
-| [`experiments/PHASE1_MANUSCRIPT.md`](experiments/PHASE1_MANUSCRIPT.md) | 阶段 1 主成稿（含 §8–§10 及阶段 2 并入叙述） |
-| [`experiments/PHASE2_DRAFT.md`](experiments/PHASE2_DRAFT.md) | 阶段 2 **表数字、修订日志**；叙事主干以 MANUSCRIPT 为准 |
-| [`experiments/FIGURE_CAPTIONS_STAGE1.md`](experiments/FIGURE_CAPTIONS_STAGE1.md) | 主图图注与五轴护栏 |
-| [`overview/SUBMISSION_PACK.md`](overview/SUBMISSION_PACK.md) | 投稿结构化草案（A1–A7 等） |
-
-**存档 / 补充（不替代上表主链）**
+## 1. 成文与阶段素材（`experiments/phases/`）
 
 | 文件 | 说明 |
 |------|------|
-| [`experiments/PHASE1_COMPLETE_SUMMARY.md`](experiments/PHASE1_COMPLETE_SUMMARY.md) | 阶段 1 收口存档、§7 复跑指针 |
-| [`experiments/PHASE1_VALIDATION_PLAN.md`](experiments/PHASE1_VALIDATION_PLAN.md) | 早期验证规划与扫参约定 |
+| [`phases/PHASE1_MANUSCRIPT.md`](experiments/phases/PHASE1_MANUSCRIPT.md) | 阶段 1 主成稿（含 §8–§10） |
+| [`phases/PHASE2_DRAFT.md`](experiments/phases/PHASE2_DRAFT.md) | 阶段 2 表数字、修订日志 |
+| [`phases/FIGURE_CAPTIONS_STAGE1.md`](experiments/phases/FIGURE_CAPTIONS_STAGE1.md) | 主图图注与五轴护栏 |
+| [`phases/PHASE1_COMPLETE_SUMMARY.md`](experiments/phases/PHASE1_COMPLETE_SUMMARY.md) | 阶段 1 存档与 §7 复跑指针 |
 
-## 2. 规划与总览（`overview/`）
+**实验侧总体规划**：[`planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md)、[`planning/DATASETS.md`](experiments/planning/DATASETS.md)、[`planning/PHASE1_VALIDATION_PLAN.md`](experiments/planning/PHASE1_VALIDATION_PLAN.md)。
+
+## 2. Overview 总体规划（`overview/planning/`）
 
 | 文件 | 职责 |
 |------|------|
-| [`RESEARCH_STATUS_AND_DIRECTION.md`](overview/RESEARCH_STATUS_AND_DIRECTION.md) | **唯一**长篇：现状 + 方向 + 证据梯 |
-| [`CURRENT_SPRINT.md`](overview/CURRENT_SPRINT.md) | **当前迭代**勾选与阻塞（周更） |
-| [`NEXT_RESEARCH_PLAN.md`](overview/NEXT_RESEARCH_PLAN.md) | 中长期任务表、收口清单 |
-| [`PROJECT_MASTER_PLAN.md`](overview/PROJECT_MASTER_PLAN.md) | 里程碑式总体规划（月级） |
-| [`PROJECT_OVERVIEW.md`](overview/PROJECT_OVERVIEW.md) | 目标、**A/B/C/X** 分类、**仓库目录树**；执行细节指向上表与 registry |
-| [`ROADMAP.md`](overview/ROADMAP.md) | 周历**模板**、里程碑对照与**历史**一行；**阶段 2 详表**见 **NEXT_RESEARCH_PLAN §2**；**可执行勾选**以 **CURRENT_SPRINT** 为准 |
+| [`RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) | 现状 + 方向 + 证据梯 |
+| [`PROJECT_MASTER_PLAN.md`](overview/planning/PROJECT_MASTER_PLAN.md) | 月级规划、四条线、风险 |
+| [`PROJECT_OVERVIEW.md`](overview/planning/PROJECT_OVERVIEW.md) | 目标、A/B/C/X、**仓库目录树** |
+| [`ROADMAP.md`](overview/planning/ROADMAP.md) | 周历模板与里程碑对照 |
 
-## 3. 实验与数据
+## 3. Overview 实施（`overview/execution/`）
 
-- [`experiments/EXPERIMENT_REGISTRY.md`](experiments/EXPERIMENT_REGISTRY.md)
-- [`experiments/DATASETS.md`](experiments/DATASETS.md)
-
-## 4. 环境与运行（`environment/`）
-
-- **本机 RTX 5060**：优先 [`LOCAL_5060_RUNBOOK.md`](environment/LOCAL_5060_RUNBOOK.md)
-- **云端 / 命令模板**：[`NEXT_EXPERIMENTS_COMMANDS.md`](environment/NEXT_EXPERIMENTS_COMMANDS.md)、[`SERVER_SWEEP_RUNBOOK.md`](environment/SERVER_SWEEP_RUNBOOK.md)、[`SYNC_AND_ENVIRONMENTS.md`](environment/SYNC_AND_ENVIRONMENTS.md)、[`AUTODL_SETUP.md`](environment/AUTODL_SETUP.md)
-- **安装与排障**：[`MAMBA_SSM_INSTALL_LINUX.md`](environment/MAMBA_SSM_INSTALL_LINUX.md)、[`SH_CRLF_LINUX.md`](environment/SH_CRLF_LINUX.md)、[`GIT_SERVER_MERGE_UNTRACKED.md`](environment/GIT_SERVER_MERGE_UNTRACKED.md)
-- **§7 玩具 JSON（按需）**：[`RUN_AUTOADL_SECTION7_NOW.md`](environment/RUN_AUTOADL_SECTION7_NOW.md)
-
-## 5. 研究笔记（`research/`）
-
-- [`RESEARCH_NOTES.md`](research/RESEARCH_NOTES.md) — SSGS、快照、§7 等
-- [`RETRIEVAL_HEAD_NOTES.md`](research/RETRIEVAL_HEAD_NOTES.md) — B 线、检索头叙事与 **B-S2** 边界
-
----
-
-**子目录一览**
-
-| 目录 | 内容 |
+| 文件 | 职责 |
 |------|------|
-| `docs/overview/` | 规划、sprint、研究状态、投稿包 |
-| `docs/experiments/` | 登记、成文稿、阶段 2 草稿、图注、数据说明 |
-| `docs/environment/` | 同步、AutoDL、跑书、排障 |
-| `docs/research/` | 主题笔记 |
+| [`NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) | 任务展开、收口清单、P1–P3 |
+| [`CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) | 当前迭代勾选 |
+| [`SUBMISSION_PACK.md`](overview/execution/SUBMISSION_PACK.md) | 投稿用 A1–A7 等 |
+
+## 4. 环境：执行手册（`environment/runbooks/`）
+
+- **本机 5060**：[`LOCAL_5060_RUNBOOK.md`](environment/runbooks/LOCAL_5060_RUNBOOK.md)
+- **云端命令模板**：[`NEXT_EXPERIMENTS_COMMANDS.md`](environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md)、[`SERVER_SWEEP_RUNBOOK.md`](environment/runbooks/SERVER_SWEEP_RUNBOOK.md)
+- **同步与实例**：[`SYNC_AND_ENVIRONMENTS.md`](environment/runbooks/SYNC_AND_ENVIRONMENTS.md)、[`AUTODL_SETUP.md`](environment/runbooks/AUTODL_SETUP.md)
+- **融合核安装步骤**：[`MAMBA_SSM_INSTALL_LINUX.md`](environment/runbooks/MAMBA_SSM_INSTALL_LINUX.md)
+- **§7 depth 一键**：[`RUN_AUTOADL_SECTION7_NOW.md`](environment/runbooks/RUN_AUTOADL_SECTION7_NOW.md)
+
+## 5. 环境：排障（`environment/troubleshooting/`）
+
+- [`SH_CRLF_LINUX.md`](environment/troubleshooting/SH_CRLF_LINUX.md) — `bash\r` / CRLF
+- [`GIT_SERVER_MERGE_UNTRACKED.md`](environment/troubleshooting/GIT_SERVER_MERGE_UNTRACKED.md) — 合并与未跟踪文件
+
+## 6. 研究笔记（`research/`）
+
+- [`RESEARCH_NOTES.md`](research/RESEARCH_NOTES.md)
+- [`RETRIEVAL_HEAD_NOTES.md`](research/RETRIEVAL_HEAD_NOTES.md)

@@ -1,8 +1,8 @@
 # 研究现状与方向总览
 
-> **读法**：先读本文 **§1–§3** 建立共识；**§3.5** 为 **对外讨论（投资/Agent 叙事）的批判性接收与证据层级**；**§4** 为决策规则；**§5** 为推荐执行顺序（与 **`NEXT_RESEARCH_PLAN.md`** 细节一致）。  
-> **更长规划**仍以 **`PROJECT_MASTER_PLAN.md`** 为准；**阶段 1 成稿**见 **`PHASE1_MANUSCRIPT.md`**。  
-> **可执行勾选清单**（成文 / 仓库 / 可选实验）：**`NEXT_RESEARCH_PLAN.md`** 篇首 **「当前收口清单」**；**归档路径核对表**：**`PHASE1_MANUSCRIPT.md` §5.1**；**本机 5060**：**`docs/environment/LOCAL_5060_RUNBOOK.md`**（**`NEXT_EXPERIMENTS_COMMANDS.md` §11**）。
+> **读法**：先读本文 **§1–§3** 建立共识；**§3.5** 为 **对外讨论（投资/Agent 叙事）的批判性接收与证据层级**；**§4** 为决策规则；**§5** 为推荐执行顺序（与 **`docs/overview/execution/NEXT_RESEARCH_PLAN.md`** 细节一致）。  
+> **更长规划**仍以 **`docs/overview/planning/PROJECT_MASTER_PLAN.md`** 为准；**阶段 1 成稿**见 **`docs/experiments/phases/PHASE1_MANUSCRIPT.md`**。  
+> **可执行勾选清单**（成文 / 仓库 / 可选实验）：**`docs/overview/execution/NEXT_RESEARCH_PLAN.md`** 篇首 **「当前收口清单」**；**归档路径核对表**：**`PHASE1_MANUSCRIPT.md` §5.1**（同目录 **`docs/experiments/phases/`**）；**本机 5060**：**`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md`**（**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §11**）。
 
 ---
 

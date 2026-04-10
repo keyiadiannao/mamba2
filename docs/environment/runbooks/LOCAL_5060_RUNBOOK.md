@@ -1,8 +1,8 @@
 # 本机 RTX 5060（Windows）推进手册
 
-> **定位**：在 **服务器空闲前**，于 **本机** 跑 **轻量** 实验；产出 **JSON** 入 **`results/metrics/`**（或 **`metrics_result/`**），**登记** 时注明 **5060 / CPU / 本机** 与 **`git_sha`**。  
-> **公平性**：**5060 + HF naive** 与 **3090 fused**、**path-batch** 与 **§7** / **SSGS** / **A2-S3** 须 **分列脚注**（**`FIGURE_CAPTIONS_STAGE1.md`**、**`PHASE1_MANUSCRIPT` §5.1**）。  
-> **无云端时**：优先 **成文（P0）**；本机实验为 **可选**，见 **`NEXT_RESEARCH_PLAN.md`** **「无云端时：标准推进」** 小节 **A/B**；**不必**为追新数字重复已完成的 smoke。
+> **定位**：与 **3090 / AutoDL** 分列时，在 **本机** 跑 **轻量 / smoke**；产出 **JSON** 入 **`results/metrics/`**（或 **`metrics_result/`**），**登记** 时注明 **5060 / CPU / 本机** 与 **`git_sha`**。  
+> **公平性**：**5060 + HF naive** 与 **3090 fused**、**path-batch** 与 **§7** / **SSGS** / **A2-S3** 须 **分列脚注**（**`docs/experiments/phases/FIGURE_CAPTIONS_STAGE1.md`**、**`PHASE1_MANUSCRIPT` §5.1**）。  
+> **算力紧张或仅本机时**：优先 **成文（P0）**；本机实验为 **可选**，见 **`docs/overview/execution/NEXT_RESEARCH_PLAN.md`** **「算力不可用时的备选推进」** 小节 **A/B**；**不必**为追新数字重复已完成的 smoke。
 
 ---
 
@@ -69,7 +69,7 @@ python scripts/research/probe_path_reader_linear.py --cpu --n-leaves 16 --leaf-s
 
 ## 2b. 任务线 A2-S3（叶对 cohort + ridge，CPU）
 
-与 **path-batch**、**3090 `init_seed`×5** **分列**；见 **`docs/experiments/PHASE1_MANUSCRIPT.md` §8.2**、**`docs/experiments/PHASE2_DRAFT.md`**。
+与 **path-batch**、**3090 `init_seed`×5** **分列**；见 **`docs/experiments/phases/PHASE1_MANUSCRIPT.md` §8.2**、**`docs/experiments/phases/PHASE2_DRAFT.md`**。
 
 ```powershell
 $env:HF_ENDPOINT = "https://hf-mirror.com"
@@ -133,7 +133,7 @@ py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q
 
 **已验证**：**20 passed**（**`HEAD`≥`1533b08`**，耗时约 **15 s** 量级）。
 
-### 5.1 可选：机制线 / §7 复跑（与 **`NEXT_RESEARCH_PLAN`** **无云端 §B**）
+### 5.1 可选：机制线 / §7 复跑（与 **`NEXT_RESEARCH_PLAN`** **「算力不可用时的备选推进」§B**）
 
 **§7 S1（Mamba cache 段克隆）** — **CPU**：
 
@@ -163,4 +163,4 @@ python scripts/research/probe_retrieval_correlation.py --cpu --model gpt2 --labe
 
 ## 6. 与总清单的对应
 
-**`NEXT_RESEARCH_PLAN.md`** 篇首 **「项目现状快照」**、**「后续方向」**、**「当前收口清单」**、**「本机 RTX 5060 可推进」** 表；**服务器** 空闲后再跑 **3090 登记级** 与 **`NEXT_EXPERIMENTS_COMMANDS.md` §0–§10** 云端命令。
+**`docs/overview/execution/NEXT_RESEARCH_PLAN.md`**：**后续方向**、**当前收口清单**、**算力不可用时的备选推进**；**3090 登记级** 命令见 **`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §0–§10**（**服务器可用时**优先跑 **P1/P2** 与文档一致的新行 JSON）。

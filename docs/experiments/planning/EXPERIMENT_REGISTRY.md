@@ -15,7 +15,7 @@
 | A-20260407-sweep-local | 2026-04-07 | 5060 | | A | 扫参 preset=local | `scripts/benchmarks/sweep_tree_benchmark.py` | 见 `results/metrics/sweep_tree_reader_20260407_local.csv` |
 | A-20260408-text-shaped-tree | 2026-04-07 | 5060 | | A | 文本形树 reader 基准 | `scripts/benchmarks/benchmark_text_tree.py` | 确定性文本嵌入；待换神经 encoder |
 | X-20260408-corpus-sample | 2026-04-07 | 5060 | | X | `data/raw/sample` + prepare_leaves | `scripts/data/prepare_leaves_from_corpus.py` → `scripts/benchmarks/benchmark_text_tree.py` | 合成 8 段；叶文件见 .gitignore 生成物 |
-| X-20260408-autodl-doc | 2026-04-07 | — | | X | AutoDL 上手指南 | `docs/environment/AUTODL_SETUP.md` | 流程已验证；见下行云端扫参 |
+| X-20260408-autodl-doc | 2026-04-07 | — | | X | AutoDL 上手指南 | `docs/environment/runbooks/AUTODL_SETUP.md` | 流程已验证；见下行云端扫参 |
 | A-20260409-sweep-autodl-3090 | 2026-04-09 | AutoDL / RTX 3090 47G | `ab982d7` | A | 云端 preset=local 扫参 | `sweep_autodl.csv` 于 `results/metrics/` | torch 2.11.0+cu126；smoke OK；树基准 depth4 时 Mamba2 naive peak≈2248MiB；`mamba_ssm` 未装 |
 | X-20260409-autodl-fused-mamba | 2026-04-09 | AutoDL / RTX 3090 | —（仅环境） | X | `causal_conv1d`+`mamba_ssm` 后复测 | `scripts/smoke/smoke_mamba_minimal` + `scripts/benchmarks/benchmark_tree_walk` d4 f2 | smoke peak **56MiB**（naive≈411）；树 Mamba2 peak **73MiB**（naive≈2248）；快路径生效 |
 | X-20260409-mamba-minimal-smoke | 2026-04-07 | 5060 | | X | HF Mamba2Model tiny smoke（默认） | `scripts/smoke/smoke_mamba_minimal.py` | 无 mamba-ssm；`--arch mamba` 为 v1 |

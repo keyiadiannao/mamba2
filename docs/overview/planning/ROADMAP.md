@@ -1,6 +1,6 @@
 # 周历与里程碑（滚动更新）
 
-> **维护**：**勾选、阻塞、本周三条**以 **`CURRENT_SPRINT.md`** 为主表。本文件保留**里程碑模板**与历史周结构；避免与 sprint **双写**同一批可执行项。
+> **维护**：**勾选、阻塞、本周三条**以 **`docs/overview/execution/CURRENT_SPRINT.md`** 为主表。本文件保留**里程碑模板**与历史周结构；避免与 sprint **双写**同一批可执行项。
 
 > 使用方式（模板）：每周五勾选本周项，并写下「阻塞项」一行；周一补下周三条**可执行**任务（含负责机器：本地 / AutoDL）。
 
@@ -8,7 +8,7 @@
 
 ## 当前周期（请每次更新日期范围）
 
-**周期（滚动）**：以 **`docs/overview/CURRENT_SPRINT.md`** 为准。**2026-04-09**：**真 LM 支线（X-20260422–25）** 已归档；**迭代焦点回归主线** — 阶段 1 主图/path-batch 与 §7 的 **审计与成文**，支线 **B** 整体延后。
+**周期（滚动）**：以 **`docs/overview/execution/CURRENT_SPRINT.md`** 为准。**2026-04-09**：**真 LM 支线（X-20260422–25）** 已归档；**迭代焦点回归主线** — 阶段 1 主图/path-batch 与 §7 的 **审计与成文**，支线 **B** 整体延后。
 
 | 状态 | 任务 | 机器 | 产出 |
 |------|------|------|------|
@@ -35,7 +35,7 @@
 
 ## 阶段 2 入口
 
-**不在此重复**：目标、语料/建树约束、里程碑 **A2-S0…S4**、**B-S1…S3** 的**完整表**见 **`NEXT_RESEARCH_PLAN.md` §1–§3**；**现状与五轴**见 **`RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**。
+**不在此重复**：目标、语料/建树约束、里程碑 **A2-S0…S4**、**B-S1…S3** 的**完整表**见 **`docs/overview/execution/NEXT_RESEARCH_PLAN.md` §1–§3**；**现状与五轴**见 **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**。
 
 ---
 
@@ -49,8 +49,8 @@
 | 2026-04-09 | **`RESEARCH_STATUS_AND_DIRECTION.md`**：现状、四条轴、决策原则与 **推荐执行顺序**（统领 `NEXT_RESEARCH_PLAN`） |
 | 2026-04-08 | **§7 串行复跑**：AutoDL `run_path_protocol_cuda.sh` 全量通过；数值与 **§7.3.1** / `*_20260421.json` 同阶（见 **`PHASE1_COMPLETE_SUMMARY` 附录 B**） |
 | 2026-04-07 | 阶段 1 玩具树 + Transformer/GRU 微基准脚本；`requirements-mamba2-lock.txt` |
-| 2026-04-07 | `docs/experiments/PHASE1_VALIDATION_PLAN.md`；`scripts/benchmarks/sweep_tree_benchmark.py`；本地 preset 扫参 CSV |
-| 2026-04-07 | `docs/overview/PROJECT_MASTER_PLAN.md`、`CURRENT_SPRINT.md`；文本形树 `scripts/benchmarks/benchmark_text_tree.py`；扫参 CSV 增列与 `merge_sweep_csv.py` |
+| 2026-04-07 | `docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`；`scripts/benchmarks/sweep_tree_benchmark.py`；本地 preset 扫参 CSV |
+| 2026-04-07 | `docs/overview/planning/PROJECT_MASTER_PLAN.md`、`CURRENT_SPRINT.md`；文本形树 `scripts/benchmarks/benchmark_text_tree.py`；扫参 CSV 增列与 `merge_sweep_csv.py` |
 | 2026-04-07 | `data/raw/sample` 联调语料；`prepare_leaves_from_corpus.py`；`AUTODL_SETUP.md` |
 | 2026-04-07 | `smoke_mamba_minimal.py`：HF `MambaModel` tiny，无 mamba-ssm |
 | 2026-04-07 | `Mamba2PathReader` 接入树路径基准（TF/GRU/Mamba2 三对比） |

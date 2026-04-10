@@ -17,7 +17,7 @@ AutoDL / 无法直连 huggingface.co 时，在运行前任选其一::
   # 或：export MAMBA2_USE_HF_MIRROR=1
   # 自定义镜像：export MAMBA2_HF_ENDPOINT=https://你的镜像主机
 
-见 ``docs/environment/AUTODL_SETUP.md``（Hugging Face 镜像）。
+见 ``docs/environment/runbooks/AUTODL_SETUP.md``（Hugging Face 镜像）。
 """
 from __future__ import annotations
 

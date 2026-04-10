@@ -25,7 +25,7 @@ python scripts/data/prepare_leaves_from_corpus.py \
 ## AutoDL / 本机大数据
 
 - 全文、PDF、向量库放在 `$MAMBA2_DATA_ROOT/raw/` 与 `processed/`，**不提交 Git**。
-- 云端首次配置步骤见 **`docs/environment/AUTODL_SETUP.md`**。
+- 云端首次配置步骤见 **`docs/environment/runbooks/AUTODL_SETUP.md`**。
 
 ## HuggingFace Wikitext-2（公开小语料）
 
@@ -43,4 +43,4 @@ python scripts/benchmarks/benchmark_wikitext_tree.py --num-leaves 8 --fanout 2 -
 ## 后续（正式实验）
 
 - 选定公开数据集名称、下载方式、协议与引用格式。
-- 在 `docs/experiments/EXPERIMENT_REGISTRY.md` 登记每份外源数据的版本与哈希（可选）。
+- 在 `docs/experiments/planning/EXPERIMENT_REGISTRY.md` 登记每份外源数据的版本与哈希（可选）。

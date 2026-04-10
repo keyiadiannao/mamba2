@@ -41,7 +41,7 @@ ls -la "$MAMBA2_RESULTS_ROOT/metrics_result/section7_depth_"*
 
 1. 记下终端里的 **`STAMP=`**（UTC）与 **`git_sha`**（`manifest` 内亦有全 SHA）。  
 2. 将 **`$MAMBA2_RESULTS_ROOT/metrics_result/section7_depth_*`** 拉回本机 **`results/metrics_result/`**。  
-3. 编辑 **`docs/experiments/EXPERIMENT_REGISTRY.md`**：把 **`X-section7-depth-extension-v1`** 从「跑后填」改为完整路径 + 一句 **KV/clone/restore 随 depth 趋势**。  
+3. 编辑 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`**：把 **`X-section7-depth-extension-v1`** 从「跑后填」改为完整路径 + 一句 **KV/clone/restore 随 depth 趋势**。  
 4. **`git add` + `commit` + `push`**。
 
 ---
