@@ -41,18 +41,54 @@
 | 优先级 | 内容 | 说明 |
 |--------|------|------|
 | **P0** | **成文整合** | **`PHASE1_MANUSCRIPT`** / **`FIGURE_CAPTIONS_STAGE1`** / **`EXPERIMENT_REGISTRY`** 对齐投稿版；**§7.5 S5** 总表 **视截稿篇幅** |
-| **P★** | **（可选）L3 语义 PoC** | 见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5**：微型树、**A→错枝 B→restore A→C** vs **A→C** 同指标对照；**新 kind + 登记**；与 path-batch **分列**。用于回应「快照是否语义保真」；**失败则收紧声称**，不阻塞 **P0**。 |
-| **P1** | **3090：B-S2+ CUDA 一条** | 与 **本机 B-S2+ CPU** **分列**；**`NEXT_EXPERIMENTS_COMMANDS.md` §6** |
-| **P2** | **SSGS 辅线** | **sha 刷新**、**n128**；**非**主线阻塞 |
-| **P3** | **A2-S3 可选加压** | **`root_child`**、**`leaf_heldout`**、**`split-seed`** 等；与 **init×5** **分列** 说明 |
+| **P1** | **3090：B-S2+ CUDA 一条** | **云端可用后**；与 **本机 B-S2+ CPU** **分列**；**`NEXT_EXPERIMENTS_COMMANDS.md` §6** |
+| **P2** | **SSGS 辅线** | **云端可用后**：**sha 刷新**、**n128**；**非**主线阻塞 |
+| **P3** | **A2-S3 可选加压** | **云端或本机 CPU**（视脚本）；**`root_child`**、**`leaf_heldout`**、**`split-seed`** 等；与 **init×5** **分列** 说明 |
+| **P★** | **（可选 breakthrough）L3 语义 PoC** | 见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5**；**不纳入** 下表「无云端标准顺序」；**独立 1–2 周窗口**再排，**不抢 P0 工时**。 |
 
-**已决策略（与外部「高收益高风险」讨论对齐）**
+**默认里程碑顺序（与 `PROJECT_MASTER_PLAN`、`RESEARCH_STATUS` §5 一致；不因 §3.5 讨论而改变）**
 
-- **主线保底**：**L1–L2**（实现敏感性 + 真语料 harness + 五轴分列）已足以支撑 **可发表的工程/系统论文**；**P0** 优先把现有数字写进投稿稿。  
-- **叙事升级（可选）**：若希望论文强调 **「状态回溯解锁新算法」**，须 **显式投资 P★**；**不**与 **再扫一格 Wikitext** 无限并行，避免两条都做一半。  
-- **云端默认**：**P1** 仍为 **低成本补一行对照**（B-S2+ CUDA）；**P2** 为辅线。
+1. **P0 成文**（主线，**当前无云端时唯一必做**）。  
+2. **云端恢复后**：**P1** → **P2**（辅）→ **P3**（可选加压）。  
+3. **P★**：仅当 **主动选择**「叙事升级 + 有整块时间」时启动；**否则** 可全程 **不选**。
 
-**原则**：**不**在无脚注下混表 **5060 naive** 与 **3090 fused**；**不**混读 **path-batch 毫秒/峰值**、**§7 单列毫秒**、**SSGS 快照计数**、**A2-S3 准确率**（**`PHASE1_MANUSCRIPT` §5.1**）。**动机修辞**（投资比喻、Agent 刚需）**≠** 证据；见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5**。
+**原则**：**不**在无脚注下混表 **5060 naive** 与 **3090 fused**；**不**混读 **path-batch 毫秒/峰值**、**§7 单列毫秒**、**SSGS 快照计数**、**A2-S3 准确率**（**`PHASE1_MANUSCRIPT` §5.1**）。**§3.5** 对外部讨论的批判性接收 **不改变** 上述顺序。
+
+---
+
+## 无云端时：标准推进（成文 + 本机可执行）
+
+**定位**：**云端不可用时**，按 **`RESEARCH_STATUS_AND_DIRECTION.md` §4–§5** 与 **`PROJECT_MASTER_PLAN`** 的 **正常节奏** 推进；**不**把 **P★** 插入本段。
+
+### A. 成文（P0，优先）
+
+| 顺序 | 任务 | 产出/自检 |
+|------|------|-----------|
+| **A1** | **主叙事一页**：从 **`PHASE1_MANUSCRIPT.md`** 摘要 + §6 结论 + §8 阶段 2 段，压成 **投稿用故事线**（问题—方法—结果—边界） | 自用大纲 1 页即可 |
+| **A2** | **数字与路径核对**：**`PHASE1_MANUSCRIPT.md` §5.1** 表 + **`EXPERIMENT_REGISTRY.md`** 对应行；**主图 PNG**、**`paper_main_*` CSV** 文件名与正文引用一致 | 勾选 §5.1 各列 |
+| **A3** | **五轴脚注成句**：从 **`FIGURE_CAPTIONS_STAGE1.md`** 篇首 **复制** 到论文 **Related/Footnote** 占位（5060/3090、naive/fused、path-batch / §7 / SSGS / A2-S3） | 避免混表混读 |
+| **A4** | **机制线边界**：**`PHASE1_MANUSCRIPT.md` §9** + **`RETRIEVAL_HEAD_NOTES.md`** — 「检索头」表述与 **B-S2/B-S2+** 对齐 | 附录段落草稿 |
+| **A5** | **（可选）§7.5 S5** | 视截稿；**非**阻塞 |
+
+### B. 本机可补的实验（**非**必须；仅当成文需要「附录多一行」）
+
+**环境**：**`LOCAL_5060_RUNBOOK.md`**；解释器 **`mamba2`**。**登记**：新 JSON 须 **`EXPERIMENT_REGISTRY` 新行**。
+
+| 顺序 | 内容 | 说明 |
+|------|------|------|
+| **B1** | **`probe_retrieval_correlation.py --cpu`** | **B-S2** 附录；**`RETRIEVAL_HEAD_NOTES.md` §2**；与 path-batch **分列** |
+| **B2** | **`benchmark_mamba2_cache_snapshot_segments.py --device cpu`** | §7 **S1** 本机复现/更新 JSON（与 **`SERVER_SWEEP_RUNBOOK`** 协议一致） |
+| **B3** | **`pytest tests/`** | **20 passed** 量级；提交前 **smoke** |
+
+**已跑满时不必重复**：本机 **B-S2+**、**A2-S3 n8**、**Wikitext CPU/CUDA smoke**、**SSGS 轻量** 等见 **「本机 5060 已完成」** 清单。
+
+### C. 云端恢复后（接 **`服务器有空时`** 小节）
+
+**P1** B-S2+ CUDA、**P2** SSGS sha / n128 —— **原顺序不变**，见上文 **「服务器有空时」** 列表。
+
+---
+
+## 当前收口清单（工作台整理；与 **`PHASE1_MANUSCRIPT.md` §10** 对齐）
 
 ---
 
@@ -232,3 +268,4 @@ flowchart LR
 | 2026-04-09 | **A2-S2b** 已归档：**`TAG=stage2_leavescale`** **`STAMP=20260409T1257Z`**；**`EXPERIMENT_REGISTRY` A-stage2-wikitext-leavescale-v1** |
 | 2026-04-09 | **A2-S2b XL**：**`stage2_leavescale_xl`** **n128/n256** **`1322Z`/`1324Z`**；**A-stage2-wikitext-leavescale-xl-v1** |
 | 2026-04-10 | **§3.5 指针**；**「后续方向」** 增 **P★ L3 语义 PoC**、**已决策略**（主线保底 / 叙事升级可选 / 动机≠证据）；见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5** |
+| 2026-04-10 | **「无云端时：标准推进」**：**A 成文**（A1–A5）+ **B 本机可选**（B1–B3）；**默认里程碑** **P0→P1→P2→P3**，**P★** 不插入；**`LOCAL_5060_RUNBOOK`** / **`CURRENT_SPRINT`** 对齐 |

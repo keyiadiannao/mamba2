@@ -181,10 +181,10 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 **主线是否继续？** — **系统主线**（path-batch **效率**、真语料 **Wikitext 扫参**、**§7 玩具协议**、**A2-S3 任务 proxy**）在 **登记级材料** 上 **已闭环**；**不是**弃题，而是 **不必为同一故事无限加格点**。后续工时优先 **把已有数字写进论文/报告**（主文+附录+脚注），其次才是 **可选实验**。
 
-**下一步（按优先级）**：
+**下一步（按优先级；与 `NEXT_RESEARCH_PLAN.md`「无云端时：标准推进」一致）**：
 
-1. **成文整合（主线收尾）**：把 **`PHASE1_MANUSCRIPT` §8**、**`EXPERIMENT_REGISTRY`**、**`metrics_result`** 中表与 JSON **对齐成投稿版**（含 **五轴图注**、**5060 vs 3090** 分列）。  
-2. **可选机制线 B**：**本机 5060 CPU** 已归档 **B-S2+**（**§9.1**，**X-20260407-local5060-bs2plus-rerun**）。若要加强 **与云端对照** — **3090** 上 **1 条** **B-S2+** JSON（**`probe_path_reader_linear.py`** 去 **`--cpu`**），**新开登记行**；**非**主线阻塞；**`RETRIEVAL_HEAD_NOTES.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md` §6**。  
+1. **成文整合（主线收尾；云端不可用时仍为第一优先）**：把 **`PHASE1_MANUSCRIPT` §8**、**`EXPERIMENT_REGISTRY`**、**`metrics_result`** 中表与 JSON **对齐成投稿版**（含 **五轴图注**、**5060 vs 3090** 分列）。  
+2. **可选机制线 B**：**本机 5060 CPU** 已归档 **B-S2+**（**§9.1**，**X-20260407-local5060-bs2plus-rerun**）。**云端可用后**：**3090** 上 **1 条** **B-S2+** JSON（**`probe_path_reader_linear.py`** 去 **`--cpu`**），**新开登记行**；**非**主线阻塞；**`RETRIEVAL_HEAD_NOTES.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md` §6**。附录需要时可补 **`probe_retrieval_correlation.py --cpu`**（**`NEXT_RESEARCH_PLAN`** **无云端 §B**）。  
 3. **A2-S3 可选加压**：更大 **`heldout-leaves`**、**`root_child`**、**stratified + `split-seed`** — 与 **init×5** **分列** 说明。  
 4. **Polish**：**S5 总表**（**`RESEARCH_NOTES` §7**）、主图入仓、平面 RAG smoke。  
 5. **SSGS（辅线，非阻塞）**：**Wikitext 同树** 已归档 **`ssgs_mamba_wikitext_grid.csv`**（**n8–64** 等，登记 **X-20260407-ssgs-mamba-wikitext-tree**）。可选：**n=128**、**`git pull` 后** 重跑 **一格** 刷新 **`git_sha`**；玩具树 **X-20260421**、LM 并列 **X-20260425** 仍足 **附录** 基线。  
@@ -225,3 +225,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-10 | **§4 / §5 / §5.1 / §8.2**：本机 **5060 CPU** **A2-S3 n8 stratified** + **SSGS c4 d64** 跑例入表；登记 **X-20260410-local5060-a2s3-n8-strat**、**X-20260410-local5060-ssgs-wikitext-n8-c4d64** |
 | 2026-04-10 | **§5**：本机 **B-S2+ train50**（**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**）、**Wikitext CPU smoke**（**`benchmark_wikitext_local5060_cpu_*_n8_c8.json`**）；登记 **X-20260410-local5060-bs2plus-train50-n16**、**X-20260410-local5060-wikitext-cpu-n8c8** |
 | 2026-04-10 | **§10 指针**：**`NEXT_RESEARCH_PLAN.md`** 增 **「项目现状快照」**、**「后续方向」**；本机 **5060** 轨道 **无阻塞项**；全量 **`pytest tests/`** **20** passed |
+| 2026-04-10 | **§10**：**「下一步」** 与 **`NEXT_RESEARCH_PLAN`「无云端时：标准推进」** 对齐；**云端暂不可用时** 以 **P0 成文** 为第一优先 |

@@ -1,7 +1,8 @@
 # 本机 RTX 5060（Windows）推进手册
 
 > **定位**：在 **服务器空闲前**，于 **本机** 跑 **轻量** 实验；产出 **JSON** 入 **`results/metrics/`**（或 **`metrics_result/`**），**登记** 时注明 **5060 / CPU / 本机** 与 **`git_sha`**。  
-> **公平性**：**5060 + HF naive** 与 **3090 fused**、**path-batch** 与 **§7** / **SSGS** / **A2-S3** 须 **分列脚注**（**`FIGURE_CAPTIONS_STAGE1.md`**、**`PHASE1_MANUSCRIPT` §5.1**）。
+> **公平性**：**5060 + HF naive** 与 **3090 fused**、**path-batch** 与 **§7** / **SSGS** / **A2-S3** 须 **分列脚注**（**`FIGURE_CAPTIONS_STAGE1.md`**、**`PHASE1_MANUSCRIPT` §5.1**）。  
+> **无云端时**：优先 **成文（P0）**；本机实验为 **可选**，见 **`NEXT_RESEARCH_PLAN.md`** **「无云端时：标准推进」** 小节 **A/B**；**不必**为追新数字重复已完成的 smoke。
 
 ---
 
