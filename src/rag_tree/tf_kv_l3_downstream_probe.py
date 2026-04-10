@@ -1,16 +1,20 @@
 """
-Minimal **L3** hook for TF-KV tree navigation: DFS-with-restore vs gold-path-only forward.
+**L3 downstream (minimal)**: fixed **leaf classification head** on last-token trunk hidden.
 
-Compares **last-token trunk hidden** after a successful ``dfs_tf_kv_nav`` to a **reference**
-run that **only** applies ``forward_chunk`` along the root—target leaf path with the **same
-weights**. **Cosine ≈ 1** indicates restore/truncate semantics preserve the prefix state.
-This is **not** a downstream CE/LM probe; see ``tf_kv_l3_downstream_probe`` for a fixed-head CE
-sanity check and M1 docs for full L3 semantics scope.
+After ``dfs_tf_kv_nav`` reaches the target leaf, compare **cross-entropy** (fixed ``Linear(dim,
+num_leaves)`` init, same ``target_leaf_index``) using **nav hidden** vs **gold-path-only** hidden
+from a fresh same-weight trunk. When L3 hidden consistency holds, **``ce_nav`` ≈ ``ce_ref``** and
+**``abs_ce_delta``** is near zero.
+
+This is **not** the tree-LM **CE routing vs learned child head** harness (see **X-20260423** /
+**X-20260424** in ``EXPERIMENT_REGISTRY``): there a **trained** pointer can outperform **frozen CE
+argmin**; here the head is **untrained** and only checks **representation alignment** under restore.
 """
 
 from __future__ import annotations
 
 import torch
+import torch.nn as nn
 import torch.nn.functional as F
 
 from .tf_kv_incremental import IncrementalCausalTransformerKV
@@ -18,7 +22,7 @@ from .tf_kv_tree_nav import TfKvNavState, TfKvTruncateNavState, dfs_tf_kv_nav
 from .tree import TreeNode, find_root_leaf_path_ending_at
 
 
-def tf_kv_hidden_consistency_nav_vs_gold_path(
+def tf_kv_fixed_leaf_head_ce_nav_vs_gold_path(
     root: TreeNode,
     target_leaf: TreeNode,
     *,
@@ -28,7 +32,13 @@ def tf_kv_hidden_consistency_nav_vs_gold_path(
     ff_mult: int,
     dev: torch.device,
     use_truncate_restore: bool,
+    num_leaves: int,
+    target_leaf_index: int,
+    probe_seed: int = 12_345,
 ) -> dict[str, object]:
+    if not (0 <= target_leaf_index < num_leaves):
+        raise ValueError("target_leaf_index out of range for num_leaves")
+
     model = IncrementalCausalTransformerKV(
         dim=dim, nhead=nhead, num_layers=tf_layers, ff_mult=ff_mult
     ).to(dev)
@@ -69,15 +79,29 @@ def tf_kv_hidden_consistency_nav_vs_gold_path(
             pos += int(x.shape[1])
     h_ref = ref.read_last_token_hidden()
 
-    h_nav_f = h_nav.float()
-    h_ref_f = h_ref.float()
-    cos_t = F.cosine_similarity(h_nav_f.unsqueeze(0), h_ref_f.unsqueeze(0), dim=-1)
-    cos = float(cos_t.squeeze().item())
-    l2 = float((h_nav_f - h_ref_f).norm().item())
+    g = torch.Generator(device=dev)
+    g.manual_seed(probe_seed)
+    head = nn.Linear(dim, num_leaves, device=dev)
+    nn.init.normal_(head.weight, std=0.02, generator=g)
+    nn.init.zeros_(head.bias)
+
+    y = torch.tensor([target_leaf_index], device=dev, dtype=torch.long)
+    with torch.no_grad():
+        logits_nav = head(h_nav.unsqueeze(0))
+        logits_ref = head(h_ref.unsqueeze(0))
+        ce_nav = float(F.cross_entropy(logits_nav, y).item())
+        ce_ref = float(F.cross_entropy(logits_ref, y).item())
+        max_logit_diff = float((logits_nav - logits_ref).abs().max().item())
+
     return {
         "dfs_ok": True,
         "arm": "truncate_kv_restore" if use_truncate_restore else "full_kv_clone_restore",
         "gold_path_nodes": len(gold),
-        "cosine_last_token_hidden": round(cos, 8),
-        "l2_diff_last_token_hidden": round(l2, 8),
+        "probe_seed": probe_seed,
+        "num_leaves": num_leaves,
+        "target_leaf_index": target_leaf_index,
+        "ce_nav": round(ce_nav, 8),
+        "ce_ref": round(ce_ref, 8),
+        "abs_ce_delta": round(abs(ce_nav - ce_ref), 10),
+        "max_abs_logit_diff": round(max_logit_diff, 10),
     }

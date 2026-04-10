@@ -6,7 +6,7 @@
 2. **TF-KV clone**：``dfs_tf_kv_nav`` + ``TfKvNavState``（**全层 KV 张量 clone/恢复**）。
 3. **TF-KV truncate**：``dfs_tf_kv_nav`` + ``TfKvTruncateNavState``（**``truncate_kv(keep_tokens)``** 回退，对齐 §7.2 ``--branch-truncate-demo`` 语义）。
 
-输出 JSON（``kind=ssgs_vs_kv_tree_nav_wikitext``）：``mamba_arm``、``tf_kv_clone_arm``（原 ``tf_kv_arm`` 键名保留兼容见下）、``tf_kv_truncate_arm``（可用 ``--no-tf-kv-truncate`` 跳过第三臂）。
+输出 JSON（``kind=ssgs_vs_kv_tree_nav_wikitext``）：``mamba_arm``、``tf_kv_clone_arm``（原 ``tf_kv_arm`` 键名保留兼容见下）、``tf_kv_truncate_arm``（可用 ``--no-tf-kv-truncate`` 跳过第三臂）。可选 **L3**：``--l3-tf-kv-hidden``、``--l3-tf-kv-downstream-ce``（固定叶头 CE，与树 LM 可学习导航 **不同 harness**）。
 
 **脚注**：两臂 TF-KV **不是** ``TransformerPathReader``；与 Mamba 的墙钟/显存 **不对等**（步长与模型不同），勿单独宣称「KV 胜 Mamba」。
 
@@ -45,6 +45,7 @@ from src.rag_tree.ssgs import (
     mount_mamba_cache_meta_on_tree,
 )
 from src.rag_tree.tf_kv_incremental import IncrementalCausalTransformerKV
+from src.rag_tree.tf_kv_l3_downstream_probe import tf_kv_fixed_leaf_head_ce_nav_vs_gold_path
 from src.rag_tree.tf_kv_l3_probe import tf_kv_hidden_consistency_nav_vs_gold_path
 from src.rag_tree.tf_kv_tree_nav import (
     TfKvNavState,
@@ -271,6 +272,14 @@ def main() -> int:
             "gold-path-only forward (same weights); adds l3_tf_kv_hidden to JSON"
         ),
     )
+    p.add_argument(
+        "--l3-tf-kv-downstream-ce",
+        action="store_true",
+        help=(
+            "optional L3 downstream: fixed Linear(dim,num_leaves) CE from last hidden "
+            "(nav vs gold-path-only); adds l3_tf_kv_downstream_ce; fails if abs_ce_delta too large"
+        ),
+    )
     p.add_argument("--out-json", type=Path, default=None)
     args = p.parse_args()
 
@@ -402,6 +411,64 @@ def main() -> int:
                 return 1
             if float(block.get("cosine_last_token_hidden", 0.0)) < 0.999:
                 print(f"ERROR: l3_tf_kv_hidden.{arm_key} cosine < 0.999: {block}", file=sys.stderr)
+                return 1
+
+    if args.l3_tf_kv_downstream_ce:
+        clear_tree_snapshots(root)
+        l3ce: dict[str, object] = {
+            "kind": "tf_kv_fixed_leaf_head_ce_nav_vs_gold",
+            "definition": (
+                "Untrained Linear(dim, num_leaves) on last-token hidden after DFS vs gold-path-only "
+                "forward (same trunk weights, probe_seed fixed). "
+                "abs_ce_delta≈0 when representations match (L3 hidden consistency). "
+                "Distinct from tree-LM CE-routing vs learned child head (X-20260423 / X-20260424); "
+                "those use a different task and trained probes—reference only for narrative."
+            ),
+            "probe_seed": 12345,
+            "clone_arm": tf_kv_fixed_leaf_head_ce_nav_vs_gold_path(
+                root,
+                target,
+                dim=args.dim,
+                tf_layers=args.tf_layers,
+                nhead=args.tf_nhead,
+                ff_mult=args.ff_mult,
+                dev=dev,
+                use_truncate_restore=False,
+                num_leaves=n,
+                target_leaf_index=tidx,
+                probe_seed=12345,
+            ),
+        }
+        if not args.no_tf_kv_truncate:
+            clear_tree_snapshots(root)
+            l3ce["truncate_arm"] = tf_kv_fixed_leaf_head_ce_nav_vs_gold_path(
+                root,
+                target,
+                dim=args.dim,
+                tf_layers=args.tf_layers,
+                nhead=args.tf_nhead,
+                ff_mult=args.ff_mult,
+                dev=dev,
+                use_truncate_restore=True,
+                num_leaves=n,
+                target_leaf_index=tidx,
+                probe_seed=12345,
+            )
+        payload["l3_tf_kv_downstream_ce"] = l3ce
+        _L3CE_MAX_DELTA = 0.05
+        for arm_key in ("clone_arm", "truncate_arm"):
+            block = l3ce.get(arm_key)
+            if not isinstance(block, dict):
+                continue
+            if not block.get("dfs_ok", False):
+                print(f"ERROR: l3_tf_kv_downstream_ce.{arm_key} dfs_ok is false: {block}", file=sys.stderr)
+                return 1
+            delta = float(block.get("abs_ce_delta", 99.0))
+            if delta > _L3CE_MAX_DELTA:
+                print(
+                    f"ERROR: l3_tf_kv_downstream_ce.{arm_key} abs_ce_delta {delta} > {_L3CE_MAX_DELTA}: {block}",
+                    file=sys.stderr,
+                )
                 return 1
 
     text = json.dumps(payload, indent=2)

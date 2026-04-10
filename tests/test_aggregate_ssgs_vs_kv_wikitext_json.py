@@ -14,7 +14,7 @@ _REPO = Path(__file__).resolve().parents[1]
 _SCRIPT = _REPO / "scripts" / "research" / "aggregate_ssgs_vs_kv_wikitext_json.py"
 
 
-def _sample_m1_json(*, with_trunc: bool = True, with_l3: bool = False) -> dict:
+def _sample_m1_json(*, with_trunc: bool = True, with_l3: bool = False, with_l3_downstream: bool = False) -> dict:
     d: dict = {
         "kind": "ssgs_vs_kv_tree_nav_wikitext",
         "git_sha": "abc",
@@ -58,6 +58,11 @@ def _sample_m1_json(*, with_trunc: bool = True, with_l3: bool = False) -> dict:
             "clone_arm": {"cosine_last_token_hidden": 1.0},
             "truncate_arm": {"cosine_last_token_hidden": 1.0000001},
         }
+    if with_l3_downstream:
+        d["l3_tf_kv_downstream_ce"] = {
+            "clone_arm": {"ce_nav": 1.1, "ce_ref": 1.1, "abs_ce_delta": 0.0},
+            "truncate_arm": {"ce_nav": 2.0, "ce_ref": 2.0, "abs_ce_delta": 1e-12},
+        }
     return d
 
 
@@ -98,6 +103,22 @@ class TestAggregateSsgsVsKvWikitextJson(unittest.TestCase):
                 rows = list(csv.DictReader(f))
             self.assertEqual(rows[0]["l3_clone_cosine"], "1.0")
             self.assertIn("1.0000001", rows[0]["l3_truncate_cosine"])
+
+    def test_l3_downstream_ce_columns_when_present(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            tdir = Path(td)
+            j = tdir / "m1l3ce.json"
+            j.write_text(json.dumps(_sample_m1_json(with_l3_downstream=True)), encoding="utf-8")
+            out = tdir / "g.csv"
+            subprocess.run(
+                [sys.executable, str(_SCRIPT), str(j), "--out-csv", str(out)],
+                cwd=str(_REPO),
+                check=True,
+            )
+            with out.open(encoding="utf-8", newline="") as f:
+                rows = list(csv.DictReader(f))
+            self.assertEqual(rows[0]["l3_clone_ce_abs_delta"], "0.0")
+            self.assertEqual(rows[0]["l3_truncate_ce_nav"], "2.0")
 
 
 if __name__ == "__main__":

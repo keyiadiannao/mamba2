@@ -23,6 +23,7 @@
 | **M1：SSGS vs TF-KV 同树 DFS（Wikitext）** | 与 `demo_ssgs_mamba_wikitext` 同建树 / `target_leaf_index`；可选 **`--l3-tf-kv-hidden`** | `scripts/research/benchmark_ssgs_vs_kv_tree_nav_wikitext.py` | `tests/test_tf_kv_tree_nav.py`、`tests/test_tf_kv_l3_probe.py` |
 | **M1：多 JSON → 网格 CSV** | **`kind=ssgs_vs_kv_tree_nav_wikitext`**；可选 **L3** 列 | `scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py` | `tests/test_aggregate_ssgs_vs_kv_wikitext_json.py` |
 | **M1：L3 隐状态一致性（TF-KV）** | DFS+restore 末 token hidden vs 金路径纯增量前向（同权重） | `src/rag_tree/tf_kv_l3_probe.py` | `tests/test_tf_kv_l3_probe.py` |
+| **M1：L3 下游 CE（固定叶头）** | 未训练 **`Linear(dim,num_leaves)`** 在 nav / 金路径 hidden 上的 CE；**`abs_ce_delta≈0`** 校验对齐。与 **X-20260423/24** 树 LM「CE 路由 vs **可学习**子头」**不同 harness**（后者可更强，仅叙事参考） | `src/rag_tree/tf_kv_l3_downstream_probe.py` | `tests/test_tf_kv_l3_downstream_probe.py` |
 | **path-batch 同树三 reader** | Wikitext | `scripts/benchmarks/benchmark_wikitext_tree.py` | — |
 | **path-batch + SSGS 同树 smoke（三 reader 一行 JSON）** | — | `run_ssgs_mamba_wikitext_cuda.sh` 中 **`RUN_WIKITEXT_SMOKE=1`** → `benchmark_wikitext_tree` bundle | — |
 | **SSGS 张量微基准（无 LM）** | — | `scripts/benchmarks/benchmark_ssgs_tensor_overhead.py` | — |
@@ -36,7 +37,7 @@
 | 缺口 | 说明 | 建议产出 |
 |------|------|----------|
 | **统一 harness「同树 · 同任务 · 多臂」** | **已有**：`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`（``kind=ssgs_vs_kv_tree_nav_wikitext``）：**Mamba** + **TF-KV clone** + **TF-KV truncate**；**``--l3-tf-kv-hidden``** → **隐状态 L3**；``--no-tf-kv-truncate`` 可关第三臂；**``tf_kv_arm``** = **``tf_kv_clone_arm``**（兼容） | **已登记** **`X-ssgs-vs-kv-tree-nav-m1`**；**叶扫** **``20260410T1012Z``** |
-| **L3 语义对照** | **隐状态层（已有）**：**`--l3-tf-kv-hidden`** → **`l3_tf_kv_hidden`**（末 token hidden **余弦** vs 金路径-only；**非** CE/LM）。**下游层（仍缺）**：错枝→restore→正枝 vs 直达 的 **CE / 小分类头** | **隐状态**：**`tf_kv_l3_probe`**；**下游**：另开 **`kind`** 或 **`--probe-ce-*`**；**禁止**与 path-batch 主表无脚注合并 |
+| **L3 语义对照** | **隐状态（已有）**：**`--l3-tf-kv-hidden`**。**下游（最小 CE）**：**`--l3-tf-kv-downstream-ce`** → **`l3_tf_kv_downstream_ce`**（**固定随机**叶分类头，**非**训练树 LM 子头）。**树 LM 叙事**：**X-20260424** 可学习导航可优于 **X-20260423** 的 CE argmin —— **不同任务**，此处仅脚注参考 | **隐状态**：**`tf_kv_l3_probe`**；**下游 CE**：**`tf_kv_l3_downstream_probe`**；**禁止**与 path-batch 主表无脚注合并 |
 | **树上 TF-KV 与 path-batch 的公平脚注** | `TransformerPathReader` 为整段 SA；§7 TF-KV 为 **玩具 trunk** —— M1 须在 JSON/README 中 **写清基线定义** | 登记册 **「与何物对照」** 一栏一段话 |
 
 ---
@@ -78,7 +79,8 @@
 - [x] **叶数扩展**：**`STAMP=20260410T1012Z`** — **`…_n{8,16,32}_cuda_3arm_20260410T1012Z.json`** 已入仓并写入 **`EXPERIMENT_REGISTRY`** **X-ssgs-vs-kv-tree-nav-m1**；**n64** 等仍可选。  
 - [x] **L3（隐状态）**：**`--l3-tf-kv-hidden`** + **`src/rag_tree/tf_kv_l3_probe.py`**；单测 **`tests/test_tf_kv_l3_probe.py`**。  
 - [x] **网格 CSV**：**`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**；单测 **`tests/test_aggregate_ssgs_vs_kv_wikitext_json.py`**。  
-- [ ] **L3（下游 CE/头）**：仍待；**禁止**与 path-batch 主表无脚注合并。
+- [x] **L3（下游 CE，固定叶头）**：**`--l3-tf-kv-downstream-ce`**；单测 **`tests/test_tf_kv_l3_downstream_probe.py`**。树 LM **可学习 vs CE**（**X-20260423/24**）为**另一 harness**，不作数值可比。  
+- [ ] **L3（训练型子头 / 与树 LM 对齐）**：若要做，须另 **`kind`** 与登记；**禁止**与 path-batch 主表无脚注合并。
 
 ---
 
@@ -101,3 +103,4 @@
 | 2026-04-10 | **叶扫归档**：**`20260410T1012Z`** **n8/n16/n32** 三臂 JSON → **`EXPERIMENT_REGISTRY` M1** 行 |
 | 2026-04-10 | **§2.1** 实测表；**L3 隐状态**：**`tf_kv_l3_probe`**、**`--l3-tf-kv-hidden`** |
 | 2026-04-10 | **网格 CSV**：**`aggregate_ssgs_vs_kv_wikitext_json.py`**、**`ssgs_vs_kv_wikitext_nav_grid.csv`**；检查表勾选 |
+| 2026-04-10 | **L3 下游 CE**：**`--l3-tf-kv-downstream-ce`**、**`tf_kv_l3_downstream_probe.py`**；脚注 **X-20260423/24** 叙事参考 |

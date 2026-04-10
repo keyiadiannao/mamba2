@@ -54,6 +54,12 @@ _CSV_FIELDS = [
     "tf_kv_truncate_kv_calls",
     "l3_clone_cosine",
     "l3_truncate_cosine",
+    "l3_clone_ce_nav",
+    "l3_clone_ce_ref",
+    "l3_clone_ce_abs_delta",
+    "l3_truncate_ce_nav",
+    "l3_truncate_ce_ref",
+    "l3_truncate_ce_abs_delta",
     "kind",
 ]
 
@@ -70,6 +76,9 @@ def _row_from_json(abs_path: Path, data: dict) -> dict[str, object]:
     l3 = data.get("l3_tf_kv_hidden") if isinstance(data.get("l3_tf_kv_hidden"), dict) else {}
     l3c = l3.get("clone_arm") if isinstance(l3.get("clone_arm"), dict) else {}
     l3t = l3.get("truncate_arm") if isinstance(l3.get("truncate_arm"), dict) else {}
+    l3ce = data.get("l3_tf_kv_downstream_ce") if isinstance(data.get("l3_tf_kv_downstream_ce"), dict) else {}
+    l3cec = l3ce.get("clone_arm") if isinstance(l3ce.get("clone_arm"), dict) else {}
+    l3cet = l3ce.get("truncate_arm") if isinstance(l3ce.get("truncate_arm"), dict) else {}
 
     def _f(x: object) -> object:
         return "" if x is None else x
@@ -106,6 +115,12 @@ def _row_from_json(abs_path: Path, data: dict) -> dict[str, object]:
         "tf_kv_truncate_kv_calls": _f(tr.get("truncate_kv_calls")) if tr else "",
         "l3_clone_cosine": _f(l3c.get("cosine_last_token_hidden")),
         "l3_truncate_cosine": _f(l3t.get("cosine_last_token_hidden")),
+        "l3_clone_ce_nav": _f(l3cec.get("ce_nav")),
+        "l3_clone_ce_ref": _f(l3cec.get("ce_ref")),
+        "l3_clone_ce_abs_delta": _f(l3cec.get("abs_ce_delta")),
+        "l3_truncate_ce_nav": _f(l3cet.get("ce_nav")) if l3cet else "",
+        "l3_truncate_ce_ref": _f(l3cet.get("ce_ref")) if l3cet else "",
+        "l3_truncate_ce_abs_delta": _f(l3cet.get("abs_ce_delta")) if l3cet else "",
         "kind": _f(data.get("kind")) or _KIND,
     }
 

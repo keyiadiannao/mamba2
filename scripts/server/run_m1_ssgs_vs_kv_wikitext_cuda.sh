@@ -17,6 +17,9 @@
 # **L3 隐状态**（每叶数 JSON 变大；**n8 单点** 常用）：
 #   M1_WITH_L3=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
 #
+# **L3 下游 CE**（固定随机叶头；与树 LM「可学习 vs CE」**不同 harness**，见脚本 --help / M1 文档）：
+#   M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+#
 # **汇总 CSV**（默认跑）：**`ssgs_vs_kv_tree_nav_wikitext_*.json`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**  
 #   跳过：**`SKIP_M1_AGGREGATE=1`**；与旧表合并：**`AGGREGATE_APPEND=1`**
 #
@@ -37,6 +40,9 @@ if [[ "${M1_NO_TRUNCATE:-0}" == "1" ]]; then
 fi
 if [[ "${M1_WITH_L3:-0}" == "1" ]]; then
   EXTRA_FLAGS+=(--l3-tf-kv-hidden)
+fi
+if [[ "${M1_WITH_L3_DOWNSTREAM_CE:-0}" == "1" ]]; then
+  EXTRA_FLAGS+=(--l3-tf-kv-downstream-ce)
 fi
 
 SUFFIX="3arm"

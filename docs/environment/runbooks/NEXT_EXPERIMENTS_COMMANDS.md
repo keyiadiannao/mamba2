@@ -278,6 +278,8 @@ bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
 
 **可选 L3（隐状态一致性，非 CE）**：在 **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`** 上加 **`--l3-tf-kv-hidden`**，JSON 增加 **`l3_tf_kv_hidden`**（**clone** / **truncate** 臂各 **余弦** vs 金路径-only）。见 **`SSGS_MAINLINE_M1.md`** §2.1、**`tf_kv_l3_probe.py`**。
 
+**可选 L3 下游（固定叶头 CE）**：**`--l3-tf-kv-downstream-ce`** → **`l3_tf_kv_downstream_ce`**（未训练 **`Linear(dim,num_leaves)`**，**`abs_ce_delta`** 应极小）。与 **树 LM** **X-20260423 / X-20260424**（**CE 路由 vs 可学习子头**）**不同 harness**，登记与成文勿混表。云端：**`M1_WITH_L3_DOWNSTREAM_CE=1`**。
+
 ---
 
 ## 11. 本机 **RTX 5060**（Windows；服务器忙时）
@@ -307,3 +309,4 @@ bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
 | 2026-04-07 | **§10.1**：**M1** **`run_m1_ssgs_vs_kv_wikitext_cuda.sh`**（**n8/n16/n32** 三臂）；**`SSGS_MAINLINE_M1.md`** |
 | 2026-04-10 | **§10.1**：**`--l3-tf-kv-hidden`**（**`l3_tf_kv_hidden`**）；**`tf_kv_l3_probe.py`** |
 | 2026-04-10 | **§10.1**：**`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**；**`SKIP_M1_AGGREGATE` / `AGGREGATE_APPEND`** |
+| 2026-04-10 | **§10.1**：**`--l3-tf-kv-downstream-ce`**、**`M1_WITH_L3_DOWNSTREAM_CE`**（**`l3_tf_kv_downstream_ce`**） |
