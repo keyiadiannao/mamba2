@@ -1,7 +1,7 @@
 # 投稿成文包（P0：A1–A4）
 
 > **用途**：把 **`PHASE1_MANUSCRIPT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**、**`EXPERIMENT_REGISTRY.md`** 压成 **可粘贴** 的叙事与脚注；**登记真相**仍以 **`EXPERIMENT_REGISTRY.md`** 为准。  
-> **生成**：按 **`NEXT_RESEARCH_PLAN.md`** **「无云端时：标准推进」** §A 维护；路径核对于 **2026-04-10** 对仓库做一次存在性检查。
+> **生成**：按 **`NEXT_RESEARCH_PLAN.md`** **「无云端时：标准推进」** §A 维护；路径核对 **已扫仓库**（**2026-04-10**）。
 
 ---
 
@@ -22,21 +22,41 @@
 - **5060 + HF naive** 与 **3090 + fused** **禁止无脚注同表**。  
 - **path-batch**、**§7 毫秒列**、**SSGS 快照/回滚计数**、**A2-S3 准确率** 为 **四条（及以上）独立测量轴**。
 
+### A1b · 摘要 / 引言用草稿（摘自 `PHASE1_MANUSCRIPT.md`，可再压缩到字数限制）
+
+**中文摘要（约 150 字量级；投稿前按会议删改）**
+
+在树状索引上，以同一批根—叶路径对 Transformer、GRU、Mamba-2 三类路径 reader 做批量前向，测量步均耗时与 CUDA 峰值显存。实验表明：Mamba-2 path reader 的可观测效率对是否启用 `mamba_ssm` 融合实现极为敏感——无融合核时峰值可达 GiB 量级，与 Transformer/GRU 的百 MiB 量级形成反差；融合后同网格峰值可降至约 51–217 MiB（随叶数与 dim 可升至数百 MiB–约 1 GiB 以下，仍与 naive 分列）。故在树形 RAG 的 path-batch 负载下，不能仅用 SSM 名义复杂度替代实测效率；主文须同机、同 commit 报告 naive 与 fused 对照。阶段 2 在 Wikitext-2 浅树上沿用同一 harness，已归档四格、dim256、叶数 8→256 等登记级效率曲线；并以叶对 cohort + 岭回归给出与墙钟分列的效果 proxy。§7 玩具协议已扩展 depth 5–6；SSGS×Mamba 与主图非同一 harness；Wikitext 同树上已归档 snapshots/rollbacks 与 grid（§4、§5）。
+
+**英文摘要（约 120 词；见 `PHASE1_MANUSCRIPT.md` §7 英文摘要全文）**
+
+可直接复制 **`PHASE1_MANUSCRIPT.md`** 从 *We benchmark Transformer, GRU…* 起一整段；投稿前统一 **时态** 与 **期刊缩写**。
+
+**引言首段提示（非正文）**  
+先落 **树路径编码 + path-batch harness**，再点出 **naive vs fused** 与 **真语料扩展**；**勿**在首段混谈 Agent 端到端或「检索头」——细节放 **§9 / 附录**。
+
 ---
 
 ## A2 · 归档路径核对（存在性自检）
 
-| 类别 | 路径（相对仓库根） | 状态 |
-|------|---------------------|------|
-| 主图 PNG ×3 | `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png` | 已存在 |
-| 主文 CSV fused | `results/metrics_result/paper_main_dim128_localgrid_paper_main_v1.csv`；`paper_main_dim{256,384}_paper_main_v1.csv` | dim128 已抽检；余请投稿前再扫 |
-| 主文 CSV naive | `paper_main_*_paper_main_naive_v1.csv`（同上 dim 模式） | 投稿前全量核对 |
-| Manifest | `results/metrics_result/paper_main_manifest_paper_main_{v1,naive_v1}.txt` | 已存在 |
-| 阶段 2 叶数扫描（例） | `results/metrics_result/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n{8,16,32,64}_c8.json` | n8–64 四文件已存在 |
-| SSGS grid | `results/metrics_result/ssgs_mamba_wikitext_grid.csv` | 投稿前核对登记行 |
-| 本机 5060 登记 JSON | `results/metrics/probe_path_reader_linear_text*_heldout_local5060.json`、`task_wikitext_sibling8_local5060_cpu_20260410.json` 等 | 见 **EXPERIMENT_REGISTRY** **X-20260410-*** |
+**仓库扫描（2026-04-10）**：下列路径均已 **存在**（相对仓库根）。
 
-**动作**：投稿前用 **`git status`** + **`PHASE1_MANUSCRIPT` §5.1** 全表再扫一遍；重跑数据后以 JSON 内 **`git_sha`** 为准更新正文。
+| 类别 | 路径 | 状态 |
+|------|------|------|
+| 主图 PNG ×3 | `results/metrics/figures/mamba_3090_naive_vs_fused_dim128_paper_main_v1.png` 等 dim256/384 | ✅ |
+| 主文 CSV **fused** | `paper_main_dim128_localgrid_paper_main_v1.csv`、`paper_main_dim256_paper_main_v1.csv`、`paper_main_dim384_paper_main_v1.csv` | ✅ |
+| 主文 CSV **naive** | `paper_main_dim128_localgrid_paper_main_naive_v1.csv`、`paper_main_dim256_paper_main_naive_v1.csv`、`paper_main_dim384_paper_main_naive_v1.csv` | ✅ |
+| Manifest | `paper_main_manifest_paper_main_v1.txt`、`paper_main_manifest_paper_main_naive_v1.txt` | ✅ |
+| 5060 Wikitext 四格 JSON | `benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json` | ✅ |
+| 5060 汇总 CSV | `benchmark_wikitext_5060_cuda_grid_20260407.csv` | ✅ |
+| 阶段 2 叶数扫描 n8–64 | `benchmark_wikitext_stage2_leavescale_20260409T1257Z_n{8,16,32,64}_c8.json` | ✅ |
+| SSGS grid | `ssgs_mamba_wikitext_grid.csv` | ✅ |
+
+**投稿前仍须人工核对**：正文引用的 **每一个** 文件名与 **`PHASE1_MANUSCRIPT` §5.1** 表 **逐字一致**；若重跑数据，以 JSON **`git_sha`** 更新 **方法/附录**。
+
+**本机 5060 登记 JSON**（成文脚注用）：**`EXPERIMENT_REGISTRY`** **X-20260410-***、**X-20260407-local5060-bs2plus-rerun**；路径见 **`LOCAL_5060_RUNBOOK.md`**。
+
+**动作**：投稿前 **`git status`** 干净；**§7.5 S5** 总表若补，另开一行登记（**可选**）。
 
 ---
 
@@ -69,3 +89,4 @@
 | 日期 | 说明 |
 |------|------|
 | 2026-04-10 | 初版：A1–A4；对接 **`NEXT_RESEARCH_PLAN`** **无云端 §A** |
+| 2026-04-10 | **A1b** 中英摘要/引言提示；**A2** 全表 **✅** 存在性扫描（paper_main 6 CSV、5060 四 JSON+grid、leavescale n8–64、SSGS grid） |

@@ -62,11 +62,11 @@
 
 ### A. 成文（P0，优先）
 
-**成文包（A1–A4 正文与脚注草稿）**：**`docs/overview/SUBMISSION_PACK.md`**（一页故事线、路径核对表、可粘贴边界句、检索头短段）。
+**成文包（A1–A4 正文与脚注草稿）**：**`docs/overview/SUBMISSION_PACK.md`**（一页故事线、路径核对表、可粘贴边界句、检索头短段；**§A1b** 摘要/引言草稿）。
 
 | 顺序 | 任务 | 产出/自检 |
 |------|------|-----------|
-| **A1** | **主叙事一页** | **`SUBMISSION_PACK.md` §A1**；按需改写成投稿摘要/引言 |
+| **A1** | **主叙事一页** | **`SUBMISSION_PACK.md` §A1**；摘要/引言句见 **§A1b** |
 | **A2** | **数字与路径核对** | **`SUBMISSION_PACK.md` §A2** + 全表补扫 **`PHASE1_MANUSCRIPT` §5.1** |
 | **A3** | **五轴脚注成句** | **`SUBMISSION_PACK.md` §A3**；完整表见 **`FIGURE_CAPTIONS_STAGE1.md`** |
 | **A4** | **检索头边界** | **`SUBMISSION_PACK.md` §A4**；全文见 **`PHASE1_MANUSCRIPT` §9** |

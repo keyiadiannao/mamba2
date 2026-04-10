@@ -227,3 +227,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-10 | **§10 指针**：**`NEXT_RESEARCH_PLAN.md`** 增 **「项目现状快照」**、**「后续方向」**；本机 **5060** 轨道 **无阻塞项**；全量 **`pytest tests/`** **20** passed |
 | 2026-04-10 | **§10**：**「下一步」** 与 **`NEXT_RESEARCH_PLAN`「无云端时：标准推进」** 对齐；**云端暂不可用时** 以 **P0 成文** 为第一优先 |
 | 2026-04-10 | **§10**：**`docs/overview/SUBMISSION_PACK.md`**（**A1–A4** 投稿叙事与脚注草稿） |
+| 2026-04-10 | **`SUBMISSION_PACK`**：**§A1b** 摘要草稿；**§A2** 与 **`metrics_result`** 路径扫描对齐 |
