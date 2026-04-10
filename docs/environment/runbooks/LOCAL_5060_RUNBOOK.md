@@ -131,7 +131,7 @@ py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q
 & "C:\Users\26433\miniconda3\envs\mamba2\python.exe" -m pytest tests/ -q
 ```
 
-**已验证**：**约 21 passed**（含 **`test_tf_kv_trajectory_l3`** 等须 **torch**；以 **`pytest tests/ -q`** 实际计数为准；耗时约 **15 s** 量级）。
+**已验证（AutoDL `mamba2`）**：**`python -m pytest tests/ -q`** → **28 passed**, **4 subtests passed**, **~21 s**（本机 Windows 可能略异；以当次输出为准）。
 
 ### 5.1 可选：机制线 / §7 复跑（与 **`NEXT_RESEARCH_PLAN`** **「算力不可用时的备选推进」§B**）
 

@@ -36,7 +36,7 @@
 
 ### 1. 测试与仓库卫生
 
-- **`pytest tests/`**（须 **`mamba2`** 等有 **torch** 的环境）：**约 21 passed**（全量；以 **`pytest tests/ -q` 实际计数为准**；约 **15 s** 量级，以本机为准）。
+- **`python -m pytest tests/ -q`**（须 **`mamba2`** 等有 **torch** 的环境）：**AutoDL 实测** **28 passed**, **4 subtests**, **~21 s**（以你当次输出为准）。
 - **`py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q`**：**无 torch** 亦可跑（**2** 条），见 **`LOCAL_5060_RUNBOOK` §5**。
 - **`git status`**：提交前自检应保持 **干净**；勿手改污染 **`metrics_result/`** 归档。
 
@@ -110,7 +110,7 @@
 |------|------|------|
 | **B1** | **`probe_retrieval_correlation.py --cpu`** | **B-S2** 附录；**`RETRIEVAL_HEAD_NOTES.md` §2**；与 path-batch **分列** |
 | **B2** | **`benchmark_mamba2_cache_snapshot_segments.py --device cpu`** | §7 **S1** 本机复现/更新 JSON（与 **`docs/environment/runbooks/SERVER_SWEEP_RUNBOOK.md`** 协议一致） |
-| **B3** | **`pytest tests/`** | **约 21 passed**（以 torch 环境 **`pytest tests/ -q`** 为准）；提交前 **smoke** |
+| **B3** | **`python -m pytest tests/ -q`** | **28 passed + 4 subtests**（**AutoDL** 样例；以当次为准）；提交前 **smoke** |
 
 **已跑满时不必重复**：本机 **B-S2+**、**A2-S3 n8**、**Wikitext CPU/CUDA smoke**、**SSGS 轻量** 等见 **「本机 5060 已完成」** 清单。
 
@@ -139,7 +139,7 @@
 - [x] **SSGS × Wikitext（轻量）**：**`demo_ssgs_mamba_wikitext.py`** **`--cpu`** **n8 c4 dim64** → **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**X-20260410-local5060-ssgs-wikitext-n8-c4d64**；**snapshots 7 / rollbacks 11 / leaf_checks 8**）。与 **`metrics_result` 归档 grid（c8 dim128）** **分列**。
 - [x] **B-S2+ BCE 50 步（本机）**：**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**（**X-20260410-local5060-bs2plus-train50-n16**；与 **`LOCAL_5060_RUNBOOK` §2** 可选行一致）。
 - [x] **Wikitext path-batch CPU smoke**：**`benchmark_wikitext_local5060_cpu_20260410T1220Z_n8_c8.json`**（**`WARMUP=1` `REPS=2`**；**X-20260410-local5060-wikitext-cpu-n8c8**）。
-- [x] **回归**：**`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`**（**2** passed，**`py -3`** 可无 torch）；**`pytest tests/`** 全量（**约 21** passed，**`mamba2` Python**，约 **15 s**；以实际计数为准）。
+- [x] **回归**：**`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`**（**2** passed，**`py -3`** 可无 torch）；**`python -m pytest tests/ -q`** 全量（**AutoDL**：**28 passed**, **4 subtests**, **~21 s**）。
 
 **服务器有空时（可选一条即可；建议优先级自上而下）**
 
@@ -292,3 +292,4 @@ flowchart LR
 | 2026-04-11 | **§0**：全局阶段 / 分阶段路线图 / **下一步**；**七轴** + **SSGS 13 行** + **P1/P2 已划**；**pytest** 改为 **以实际计数为准** |
 | 2026-04-11 | **§0.1**：**P0 收口 ≠ 研究终点**；指针 **`RESEARCH_STATUS` §1.5** 北星（快照回溯 × 树 RAG） |
 | 2026-04-11 | **`RESEARCH_PHASES_0_TO_DONE.md`**：阶段 0–7 表 + 阶段 5 清单；篇首与 **`docs/README`** 互链 |
+| 2026-04-11 | **§1 / 收口清单 / §B B3**：**AutoDL** 全量 **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**, **~21 s** |

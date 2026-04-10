@@ -235,7 +235,8 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-10 | **§4 / §5 / §5.1 / §8.2**：本机 **5060 CPU** **A2-S3 n8 stratified** + **SSGS c4 d64** 跑例入表；登记 **X-20260410-local5060-a2s3-n8-strat**、**X-20260410-local5060-ssgs-wikitext-n8-c4d64** |
 | 2026-04-10 | **§4 / §5 / §8.2 / §8.3 / §10**：**3090** **A2-S3** 复跑 **0820Z/0850Z** + **TSV**；**dim256** **`0847Z` minimal**；**SSGS grid** 后扩至 **13 行**；**§8.2** 补 **A2-S3 研究含义**（与墙钟 **分列** 的 **表征可读性 proxy**） |
 | 2026-04-10 | **§5**：本机 **B-S2+ train50**（**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**）、**Wikitext CPU smoke**（**`benchmark_wikitext_local5060_cpu_*_n8_c8.json`**）；登记 **X-20260410-local5060-bs2plus-train50-n16**、**X-20260410-local5060-wikitext-cpu-n8c8** |
-| 2026-04-10 | **§10 指针**：**`NEXT_RESEARCH_PLAN.md`** 增 **「项目现状快照」**、**「后续方向」**；本机 **5060** 轨道 **无阻塞项**；全量 **`pytest tests/`** **约 21** passed（以 torch 环境计数为准） |
+| 2026-04-10 | **§10 指针**：**`NEXT_RESEARCH_PLAN.md`** 增 **「项目现状快照」**、**「后续方向」**；本机 **5060** 轨道 **无阻塞项**；全量 **`pytest`** 计数见 **`NEXT_RESEARCH_PLAN` §1**（随测试增减） |
+| 2026-04-11 | **AutoDL**：**`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**, **~21 s** |
 | 2026-04-10 | **§10**：**「下一步」** 与 **`NEXT_RESEARCH_PLAN`** 默认里程碑对齐；**算力紧张时** 以 **P0 成文** 为第一优先 |
 | 2026-04-10 | **§10**：**`docs/overview/execution/SUBMISSION_PACK.md`**（**A1–A4** 投稿叙事与脚注草稿） |
 | 2026-04-10 | **`SUBMISSION_PACK`**：**§A1b** 摘要草稿；**§A2** 与 **`metrics_result`** 路径扫描对齐 |

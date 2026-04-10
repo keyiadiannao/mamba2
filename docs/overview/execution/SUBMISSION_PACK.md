@@ -150,7 +150,7 @@ Our primary figures report **path-batch** wall-clock and **Mamba-2 peak CUDA mem
 
 | 检查 | 命令 / 动作 |
 |------|-------------|
-| **单元与协议测试** | **`mamba2` Python**：`python -m pytest tests/ -q`（**约 21** passed；以实际计数为准） |
+| **单元与协议测试** | **`mamba2` Python**：`python -m pytest tests/ -q`（**AutoDL 实测**：**28 passed**, **4 subtests passed**, **~21 s**；随测试增减会变） |
 | **无 torch 快测** | `py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q` |
 | **工作区** | **`git status`** 干净；勿手改 **`metrics_result/`** 归档 |
 | **可选本机复跑** | **`LOCAL_5060_RUNBOOK.md` §5.1**（§7 S1/S2 CPU、B-S2 gpt2 topic） |
@@ -218,3 +218,4 @@ Our primary figures report **path-batch** wall-clock and **Mamba-2 peak CUDA mem
 | 2026-04-11 | **§A2**：**核对摘要**（basename；**M1 行数 = 聚合 stdout `N`**）；**§A3b** M1 一句同步 |
 | 2026-04-11 | **§A2/§A3b**：**M1 N** 随 JSON 个数（例 **15** on AutoDL）；**pytest** → **`python -m pytest`**（§12） |
 | 2026-04-11 | **§A1 问题段**：**主验证轴**（树+Mamba+SSGS/M1）与 **副线**（检索/探针）；对齐 **`PROJECT_MASTER_PLAN` §1.0** |
+| 2026-04-11 | **提交前检查**：**AutoDL** **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests** |
