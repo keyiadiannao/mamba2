@@ -1,4 +1,4 @@
-# 投稿成文包（P0：A1–A7）
+# 投稿成文包（P0：A1–A8）
 
 > **用途**：把 **`docs/experiments/phases/PHASE1_MANUSCRIPT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**、**`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 压成 **可粘贴** 的叙事与脚注；**登记真相**仍以 **登记册** 为准。  
 > **生成**：与 **`NEXT_RESEARCH_PLAN.md`** **「算力不可用时的备选推进」** §A 对齐（**P0 成文** 主路径相同）；路径核对 **已扫仓库**（**2026-04-10**）。
@@ -39,24 +39,55 @@
 
 ## A2 · 归档路径核对（存在性自检）
 
-**仓库扫描（2026-04-10）**：下列路径均已 **存在**（相对仓库根）。
+**仓库扫描（2026-04-10）**：下列路径均已 **存在**（相对仓库根 **`results/metrics_result/`** 除非另写 **`results/metrics/`**）。
 
-| 类别 | 路径 | 状态 |
+| 类别 | 路径（投稿正文/附录请 **逐字** 引用 basename） | 状态 |
 |------|------|------|
-| 主图 PNG ×3 | `results/metrics/figures/mamba_3090_naive_vs_fused_dim128_paper_main_v1.png` 等 dim256/384 | ✅ |
-| 主文 CSV **fused** | `paper_main_dim128_localgrid_paper_main_v1.csv`、`paper_main_dim256_paper_main_v1.csv`、`paper_main_dim384_paper_main_v1.csv` | ✅ |
-| 主文 CSV **naive** | `paper_main_dim128_localgrid_paper_main_naive_v1.csv`、`paper_main_dim256_paper_main_naive_v1.csv`、`paper_main_dim384_paper_main_naive_v1.csv` | ✅ |
-| Manifest | `paper_main_manifest_paper_main_v1.txt`、`paper_main_manifest_paper_main_naive_v1.txt` | ✅ |
-| 5060 Wikitext 四格 JSON | `benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json` | ✅ |
-| 5060 汇总 CSV | `benchmark_wikitext_5060_cuda_grid_20260407.csv` | ✅ |
-| 阶段 2 叶数扫描 n8–64 | `benchmark_wikitext_stage2_leavescale_20260409T1257Z_n{8,16,32,64}_c8.json` | ✅ |
-| SSGS grid | `ssgs_mamba_wikitext_grid.csv` | ✅ |
+| 主图 PNG ×3 | `results/metrics/figures/mamba_3090_naive_vs_fused_dim128_paper_main_v1.png` 及 **dim256 / dim384** 同名模式 | ✅ |
+| 主文 CSV **fused** | `results/metrics_result/paper_main_dim128_localgrid_paper_main_v1.csv`、`paper_main_dim256_paper_main_v1.csv`、`paper_main_dim384_paper_main_v1.csv` | ✅ |
+| 主文 CSV **naive** | `…/paper_main_dim128_localgrid_paper_main_naive_v1.csv`、`paper_main_dim256_paper_main_naive_v1.csv`、`paper_main_dim384_paper_main_naive_v1.csv` | ✅ |
+| Manifest | `…/paper_main_manifest_paper_main_v1.txt`、`…/paper_main_manifest_paper_main_naive_v1.txt` | ✅ |
+| 5060 Wikitext 四格 JSON | `…/benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json` | ✅ |
+| 5060 汇总 CSV | `…/benchmark_wikitext_5060_cuda_grid_20260407.csv` | ✅ |
+| 阶段 2 **A2-S2** 四格 fused | `…/benchmark_wikitext_stage2_fused_20260409T1035Z_n{8,16}_c{8,12}.json`、**`…_grid_20260409T1035Z.csv`**、**`…_manifest_20260409T1035Z.txt`**；R2 另 **`…_fused_r2_20260409T1110Z_*`** | ✅ |
+| 阶段 2 **dim256** 四格 | `…/benchmark_wikitext_stage2_dim256_20260409T1137Z_n{8,16}_c{8,12}.json`、**`…_grid_20260409T1137Z.csv`**、manifest | ✅ |
+| 阶段 2 **dim256** minimal 复跑 | `…/benchmark_wikitext_stage2_dim256_20260410T0847Z_n8_c8.json`、`…_n16_c8.json`、`…_n16_c12.json`、**`…_grid_20260410T0847Z.csv`**、**`…_manifest_20260410T0847Z.txt`** | ✅ |
+| 阶段 2 叶数扫描 n8–64 | `…/benchmark_wikitext_stage2_leavescale_20260409T1257Z_n{8,16,32,64}_c8.json`、grid + manifest | ✅ |
+| 阶段 2 XL n128/n256 | `…/benchmark_wikitext_stage2_leavescale_xl_20260409T1322Z_n128_c8.json`、`…_20260409T1324Z_n256_c8.json`、combined CSV | ✅ |
+| §7 depth 5–6 | `…/stage2_leavescale_xl_s{1..4}_*_d{5,6}_20260409T1341Z.json`（文件名前缀历史 **`TAG` 残留**，见 **`EXPERIMENT_REGISTRY` X-section7**）、manifest | ✅ |
+| **A2-S3** init×5 | `…/task_wikitext_sibling16_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json`、**`…_20260410T0820Z.json`**（与 1438Z 聚合一致）；**sibling32** **`…_20260409T1438Z.json`**、**`…_20260410T0850Z.json`** | ✅ |
+| **A2-S3 贴表 TSV** | `…/task_wikitext_sibling16_c8_leafheldout6_initseed5_summary_20260410T0820Z.tsv`、`…_sibling32_…_summary_20260410T0850Z.tsv` | ✅ |
+| **SSGS** 汇总 | **`…/ssgs_mamba_wikitext_grid.csv`**（通配 **`ssgs_mamba_wikitext_*.json`** 合并；本仓 **11 行** 量级，含多 **STAMP**） | ✅ |
+| **path-batch smoke（同树三 reader）** | `…/benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`（**辅**；与 SSGS **分列**） | ✅ |
 
-**投稿前仍须人工核对**：正文引用的 **每一个** 文件名与 **`PHASE1_MANUSCRIPT` §5.1** 表 **逐字一致**；若重跑数据，以 JSON **`git_sha`** 更新 **方法/附录**。
+**脚注规则（防混）**：**`aggregate_*_grid.csv`** 若含列 **`json_path`** 为 **服务器绝对路径**，正文/附录 **只写 basename**（上表右列 **文件名**）即可，与 **`EXPERIMENT_REGISTRY`** 一致。
+
+**投稿前仍须人工核对**：正文引用的 **每一个** 文件名与 **`PHASE1_MANUSCRIPT` §5.1**、上表 **逐字一致**；若重跑数据，以 JSON **`git_sha`** 更新 **方法/附录**。
 
 **本机 5060 登记 JSON**（成文脚注用）：**`EXPERIMENT_REGISTRY`** **X-20260410-***、**X-20260407-local5060-bs2plus-rerun**；路径见 **`LOCAL_5060_RUNBOOK.md`**。
 
 **动作**：投稿前 **`git status`** 干净；**§7.5 S5** 总表若补，另开一行登记（**可选**）。
+
+---
+
+## A2.1 · 主文/附录引用习惯（与上表一致）
+
+- **阶段 2 path-batch（3090 fused）**：优先写 **登记 STAMP** + **四格 basename**，例：`benchmark_wikitext_stage2_fused_20260409T1035Z_n16_c8.json`；**dim256** 写 **`1137Z` 全四格** 或 **`0847Z` minimal** 三格，**勿**混为同一表无说明。  
+- **A2-S3**：附录表可直接引用 **`task_wikitext_*_summary_20260410T{0820,0850}Z.tsv`**；若审稿人要原始 run，再列 **10** 个 **`initseed*_1438Z`/`0820Z`/`0850Z`** JSON。  
+- **SSGS**：主文一句 **`ssgs_mamba_wikitext_grid.csv`** + **「通配合并、当前 11 行」** 即可；**禁止**与 path-batch **`per_step_s`** 同纵轴。  
+- **本机 5060**：路径多在 **`results/metrics/`**（非 **`metrics_result`**），见 **`EXPERIMENT_REGISTRY` X-20260410-***。
+
+---
+
+## A8 · 投稿对齐之后的下一步（按优先级）
+
+1. **P0 冻结叙事**：将 **§A3 五轴** + **§A2.1** 句式 **粘贴进 LaTeX/Word** 脚注或方法段；**Figure 1** 三张 PNG 与 **CSV** 已在仓内 — **勿再改文件名**。  
+2. **P0 可选**：**§7.5 S5** 总表（**`RESEARCH_NOTES` §7**）— **仅**在篇幅允许时补。  
+3. **P1（3090 一条即可）**：**B-S2+ CUDA** 单行 JSON（**`probe_path_reader_linear.py`** 去 **`--cpu`**），**新开登记行** — **非**阻塞主结论。  
+4. **P2（辅线）**：**`git pull` 后** SSGS **n8 一格** 刷新 **`git_sha`**，或 **SSGS n128** + **`aggregate_ssgs_mamba_wikitext_json.py --append`**。  
+5. **搁置**：重复跑已有 **A2-S3** / **leavescale** 全网格（除非审稿人点名）。
+
+详见 **`NEXT_RESEARCH_PLAN.md`** **「当前收口清单」** 与 **`PHASE1_MANUSCRIPT.md` §10**。
 
 ---
 
@@ -147,3 +178,5 @@
 | 2026-04-10 | **A1b** 中英摘要/引言提示；**A2** 全表 **✅** 存在性扫描（paper_main 6 CSV、5060 四 JSON+grid、leavescale n8–64、SSGS grid） |
 | 2026-04-10 | **提交前检查**表（pytest / git）；与 **`LOCAL_5060_RUNBOOK` §5.1** 对齐 |
 | 2026-04-10 | **A5–A7**：正文骨架（引言/方法/结果/讨论）、**A6** 结果句模板、**A7** 本机 **高性价比/搁置** |
+| 2026-04-10 | **A2 扩表**：与 **`metrics_result`** **逐字对齐** — **dim256 `0847Z`**、**A2-S3 `0820Z`/`0850Z`+TSV**、**SSGS 11 行**、**ssgs_bundle `0803Z`**、**`json_path`** 脚注规则 |
+| 2026-04-10 | **A2.1** 主文引用习惯；**A8** 对齐后下一步（P0–P2） |

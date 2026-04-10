@@ -25,23 +25,37 @@
 
 ---
 
+## 3. 正式开工：**Mamba + 树 + SSGS** 整合主线（**Phase M1**）
+
+> **唯一详表**：**`docs/experiments/planning/SSGS_MAINLINE_M1.md`**（工具盘点、缺口、四周目标、检查表）。  
+> **M1 CUDA 归档**：**`EXPERIMENT_REGISTRY.md`** **`X-ssgs-vs-kv-tree-nav-m1`**；**三臂** **`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm.json`**（**`tf_kv_truncate_arm`**）；**两臂-only** **`…_n8_cuda.json`**。**L3 探针** 仍见 **`SSGS_MAINLINE_M1.md`**。
+
+**已有**：`dfs_ssgs_mamba`、Wikitext 同树 **`demo_ssgs_mamba_wikitext`**、聚合与 **`run_ssgs_mamba_wikitext_cuda.sh`**、§7 **Mamba 快照/恢复** 与 **TF-KV 错枝 demo**、**pytest** 覆盖 SSGS 核心。  
+**待做**：**同一树任务**下 **SSGS 臂 vs KV/重算基线臂** 的 **统一 JSON harness**（见 **`SSGS_MAINLINE_M1.md` §2**）。
+
+**与 P0/P1 关系**：**P0 成文** 可并行；**M1** 占用 **设计与 3090 实测** 时间，**优先于** 「无新假说的 path-batch 再扫一格」。**P1 B-S2+ CUDA** 仍为 **检索副线**，**不替代 M1**。
+
+---
+
 ## 后续方向（推荐优先级）
 
 | 优先级 | 内容 | 说明 |
 |--------|------|------|
 | **P0** | **成文整合** | **`PHASE1_MANUSCRIPT`** / **`FIGURE_CAPTIONS_STAGE1`** / **`EXPERIMENT_REGISTRY`** 对齐投稿版；**§7.5 S5** 总表 **视截稿篇幅** |
-| **P1** | **3090：B-S2+ CUDA 一条** | **在 3090 上执行**；与 **本机 B-S2+ CPU** **分列**；**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §6** |
-| **P2** | **SSGS 辅线** | **sha 刷新**、**n128**；**非**主线阻塞 |
-| **P3** | **A2-S3 可选加压** | **云端或本机 CPU**（视脚本）；**`root_child`**、**`leaf_heldout`**、**`split-seed`** 等；与 **init×5** **分列** 说明 |
-| **P★** | **（可选 breakthrough）L3 语义 PoC** | 见 **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §3.5**；**不纳入** 下表默认里程碑；**独立 1–2 周窗口**再排，**不抢 P0 工时**。 |
+| **M1** | **SSGS 整合对照（主线科研）** | **`SSGS_MAINLINE_M1.md`**：同树 **快照回溯 vs KV/重算** 可并表 harness + 登记；**L3** 证据层级见 **`RESEARCH_STATUS` §3.5** |
+| **P1** | **3090：B-S2+ CUDA 一条** | **在 3090 上执行**；与 **本机 B-S2+ CPU** **分列**；**`NEXT_EXPERIMENTS_COMMANDS.md` §6**；**副线** |
+| **P2** | **SSGS 辅线** | **sha 刷新**、**n128**；**非** M1 阻塞 |
+| **P3** | **A2-S3 可选加压** | **云端或本机 CPU**（视脚本）；与 **init×5** **分列** 说明 |
+| **P★** | **（可选）L3 语义加细** | 与 **M1** 重叠时可 **合并排期**；独立窗口见 **`RESEARCH_STATUS` §3.5** |
 
-**默认里程碑顺序（与 `PROJECT_MASTER_PLAN`、`RESEARCH_STATUS` §5 一致；不因 §3.5 讨论而改变）**
+**默认里程碑顺序（2026-04-10 起）**
 
-1. **P0 成文**（主线；**与 P1/P2 可交错**：不占 GPU 的段落先写，**有卡时**跑登记命令）。  
-2. **3090 可用时**：**P1** → **P2**（辅）→ **P3**（可选加压）。**（实例当前可用；以你实际上机为准。）**  
-3. **P★**：仅当 **主动选择**「叙事升级 + 有整块时间」时启动；**否则** 可全程 **不选**。
+1. **P0 成文** 与 **M1 设计/实现** **并行**（文档不占 GPU；**harness 开发**可本机 + 3090 实测）。  
+2. **M1 首版 JSON 绿** 优先于 **无假设的 path-batch 扩格**。  
+3. **3090**：**M1** 与 **P1 B-S2+ CUDA** 可 **按周交错**；**P2** 辅线最后。  
+4. **P3**、**P★** 仍 **可选**。
 
-**原则**：**不**在无脚注下混表 **5060 naive** 与 **3090 fused**；**不**混读 **path-batch 毫秒/峰值**、**§7 单列毫秒**、**SSGS 快照计数**、**A2-S3 准确率**（**`PHASE1_MANUSCRIPT` §5.1**）。**§3.5** 对外部讨论的批判性接收 **不改变** 上述顺序。
+**原则**：**不**在无脚注下混表 **5060 naive** 与 **3090 fused**；**不**混读 **path-batch 毫秒/峰值**、**§7 单列毫秒**、**SSGS 快照计数**、**A2-S3 准确率**、**M1 双臂对照**（**`PHASE1_MANUSCRIPT` §5.1** + **`SSGS_MAINLINE_M1.md`**）。**§3.5** 证据层级：**M1** 目标 **L3**，**不**跳级写成 L4 Agent。
 
 ---
 
@@ -83,7 +97,7 @@
 
 **成文（优先，不占 GPU）**
 
-- [x] **归档路径核对**：见 **`PHASE1_MANUSCRIPT.md` §5.1**（主图 PNG、**`paper_main_*` CSV**、§7、5060、阶段 2、A2-S3、SSGS）；五轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
+- [x] **归档路径核对**：见 **`PHASE1_MANUSCRIPT.md` §5.1** + **`SUBMISSION_PACK.md` §A2**（主图 PNG、**`paper_main_*` CSV**、§7、5060、阶段 2 **含 `dim256` `0847Z`**、A2-S3 **含 TSV**、SSGS **11 行 grid**）；五轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
 - [x] **分列脚注规则**：已写入 **`PHASE1_MANUSCRIPT` §5.1**（**5060/3090**、**naive/fused**、**path-batch / §7 / SSGS / A2-S3**）；正式投稿前将对应句式 **粘贴进论文正文/附录** 即可。
 - [ ] **§7.5 S5** 总表是否补 —— **视截稿篇幅**（主图 PNG **已入仓** 三张 **`mamba_3090_naive_vs_fused_dim{128,256,384}_*.png`**）。
 
@@ -102,11 +116,14 @@
 
 **服务器有空时（可选一条即可；建议优先级自上而下）**
 
-1. **B-S2+ CUDA（3090）** — **首选**：**`probe_path_reader_linear.py`** **去掉 `--cpu`**，与 **`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md` §2** 同 **n-leaves / heldout**，**`--out-json`** 到 **`results/metrics_result/`** 或 **`results/metrics/`**，**新开登记行**（**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §6**）；与 **本机 5060 CPU**（**`PHASE1_MANUSCRIPT` §9.1**、**X-20260407-local5060-bs2plus-rerun**）**分列**。  
-2. **`git pull` 后** 在 3090 上 **重跑 `demo_ssgs_mamba_wikitext.py` n8 一格**（**c8 dim128** 与归档 grid 一致），刷新 JSON **`git_sha`**（与正文 **HEAD** 对齐）。  
-3. **SSGS n128**（**`--num-leaves 128`**，CUDA）+ **`aggregate_ssgs_mamba_wikitext_json.py --append`** —— **辅线延长**，非主线阻塞（**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §10**）。
+1. **Phase M1**：**SSGS vs KV/重算** 同树 harness —— 见 **`docs/experiments/planning/SSGS_MAINLINE_M1.md`**；产出 **新 JSON `kind`** + **`EXPERIMENT_REGISTRY` 登记**。  
+2. **B-S2+ CUDA（3090）** — **副线**：**`probe_path_reader_linear.py`** **去掉 `--cpu`**（**`NEXT_EXPERIMENTS_COMMANDS.md` §6**）；与 **本机 CPU** **分列**。  
+3. **`git pull` 后** **`demo_ssgs_mamba_wikitext.py` n8 一格** 刷新 **`git_sha`**。  
+4. **SSGS n128** + **`aggregate_ssgs_mamba_wikitext_json.py --append`** — **辅线**（**`NEXT_EXPERIMENTS_COMMANDS.md` §10**）。
 
-**已就绪（无需再跑也能写）**：阶段 2 **path-batch** 叶数扫描与 XL、**§7 depth 5–6**、**A2-S3 init×5**、**Wikitext SSGS grid（n8–64）** —— 见 **登记册** 与 **`PHASE1_MANUSCRIPT` §5** 表。
+**已就绪（无需再跑也能写）**：阶段 2 **path-batch**（**A2-S2**、**dim256 `1137Z`+`0847Z`**、叶数扫描与 XL、**§7 depth 5–6**）、**A2-S3**（**1438Z** + **0820Z/0850Z** + **TSV**）、**Wikitext SSGS**（**`ssgs_mamba_wikitext_grid.csv` 11 行**）—— 见 **登记册**、**`SUBMISSION_PACK` §A2/A2.1/A8**、**`PHASE1_MANUSCRIPT` §5**。
+
+**M1 开工清单**（与 **§3** 一致）：见 **`docs/experiments/planning/SSGS_MAINLINE_M1.md` §4**。
 
 **本机 5060 可复制命令**（含 B-S2+ / Wikitext / SSGS / §7 CPU）：**唯一权威** **`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md`**；**勿**在此文件维护第二份命令表。
 
@@ -243,3 +260,5 @@ flowchart LR
 | 2026-04-10 | **`SUBMISSION_PACK.md`**：**§A1b** 摘要/引言；**§A2** 主文 6 CSV + 5060 grid 等 **存在性 ✅** |
 | 2026-04-10 | **备选推进 §B**（旧称无云端 §B）：本机 **§7 S1** + **B-S2 gpt2 topic heldout** 复跑 JSON；**`SUBMISSION_PACK`** **提交前检查**；**`LOCAL_5060_RUNBOOK` §5.1** |
 | 2026-04-10 | **P0**：**`SUBMISSION_PACK` A5–A7** 成文骨架与搁置表；**§B**：本机 **§7 S2 TF-R1 CPU** 确认 JSON |
+| 2026-04-10 | **投稿版对齐**：**`SUBMISSION_PACK` A2 扩表** + **A2.1/A8**；**`PHASE1_MANUSCRIPT` §5.1**、**`FIGURE_CAPTIONS_STAGE1` P0/五轴** 与 **`metrics_result` basename** 一致；**`NEXT_RESEARCH_PLAN`** 收口清单更新 |
+| 2026-04-10 | **§3 Phase M1**：**`SSGS_MAINLINE_M1.md`**；优先级表增 **M1**；**3090** 待办 **M1 优先**；**P1 B-S2+ CUDA** 标 **副线** |

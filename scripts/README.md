@@ -26,6 +26,8 @@
 | | `benchmark_tf_kv_path_segments.py` | §7.5 S3 / §7.2 **TF-KV**：Pre-LN 因果 trunk + MHA KV cache；`kv_cache_nbytes`、`increment_last_chunk_mean_ms`；可选 `--branch-truncate-demo` |
 | | `benchmark_mamba2_cache_restore_segments.py` | §7.5 S4 / §7.3 **SSM restore**：S1 同款 cache 上 `zero_`→`copy_` 快照；`restore_wall_ms`；`--snapshot-device cpu` 含 H2D |
 | | `demo_ssgs_mamba_dfs.py` | **SSGS × Mamba**：`dfs_ssgs_mamba` 玩具树 DFS（最右叶）；`MambaNavState` + token 前向 |
+| | `demo_ssgs_mamba_wikitext.py` | **SSGS × Mamba × Wikitext**：与 **`benchmark_wikitext_tree`** **同建树**；**`--out-json`**；CUDA 上 `torch_forward` patch；登记 **X-20260407** |
+| | `aggregate_ssgs_mamba_wikitext_json.py` | 多份 **`ssgs_mamba_wikitext_tree` JSON** → **`ssgs_mamba_wikitext_grid.csv`**；支持 **`--append`** |
 | | `demo_tree_lm_minimal.py` | **真因果 LM 最小闭环**：文本形树 → 路径文档 → HF ``AutoModelForCausalLM`` CE + 续写；可选一步 ``AdamW`` |
 | | `demo_tree_lm_nav_greedy.py` | **树上导航任务（启发式）**：每节点对各子「walk+子」文档算 CE，argmin 贪心；**--eval-all-leaves** → **reach_rate** / **mean_child_choice_accuracy** |
 | | `demo_tree_lm_nav_learned.py` | **目标叶条件可学习子指针**：冻结 LM，**h_last + goal 叶嵌入** → 子 logits；监督 CE；**--eval-all-leaves**；登记 **X-20260424**（与 **X-20260423** 边界：**goal** vs 盲 argmin） |
@@ -39,6 +41,7 @@
 | **Linux** | `benchmarks/run_server_wikitext_dim256_grid.sh` | Wikitext **dim=256** 同拓扑四格（**`TAG` 默认 `stage2_dim256`**）；见 **`NEXT_EXPERIMENTS_COMMANDS.md`** |
 | **Linux** | **[server/bootstrap_autodl.sh](server/bootstrap_autodl.sh)** | AutoDL：**conda mamba2** + **`HF_ENDPOINT`** + **`MAMBA2_RESULTS_ROOT`** + Wikitext/datasets 与 **CUDA** 冒烟 |
 | **Linux** | **[server/run_ssgs_mamba_wikitext_cuda.sh](server/run_ssgs_mamba_wikitext_cuda.sh)** | 主线：**SSGS × Mamba × Wikitext 同建树**（`demo_ssgs_mamba_wikitext.py` **CUDA**）+ 可选 path-batch smoke + **`aggregate_ssgs_mamba_wikitext_json.py`** |
+| **Linux** | **[server/run_m1_ssgs_vs_kv_wikitext_cuda.sh](server/run_m1_ssgs_vs_kv_wikitext_cuda.sh)** | **Phase M1**：**`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`** **CUDA**；默认 **n8/n16/n32** **三臂**（可 **`M1_LEAVES`** / **`M1_NO_TRUNCATE=1`**） |
 
 示例：
 

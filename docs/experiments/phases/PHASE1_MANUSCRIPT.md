@@ -46,7 +46,7 @@
 
 **depth 扩展（登记 X-section7-depth-extension-v1）**：在 **`tree_depth_param ∈ {5,6}`**（路径 **6 / 7** 节点；与 **32 / 64 叶** 同深）上各跑 **S1–S4** 全套，**`STAMP=20260409T1341Z`**。**TF-KV** 末段 **`kv_cache_nbytes`** 在 **d5→d6** 上由 **约 96 KiB → 约 112 KiB** 量级抬升；**S1** **Mamba cache** **clone_nbytes** 仍 **约 41 KiB/段**（与 **depth=4** 归档同阶）。产出文件名曾因 shell **残留 `TAG`** 带 **`stage2_leavescale_xl_`** 前缀，**`manifest` 的 `kind=section7_s1_s4_depth_sweep`** 可据以识别；详见 **`EXPERIMENT_REGISTRY`** 该行脚注。此后脚本改用 **`SECTION7_TAG`**，见 **`docs/environment/runbooks/RUN_AUTOADL_SECTION7_NOW.md`**。
 
-**SSGS（State-Snapshot Guided Search）与 Mamba cache**：**`dfs_ssgs_mamba`** 在 **DFS 试错序** 下以 **token 步进** 驱动 **HF `Mamba2Model` + `DynamicCache`**，并用 **clone / zero_ / copy_** 做快照与回滚；**玩具树** 演示见 **X-20260421-ssgs-mamba-dfs-demo**。**同一文本 8 叶树** 上 **SSGS 必达** 与 **tiny-gpt2 子头贪心** 的并列指标见 **X-20260425**。**与 `benchmark_wikitext_tree` 同建树** 的 **Wikitext-2** 接线见 **`demo_ssgs_mamba_wikitext.py`**（登记 **X-20260407-ssgs-mamba-wikitext-tree**）：已归档 **`results/metrics_result/ssgs_mamba_wikitext_*.json`** 与汇总 **`ssgs_mamba_wikitext_grid.csv`**（**n∈{8,16,32,64}**，**c8 dim128**、**目标最右叶**；**`snapshots_taken=n−1`**、**`leaf_checks=n`** 可作 **结构性自检**；**`rollbacks`** 随 n **上升**）。**本机** 另存轻量跑例 **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**c4 dim64**，登记 **X-20260410-local5060-ssgs-wikitext-n8-c4d64**），与 **`metrics_result` grid** **分列**。**禁止**与 **path-batch** 的 **wall-clock / m2_peak** 或 **§7 单列毫秒** **混为同一纵轴**；可与 **A-stage2-wikitext-leavescale**（同 **c8 dim128** 的 **效率曲线**）**并列叙述、分列子表**。可选续作：**n=128**、或 **`git pull` 后重跑一格** 以刷新 **`git_sha`** — **非**主文阻塞（**§10**）。
+**SSGS（State-Snapshot Guided Search）与 Mamba cache**：**`dfs_ssgs_mamba`** 在 **DFS 试错序** 下以 **token 步进** 驱动 **HF `Mamba2Model` + `DynamicCache`**，并用 **clone / zero_ / copy_** 做快照与回滚；**玩具树** 演示见 **X-20260421-ssgs-mamba-dfs-demo**。**同一文本 8 叶树** 上 **SSGS 必达** 与 **tiny-gpt2 子头贪心** 的并列指标见 **X-20260425**。**与 `benchmark_wikitext_tree` 同建树** 的 **Wikitext-2** 接线见 **`demo_ssgs_mamba_wikitext.py`**（登记 **X-20260407-ssgs-mamba-wikitext-tree**）：已归档 **`results/metrics_result/ssgs_mamba_wikitext_*.json`** 与汇总 **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **现 11 行**，含 **n∈{8,16,32,64}** 多 **STAMP** 与 **20260410** **`…_n8/n64_*_0845Z.json`**；**c8 dim128**、**目标最右叶**；**`snapshots_taken=n−1`**、**`leaf_checks=n`** **结构性自检**；**`rollbacks`** 随 n **上升**）。**本机** 另存轻量跑例 **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**c4 dim64**，登记 **X-20260410-local5060-ssgs-wikitext-n8-c4d64**），与 **`metrics_result` grid** **分列**。**禁止**与 **path-batch** 的 **wall-clock / m2_peak** 或 **§7 单列毫秒** **混为同一纵轴**；可与 **A-stage2-wikitext-leavescale**（同 **c8 dim128** 的 **效率曲线**）**并列叙述、分列子表**。可选续作：**n=128**、或 **`git pull` 后重跑一格** 以刷新 **`git_sha`** — **非**主文阻塞（**§10**）。
 
 ---
 
@@ -68,9 +68,9 @@
 | **大叶数研究** | `sweep_research_large_leaves_*_research_lg_v1.csv` + manifest | 登记 **A-20260408-research-large-leaves-3090** |
 | **阶段 2 叶数扫描（3090 fused）** | `benchmark_wikitext_stage2_leavescale_20260409T1257Z_n{8,16,32,64}_c8.json`、`…_grid_20260409T1257Z.csv`、manifest | **A-stage2-wikitext-leavescale-v1** |
 | **阶段 2 叶数 XL** | `benchmark_wikitext_stage2_leavescale_xl_*_{1322Z_n128,1324Z_n256}_c8.json`、`…_grid_n128_n256_combined.csv` | **A-stage2-wikitext-leavescale-xl-v1** |
-| **阶段 2 dim256 四格** | `benchmark_wikitext_stage2_dim256_20260409T1137Z_*` + grid CSV | **A-stage2-wikitext-dim256-v1** |
+| **阶段 2 dim256** | **`1137Z`** 四格 JSON + grid；**`0847Z`** minimal（三 JSON + **`…_grid_0847Z.csv` 9 行** + manifest） | **A-stage2-wikitext-dim256-v1** |
 | **§7 depth 5–6** | `stage2_leavescale_xl_s{1..4}_*_d{5,6}_20260409T1341Z.json`（前缀见 **§4** 脚注）、`…_manifest_20260409T1341Z.txt` | **X-section7-depth-extension-v1** |
-| **A2-S3 init×5（3090）** | `task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json` | **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**`aggregate_task_wikitext_path_pair_json.py`** |
+| **A2-S3 init×5（3090）** | **`1438Z`** JSON；**`0820Z`/`0850Z`** 复跑；**TSV 摘要** **`task_wikitext_sibling{16,32}_c8_leafheldout6_initseed5_summary_20260410T{0820,0850}Z.tsv`** | **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**`aggregate_task_wikitext_path_pair_json.py`** |
 | **A2-S3 本机 5060（stratified，n8）** | **`results/metrics/task_wikitext_sibling8_local5060_cpu_20260410.json`** | **X-20260410-local5060-a2s3-n8-strat**；与 **3090 init×5**、**path-batch** **分列** |
 | **SSGS × Mamba × Wikitext 同树** | `ssgs_mamba_wikitext_*.json`、`ssgs_mamba_wikitext_grid.csv` | **X-20260407-ssgs-mamba-wikitext-tree**；**`aggregate_ssgs_mamba_wikitext_json.py`**；与 **path-batch**、**§7** **分列**（**§4**） |
 | **SSGS Wikitext 本机（小 chunk/dim）** | **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`** | **X-20260410-local5060-ssgs-wikitext-n8-c4d64**；与 **`metrics_result` grid** **分列** |
@@ -78,22 +78,24 @@
 
 **历史归档**（仍在 `results/metrics/`）：`**_20260421.json** 系列，与 **X-20260421-*** 登记一一对应；与 `metrics_result` 中 **STAMP** 文件 **并存**，便于 diff。
 
-### 5.1 成文核对（本仓库路径；**2026-04-07**）
+### 5.1 成文核对（本仓库路径；**2026-04-10 投稿版对齐**）
 
-以下已由仓库内 **文件存在性** 核对（投稿前若重跑数据，以 **JSON/`git_sha`** 为准再扫一遍）。
+以下与 **`results/metrics_result/`** 内 **实际 basename** 对齐（投稿前若重跑数据，以 **JSON/`git_sha`** 为准再扫一遍）。**完整核对表**见 **`docs/overview/execution/SUBMISSION_PACK.md` §A2**。
 
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
-| **主文 CSV + Manifest** | **齐** | **`paper_main_dim128_localgrid_paper_main_{v1,naive_v1}.csv`**；**`paper_main_dim{256,384}_paper_main_{v1,naive_v1}.csv`**；**`paper_main_manifest_paper_main_{v1,naive_v1}.txt`** |
+| **主文 CSV + Manifest** | **齐** | 均在 **`results/metrics_result/`**：**`paper_main_dim128_localgrid_paper_main_{v1,naive_v1}.csv`**；**`paper_main_dim{256,384}_paper_main_{v1,naive_v1}.csv`**；**`paper_main_manifest_paper_main_{v1,naive_v1}.txt`** |
 | **主图 PNG（naive vs fused）** | **齐** | **`results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`**（各一张） |
 | **§7 + 玩具 JSON** | **齐** | **`metrics_result/`** 内 **`…1617Z`** 等；**`results/metrics/*_20260421.json`** 与登记 **X-20260421-*** 对应 |
-| **5060 Wikitext 动机** | **齐** | **`benchmark_wikitext_5060_cuda_*_20260407.json`**、**`…_grid_20260407.csv`**；另 **单点 CUDA smoke**：**`benchmark_wikitext_local5060_cuda_*_n8_c8.json`**（**§5** 表）；**CPU 可跑性**：**`benchmark_wikitext_local5060_cpu_*_n8_c8.json`** |
-| **阶段 2 path-batch 归档** | **齐** | **leavescale / XL / dim256 / §7 depth** 等见 **§5** 表与 **登记册** |
-| **A2-S3 init×5** | **齐** | **`task_wikitext_sibling{16,32}_*_1438Z.json`** |
-| **A2-S3 本机 stratified（n8）** | **齐** | **`task_wikitext_sibling8_local5060_cpu_20260410.json`**（**X-20260410-local5060-a2s3-n8-strat**） |
-| **SSGS Wikitext** | **齐** | **`ssgs_mamba_wikitext_grid.csv`** + **`ssgs_mamba_wikitext_*.json`** |
-| **SSGS 本机小格（辅）** | **齐** | **`ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**X-20260410-local5060-ssgs-wikitext-n8-c4d64**） |
-| **B-S2+ 本机 5060** | **齐** | **`probe_path_reader_linear_*_local5060.json`**（登记 **X-20260407-local5060-bs2plus-rerun**） |
+| **5060 Wikitext 动机** | **齐** | **`results/metrics_result/benchmark_wikitext_5060_cuda_*_20260407.json`**、**`benchmark_wikitext_5060_cuda_grid_20260407.csv`**；**CUDA/CPU smoke** 见 **§5** 表 **`benchmark_wikitext_local5060_*`** |
+| **阶段 2 path-batch 归档** | **齐** | **A2-S2** **`benchmark_wikitext_stage2_fused_20260409T1035Z_*`** + grid/manifest；**R2** **`…_fused_r2_20260409T1110Z_*`**；**dim256** **`…_dim256_20260409T1137Z_*`** 与 **`…_dim256_20260410T0847Z_*`**（**minimal**）+ 各 **grid/manifest**；**leavescale / XL / §7 depth** 见 **§5** 表与 **登记册** |
+| **A2-S3 init×5** | **齐** | **`task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json`**；复跑 **`…_sibling16_*_20260410T0820Z.json`**、**`…_sibling32_*_20260410T0850Z.json`**；贴表 **`…_initseed5_summary_20260410T{0820,0850}Z.tsv`** |
+| **A2-S3 本机 stratified（n8）** | **齐** | **`results/metrics/task_wikitext_sibling8_local5060_cpu_20260410.json`**（**`metrics/`**，**非** **`metrics_result/`**；**X-20260410-local5060-a2s3-n8-strat**） |
+| **SSGS Wikitext** | **齐** | **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **11 行** 量级）+ **`ssgs_mamba_wikitext_*.json`**；辅 **`benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`**（path-batch **同树** smoke，**与 SSGS 分列**） |
+| **SSGS 本机小格（辅）** | **齐** | **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**X-20260410-local5060-ssgs-wikitext-n8-c4d64**） |
+| **B-S2+ 本机 5060** | **齐** | **`results/metrics/probe_path_reader_linear_*_local5060.json`**（**X-20260407-local5060-bs2plus-rerun** 等） |
+
+**脚注（聚合 CSV）**：若 **`ssgs_mamba_wikitext_grid.csv`** 等含 **`json_path`** 列为 **服务器绝对路径**，正文只写 **JSON basename**（与 **`SUBMISSION_PACK` §A2** 一致）。
 
 **四类数字分列脚注（正文须显式）**：**①** **5060 + HF naive** 与 **②** **3090 + fused** **不可同表无标注混点**；**③** **path-batch 墙钟/m2_peak** 与 **④** **§7 单列毫秒**、**⑤** **SSGS 快照/回滚计数**、**⑥** **A2-S3 准确率** **各为独立测量轴**（**`FIGURE_CAPTIONS_STAGE1.md`** 篇首）。**§7.5 S5**「同轨迹总表」仍为 **可选**，视截稿篇幅（**§10** 第 4 条）。
 
@@ -125,7 +127,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 **标签**：对叶索引 \(i<j\)，按块大小 \(b\) 定义 **同 cohort**：**\(y=1\)** 当且仅当 \(\lfloor i/b\rfloor=\lfloor j/b\rfloor\)。默认 **`sibling`**：**\(b=\texttt{fanout}\)**；**`root_child`**：**\(b=\texttt{fanout}^{d-1}\)**（详见 **`src/rag_tree/path_pair_geometry.py`**）。
 
-**特征与读出**：对每个叶路径做 path reader，**池化**得 \(z_i\)，拼接 **\([z_i,z_j]\)**，**岭回归** 二分类；并报告 **raw mean-pool 拼接** 基线。**脚本**：**`scripts/research/task_wikitext_path_pair.py`**；**JSON** 字段 **`ridge_concat.*.test_acc`** 等；早期 smoke 见 **`results/metrics/task_wikitext_*.json`**（登记 **A-20260407-stage2-wikitext-path-pair**），**3090 fused** **五种子** 归档见 **`results/metrics_result/task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json`**（**A-stage2-wikitext-path-pair-initseed5-3090-v1**）。
+**特征与读出**：对每个叶路径做 path reader，**池化**得 \(z_i\)，拼接 **\([z_i,z_j]\)**，**岭回归** 二分类；并报告 **raw mean-pool 拼接** 基线。**脚本**：**`scripts/research/task_wikitext_path_pair.py`**；**JSON** 字段 **`ridge_concat.*.test_acc`** 等；早期 smoke 见 **`results/metrics/task_wikitext_*.json`**（登记 **A-20260407-stage2-wikitext-path-pair**）。**3090 fused** **五种子**：**`…_sibling{16,32}_*_20260409T1438Z.json`**；**2026-04-10** 复跑 **`…_sibling16_*_20260410T0820Z.json`**、**`…_sibling32_*_20260410T0850Z.json`**（**`aggregate_task_wikitext_path_pair_json.py`** 聚合与 **1438Z** **一致**）。**贴表 TSV**：**`task_wikitext_sibling16_c8_leafheldout6_initseed5_summary_20260410T0820Z.tsv`**、**`task_wikitext_sibling32_c8_leafheldout6_initseed5_summary_20260410T0850Z.tsv`**（**A-stage2-wikitext-path-pair-initseed5-3090-v1**）。
 
 **本机 5060 CPU（2026-04-10）**：**`stratified`**、**n=8**、**sibling**、**chunk_len=8**、**dim=128**，归档 **`results/metrics/task_wikitext_sibling8_local5060_cpu_20260410.json`**（**`git_sha=1a65b29`**，登记 **X-20260410-local5060-a2s3-n8-strat**；**Mamba HF naive**）。**test** **7** 对：**`ridge_concat`** 下 **Transformer / GRU / Mamba2 / raw baseline** 的 **`test_acc`** 均为 **≈0.857**（**train** 1.0）。与上文 **3090 `leaf_heldout`、多 `init_seed`** **分列**，**不得**混读为同一难度标度。
 
@@ -133,7 +135,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 **与 §3–§5 的关系**：本任务报告 **准确率类标量**，**不是** path-batch 的 **wall-clock / m2_peak**；正文应 **分列子表或脚注**，**不得**与 **`paper_main_*`** 无标注合并。
 
-**3090、`leaf_heldout` H=6、五种子（`init_seed∈{0..4}`，`STAMP=20260409T1438Z`）**：**test** 仅 **C(6,2)=15** 对，**类别极不平衡**，数值 **不宜过度外推**。用 **`aggregate_task_wikitext_path_pair_json.py`** 对 **n=16** 与 **n=32** 各 **5** 份 JSON 汇总 **`ridge_concat.*.test_acc`** 时，**典型量级**为：**n=32** 下 **GRU** test 均值 **约 0.67**（**std 约 0.16**），**Transformer 约 0.37**，**Mamba2 约 0.19**，**raw baseline 恒 0.2**；**n=16** 下 **GRU 约 0.35**，**Mamba2 约 0.24**。正文可写 **「小样本 held-out 上 GRU 的线性可分性常高于 Mamba2/基线」**，并强调 **任务 v0** 与 **未训练 reader**。
+**3090、`leaf_heldout` H=6、五种子（`init_seed∈{0..4}`；**`STAMP=20260409T1438Z`** 与 **复跑 `0820Z`/`0850Z`** 聚合 **一致**）**：**test** 仅 **C(6,2)=15** 对，**类别极不平衡**，数值 **不宜过度外推**。用 **`aggregate_task_wikitext_path_pair_json.py`** 对 **n=16** 与 **n=32** 各 **5** 份 JSON 汇总 **`ridge_concat.*.test_acc`** 时，**典型量级**为：**n=32** 下 **GRU** test 均值 **约 0.67**（**std 约 0.16**），**Transformer 约 0.37**，**Mamba2 约 0.19**，**raw baseline 恒 0.2**；**n=16** 下 **GRU 约 0.35**，**Mamba2 约 0.24**。正文可写 **「小样本 held-out 上 GRU 的线性可分性常高于 Mamba2/基线」**，并强调 **任务 v0** 与 **未训练 reader**。**研究含义**：该 proxy 测的是 **冻结随机初始化 reader 的池化表征** 是否含 **「同父叶块」** 的 **线性线索** — **不是** path-batch **速度/显存** 优劣，也 **不是** 训练后的 **下游任务 SOTA**；作用是与 **§8.3 墙钟曲线** **并列**，避免全文 **只有效率、没有真语料上的可读性标量**。
 
 ### 8.3 阶段 2 公平性（列语义速查）
 
@@ -143,7 +145,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | **3090 fused** | **`mamba_ssm` / fused**；登记 **A-20260408-wikitext-3090-fused** 等 |
 | **A2-S3 JSON** | **任务名、划分（stratified / leaf_heldout）、`chunk_len`** |
 
-**A2-S2（3090 fused，已归档）**：**`WARMUP=2` `REPS=8`**，**RTX 3090**、驱动 **580.105.08**，**`torch 2.11.0+cu126`**。**R1/R2 四格**（**`STAMP=20260409T1035Z`**、**`20260409T1110Z`**）：**Mamba2 `peak_alloc_mib`** 两轮一致 **约 53 / 55 / 73 / 78**。**扩维 dim256**（**`1137Z`**）：**Mamba2** 四格 **约 62→87 MiB**。**32 叶单点**（**`1140Z`**）：**Mamba2≈98 MiB**。**`git_sha`** 上述跑次在服务器上 **常为 `6fa7873`**（与 **paper_main** 同提交）；与 **仅文档更新的 GitHub HEAD** 可能不一致 — 正文须 **manifest / 登记** 脚注。**5060 naive** 与 **3090 fused** **分列**。**命令**：**`SERVER_SWEEP_RUNBOOK` §2d/§2e**。**叶数扫描、XL、§7 深度** 见 **§8.4**。
+**A2-S2（3090 fused，已归档）**：**`WARMUP=2` `REPS=8`**，**RTX 3090**、驱动 **580.105.08**，**`torch 2.11.0+cu126`**。**R1/R2 四格**（**`STAMP=20260409T1035Z`**、**`20260409T1110Z`**）：**Mamba2 `peak_alloc_mib`** 两轮一致 **约 53 / 55 / 73 / 78**。**扩维 dim256**：**首轮四格**（**`1137Z`**）**Mamba2** **约 62→87 MiB**；**2026-04-10** **`GRID=minimal`**（**`0847Z`**：**n8c8 / n16c8 / n16c12**）**Mamba2** **约 70 / 82 / 88 MiB**（与 **1137Z** 同拓扑格点 **可对账**）。**32 叶单点**（**`1140Z`**）：**Mamba2≈98 MiB**。**`git_sha`** 上述跑次在服务器上 **常为 `6fa7873`**（与 **paper_main** 同提交）；与 **仅文档更新的 GitHub HEAD** 可能不一致 — 正文须 **manifest / 登记** 脚注。**5060 naive** 与 **3090 fused** **分列**。**命令**：**`SERVER_SWEEP_RUNBOOK` §2d/§2e**。**叶数扫描、XL、§7 深度** 见 **§8.4**。
 
 ### 8.4 叶数扫描、XL 与 §7 深度扩展（登记级摘要）
 
@@ -177,17 +179,17 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 ## 10 下一阶段与文档指针
 
-**本版成文**：**§8.4** 与 **§5** 已收口 **A2-S2 / dim256 / 叶数 8–256 / §7 depth 5–6**；**A2-S3** **3090** **`init_seed`×5**（**n16/n32**、**H=6**）JSON 已入仓 **`results/metrics_result/*_20260409T1438Z.json`**，登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**。
+**本版成文**：**§8.4** 与 **§5** 已收口 **A2-S2 / dim256 / 叶数 8–256 / §7 depth 5–6**；**A2-S3** **3090** **`init_seed`×5**（**n16/n32**、**H=6**）JSON 含 **`1438Z`** 与 **复跑 `0820Z`/`0850Z`**，**TSV 摘要** 已入 **`results/metrics_result/`**，登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**。**dim256** 增补 **`0847Z` minimal**；**SSGS** **`ssgs_mamba_wikitext_grid.csv`** **11 行**（**`EXPERIMENT_REGISTRY` X-20260407**）。
 
 **主线是否继续？** — **系统主线**（path-batch **效率**、真语料 **Wikitext 扫参**、**§7 玩具协议**、**A2-S3 任务 proxy**）在 **登记级材料** 上 **已闭环**；**不是**弃题，而是 **不必为同一故事无限加格点**。后续工时优先 **把已有数字写进论文/报告**（主文+附录+脚注），其次才是 **可选实验**。
 
 **下一步（按优先级；与 `docs/overview/execution/NEXT_RESEARCH_PLAN.md` 默认里程碑一致）**：
 
-1. **成文整合（主线收尾；与 P1/P2 可交错）**：把 **`PHASE1_MANUSCRIPT` §8**、**`docs/experiments/planning/EXPERIMENT_REGISTRY.md`**、**`metrics_result`** 中表与 JSON **对齐成投稿版**（含 **五轴图注**、**5060 vs 3090** 分列）。
+1. **成文整合（主线收尾；与 P1/P2 可交错）**：以 **`docs/overview/execution/SUBMISSION_PACK.md` §A2–A2.1** 为 **文件名真相源**，将 **`PHASE1_MANUSCRIPT` §8**、**`EXPERIMENT_REGISTRY.md`**、**`results/metrics_result/`** 与 **LaTeX/Word** **逐字对齐**（含 **五轴图注**、**5060 vs 3090** 分列、**`json_path` basename 脚注**）。
 2. **可选机制线 B**：**本机 5060 CPU** 已归档 **B-S2+**（**§9.1**，**X-20260407-local5060-bs2plus-rerun**）。**3090 可用时**：**1 条** **B-S2+ CUDA** JSON（**`probe_path_reader_linear.py`** 去 **`--cpu`**），**新开登记行**；**非**主线阻塞；**`RETRIEVAL_HEAD_NOTES.md`**、**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §6**。附录需要时可补 **`probe_retrieval_correlation.py --cpu`**（**`NEXT_RESEARCH_PLAN`** **备选推进 §B**）。
 3. **A2-S3 可选加压**：更大 **`heldout-leaves`**、**`root_child`**、**stratified + `split-seed`** — 与 **init×5** **分列** 说明。  
 4. **Polish**：**S5 总表**（**`RESEARCH_NOTES` §7**）、主图入仓、平面 RAG smoke。  
-5. **SSGS（辅线，非阻塞）**：**Wikitext 同树** 已归档 **`ssgs_mamba_wikitext_grid.csv`**（**n8–64** 等，登记 **X-20260407-ssgs-mamba-wikitext-tree**）。可选：**n=128**、**`git pull` 后** 重跑 **一格** 刷新 **`git_sha`**；玩具树 **X-20260421**、LM 并列 **X-20260425** 仍足 **附录** 基线。  
+5. **SSGS（辅线，非阻塞）**：**Wikitext 同树** 已归档 **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **11 行**，**n8–64** 多 **STAMP**，登记 **X-20260407-ssgs-mamba-wikitext-tree**）。可选：**n=128**、**`git pull` 后** 重跑 **一格** 刷新 **`git_sha`**；玩具树 **X-20260421**、LM 并列 **X-20260425** 仍足 **附录** 基线。  
 6. **总览**：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**、**`docs/overview/execution/NEXT_RESEARCH_PLAN.md`**（**「当前收口清单」**）；**投稿包**：**`docs/overview/execution/SUBMISSION_PACK.md`**（**A1–A4**）；手册：**`docs/environment/runbooks/SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**（**§11 本机 5060**）、**`LOCAL_5060_RUNBOOK.md`**、**`RUN_AUTOADL_SECTION7_NOW.md`**；草稿：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**（同目录 **`phases/`**）。
 
 ---
@@ -223,6 +225,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-07 | **§9.1**：**5060 CPU B-S2+** 成文 + **§7** 英摘一句；**§10** 第 2 条更新（CPU 已归档） |
 | 2026-04-10 | **§5**：**5060 CUDA** Wikitext **n8 c8** smoke（**`benchmark_wikitext_local5060_cuda_*_n8_c8.json`**）；登记 **X-20260410-benchmark-wikitext-local5060-cuda-n8c8** |
 | 2026-04-10 | **§4 / §5 / §5.1 / §8.2**：本机 **5060 CPU** **A2-S3 n8 stratified** + **SSGS c4 d64** 跑例入表；登记 **X-20260410-local5060-a2s3-n8-strat**、**X-20260410-local5060-ssgs-wikitext-n8-c4d64** |
+| 2026-04-10 | **§4 / §5 / §8.2 / §8.3 / §10**：**3090** **A2-S3** 复跑 **0820Z/0850Z** + **TSV**；**dim256** **`0847Z` minimal**；**SSGS grid 11 行**；**§8.2** 补 **A2-S3 研究含义**（与墙钟 **分列** 的 **表征可读性 proxy**） |
 | 2026-04-10 | **§5**：本机 **B-S2+ train50**（**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**）、**Wikitext CPU smoke**（**`benchmark_wikitext_local5060_cpu_*_n8_c8.json`**）；登记 **X-20260410-local5060-bs2plus-train50-n16**、**X-20260410-local5060-wikitext-cpu-n8c8** |
 | 2026-04-10 | **§10 指针**：**`NEXT_RESEARCH_PLAN.md`** 增 **「项目现状快照」**、**「后续方向」**；本机 **5060** 轨道 **无阻塞项**；全量 **`pytest tests/`** **20** passed |
 | 2026-04-10 | **§10**：**「下一步」** 与 **`NEXT_RESEARCH_PLAN`** 默认里程碑对齐；**算力紧张时** 以 **P0 成文** 为第一优先 |

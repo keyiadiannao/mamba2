@@ -58,6 +58,14 @@ def iter_root_leaf_paths(root: TreeNode) -> Iterator[List[TreeNode]]:
             yield [root, *path]
 
 
+def find_root_leaf_path_ending_at(root: TreeNode, leaf: TreeNode) -> List[TreeNode]:
+    """Root—``leaf`` path (``leaf`` must be a leaf in ``iter_root_leaf_paths`` order target)."""
+    for path in iter_root_leaf_paths(root):
+        if path[-1] is leaf:
+            return path
+    raise ValueError("leaf not found under root")
+
+
 def path_tensor(path: List[TreeNode]) -> torch.Tensor:
     """Concatenate node chunks along time: [sum(chunk_len), D]."""
     return torch.cat([n.embedding for n in path], dim=0)

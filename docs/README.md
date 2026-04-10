@@ -34,6 +34,7 @@
 | 现状、证据、推荐推进顺序 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
 | 本周在做什么、阻塞项 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
 | 任务拆条、收口清单 | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
+| **Mamba+树+SSGS** 整合主线（M1）工具与缺口 | [`experiments/planning/SSGS_MAINLINE_M1.md`](experiments/planning/SSGS_MAINLINE_M1.md) |
 | 投稿草稿块与检查清单 | [`overview/execution/SUBMISSION_PACK.md`](overview/execution/SUBMISSION_PACK.md) |
 | 实验登记 | [`experiments/planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md) |
 
@@ -46,7 +47,7 @@
 | [`phases/FIGURE_CAPTIONS_STAGE1.md`](experiments/phases/FIGURE_CAPTIONS_STAGE1.md) | 主图图注与五轴护栏 |
 | [`phases/PHASE1_COMPLETE_SUMMARY.md`](experiments/phases/PHASE1_COMPLETE_SUMMARY.md) | 阶段 1 存档与 §7 复跑指针 |
 
-**实验侧总体规划**：[`planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md)、[`planning/DATASETS.md`](experiments/planning/DATASETS.md)、[`planning/PHASE1_VALIDATION_PLAN.md`](experiments/planning/PHASE1_VALIDATION_PLAN.md)。
+**实验侧总体规划**：[`planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md)、[`planning/DATASETS.md`](experiments/planning/DATASETS.md)、[`planning/PHASE1_VALIDATION_PLAN.md`](experiments/planning/PHASE1_VALIDATION_PLAN.md)、[`planning/SSGS_MAINLINE_M1.md`](experiments/planning/SSGS_MAINLINE_M1.md)（**Phase M1**）。
 
 ## 2. Overview 总体规划（`overview/planning/`）
 

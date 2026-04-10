@@ -54,6 +54,12 @@
 | **检索头 C（注入训练）** | 依赖 B 与稳定 harness；**48G** |
 | **§7.5 S5 汇总表** | 支撑贡献候选 **③** 的「一句话表」；**可做可不做**，视篇幅 |
 | **平面 RAG 消融** | 动机/完整性；**非当前阻塞** |
+| **SSGS × KV/重算「同树同任务」双臂 harness** | **M1**：**L3 对照** 所需；**尚无** 单一登记 JSON；见 **`docs/experiments/planning/SSGS_MAINLINE_M1.md`** |
+
+### 2.4 工具就绪（**Phase M1** 正式开工）
+
+**已齐**：`dfs_ssgs_mamba`、`demo_ssgs_mamba_{dfs,wikitext}`、`aggregate_ssgs_mamba_wikitext_json.py`、`run_ssgs_mamba_wikitext_cuda.sh`、§7 **Mamba 快照/恢复** 与 **TF-KV**（含 **`--branch-truncate-demo`**）、相关 **`tests/test_ssgs*.py`**。  
+**待补**：**统一脚本** 输出 **SSGS 臂 + 基线臂** 的 **同 `kind` 族 JSON**（详见 **`SSGS_MAINLINE_M1.md` §2–§3**）。
 
 ---
 
@@ -109,7 +115,7 @@
 
 ## 4. 决策原则（再决定「先做什么」）
 
-1. **主故事优先**：凡直接支撑 **「树内 Mamba vs Transformer + 效率证据」** 的，阶段 1 已齐；**下一步应补「树 + 读者 + 任务」或「检索头机制」**，否则长期停在曲线。  
+1. **主故事优先**：阶段 1 **效率与 harness** 已齐；**叙事升级** 依赖 **M1**：**SSGS 快照回溯 vs KV/重算** 在 **同一树任务** 上的 **对照证据**（**`SSGS_MAINLINE_M1.md`**）。**检索头 B** 仍为 **辅线**，**不替代 M1**。  
 2. **Harness 不拆**：新实验 **必须** 能声明 **与 `benchmark_*_tree` / `run_tree_reader_benchmark` 同槽位**，否则 **新开登记行** 并 **禁止与主表混点**。  
 3. **算力分档**：5060 做 **smoke 与脚本**；3090/48G 做 **登记级数字**；**跨机数字** 只作趋势，不作主表格点。  
 4. **辅线节流**：**X-20260422–25**、子头 **B（抬 reach）** 仅在有 **明确审稿/假设** 时加投。  
@@ -119,10 +125,11 @@
 
 ## 5. 推荐执行顺序（已按依赖排序）
 
-下列顺序在 **`NEXT_RESEARCH_PLAN.md`** 中展开为 **A2-S0…**、**B-S1…** 等里程碑。
+下列顺序在 **`NEXT_RESEARCH_PLAN.md`** 中展开；**阶段 2 网格与 A2-S3** 已多行归档。**当前增量主轨** 为 **M1**（见 **`SSGS_MAINLINE_M1.md`**）。
 
 | 顺序 | 动作 | 目的 |
 |------|------|------|
+| **0（新）** | **M1**：**SSGS vs KV/重算** **同树 harness** → JSON + **登记** **`X-ssgs-vs-kv-tree-nav-m1`**（或等价 id） | **L3** 级 **整合对照**；**优先于** 无假说 path-batch 扩格 |
 | **1** | **登记**：**EXPERIMENT_REGISTRY** 新增 **阶段 2 / Wikitext 网格** 占位行（如 **`A-stage2-wikitext-grid-v1`**） | 固定 **承诺** 与 **指标列模板**，避免散跑 |
 | **2** | **A2-S1**：`benchmark_wikitext_tree.py` **smoke** → JSON 入 **`results/metrics_result/`** | 验证 **HF + fused + harness** 在阶段 2 网格上仍 **可跑通** |
 | **3** | **B-S1 / B-S2 / B-S2+**：**`RETRIEVAL_HEAD_NOTES.md`**（§2 / §4 GPT-2 探针；§5 叙事；§7 **path reader** 探针） | **机制线** 与 **系统线** 对齐；**per-head** 仍属 **B-S3** |
@@ -198,3 +205,4 @@
 | 2026-04-09 | **§2.1**：**§7 depth 5–6** **`1341Z`** 归档；**`X-section7-depth-extension-v1`**；**TAG 残留** 致文件名 **`stage2_leavescale_xl_s*`** — 脚本已改 **`SECTION7_TAG`**；**`RUN_AUTOADL_SECTION7_NOW`** 增 **`unset TAG`** |
 | 2026-04-10 | **§3.5 新增**：对外叙事（投资/Agent）**批判性接收**；**L1–L4 证据层级**；三风险；**L3 最小 PoC** 与止损；与 **`NEXT_RESEARCH_PLAN`「后续方向」** 对齐 |
 | 2026-04-10 | **§7 文档地图**：**`SUBMISSION_PACK.md`**（**P0 A1–A4**） |
+| 2026-04-10 | **§2.3–§2.4**、**§4.1**、**§5**：**Phase M1**（**`SSGS_MAINLINE_M1.md`**）**工具就绪** 与 **双臂 harness 缺口**；**主故事** 增 **M1 优先** |

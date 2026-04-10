@@ -1,0 +1,10 @@
+# task_wikitext_path_pair aggregate (scripts/research/aggregate_task_wikitext_path_pair_json.py)
+# glob: results/metrics_result/task_wikitext_sibling16_c8_leafheldout6_initseed*_20260410T0820Z.json
+# protocol: A2-S3, leaf_heldout H=6, sibling, c8 dim128, cuda, init_seed 0..4, n_test_pairs=15
+# regenerate: conda run -n mamba2 python scripts/research/aggregate_task_wikitext_path_pair_json.py -g "results/metrics_result/task_wikitext_sibling16_c8_leafheldout6_initseed*_20260410T0820Z.json"
+# files: 5
+reader	mean_test_acc	std	n
+baseline_raw_mean_concat	0.2000	0.0000	5
+gru	0.3467	0.1592	5
+mamba2	0.2400	0.0894	5
+transformer	0.1867	0.0298	5

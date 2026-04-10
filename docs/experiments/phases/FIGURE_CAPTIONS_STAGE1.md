@@ -10,7 +10,7 @@
 
 **§7.2–§7.3 与附录表 §7.3.1** 属于**另一套可复现玩具协议**：在**单条**合成路径或专用 Transformer trunk 上，**分别**测量 S1（Mamba `DynamicCache` clone）、S4（restore）、S2（TF-R1 无 KV 整段前向）、S3（TF-KV 增量）等；**各列物理含义不同**，**不得**与主图曲线混为同一「一步」或互相做差得出结论。
 
-**SSGS × Mamba（`dfs_ssgs_mamba`）** 再占一条线：**按 token 前向 + `DynamicCache` + DFS 回溯**，用于证明**导航环**与迹的一致性。**玩具树** 登记 **X-20260421-ssgs-mamba-dfs-demo**；**与 `benchmark_wikitext_tree` 同建树** 的 **Wikitext** 归档见 **X-20260407-ssgs-mamba-wikitext-tree**（**`ssgs_mamba_wikitext_grid.csv`**：**snapshots/rollbacks**，**非** wall-clock）。它与 path-batch 扫参、与 §7.3.1 各列**仍非同一实验**。
+**SSGS × Mamba（`dfs_ssgs_mamba`）** 再占一条线：**按 token 前向 + `DynamicCache` + DFS 回溯**，用于证明**导航环**与迹的一致性。**玩具树** 登记 **X-20260421-ssgs-mamba-dfs-demo**；**与 `benchmark_wikitext_tree` 同建树** 的 **Wikitext** 归档见 **X-20260407-ssgs-mamba-wikitext-tree**（**`results/metrics_result/ssgs_mamba_wikitext_grid.csv`**：通配合并 **多 JSON**，本仓 **11 行** 量级；列 **`snapshots_taken` / `rollbacks` / `leaf_checks`**，**非** path-batch **wall-clock**；**`json_path`** 若来自服务器，脚注写 **basename**）。**辅**：同树 **path-batch 三 reader** 小 smoke **`benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`**（**与 SSGS 计数分列**）。它与 path-batch 全网格扫参、与 §7.3.1 各列**仍非同一实验**。
 
 **正文可粘贴的一句边界**：主文图呈现 **path-batch 系统级曲线**；§7 表呈现 **分解尺上的玩具对照**；SSGS demo 呈现 **状态快照式 DFS 的可行性**，三者口径须在段落中显式区分。
 
@@ -24,9 +24,9 @@
 |----|----------|-----------------|
 | **Path-batch 主图** | 固定路径集合上 **三 reader 批量前向** 的 **时间与 m2_peak** | **A-20260408-paper-main-3090-pair**；`paper_main_*.csv` |
 | **§7 玩具表** | **单路径**上 **clone / restore / TF-R1 / TF-KV** 等 **分列毫秒** | **X-20260421-***；`*_20260421.json` |
-| **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照（**计数**：snapshots / rollbacks） | **X-20260421**（玩具）；**X-20260407** + **`ssgs_mamba_wikitext_grid.csv`**（Wikitext 同树） |
+| **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照（**计数**：snapshots / rollbacks） | **X-20260421**（玩具）；**X-20260407** + **`ssgs_mamba_wikitext_grid.csv`**（Wikitext 同树；**多 STAMP** 合并，**11 行** 量级） |
 | **真 LM 线** | **tiny-gpt2** 上 **CE / 导航指标**；**非** path-batch harness | **X-20260422–25** |
-| **阶段 2 任务（A2-S3）** | 同 Wikitext 树上的 **效果 proxy**（例：叶对 cohort **ridge 准确率**）；**非**主图纵轴、**非** §7 毫秒 | **A-20260407-stage2-wikitext-path-pair**；`task_wikitext_*.json` |
+| **阶段 2 任务（A2-S3）** | 同 Wikitext 树上的 **效果 proxy**（例：叶对 cohort **ridge 准确率**）；**非**主图纵轴、**非** §7 毫秒 | **A-20260407-stage2-wikitext-path-pair**；**`task_wikitext_*.json`**；贴表优先 **`task_wikitext_sibling*_initseed5_summary_20260410T*.tsv`**（见 **`SUBMISSION_PACK` §A2**） |
 
 **阶段 2 效率补充（5060 Wikitext 2×2）**：**不是** 主图上的新曲线，而是 **本地动机表**（**HF naive**、`m2_peak_mib`）；数据 **`benchmark_wikitext_5060_cuda_grid_20260407.csv`** 与四份 JSON；**禁止**与 **3090 fused** 主文格点 **无脚注同表**。若正文出现「5060 + A2-S3」同段，须 **分列**（左：效率/m2_peak；右：任务 test_acc）或 **分子表**，并各注 **device / naive·fused / split**。
 

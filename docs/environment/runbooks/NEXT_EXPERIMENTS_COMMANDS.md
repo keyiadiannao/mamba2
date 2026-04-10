@@ -258,6 +258,24 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 
 **已跑通归档例**（**`git_sha` 以 JSON 为准**）：**n8** CPU+CUDA **`1529Z`**，**n16/n32** CUDA **`1550Z`**，**n64** CUDA **`1601Z`** → **`ssgs_mamba_wikitext_grid.csv`** **5 行**（登记 **X-20260407**）。可选：**n128**（大叶、耗时更长）；**`git pull` 后** 重跑 **n8** 一格对齐 **HEAD**。
 
+### 10.1 Phase **M1**：**SSGS vs TF-KV**（**三臂**）叶数扫
+
+与 **§10** **同 Wikitext 建树**，**`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`**：**Mamba** + **TF-KV clone** + **TF-KV truncate**（**`tf_kv_truncate_arm`** = **`truncate_kv`** 回退）。**`kind=ssgs_vs_kv_tree_nav_wikitext`**。工具表与脚注：**`SSGS_MAINLINE_M1.md`**；登记 **X-ssgs-vs-kv-tree-nav-m1**。
+
+**前置**：**§0**。
+
+```bash
+cd /root/autodl-tmp/mamba2
+bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+# 叶数：M1_LEAVES="8 16 32 64" bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+# 仅两臂（无 truncate 键）：M1_NO_TRUNCATE=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+# 固定 STAMP：M1_STAMP=20260407T1200Z bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+```
+
+产出：**`$MAMBA2_RESULTS_ROOT/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n{N}_cuda_3arm_${STAMP}.json`**（**`M1_NO_TRUNCATE=1`** 时文件名为 **`…_2arm_${STAMP}.json`**）。**跑后**：在 **`EXPERIMENT_REGISTRY`** 更新 **M1** 行或附 **n16/n32** 一句；跨臂墙钟 **不对等** 须在脚注中写明。
+
+**可选 L3（隐状态一致性，非 CE）**：在 **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`** 上加 **`--l3-tf-kv-hidden`**，JSON 增加 **`l3_tf_kv_hidden`**（**clone** / **truncate** 臂各 **余弦** vs 金路径-only）。见 **`SSGS_MAINLINE_M1.md`** §2.1、**`tf_kv_l3_probe.py`**。
+
 ---
 
 ## 11. 本机 **RTX 5060**（Windows；服务器忙时）
@@ -284,3 +302,5 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 | 2026-04-07 | **§10**：已跑通 **1529Z / 1550Z / 1601Z** 归档例；**n128**、**HEAD** 重跑 为可选 |
 | 2026-04-07 | **§11**：**`LOCAL_5060_RUNBOOK.md`**（本机 5060 / Windows） |
 | 2026-04-07 | **§0 / §10**：**`scripts/server/bootstrap_autodl.sh`**、**`run_ssgs_mamba_wikitext_cuda.sh`**（重启后环境 + 主线 SSGS CUDA） |
+| 2026-04-07 | **§10.1**：**M1** **`run_m1_ssgs_vs_kv_wikitext_cuda.sh`**（**n8/n16/n32** 三臂）；**`SSGS_MAINLINE_M1.md`** |
+| 2026-04-10 | **§10.1**：**`--l3-tf-kv-hidden`**（**`l3_tf_kv_hidden`**）；**`tf_kv_l3_probe.py`** |
