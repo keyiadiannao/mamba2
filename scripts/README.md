@@ -41,7 +41,8 @@
 | **Linux** | `benchmarks/run_server_wikitext_dim256_grid.sh` | Wikitext **dim=256** 同拓扑四格（**`TAG` 默认 `stage2_dim256`**）；见 **`NEXT_EXPERIMENTS_COMMANDS.md`** |
 | **Linux** | **[server/bootstrap_autodl.sh](server/bootstrap_autodl.sh)** | AutoDL：**conda mamba2** + **`HF_ENDPOINT`** + **`MAMBA2_RESULTS_ROOT`** + Wikitext/datasets 与 **CUDA** 冒烟 |
 | **Linux** | **[server/run_ssgs_mamba_wikitext_cuda.sh](server/run_ssgs_mamba_wikitext_cuda.sh)** | 主线：**SSGS × Mamba × Wikitext 同建树**（`demo_ssgs_mamba_wikitext.py` **CUDA**）+ 可选 path-batch smoke + **`aggregate_ssgs_mamba_wikitext_json.py`** |
-| **Linux** | **[server/run_m1_ssgs_vs_kv_wikitext_cuda.sh](server/run_m1_ssgs_vs_kv_wikitext_cuda.sh)** | **Phase M1**：**`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`** **CUDA**；默认 **n8/n16/n32** **三臂**（可 **`M1_LEAVES`** / **`M1_NO_TRUNCATE=1`**） |
+| **Linux** | **[server/run_m1_ssgs_vs_kv_wikitext_cuda.sh](server/run_m1_ssgs_vs_kv_wikitext_cuda.sh)** | **Phase M1**：**`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`** **CUDA**；默认 **n8/n16/n32** **三臂**（可 **`M1_LEAVES`** / **`M1_NO_TRUNCATE=1`**）；末步 **`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**（**`SKIP_M1_AGGREGATE=1`** 可关） |
+| **任意** | `research/aggregate_ssgs_vs_kv_wikitext_json.py` | **M1**：glob **`ssgs_vs_kv_tree_nav_wikitext_*.json`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**（**`--out-csv`**） |
 
 示例：
 

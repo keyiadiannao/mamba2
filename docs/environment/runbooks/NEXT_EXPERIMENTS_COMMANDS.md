@@ -274,6 +274,8 @@ bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
 
 产出：**`$MAMBA2_RESULTS_ROOT/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n{N}_cuda_3arm_${STAMP}.json`**（**`M1_NO_TRUNCATE=1`** 时文件名为 **`…_2arm_${STAMP}.json`**）。**跑后**：在 **`EXPERIMENT_REGISTRY`** 更新 **M1** 行或附 **n16/n32** 一句；跨臂墙钟 **不对等** 须在脚注中写明。
 
+**汇总表**：拷入本仓 **`results/metrics_result/`** 后，**`python scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py -g 'results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_*.json' --out-csv results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**（含 **L3** 列若 JSON 有 **`l3_tf_kv_hidden`**）。单测：**`pytest tests/test_aggregate_ssgs_vs_kv_wikitext_json.py`**。**`run_m1_ssgs_vs_kv_wikitext_cuda.sh`** 默认在叶扫结束后调用聚合（**`SKIP_M1_AGGREGATE=1`** 跳过；**`AGGREGATE_APPEND=1`** 追加）。
+
 **可选 L3（隐状态一致性，非 CE）**：在 **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`** 上加 **`--l3-tf-kv-hidden`**，JSON 增加 **`l3_tf_kv_hidden`**（**clone** / **truncate** 臂各 **余弦** vs 金路径-only）。见 **`SSGS_MAINLINE_M1.md`** §2.1、**`tf_kv_l3_probe.py`**。
 
 ---
@@ -304,3 +306,4 @@ bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
 | 2026-04-07 | **§0 / §10**：**`scripts/server/bootstrap_autodl.sh`**、**`run_ssgs_mamba_wikitext_cuda.sh`**（重启后环境 + 主线 SSGS CUDA） |
 | 2026-04-07 | **§10.1**：**M1** **`run_m1_ssgs_vs_kv_wikitext_cuda.sh`**（**n8/n16/n32** 三臂）；**`SSGS_MAINLINE_M1.md`** |
 | 2026-04-10 | **§10.1**：**`--l3-tf-kv-hidden`**（**`l3_tf_kv_hidden`**）；**`tf_kv_l3_probe.py`** |
+| 2026-04-10 | **§10.1**：**`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**；**`SKIP_M1_AGGREGATE` / `AGGREGATE_APPEND`** |

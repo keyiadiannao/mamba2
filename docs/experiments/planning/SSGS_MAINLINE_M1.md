@@ -21,6 +21,7 @@
 | **§7：Mamba 段快照/恢复 ms** | 单路径 | `scripts/research/benchmark_mamba2_cache_snapshot_segments.py`、`benchmark_mamba2_cache_restore_segments.py` | — |
 | **§7：TF-R1 / TF-KV（含错枝截断 demo）** | 单路径玩具 trunk；**KV 类** 亦在 `src/rag_tree/tf_kv_incremental.py` | `scripts/research/benchmark_tf_r1_path_segments.py`、`benchmark_tf_kv_path_segments.py`（`--branch-truncate-demo`） | — |
 | **M1：SSGS vs TF-KV 同树 DFS（Wikitext）** | 与 `demo_ssgs_mamba_wikitext` 同建树 / `target_leaf_index`；可选 **`--l3-tf-kv-hidden`** | `scripts/research/benchmark_ssgs_vs_kv_tree_nav_wikitext.py` | `tests/test_tf_kv_tree_nav.py`、`tests/test_tf_kv_l3_probe.py` |
+| **M1：多 JSON → 网格 CSV** | **`kind=ssgs_vs_kv_tree_nav_wikitext`**；可选 **L3** 列 | `scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py` | `tests/test_aggregate_ssgs_vs_kv_wikitext_json.py` |
 | **M1：L3 隐状态一致性（TF-KV）** | DFS+restore 末 token hidden vs 金路径纯增量前向（同权重） | `src/rag_tree/tf_kv_l3_probe.py` | `tests/test_tf_kv_l3_probe.py` |
 | **path-batch 同树三 reader** | Wikitext | `scripts/benchmarks/benchmark_wikitext_tree.py` | — |
 | **path-batch + SSGS 同树 smoke（三 reader 一行 JSON）** | — | `run_ssgs_mamba_wikitext_cuda.sh` 中 **`RUN_WIKITEXT_SMOKE=1`** → `benchmark_wikitext_tree` bundle | — |
@@ -56,6 +57,8 @@
 
 **L3 隐状态（n8 CUDA）**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm_l3.json`** — **`l3_tf_kv_hidden`**：**clone / truncate** 与金路径-only 的 **末 token hidden** **余弦 ≈ 1**、**`l2_diff`=0**（**`git_sha` 以 JSON 为准**）。
 
+**网格 CSV**：**`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** — **`python scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py -g 'results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_*.json' --out-csv results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`**。云端 **`run_m1_ssgs_vs_kv_wikitext_cuda.sh`** 扫叶后默认聚合（**`SKIP_M1_AGGREGATE=1`** 跳过；**`AGGREGATE_APPEND=1`** 追加）。
+
 ---
 
 ## 3. Phase M1 目标（4 周内可检查）
@@ -74,6 +77,7 @@
 - [x] 在 **`EXPERIMENT_REGISTRY`** 登记 **M1**：**`X-ssgs-vs-kv-tree-nav-m1`** + **`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm.json`**（三臂，**`git_sha=6fa7873`**）；历史两臂文件 **`…_n8_cuda.json`** 仍保留作对照。  
 - [x] **叶数扩展**：**`STAMP=20260410T1012Z`** — **`…_n{8,16,32}_cuda_3arm_20260410T1012Z.json`** 已入仓并写入 **`EXPERIMENT_REGISTRY`** **X-ssgs-vs-kv-tree-nav-m1**；**n64** 等仍可选。  
 - [x] **L3（隐状态）**：**`--l3-tf-kv-hidden`** + **`src/rag_tree/tf_kv_l3_probe.py`**；单测 **`tests/test_tf_kv_l3_probe.py`**。  
+- [x] **网格 CSV**：**`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**；单测 **`tests/test_aggregate_ssgs_vs_kv_wikitext_json.py`**。  
 - [ ] **L3（下游 CE/头）**：仍待；**禁止**与 path-batch 主表无脚注合并。
 
 ---
@@ -96,3 +100,4 @@
 | 2026-04-07 | 增补 **`run_m1_ssgs_vs_kv_wikitext_cuda.sh`**（叶数扫）；检查表：**叶数扩展** + **L3 探针** |
 | 2026-04-10 | **叶扫归档**：**`20260410T1012Z`** **n8/n16/n32** 三臂 JSON → **`EXPERIMENT_REGISTRY` M1** 行 |
 | 2026-04-10 | **§2.1** 实测表；**L3 隐状态**：**`tf_kv_l3_probe`**、**`--l3-tf-kv-hidden`** |
+| 2026-04-10 | **网格 CSV**：**`aggregate_ssgs_vs_kv_wikitext_json.py`**、**`ssgs_vs_kv_wikitext_nav_grid.csv`**；检查表勾选 |

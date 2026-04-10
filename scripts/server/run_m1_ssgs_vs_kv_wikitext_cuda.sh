@@ -14,6 +14,12 @@
 # 固定 **STAMP**（UTC）：
 #   M1_STAMP=20260407T1200Z bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
 #
+# **L3 隐状态**（每叶数 JSON 变大；**n8 单点** 常用）：
+#   M1_WITH_L3=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+#
+# **汇总 CSV**（默认跑）：**`ssgs_vs_kv_tree_nav_wikitext_*.json`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**  
+#   跳过：**`SKIP_M1_AGGREGATE=1`**；与旧表合并：**`AGGREGATE_APPEND=1`**
+#
 # 依赖：**`scripts/server/_autodl_env.sh`**（conda **mamba2**、**HF_ENDPOINT**、**MAMBA2_RESULTS_ROOT**）。
 
 set -euo pipefail
@@ -28,6 +34,9 @@ mkdir -p "$OUT_DIR"
 EXTRA_FLAGS=()
 if [[ "${M1_NO_TRUNCATE:-0}" == "1" ]]; then
   EXTRA_FLAGS+=(--no-tf-kv-truncate)
+fi
+if [[ "${M1_WITH_L3:-0}" == "1" ]]; then
+  EXTRA_FLAGS+=(--l3-tf-kv-hidden)
 fi
 
 SUFFIX="3arm"
@@ -46,4 +55,15 @@ for N in ${M1_LEAVES:-8 16 32}; do
     --out-json "$OUT_DIR/ssgs_vs_kv_tree_nav_wikitext_n${N}_cuda_${SUFFIX}_${STAMP}.json"
 done
 
-echo "== 完成。核对各 JSON 内 **git_sha**；**EXPERIMENT_REGISTRY** 更新 **X-ssgs-vs-kv-tree-nav-m1** 或新开 **STAMP** 行（附 n16/n32 趋势一句）=="
+if [[ "${SKIP_M1_AGGREGATE:-0}" != "1" ]]; then
+  AGG=(python scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py \
+    -g "$OUT_DIR/ssgs_vs_kv_tree_nav_wikitext_*.json" \
+    --out-csv "$OUT_DIR/ssgs_vs_kv_wikitext_nav_grid.csv")
+  if [[ "${AGGREGATE_APPEND:-0}" == "1" ]]; then
+    AGG+=(--append)
+  fi
+  echo "== M1 汇总 CSV：${AGG[*]} =="
+  "${AGG[@]}"
+fi
+
+echo "== 完成。核对各 JSON 内 **git_sha**；**EXPERIMENT_REGISTRY** 更新 **X-ssgs-vs-kv-tree-nav-m1**；**CSV** 见 **ssgs_vs_kv_wikitext_nav_grid.csv** =="
