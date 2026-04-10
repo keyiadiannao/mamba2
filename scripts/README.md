@@ -37,6 +37,8 @@
 | **Linux** | `benchmarks/run_server_paper_main_sweep_naive.sh` | **同机主文扫参 HF naive**（需无 `mamba-ssm`/`causal-conv1d` 的环境；网格与上者相同） |
 | **Linux** | `benchmarks/run_server_stage2_wikitext_grid.sh` | **A2-S2**：Wikitext 浅树 **fused** 四格（或 **`GRID=minimal`**）；见 **`SERVER_SWEEP_RUNBOOK` §2d** |
 | **Linux** | `benchmarks/run_server_wikitext_dim256_grid.sh` | Wikitext **dim=256** 同拓扑四格（**`TAG` 默认 `stage2_dim256`**）；见 **`NEXT_EXPERIMENTS_COMMANDS.md`** |
+| **Linux** | **[server/bootstrap_autodl.sh](server/bootstrap_autodl.sh)** | AutoDL：**conda mamba2** + **`HF_ENDPOINT`** + **`MAMBA2_RESULTS_ROOT`** + Wikitext/datasets 与 **CUDA** 冒烟 |
+| **Linux** | **[server/run_ssgs_mamba_wikitext_cuda.sh](server/run_ssgs_mamba_wikitext_cuda.sh)** | 主线：**SSGS × Mamba × Wikitext 同建树**（`demo_ssgs_mamba_wikitext.py` **CUDA**）+ 可选 path-batch smoke + **`aggregate_ssgs_mamba_wikitext_json.py`** |
 
 示例：
 

@@ -8,6 +8,18 @@
 
 ## 0. 服务器公共前置（每条流水线前先执行）
 
+**一键（推荐，实例重启后先跑）**：仓库根执行
+
+```bash
+cd /root/autodl-tmp/mamba2
+git pull origin master   # 若失败：本机 pull + 同步；见 **SERVER_SWEEP_RUNBOOK** §1
+bash scripts/server/bootstrap_autodl.sh
+```
+
+其内部会 **`source`** **`scripts/server/_autodl_env.sh`**（**`HF_ENDPOINT=https://hf-mirror.com`**、**`MAMBA2_RESULTS_ROOT`**、`conda activate mamba2`），并做 **Wikitext `datasets`** 与 **CUDA** 检查。
+
+**手工等价**（与旧版一致）：
+
 ```bash
 cd /root/autodl-tmp/mamba2
 git pull origin master   # 若 TLS 失败：本机 pull + PyCharm 同步；见 **SERVER_SWEEP_RUNBOOK** §1
@@ -29,7 +41,7 @@ mkdir -p "$MAMBA2_RESULTS_ROOT/metrics_result" "$MAMBA2_RESULTS_ROOT/metrics"
 # export HF_TOKEN=hf_你的token
 ```
 
-（Conda 若在 **`/root/anaconda3`**，请改 **`source`** 路径；代码若不在 **`/root/autodl-tmp/mamba2`**，只改 **`cd`**。）
+（Conda 若在 **`/root/anaconda3`**，请改 **`source`** 路径或 **`export CONDA_SH=/root/anaconda3/etc/profile.d/conda.sh`** 后再跑 **`bootstrap_autodl.sh`**；代码若不在 **`/root/autodl-tmp/mamba2`**，**`export MAMBA2_REPO_ROOT=...`**。）
 
 ---
 
@@ -208,10 +220,22 @@ done
 
 **前置**：**§0**（**`HF_ENDPOINT`**、**datasets** 可拉 **Wikitext-2**）。CUDA 上 **`build_toy_mamba2_for_ssgs`** 行为与 **`demo_ssgs_mamba_dfs.py`** 一致（见 **`SERVER_SWEEP_RUNBOOK`** **SSGS** 段）。
 
+**一键（CUDA + 汇总 CSV；可选顺带 path-batch smoke）**：
+
+```bash
+cd /root/autodl-tmp/mamba2
+bash scripts/server/bootstrap_autodl.sh
+RUN_WIKITEXT_SMOKE=1 bash scripts/server/run_ssgs_mamba_wikitext_cuda.sh
+# 多叶数：EXTRA_LEAVES="16 32" bash scripts/server/run_ssgs_mamba_wikitext_cuda.sh
+```
+
+**单条命令（等价 n8 一格，须已 §0）**：
+
 ```bash
 cd /root/autodl-tmp/mamba2
 STAMP=$(date -u +%Y%m%dT%H%MZ)
 python scripts/research/demo_ssgs_mamba_wikitext.py \
+  --device cuda \
   --num-leaves 8 --fanout 2 --chunk-len 8 --dim 128 --layers 2 \
   --target-leaf-index -1 \
   --out-json "$MAMBA2_RESULTS_ROOT/metrics_result/ssgs_mamba_wikitext_n8_c8_${STAMP}.json"
@@ -259,3 +283,4 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 | 2026-04-07 | **§10**：**`aggregate_ssgs_mamba_wikitext_json.py`** → **`ssgs_mamba_wikitext_grid.csv`** |
 | 2026-04-07 | **§10**：已跑通 **1529Z / 1550Z / 1601Z** 归档例；**n128**、**HEAD** 重跑 为可选 |
 | 2026-04-07 | **§11**：**`LOCAL_5060_RUNBOOK.md`**（本机 5060 / Windows） |
+| 2026-04-07 | **§0 / §10**：**`scripts/server/bootstrap_autodl.sh`**、**`run_ssgs_mamba_wikitext_cuda.sh`**（重启后环境 + 主线 SSGS CUDA） |
