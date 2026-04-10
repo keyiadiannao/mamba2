@@ -1,6 +1,6 @@
 # 当前迭代（滚动）
 
-> **方向与现状总览**（读后再勾选）：**`RESEARCH_STATUS_AND_DIRECTION.md`**。  
+> **方向与现状总览**（读后再勾选）：**`RESEARCH_STATUS_AND_DIRECTION.md`**（含 **§3.5 对外叙事批判性接收、L1–L4 证据层级、P★ L3 PoC**）。  
 > 每 1–2 周更新一次「周期」与勾选；完成后把结论一行写入 `docs/experiments/EXPERIMENT_REGISTRY.md`。
 
 ## 周期

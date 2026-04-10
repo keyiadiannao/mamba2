@@ -1,6 +1,6 @@
 # 下一步研究计划（展开）
 
-> **先读**：**`RESEARCH_STATUS_AND_DIRECTION.md`**（整体方向、现状、决策原则、**§6 公平性与何时换更大模型**、与本文件 **推荐顺序** 的对应）。  
+> **先读**：**`RESEARCH_STATUS_AND_DIRECTION.md`**（整体方向、现状、**§3.5 对外叙事批判性接收与证据层级**、决策原则、**§6 公平性与何时换更大模型**、与本文件 **推荐顺序** 的对应）。  
 > **前置**：阶段 1 已收束（**`PHASE1_MANUSCRIPT.md`**、**`results/metrics_result/`**、§7 复跑验收）。本文将 **`ROADMAP.md` 阶段 2 入口** 与 **`PROJECT_MASTER_PLAN.md`** 工作分解 **展开为可执行任务**；**周期勾选**仍以 **`CURRENT_SPRINT.md`** 为准。
 
 ---
@@ -41,11 +41,18 @@
 | 优先级 | 内容 | 说明 |
 |--------|------|------|
 | **P0** | **成文整合** | **`PHASE1_MANUSCRIPT`** / **`FIGURE_CAPTIONS_STAGE1`** / **`EXPERIMENT_REGISTRY`** 对齐投稿版；**§7.5 S5** 总表 **视截稿篇幅** |
+| **P★** | **（可选）L3 语义 PoC** | 见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5**：微型树、**A→错枝 B→restore A→C** vs **A→C** 同指标对照；**新 kind + 登记**；与 path-batch **分列**。用于回应「快照是否语义保真」；**失败则收紧声称**，不阻塞 **P0**。 |
 | **P1** | **3090：B-S2+ CUDA 一条** | 与 **本机 B-S2+ CPU** **分列**；**`NEXT_EXPERIMENTS_COMMANDS.md` §6** |
 | **P2** | **SSGS 辅线** | **sha 刷新**、**n128**；**非**主线阻塞 |
 | **P3** | **A2-S3 可选加压** | **`root_child`**、**`leaf_heldout`**、**`split-seed`** 等；与 **init×5** **分列** 说明 |
 
-**原则**：**不**在无脚注下混表 **5060 naive** 与 **3090 fused**；**不**混读 **path-batch 毫秒/峰值**、**§7 单列毫秒**、**SSGS 快照计数**、**A2-S3 准确率**（**`PHASE1_MANUSCRIPT` §5.1**）。
+**已决策略（与外部「高收益高风险」讨论对齐）**
+
+- **主线保底**：**L1–L2**（实现敏感性 + 真语料 harness + 五轴分列）已足以支撑 **可发表的工程/系统论文**；**P0** 优先把现有数字写进投稿稿。  
+- **叙事升级（可选）**：若希望论文强调 **「状态回溯解锁新算法」**，须 **显式投资 P★**；**不**与 **再扫一格 Wikitext** 无限并行，避免两条都做一半。  
+- **云端默认**：**P1** 仍为 **低成本补一行对照**（B-S2+ CUDA）；**P2** 为辅线。
+
+**原则**：**不**在无脚注下混表 **5060 naive** 与 **3090 fused**；**不**混读 **path-batch 毫秒/峰值**、**§7 单列毫秒**、**SSGS 快照计数**、**A2-S3 准确率**（**`PHASE1_MANUSCRIPT` §5.1**）。**动机修辞**（投资比喻、Agent 刚需）**≠** 证据；见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5**。
 
 ---
 
@@ -224,3 +231,4 @@ flowchart LR
 | 2026-04-07 | **A2-S2b** 叶数扫描 **`run_server_wikitext_leavescale.sh`**；§7 **depth 5–6** **`run_server_section7_depth_sweep.sh`**（**`SERVER_SWEEP_RUNBOOK` §2f–§2g**） |
 | 2026-04-09 | **A2-S2b** 已归档：**`TAG=stage2_leavescale`** **`STAMP=20260409T1257Z`**；**`EXPERIMENT_REGISTRY` A-stage2-wikitext-leavescale-v1** |
 | 2026-04-09 | **A2-S2b XL**：**`stage2_leavescale_xl`** **n128/n256** **`1322Z`/`1324Z`**；**A-stage2-wikitext-leavescale-xl-v1** |
+| 2026-04-10 | **§3.5 指针**；**「后续方向」** 增 **P★ L3 语义 PoC**、**已决策略**（主线保底 / 叙事升级可选 / 动机≠证据）；见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5** |
