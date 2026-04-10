@@ -111,3 +111,4 @@
 | 2026-04-10 | **L3 下游 CE**：**`--l3-tf-kv-downstream-ce`**、**`tf_kv_l3_downstream_probe.py`**；脚注 **X-20260423/24** 叙事参考 |
 | 2026-04-10 | **归档**：**`STAMP=20260410T1113Z`** **n8** 三臂 + **`l3_tf_kv_downstream_ce`**（**`…_n8_cuda_3arm_20260410T1113Z.json`**） |
 | 2026-04-11 | **归档**：**`STAMP=20260410T1133Z`** **n16/n32** **`l3_tf_kv_downstream_ce`**（**`abs_ce_delta`=0**）；§10.1 推荐命令已跑通 |
+| 2026-04-11 | **索引**：**`docs/README`**、**`CURRENT_SPRINT`**、**`ROADMAP`**、**`NEXT_EXPERIMENTS`** 篇首、**`SERVER_SWEEP_RUNBOOK`** — **六轴** 与 **P0** **M1** 入稿指针 |

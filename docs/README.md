@@ -19,7 +19,7 @@
 | 主题 | 唯一权威 |
 |------|----------|
 | 叙事框架、基线对照、A/B/C/X、月级阶段表 | [`overview/planning/PROJECT_MASTER_PLAN.md`](overview/planning/PROJECT_MASTER_PLAN.md) |
-| **现状**大表、五轴、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
+| **现状**大表、六轴、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
 | 轨道里程碑、**当前收口清单**、P0–P3、后备推进 § | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
 | **本周**勾选、阻塞 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
 | 本机 5060 **可复制命令** | [`environment/runbooks/LOCAL_5060_RUNBOOK.md`](environment/runbooks/LOCAL_5060_RUNBOOK.md) |
@@ -44,7 +44,7 @@
 |------|------|
 | [`phases/PHASE1_MANUSCRIPT.md`](experiments/phases/PHASE1_MANUSCRIPT.md) | 阶段 1 主成稿（含 §8–§10） |
 | [`phases/PHASE2_DRAFT.md`](experiments/phases/PHASE2_DRAFT.md) | 阶段 2 表数字、修订日志 |
-| [`phases/FIGURE_CAPTIONS_STAGE1.md`](experiments/phases/FIGURE_CAPTIONS_STAGE1.md) | 主图图注与五轴护栏 |
+| [`phases/FIGURE_CAPTIONS_STAGE1.md`](experiments/phases/FIGURE_CAPTIONS_STAGE1.md) | 主图图注与六轴护栏（含 **M1**） |
 | [`phases/PHASE1_COMPLETE_SUMMARY.md`](experiments/phases/PHASE1_COMPLETE_SUMMARY.md) | 阶段 1 存档与 §7 复跑指针 |
 
 **实验侧总体规划**：[`planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md)、[`planning/DATASETS.md`](experiments/planning/DATASETS.md)、[`planning/PHASE1_VALIDATION_PLAN.md`](experiments/planning/PHASE1_VALIDATION_PLAN.md)、[`planning/SSGS_MAINLINE_M1.md`](experiments/planning/SSGS_MAINLINE_M1.md)（**Phase M1**）。

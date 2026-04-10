@@ -35,7 +35,7 @@
 
 ## 阶段 2 入口
 
-**不在此重复**：目标、语料/建树约束、里程碑 **A2-S0…S4**、**B-S1…S3** 的**完整表**见 **`docs/overview/execution/NEXT_RESEARCH_PLAN.md` §1–§3**；**现状与五轴**见 **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**。
+**不在此重复**：目标、语料/建树约束、里程碑 **A2-S0…S4**、**B-S1…S3** 的**完整表**见 **`docs/overview/execution/NEXT_RESEARCH_PLAN.md` §1–§3**；**现状与六轴**见 **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**。
 
 ---
 

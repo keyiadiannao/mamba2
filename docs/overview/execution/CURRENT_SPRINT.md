@@ -81,10 +81,10 @@
 - [x] **阶段 2 开工**：按 **`NEXT_RESEARCH_PLAN.md` §2** — **A2-S0** 登记占位 + **A2-S1** `benchmark_wikitext_tree.py` smoke（**`--out-json`** 至 **`results/metrics_result/`**，见该文档 **§2.4**）；**B-S1** **`docs/research/RETRIEVAL_HEAD_NOTES.md`**。  
 - [x] **检索头 B-S2（本地可完成）**：**`probe_retrieval_correlation.py`** + **`RETRIEVAL_HEAD_NOTES.md` §2** 文献入口表（与 2404.15574 等对照）；**per-head / 大模型** 仍待 **B-S3** 与 GPU。  
 - [x] **B-S2+ path reader 探针**：**`probe_path_reader_linear.py`**（默认 **16 叶 heldout**、**`ridge_untrained`**；可选 **`bce_reader_train` / `bce_head_only_train`**）；归档 **`results/metrics/probe_path_reader_linear_text16_*.json`**。  
-- [x] **A2-S3 任务 smoke 扩展**：**`task_wikitext_path_pair.py`** — **`task_wikitext_path_pair_sibling16_cpu.json`**、**`task_wikitext_path_pair_rootchild16_cpu.json`**（**CPU**，`split_seed=1`）；总览 **RESEARCH_STATUS** §3 第五条轴、**`PHASE2_DRAFT.md`** §2。  
+- [x] **A2-S3 任务 smoke 扩展**：**`task_wikitext_path_pair.py`** — **`task_wikitext_path_pair_sibling16_cpu.json`**、**`task_wikitext_path_pair_rootchild16_cpu.json`**（**CPU**，`split_seed=1`）；总览 **RESEARCH_STATUS** §3 测量轴、**`PHASE2_DRAFT.md`** §2。  
 - [x] **A2-S3 叶级 heldout**：**`--pair-split leaf_heldout --heldout-leaves 4`**（16 叶 sibling）→ **`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**；见 **`PHASE2_DRAFT.md`**（小 **test** 叶对数、CPU/CUDA ridge 波动）。  
 - [x] **本地收尾**：**`path_pair_geometry.py`** + **`tests/test_path_pair_geometry.py`**；**`aggregate_wikitext_5060_cuda_grid.py`** → **`benchmark_wikitext_5060_cuda_grid_20260407.csv`**；**A2-S3** **`chunk_len=12`** **`…_c12_leafheldout6_*.json`**；**`PHASE1_MANUSCRIPT` §3.1**。  
-- [x] **P1 成文并入主稿**：**`PHASE1_MANUSCRIPT.md` §8–§10**（阶段 2 系统+A2-S3、检索头/Mamba 边界、文档指针）；**`FIGURE_CAPTIONS_STAGE1.md`** 五条测量轴表；**`PHASE2_DRAFT.md`** 顶注指向主稿。  
+- [x] **P1 成文并入主稿**：**`PHASE1_MANUSCRIPT.md` §8–§10**（阶段 2 系统+A2-S3、检索头/Mamba 边界、文档指针）；**`FIGURE_CAPTIONS_STAGE1.md`** **六条测量轴**表（含 **M1**）；**`PHASE2_DRAFT.md`** 顶注指向主稿。  
 - [x] **仓库梳理（代码/文档）**：**`src/rag_tree/__init__.py`** 惰性导出（**`test_path_pair_geometry`** 可不加载 **torch**）；根目录 **`pytest.ini`**；**`PHASE1_MANUSCRIPT` §5** 主图路径改为 **`results/metrics/figures/`**；**`scripts/README.md`** 补 **aggregate** / **task_wikitext**；**`docs/README.md`** 补 **PHASE2_DRAFT** 链；根 **`README.md`** 单测分层说明。  
 - [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
 - [x] **A2-S2 第二轮（3090 fused）**：**`TAG=stage2_fused_r2`** **`STAMP=20260409T1110Z`**；**Mamba2 峰值与 R1 一致**；**`git_sha` JSON 内仍为 `6fa7873`**；归档 **`metrics_result/benchmark_wikitext_stage2_fused_r2_*`**；登记 **A-stage2** 已更新。
@@ -124,7 +124,7 @@
 
 | 优先级 | 方向 | 可执行项 |
 |--------|------|----------|
-| P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 对齐；**`docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`docs/experiments/phases/FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 作 **口径护栏**；**`docs/experiments/phases/PHASE1_MANUSCRIPT.md`** 已含 **阶段 2 §8–§10** 与 **五轴** 交叉引用（截稿前仍可润色） |
+| P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 对齐；**`docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`docs/experiments/phases/FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 作 **口径护栏**；**`docs/experiments/phases/PHASE1_MANUSCRIPT.md`** 已含 **阶段 2 §8–§10** 与 **六轴**（含 **M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**）交叉引用；**`SUBMISSION_PACK.md` §A3–A2.1** **粘贴进正稿**（截稿前仍可润色） |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT`；**A-20260408-wikitext-3090-fused** — 主线引用时标明 **与合成树同一 harness** |
 | P1 | **主线：§7 协议** | **复跑已通过**（见 sprint §7 勾选 + **`PHASE1_COMPLETE_SUMMARY` 附录 B**）；正文仍须与主图 **分列声明**（§7.3.1） |
 | P1 | **SSGS（协议层）** | **X-20260421-*** 张量 + **`dfs_ssgs_mamba`** demo；**不等于** 真 LM 导航线 |

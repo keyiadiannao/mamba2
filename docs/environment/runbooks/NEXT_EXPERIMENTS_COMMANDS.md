@@ -2,7 +2,7 @@
 
 > **用途**：**A2-S2（dim128）** 与 **叶数 / dim256 / §7 depth** 已归档后，优先跑 **A2-S3 多种子**（轻负载），可选 **机制探针 B-S2+**。  
 > **登记**：每次新网格 **新开 `EXPERIMENT_REGISTRY` 行**（勿与 **`A-stage2-wikitext-grid-v1`** 无说明合并）。  
-> **公平性**：**5060 naive** 与 **3090 fused**、**dim128** 与 **dim256** 均须 **分列 + 脚注**（见 **`RESEARCH_STATUS` §6**、**`FIGURE_CAPTIONS`** 五轴）。
+> **公平性**：**5060 naive** 与 **3090 fused**、**dim128** 与 **dim256** 均须 **分列 + 脚注**（见 **`RESEARCH_STATUS` §6**、**`FIGURE_CAPTIONS`** **六轴**）。
 
 ---
 
@@ -321,3 +321,4 @@ M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_
 | 2026-04-10 | **§10.1**：**`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**；**`SKIP_M1_AGGREGATE` / `AGGREGATE_APPEND`** |
 | 2026-04-10 | **§10.1**：**`--l3-tf-kv-downstream-ce`**、**`M1_WITH_L3_DOWNSTREAM_CE`**（**`l3_tf_kv_downstream_ce`**） |
 | 2026-04-11 | **§10.1**：**L3 CE 叶扩** — **`STAMP=20260410T1133Z`** **n16/n32** 已归档；块内改为重跑 / **n64** 模板 |
+| 2026-04-11 | **篇首公平性**：**`FIGURE_CAPTIONS`** **六轴** 指针 |
