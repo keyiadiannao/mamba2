@@ -18,11 +18,16 @@
 - [ ] **`git status`** 干净（提交前自检）；勿让 Excel/手改 **污染** 已归档 **`benchmark_wikitext_stage2_*`** / **`…leavescale_xl_*`**（误改用 **`git restore results/metrics_result/<file>`** 回滚）。
 - [x] **SSGS Wikitext**：以 **`ssgs_mamba_wikitext_grid.csv`** + **`ssgs_mamba_wikitext_*.json`** 为准；**勿**保留 **`…grid-Copy1.csv`** 等重复副本。
 
-**服务器有空时（可选一条即可）**
+**本机 5060 已完成（2026-04-10；与登记册、`PHASE1_MANUSCRIPT` §4/§5/§8.2 对齐）**
 
-- [ ] **`git pull` 后** 在 3090 上 **重跑 `demo_ssgs_mamba_wikitext.py` n8 一格**，刷新 JSON **`git_sha`**（与正文 **HEAD** 对齐）。
-- [ ] **B-S2+ CUDA（3090）**：**`probe_path_reader_linear.py`** **去掉 `--cpu`** 一条 JSON，**新开登记行**（**`NEXT_EXPERIMENTS_COMMANDS.md` §6**）；与 **本机 5060 CPU**（**§9.1**、**X-20260407-local5060-bs2plus-rerun**）**分列**。
-- [ ] **SSGS n128**（**`--num-leaves 128`**，CUDA）+ **`aggregate_ssgs_mamba_wikitext_json.py --append`** —— **辅线延长**，非主线阻塞（**`NEXT_EXPERIMENTS_COMMANDS.md` §10**）。
+- [x] **A2-S3**：**`task_wikitext_path_pair.py`** **`--cpu --num-leaves 8`**，**sibling**、**stratified**、**c8 dim128** → **`results/metrics/task_wikitext_sibling8_local5060_cpu_20260410.json`**（**X-20260410-local5060-a2s3-n8-strat**；**`ridge_concat.*.test_acc`≈0.857**，7 test 对）。
+- [x] **SSGS × Wikitext（轻量）**：**`demo_ssgs_mamba_wikitext.py`** **`--cpu`** **n8 c4 dim64** → **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**X-20260410-local5060-ssgs-wikitext-n8-c4d64**；**snapshots 7 / rollbacks 11 / leaf_checks 8**）。与 **`metrics_result` 归档 grid（c8 dim128）** **分列**。
+
+**服务器有空时（可选一条即可；建议优先级自上而下）**
+
+1. **B-S2+ CUDA（3090）** — **首选**：**`probe_path_reader_linear.py`** **去掉 `--cpu`**，与 **`LOCAL_5060_RUNBOOK` §2** 同 **n-leaves / heldout**，**`--out-json`** 到 **`results/metrics_result/`** 或 **`results/metrics/`**，**新开登记行**（**`NEXT_EXPERIMENTS_COMMANDS.md` §6**）；与 **本机 5060 CPU**（**`PHASE1_MANUSCRIPT` §9.1**、**X-20260407-local5060-bs2plus-rerun**）**分列**。  
+2. **`git pull` 后** 在 3090 上 **重跑 `demo_ssgs_mamba_wikitext.py` n8 一格**（**c8 dim128** 与归档 grid 一致），刷新 JSON **`git_sha`**（与正文 **HEAD** 对齐）。  
+3. **SSGS n128**（**`--num-leaves 128`**，CUDA）+ **`aggregate_ssgs_mamba_wikitext_json.py --append`** —— **辅线延长**，非主线阻塞（**`NEXT_EXPERIMENTS_COMMANDS.md` §10**）。
 
 **已就绪（无需再跑也能写）**：阶段 2 **path-batch** 叶数扫描与 XL、**§7 depth 5–6**、**A2-S3 init×5**、**Wikitext SSGS grid（n8–64）** —— 见 **登记册** 与 **`PHASE1_MANUSCRIPT` §5** 表。
 
