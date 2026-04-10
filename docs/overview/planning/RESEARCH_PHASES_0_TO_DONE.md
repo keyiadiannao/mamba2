@@ -39,7 +39,7 @@
 与 **`docs/overview/execution/SUBMISSION_PACK.md`**、**`docs/experiments/planning/DATA_ARCHIVE_202604_SERVER.md` §0** 同步勾选：
 
 1. [ ] **§A2**：主文/附录出现的每个 **`results/metrics_result/`** basename 与 **`EXPERIMENT_REGISTRY`** 一行对齐。  
-2. [ ] **§A3 / `FIGURE_CAPTIONS_STAGE1.md`**：**七轴** 各轴一句脚注进正文（含 **M1**、**L3 轨迹玩具** 分列）。  
+2. [x] **§A3 / §A3b**：**中文 §A3** + **英文 §A3b** 已写入 **`SUBMISSION_PACK.md`**；**待** 粘贴进主稿。完整表仍见 **`FIGURE_CAPTIONS_STAGE1.md`**。  
 3. [ ] **`PHASE1_MANUSCRIPT.md`**：摘要/讨论/局限 与 **§3.5** 一致（**不**把动机写成已证结论）。  
 4. [ ] **`git status`** 干净；提交前 **`pytest tests/`**（须 torch 的环境）或至少 **`test_aggregate_ssgs_mamba_wikitext_json.py`**。  
 5. [ ] （可选）**§7.5 S5**、主图 PNG 入仓策略 — **视截稿**。

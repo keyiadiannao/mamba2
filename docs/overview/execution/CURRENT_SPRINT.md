@@ -118,9 +118,10 @@
 ## 阶段 5 检查清单（与 **`RESEARCH_PHASES_0_TO_DONE.md`** 同步）
 
 - [ ] **§A2** basename ↔ 登记册  
-- [ ] **§A3** 七轴脚注入稿  
-- [ ] **局限段** 含 §3.5 三风险（有损状态 / 回退触发 / H2D）  
-- [ ] **`git status`** + **pytest**（或聚合单测）  
+- [x] **§A3 / §A3b** 七轴脚注：**中文 §A3** + **英文 §A3b** 已在 **`SUBMISSION_PACK.md`** — 粘贴进 LaTeX/Word  
+- [ ] **局限段** 含 §3.5 三风险（有损状态 / 回退触发 / H2D）— **`PHASE1_MANUSCRIPT` §9.2** 已有骨架  
+- [x] **`git push`**：**`7052efa`** 已上 **`origin/master`**（含 metrics + 文档 + L3 轨迹 harness）  
+- [ ] **`pytest tests/`**（或聚合单测；须 **torch** 环境）  
 
 ---
 
