@@ -64,6 +64,7 @@
 | **Wikitext** | `benchmark_wikitext_3090_fused_20260408T0846Z.json` | 浅树 fused |
 | **Wikitext（5060 CUDA，动机）** | `benchmark_wikitext_5060_cuda_{n8_c8,n8_c12,n16_c8,n16_c12}_20260407.json`、`benchmark_wikitext_5060_cuda_grid_20260407.csv` | **HF naive** Mamba **2×2**；**`aggregate_wikitext_5060_cuda_grid.py`** 可重生成 CSV；**不可**与 3090 fused **同表混点** |
 | **Wikitext（5060 CUDA，单点 smoke）** | **`benchmark_wikitext_local5060_cuda_*_n8_c8.json`**（例 **`20260410T1204Z`**） | **X-20260410-benchmark-wikitext-local5060-cuda-n8c8**；与上 **同 harness**；**`git_sha`** 以文件内为准 |
+| **Wikitext（5060 CPU，可跑性）** | **`benchmark_wikitext_local5060_cpu_*_n8_c8.json`**（例 **`20260410T1220Z`**） | **X-20260410-local5060-wikitext-cpu-n8c8**；**低 `WARMUP`/`REPS`**；**`peak_alloc_mib`** 在 CPU **非** GPU 峰值；与 **CUDA smoke** **分列** |
 | **大叶数研究** | `sweep_research_large_leaves_*_research_lg_v1.csv` + manifest | 登记 **A-20260408-research-large-leaves-3090** |
 | **阶段 2 叶数扫描（3090 fused）** | `benchmark_wikitext_stage2_leavescale_20260409T1257Z_n{8,16,32,64}_c8.json`、`…_grid_20260409T1257Z.csv`、manifest | **A-stage2-wikitext-leavescale-v1** |
 | **阶段 2 叶数 XL** | `benchmark_wikitext_stage2_leavescale_xl_*_{1322Z_n128,1324Z_n256}_c8.json`、`…_grid_n128_n256_combined.csv` | **A-stage2-wikitext-leavescale-xl-v1** |
@@ -86,7 +87,7 @@
 | **主文 CSV + Manifest** | **齐** | **`paper_main_dim128_localgrid_paper_main_{v1,naive_v1}.csv`**；**`paper_main_dim{256,384}_paper_main_{v1,naive_v1}.csv`**；**`paper_main_manifest_paper_main_{v1,naive_v1}.txt`** |
 | **主图 PNG（naive vs fused）** | **齐** | **`results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`**（各一张） |
 | **§7 + 玩具 JSON** | **齐** | **`metrics_result/`** 内 **`…1617Z`** 等；**`results/metrics/*_20260421.json`** 与登记 **X-20260421-*** 对应 |
-| **5060 Wikitext 动机** | **齐** | **`benchmark_wikitext_5060_cuda_*_20260407.json`**、**`…_grid_20260407.csv`**；另 **单点 CUDA smoke**：**`benchmark_wikitext_local5060_cuda_*_n8_c8.json`**（**§5** 表） |
+| **5060 Wikitext 动机** | **齐** | **`benchmark_wikitext_5060_cuda_*_20260407.json`**、**`…_grid_20260407.csv`**；另 **单点 CUDA smoke**：**`benchmark_wikitext_local5060_cuda_*_n8_c8.json`**（**§5** 表）；**CPU 可跑性**：**`benchmark_wikitext_local5060_cpu_*_n8_c8.json`** |
 | **阶段 2 path-batch 归档** | **齐** | **leavescale / XL / dim256 / §7 depth** 等见 **§5** 表与 **登记册** |
 | **A2-S3 init×5** | **齐** | **`task_wikitext_sibling{16,32}_*_1438Z.json`** |
 | **A2-S3 本机 stratified（n8）** | **齐** | **`task_wikitext_sibling8_local5060_cpu_20260410.json`**（**X-20260410-local5060-a2s3-n8-strat**） |
@@ -222,3 +223,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-07 | **§9.1**：**5060 CPU B-S2+** 成文 + **§7** 英摘一句；**§10** 第 2 条更新（CPU 已归档） |
 | 2026-04-10 | **§5**：**5060 CUDA** Wikitext **n8 c8** smoke（**`benchmark_wikitext_local5060_cuda_*_n8_c8.json`**）；登记 **X-20260410-benchmark-wikitext-local5060-cuda-n8c8** |
 | 2026-04-10 | **§4 / §5 / §5.1 / §8.2**：本机 **5060 CPU** **A2-S3 n8 stratified** + **SSGS c4 d64** 跑例入表；登记 **X-20260410-local5060-a2s3-n8-strat**、**X-20260410-local5060-ssgs-wikitext-n8-c4d64** |
+| 2026-04-10 | **§5**：本机 **B-S2+ train50**（**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**）、**Wikitext CPU smoke**（**`benchmark_wikitext_local5060_cpu_*_n8_c8.json`**）；登记 **X-20260410-local5060-bs2plus-train50-n16**、**X-20260410-local5060-wikitext-cpu-n8c8** |

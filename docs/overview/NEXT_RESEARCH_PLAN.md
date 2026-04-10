@@ -22,6 +22,9 @@
 
 - [x] **A2-S3**：**`task_wikitext_path_pair.py`** **`--cpu --num-leaves 8`**，**sibling**、**stratified**、**c8 dim128** → **`results/metrics/task_wikitext_sibling8_local5060_cpu_20260410.json`**（**X-20260410-local5060-a2s3-n8-strat**；**`ridge_concat.*.test_acc`≈0.857**，7 test 对）。
 - [x] **SSGS × Wikitext（轻量）**：**`demo_ssgs_mamba_wikitext.py`** **`--cpu`** **n8 c4 dim64** → **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**X-20260410-local5060-ssgs-wikitext-n8-c4d64**；**snapshots 7 / rollbacks 11 / leaf_checks 8**）。与 **`metrics_result` 归档 grid（c8 dim128）** **分列**。
+- [x] **B-S2+ BCE 50 步（本机）**：**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**（**X-20260410-local5060-bs2plus-train50-n16**；与 **`LOCAL_5060_RUNBOOK` §2** 可选行一致）。
+- [x] **Wikitext path-batch CPU smoke**：**`benchmark_wikitext_local5060_cpu_20260410T1220Z_n8_c8.json`**（**`WARMUP=1` `REPS=2`**；**X-20260410-local5060-wikitext-cpu-n8c8**）。
+- [x] **无 GPU 回归**：**`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`** 通过（本机 **`py -3`**）。
 
 **服务器有空时（可选一条即可；建议优先级自上而下）**
 

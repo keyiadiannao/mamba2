@@ -60,6 +60,8 @@ python scripts/research/probe_path_reader_linear.py --cpu --n-leaves 16 --leaf-s
   --out-json results/metrics/probe_path_reader_linear_text16_heldout_train50_local5060.json
 ```
 
+**已跑通例**（**`git_sha=498be11`**）：**`results/metrics/probe_path_reader_linear_text16_heldout_train50_local5060.json`**；登记 **X-20260410-local5060-bs2plus-train50-n16**。
+
 跑通后：**`git add`** JSON，**`EXPERIMENT_REGISTRY.md`** **新开一行**（id 建议 **`X-local5060-bs2plus-…`**）。
 
 ---
@@ -92,9 +94,11 @@ python scripts/benchmarks/benchmark_wikitext_tree.py `
   --out-json "results/metrics_result/benchmark_wikitext_local5060_smoke_${STAMP}_n8_c8.json"
 ```
 
-去掉 **`--cpu`**（若脚本支持默认 CUDA）即走 **5060 GPU**；以 **`--cpu`** 可只做 **可跑性检查**。
+去掉 **`--cpu`**（若脚本支持默认 CUDA）即走 **5060 GPU**；以 **`--cpu`** 可只做 **可跑性检查**（建议 **`--warmup 1 --reps 2`** 缩短墙钟；**`peak_alloc_mib`** 在 CPU 上 **常为 0**，**非** GPU 峰值动机）。
 
 **已跑通例**（**`git_sha=a466f50`**）：**`results/metrics_result/benchmark_wikitext_local5060_cuda_20260410T1204Z_n8_c8.json`** — **Mamba2 `peak_alloc_mib`≈1201**（**HF naive**）；登记 **X-20260410-benchmark-wikitext-local5060-cuda-n8c8**。
+
+**CPU 可跑性例**（**`git_sha=498be11`**）：**`results/metrics_result/benchmark_wikitext_local5060_cpu_20260410T1220Z_n8_c8.json`**（**`WARMUP=1` `REPS=2`**）；登记 **X-20260410-local5060-wikitext-cpu-n8c8**。
 
 ---
 
