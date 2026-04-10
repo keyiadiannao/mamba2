@@ -143,6 +143,13 @@ python scripts/research/benchmark_mamba2_cache_snapshot_segments.py --device cpu
   --out-json results/metrics/mamba2_cache_snap_segments_depth4_cpu_local5060_confirm.json
 ```
 
+**§7 S2（TF-R1 无 KV 重算）** — **CPU**（与 **S1** 同 depth/chunk/dim；**低 `warmup`/`reps`** 缩短墙钟）：
+
+```powershell
+python scripts/research/benchmark_tf_r1_path_segments.py --device cpu --depth 4 --warmup 1 --reps 5 `
+  --out-json results/metrics/tf_r1_path_segments_depth4_cpu_local5060_confirm.json
+```
+
 **B-S2（GPT-2 层向量 + topic heldout）**：
 
 ```powershell
@@ -150,7 +157,7 @@ python scripts/research/probe_retrieval_correlation.py --cpu --model gpt2 --labe
   --out-json results/metrics/probe_retrieval_linear_gpt2_topic_heldout_local5060_confirm.json
 ```
 
-登记：**X-20260410-local5060-section7-s1-cache-confirm**、**X-20260410-local5060-b2-gpt2-topic-heldout-confirm**。
+登记：**X-20260410-local5060-section7-s1-cache-confirm**、**X-20260410-local5060-section7-s2-tf-r1-cpu-confirm**、**X-20260410-local5060-b2-gpt2-topic-heldout-confirm**。
 
 ---
 

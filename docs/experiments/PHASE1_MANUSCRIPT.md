@@ -228,3 +228,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-10 | **§10**：**「下一步」** 与 **`NEXT_RESEARCH_PLAN`「无云端时：标准推进」** 对齐；**云端暂不可用时** 以 **P0 成文** 为第一优先 |
 | 2026-04-10 | **§10**：**`docs/overview/SUBMISSION_PACK.md`**（**A1–A4** 投稿叙事与脚注草稿） |
 | 2026-04-10 | **`SUBMISSION_PACK`**：**§A1b** 摘要草稿；**§A2** 与 **`metrics_result`** 路径扫描对齐 |
+| 2026-04-10 | **`SUBMISSION_PACK` A5–A7**：正文骨架、结果模板、本机实验 **高性价比/搁置** |
