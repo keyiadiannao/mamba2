@@ -1,0 +1,51 @@
+{
+  "kind": "mamba2_cache_snapshot_segments",
+  "git_sha": "61bb164",
+  "device": "cpu",
+  "tree_depth_param": 4,
+  "path_nodes": 5,
+  "chunk_len": 8,
+  "dim": 128,
+  "mamba_layers": 2,
+  "num_heads": 8,
+  "head_dim": 32,
+  "per_segment": [
+    {
+      "segment_index": 0,
+      "nodes_on_path": 5,
+      "view_cache_nbytes": 41984,
+      "clone_wall_ms": 0.0512,
+      "clone_nbytes": 41984
+    },
+    {
+      "segment_index": 1,
+      "nodes_on_path": 5,
+      "view_cache_nbytes": 41984,
+      "clone_wall_ms": 0.0754,
+      "clone_nbytes": 41984
+    },
+    {
+      "segment_index": 2,
+      "nodes_on_path": 5,
+      "view_cache_nbytes": 41984,
+      "clone_wall_ms": 0.0299,
+      "clone_nbytes": 41984
+    },
+    {
+      "segment_index": 3,
+      "nodes_on_path": 5,
+      "view_cache_nbytes": 41984,
+      "clone_wall_ms": 0.0347,
+      "clone_nbytes": 41984
+    },
+    {
+      "segment_index": 4,
+      "nodes_on_path": 5,
+      "view_cache_nbytes": 41984,
+      "clone_wall_ms": 0.047,
+      "clone_nbytes": 41984
+    }
+  ],
+  "total_clone_nbytes_sum_segments": 209920,
+  "note": "Each row: full cache after consuming root\u2192node_k (one full forward on prefix; no cross-segment cache_params \u2014 required for HF fused Mamba2 when chunk_len>1). Sum of clone_nbytes is per-boundary reporting, not a single snapshot."
+}

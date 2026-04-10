@@ -84,9 +84,21 @@
 
 ---
 
+## 提交前检查（代码与健康；不占云端）
+
+| 检查 | 命令 / 动作 |
+|------|-------------|
+| **单元与协议测试** | **`mamba2` Python**：`python -m pytest tests/ -q`（**20** passed 量级） |
+| **无 torch 快测** | `py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q` |
+| **工作区** | **`git status`** 干净；勿手改 **`metrics_result/`** 归档 |
+| **可选本机复跑** | **`LOCAL_5060_RUNBOOK.md` §5.1**（§7 S1 CPU、B-S2 gpt2 topic） |
+
+---
+
 ## 修订
 
 | 日期 | 说明 |
 |------|------|
 | 2026-04-10 | 初版：A1–A4；对接 **`NEXT_RESEARCH_PLAN`** **无云端 §A** |
 | 2026-04-10 | **A1b** 中英摘要/引言提示；**A2** 全表 **✅** 存在性扫描（paper_main 6 CSV、5060 四 JSON+grid、leavescale n8–64、SSGS grid） |
+| 2026-04-10 | **提交前检查**表（pytest / git）；与 **`LOCAL_5060_RUNBOOK` §5.1** 对齐 |

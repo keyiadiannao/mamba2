@@ -133,6 +133,25 @@ py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q
 
 **已验证**：**20 passed**（**`HEAD`≥`1533b08`**，耗时约 **15 s** 量级）。
 
+### 5.1 可选：机制线 / §7 复跑（与 **`NEXT_RESEARCH_PLAN`** **无云端 §B**）
+
+**§7 S1（Mamba cache 段克隆）** — **CPU**：
+
+```powershell
+$env:HF_ENDPOINT = "https://hf-mirror.com"
+python scripts/research/benchmark_mamba2_cache_snapshot_segments.py --device cpu --depth 4 `
+  --out-json results/metrics/mamba2_cache_snap_segments_depth4_cpu_local5060_confirm.json
+```
+
+**B-S2（GPT-2 层向量 + topic heldout）**：
+
+```powershell
+python scripts/research/probe_retrieval_correlation.py --cpu --model gpt2 --label-mode topic --topic-split heldout `
+  --out-json results/metrics/probe_retrieval_linear_gpt2_topic_heldout_local5060_confirm.json
+```
+
+登记：**X-20260410-local5060-section7-s1-cache-confirm**、**X-20260410-local5060-b2-gpt2-topic-heldout-confirm**。
+
 ---
 
 ## 6. 与总清单的对应

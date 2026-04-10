@@ -272,3 +272,5 @@ flowchart LR
 | 2026-04-10 | **§3.5 指针**；**「后续方向」** 增 **P★ L3 语义 PoC**、**已决策略**（主线保底 / 叙事升级可选 / 动机≠证据）；见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5** |
 | 2026-04-10 | **「无云端时：标准推进」**：**A 成文**（A1–A5）+ **B 本机可选**（B1–B3）；**默认里程碑** **P0→P1→P2→P3**，**P★** 不插入；**`LOCAL_5060_RUNBOOK`** / **`CURRENT_SPRINT`** 对齐 |
 | 2026-04-10 | **`SUBMISSION_PACK.md`**：**A1–A4** 成文包初版（故事线、路径核对、脚注句、检索头短段） |
+| 2026-04-10 | **`SUBMISSION_PACK.md`**：**§A1b** 摘要/引言；**§A2** 主文 6 CSV + 5060 grid 等 **存在性 ✅** |
+| 2026-04-10 | **无云端 §B**：本机 **§7 S1** + **B-S2 gpt2 topic heldout** 复跑 JSON；**`SUBMISSION_PACK`** **提交前检查**；**`LOCAL_5060_RUNBOOK` §5.1** |
