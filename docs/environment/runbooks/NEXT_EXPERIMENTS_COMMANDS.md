@@ -412,7 +412,7 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 python scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py \
   -g 'results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_*.json' \
   --out-csv results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv
-# 期望：脚本打印 wrote ... (N row(s)) — **N = 数据行**（无表头）；**N** 随通配到的 JSON 个数变（例 **13 / 14 / 15**）；**json_path** 列应为 **results/metrics_result/...**
+# 期望：脚本打印 wrote ... (N row(s)) — **N = 数据行**（无表头）；**N** 随通配到的 JSON 个数变（例 **13–17**）；**json_path** 列应为 **results/metrics_result/...**
 
 # 2) 全量单测（须 torch；AutoDL 常无 pytest 入口，勿用裸 pytest）
 python -m pytest tests/ -q
@@ -464,4 +464,4 @@ python -m pytest tests/ -q
 | 2026-04-11 | **§12**：阶段 5 **重聚合 M1/SSGS grid** + **`pytest tests/`** + 可选 M1 smoke |
 | 2026-04-11 | **§10.2**：**M2** 跑道指针（**`SSGS_MAINLINE_M1` §6**；**n64+L3 CE** / **`git_sha`** / **chunk_len**） |
 | 2026-04-11 | **§10.2**：**§6.0** 互链 — **先 n64 三臂 smoke 再 B2**；**B2 ≠ 全链条唯一验证** |
-| 2026-04-11 | **§12**：**M1 grid** **N** 例 **13 / 14 / 15**；**勿将中文说明粘进 shell**（**`bash: … command not found`**） |
+| 2026-04-11 | **§12**：**M1 grid** **N** 例 **13–17**；**勿将中文说明粘进 shell**；**`json_path`** 仓根 **`aggregate_*`** 重写 |

@@ -25,7 +25,7 @@
 
 | 文件 | 行数（量级） | 说明 |
 |------|----------------|------|
-| **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** | **N**（**数据行**；**N** = **`aggregate_ssgs_vs_kv_wikitext_json.py` stdout**；全量 JSON 时常 **13–15**，例 **14**；+1 表头） | **M1** 三臂 + 多 **STAMP**；含 **L3** 列（隐状态余弦、下游 CE） |
+| **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** | **N**（**数据行**；**N** = **`aggregate_ssgs_vs_kv_wikitext_json.py` stdout**；随通配 JSON 数变，本仓全量曾 **17**；+1 表头） | **M1** 三臂 + 多 **STAMP**；**`json_path`** 宜为 **`results/metrics_result/…`**（仓根 **`aggregate_*`** 重写） |
 | **`results/metrics_result/ssgs_mamba_wikitext_grid.csv`** | **13** | **SSGS × Mamba** 同 Wikitext 建树；含 **n128** |
 | **`results/metrics_result/benchmark_wikitext_stage2_leavescale_grid_20260410T1240Z.csv`** | **12** | **path-batch** **n∈{8,16,32,64}** **c8 dim128**（与 **20260409T1257Z** 档 **分列**） |
 
@@ -42,7 +42,8 @@
 | **`20260410T1235Z`** | **n64** | 三臂、**无** L3 块 |
 | **`20260410T1244Z`** | n8 | **L3 隐状态**（**`l3_tf_kv_hidden`**） |
 | **`20260410T1247Z`** | n8, n16, n32, **n64** | **L3 下游 CE** 全档 |
-| **`20260410T1617Z`** | **n64** | 三臂、**无** L3；**`git_sha`/墙钟** 以 JSON 为准（与 **1235Z** 同型 **n64**，**STAMP** 分列） |
+| **`20260410T1616Z`** | **n64** | 三臂、**无** **`l3_tf_kv_downstream_ce`** |
+| **`20260410T1617Z`** | **n64** | 三臂 **+ L3 下游 CE**（**`abs_ce_delta`=0**；**`git_sha`/墙钟** 以 JSON 为准） |
 
 **通配**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_*.json`**（另含历史无 STAMP / 旧 STAMP 文件时，以 **`aggregate` 实际合并行** 为准）。
 
@@ -104,4 +105,4 @@
 | 2026-04-11 | **§2.6**：**CUDA** **`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`** 入仓 |
 | 2026-04-11 | **§0**：核心 JSON 与登记 id **速查表** |
 | 2026-04-11 | **§1 M1 grid**：**N** 行 = **`aggregate_*` stdout**（全量常 **15** 数据行） |
-| 2026-04-11 | **§1 / §2.1**：**M1 grid** 例 **14** 行；**`20260410T1617Z`** **n64** 三臂（无 L3） |
+| 2026-04-11 | **§1 / §2.1**：**M1 grid** **N** 以 **`aggregate_*` stdout** 为准（本仓 **17**）；**1616Z** / **1617Z** **n64** 分列 |

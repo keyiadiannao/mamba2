@@ -53,7 +53,7 @@
 | 32 | 31 / 57 / 32 | ≈1.21 | ≈0.185 | ≈0.132 | 62 | 98304 |
 | 64 | 63 / 120 / 64 | ≈2.03 | ≈0.31 | ≈0.26 | 126 | 114688 |
 
-**文件**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n{8,16,32}_cuda_3arm_20260410T1012Z.json`**；**n64（无 L3）** **`…_n64_cuda_3arm_20260410T1235Z.json`**；**n64 复跑** **`…_n64_cuda_3arm_20260410T1617Z.json`**（**`STAMP` 分列**；**`git_sha`** 以文件为准）。另：**首轮无 STAMP** 的 **`…_n8_cuda_3arm.json`** 可作对照。
+**文件**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n{8,16,32}_cuda_3arm_20260410T1012Z.json`**；**n64（无 L3）** **`…_n64_cuda_3arm_20260410T1235Z.json`**；**n64 复跑**：**`…_n64_cuda_3arm_20260410T1616Z.json`**（三臂、**无** L3 CE 块）；**`…_n64_cuda_3arm_20260410T1617Z.json`**（三臂 **+** **`l3_tf_kv_downstream_ce`**，**`abs_ce_delta`=0**，**`ce`≈4.29/4.16**）。另：**首轮无 STAMP** 的 **`…_n8_cuda_3arm.json`** 可作对照。
 
 **趋势（一句）**：**Mamba** `peak_alloc_mib` 三档均 **≈130**；**TF-KV** **≈27.7–28.1**；**`wall_s`** 随叶数上升主要来自 **DFS 迹长度**，**truncate** 臂略快于 **clone** 臂（同 harness）。
 
@@ -186,3 +186,4 @@
 | 2026-04-11 | **§6.0**：**B2** vs **全链条**（①②③④）；AutoDL **先 n64 三臂 smoke 再 B2**；**path-batch smoke** 指针 |
 | 2026-04-11 | **§6.0 / B2**：与 **`1247Z`** **n64 L3 CE** 已入仓一致 — **B2** = 复现或补档 |
 | 2026-04-11 | **§2.1**：**n64** 三臂复跑 **`20260410T1617Z`**；登记与 **`NEXT_EXPERIMENTS` §12** 终端粘贴提示 |
+| 2026-04-11 | **§2.1**：**1616Z**（无 L3 CE）/ **1617Z**（**+** L3 CE **`abs_ce_delta`=0**）分列；**grid** 仓内 **`aggregate_*`** |
