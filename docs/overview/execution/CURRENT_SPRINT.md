@@ -2,6 +2,7 @@
 
 > **方向与现状总览**（读后再勾选）：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**（含 **§3.5 对外叙事批判性接收、L1–L4 证据层级、P★ L3 PoC**）。  
 > **全局阶段表**（**0→结题**、每阶段实验+成功标准）：**`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**。**当前逻辑阶段**：**阶段 5 — 成文与投稿包**（阶段 0–4 已满足表内「完成」列）。  
+> **从现在到结题的多步总览**（成文 / 冻结 / 可选 M2 / 截稿 / 审稿）：**`docs/overview/execution/PLAN_NOW_TO_DONE.md`**。  
 > 每 1–2 周更新一次「周期」与勾选；完成后把结论一行写入 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`**。
 
 ## 周期
@@ -16,7 +17,7 @@
 | 优先级 | 动作 |
 |--------|------|
 | **1** | **阶段 5**：**`SUBMISSION_PACK.md` §A2** 路径与 **`EXPERIMENT_REGISTRY`** / **`DATA_ARCHIVE_202604_SERVER.md` §0** **逐字对齐** |
-| **1b** | **M2 实验（与成文并行）**：**`SSGS_MAINLINE_M1.md` §6** — 云端优先 **Wave B**（**B2** **n64+L3 CE** 或 **B1** **`git_sha`**）；**勿**重复 **M1** 已归档全网格 |
+| **1b** | **可选 M2**（**不阻塞成文**）：**`PLAN_NOW_TO_DONE.md` §Ⅲ** + **`SSGS_MAINLINE_M1.md` §6** — 优先 **Ⅲ-1 c12** 或 **Ⅲ-2 bundle**；**n64+L3** 已有时 **勿**重复全网格 |
 | **2** | **阶段 5**：**§A3** + **`FIGURE_CAPTIONS_STAGE1.md`** — **七轴** 脚注句 **粘贴进正稿**（或 **`PHASE1_MANUSCRIPT`** 对应节） |
 | **3** | **阶段 5**：摘要/讨论/局限 与 **`RESEARCH_STATUS` §3.5** 一致（结论 **≤ L1–L3**） |
 | **4** | ~~**3090 登记项**~~ **（已完成）**：**P1** B-S2+ CUDA、**P2** SSGS **n128** 等；见 **`DATA_ARCHIVE_202604_SERVER.md`**、**`NEXT_RESEARCH_PLAN` §2** |

@@ -28,6 +28,10 @@
 
 **本机 / 任意环境**：**`git add`** 已入仓的 **`results/metrics_result/*.json`**（若尚未提交）+ 本轮 **docs** 修订 → **`git commit`**。**成文**：打开 **`PHASE1_MANUSCRIPT.md`**，将 **`SUBMISSION_PACK.md` §A3（七轴脚注）** 与 **§A2.1** 的边界句 **粘贴进正文/附录** 对应小节，并 **对照 `DATA_ARCHIVE_202604_SERVER.md` §0** 核对 basename。**Linux / torch 可用**：**`pytest tests/ -q`** 全量计数并回填本文 **§1** 与 **`SUBMISSION_PACK` §A8** 中的 **passed** 数字。
 
+### 0.4 多步总览（方向卡）
+
+**`docs/overview/execution/PLAN_NOW_TO_DONE.md`**：**Ⅰ 成文 → Ⅱ 数据冻结 → Ⅲ 可选 M2 → Ⅳ 截稿 → Ⅴ 审稿/远期**；含 **本周最小勾选** 与 **M2 实验验证点**（**c12** / **bundle** / **`git_sha`**）。
+
 ---
 
 ## 项目现状快照
@@ -298,4 +302,5 @@ flowchart LR
 | 2026-04-11 | **`RESEARCH_PHASES_0_TO_DONE.md`**：阶段 0–7 表 + 阶段 5 清单；篇首与 **`docs/README`** 互链 |
 | 2026-04-11 | **§1 / 收口清单 / §B B3**：**AutoDL** 全量 **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**, **~21 s** |
 | 2026-04-11 | **§3.1**：**M2** 后续实验 — **`SSGS_MAINLINE_M1.md` §6**（Wave A–D） |
+| 2026-04-11 | **§0.4**：**`PLAN_NOW_TO_DONE.md`** 多步总览；篇首 / **`docs/README`** 互链 |
 | 2026-04-11 | **§3 / §3.1**：**§6.0** **B2 vs 全链条**；**§3** 完成句与 **`1247Z`** **n64 L3 CE** 归档一致 |

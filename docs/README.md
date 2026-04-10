@@ -23,6 +23,7 @@
 | **阶段 0→结题**（每阶段实验 + 成功标准；与 L1–L4 对齐） | [`overview/planning/RESEARCH_PHASES_0_TO_DONE.md`](overview/planning/RESEARCH_PHASES_0_TO_DONE.md) |
 | 轨道里程碑、**当前收口清单**、P0–P3、后备推进 § | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
 | **本周**勾选、阻塞 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
+| **从现在→结题** 多步方向（成文 / 冻结 / M2 / 截稿） | [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) |
 | 本机 5060 **可复制命令** | [`environment/runbooks/LOCAL_5060_RUNBOOK.md`](environment/runbooks/LOCAL_5060_RUNBOOK.md) |
 | 云端扫参 shell、§7 depth、命令模板 | [`environment/runbooks/SERVER_SWEEP_RUNBOOK.md`](environment/runbooks/SERVER_SWEEP_RUNBOOK.md) + [`environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`](environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md)（**§12** 阶段 5 聚合/测试） |
 | 实验 id、路径、结论一行 | [`experiments/planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md) |
@@ -33,6 +34,7 @@
 
 | 目的 | 文件 |
 |------|------|
+| **接下来几周干什么**（阶段 5→投出→审稿） | [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) |
 | 现状、证据、推荐推进顺序 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
 | 本周在做什么、阻塞项 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
 | 任务拆条、收口清单 | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
