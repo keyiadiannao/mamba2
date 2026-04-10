@@ -58,6 +58,7 @@
 | **A2-S3** init×5 | `…/task_wikitext_sibling16_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json`、**`…_20260410T0820Z.json`**（与 1438Z 聚合一致）；**sibling32** **`…_20260409T1438Z.json`**、**`…_20260410T0850Z.json`** | ✅ |
 | **A2-S3 贴表 TSV** | `…/task_wikitext_sibling16_c8_leafheldout6_initseed5_summary_20260410T0820Z.tsv`、`…_sibling32_…_summary_20260410T0850Z.tsv` | ✅ |
 | **SSGS** 汇总 | **`…/ssgs_mamba_wikitext_grid.csv`**（通配 **`ssgs_mamba_wikitext_*.json`** 合并；本仓 **11 行** 量级，含多 **STAMP**） | ✅ |
+| **M1（SSGS vs TF-KV，同树 DFS）** | **`…/ssgs_vs_kv_wikitext_nav_grid.csv`**（通配 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**；本仓 **9 行** 量级，含多 **STAMP** / 可选 **L3** 列）；登记 **X-ssgs-vs-kv-tree-nav-m1** | ✅ |
 | **path-batch smoke（同树三 reader）** | `…/benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`（**辅**；与 SSGS **分列**） | ✅ |
 
 **脚注规则（防混）**：**`aggregate_*_grid.csv`** 若含列 **`json_path`** 为 **服务器绝对路径**，正文/附录 **只写 basename**（上表右列 **文件名**）即可，与 **`EXPERIMENT_REGISTRY`** 一致。
@@ -75,13 +76,14 @@
 - **阶段 2 path-batch（3090 fused）**：优先写 **登记 STAMP** + **四格 basename**，例：`benchmark_wikitext_stage2_fused_20260409T1035Z_n16_c8.json`；**dim256** 写 **`1137Z` 全四格** 或 **`0847Z` minimal** 三格，**勿**混为同一表无说明。  
 - **A2-S3**：附录表可直接引用 **`task_wikitext_*_summary_20260410T{0820,0850}Z.tsv`**；若审稿人要原始 run，再列 **10** 个 **`initseed*_1438Z`/`0820Z`/`0850Z`** JSON。  
 - **SSGS**：主文一句 **`ssgs_mamba_wikitext_grid.csv`** + **「通配合并、当前 11 行」** 即可；**禁止**与 path-batch **`per_step_s`** 同纵轴。  
+- **M1**：附录或方法脚注 **`ssgs_vs_kv_wikitext_nav_grid.csv`** + **「三臂 DFS、玩具 TF-KV ≠ path-batch reader」**；**禁止**与 **§7 单列毫秒**、**path-batch** **无标注同表**。  
 - **本机 5060**：路径多在 **`results/metrics/`**（非 **`metrics_result`**），见 **`EXPERIMENT_REGISTRY` X-20260410-***。
 
 ---
 
 ## A8 · 投稿对齐之后的下一步（按优先级）
 
-1. **P0 冻结叙事**：将 **§A3 五轴** + **§A2.1** 句式 **粘贴进 LaTeX/Word** 脚注或方法段；**Figure 1** 三张 PNG 与 **CSV** 已在仓内 — **勿再改文件名**。  
+1. **P0 冻结叙事**：将 **§A3 六轴** + **§A2.1** 句式 **粘贴进 LaTeX/Word** 脚注或方法段；**Figure 1** 三张 PNG 与 **CSV** 已在仓内 — **勿再改文件名**。  
 2. **P0 可选**：**§7.5 S5** 总表（**`RESEARCH_NOTES` §7**）— **仅**在篇幅允许时补。  
 3. **P1（3090 一条即可）**：**B-S2+ CUDA** 单行 JSON（**`probe_path_reader_linear.py`** 去 **`--cpu`**），**新开登记行** — **非**阻塞主结论。  
 4. **P2（辅线）**：**`git pull` 后** SSGS **n8 一格** 刷新 **`git_sha`**，或 **SSGS n128** + **`aggregate_ssgs_mamba_wikitext_json.py --append`**。  
@@ -91,14 +93,14 @@
 
 ---
 
-## A3 · 可粘贴：叙事边界与五轴（中文）
+## A3 · 可粘贴：叙事边界与六轴（中文）
 
 **一段边界（摘自 `FIGURE_CAPTIONS_STAGE1.md` P0，可放 Related Work 或 Method 脚注）**
 
-主文主图呈现的是 **path-batch** 下三 reader 的 **时间与 Mamba2 峰值显存**；**不实现**树上 DFS 试错序，也**不把**全模型 KV 分项摊进同一张主图。**§7 玩具协议** 在 **单条路径**上 **分列**测量 clone / restore / TF-R1 / TF-KV 等，**各列物理含义不同**。**SSGS** 线报告 **DFS + token 步进**下的 **快照/回滚计数**，**不是** path-batch 墙钟。**阶段 2 任务（A2-S3）** 为 **岭回归准确率类 proxy**，**不是**主图纵轴。
+主文主图呈现的是 **path-batch** 下三 reader 的 **时间与 Mamba2 峰值显存**；**不实现**树上 DFS 试错序，也**不把**全模型 KV 分项摊进同一张主图。**§7 玩具协议** 在 **单条路径**上 **分列**测量 clone / restore / TF-R1 / TF-KV 等，**各列物理含义不同**。**SSGS** 线报告 **DFS + token 步进**下的 **快照/回滚计数**，**不是** path-batch 墙钟。**Phase M1** 报告 **同 Wikitext 建树、同 DFS** 上 **SSGS Mamba** 与 **玩具 TF-KV**（clone / truncate_kv）的 **wall_s / peak** 等，**不是** path-batch 三 reader，也**不是** §7 表各列。**阶段 2 任务（A2-S3）** 为 **岭回归准确率类 proxy**，**不是**主图纵轴。
 
-**五轴一句（防混读）**  
-正文 **禁止**将 **path-batch 主图**、**§7 玩具表各列**、**SSGS 计数**、**真 LM 玩具线**、**A2-S3 准确率** 的纵轴或列 **无标注合并** 或 **相减**（详见 **`FIGURE_CAPTIONS_STAGE1.md`** 表）。
+**六轴一句（防混读）**  
+正文 **禁止**将 **path-batch 主图**、**§7 玩具表各列**、**SSGS 计数**、**M1 三臂 DFS**、**真 LM 玩具线**、**A2-S3 准确率** 的纵轴或列 **无标注合并** 或 **相减**（详见 **`FIGURE_CAPTIONS_STAGE1.md`** **六轴** 表）。
 
 **5060 与 3090**  
 **5060** 上 **HF naive** 的 Wikitext 动机数字 **仅**作 **本地动机/趋势**；**3090 fused** 主文格点 **须分列脚注**，**禁止**无标注混点（**`PHASE1_MANUSCRIPT` §5.1**）。
@@ -180,3 +182,4 @@
 | 2026-04-10 | **A5–A7**：正文骨架（引言/方法/结果/讨论）、**A6** 结果句模板、**A7** 本机 **高性价比/搁置** |
 | 2026-04-10 | **A2 扩表**：与 **`metrics_result`** **逐字对齐** — **dim256 `0847Z`**、**A2-S3 `0820Z`/`0850Z`+TSV**、**SSGS 11 行**、**ssgs_bundle `0803Z`**、**`json_path`** 脚注规则 |
 | 2026-04-10 | **A2.1** 主文引用习惯；**A8** 对齐后下一步（P0–P2） |
+| 2026-04-11 | **A2** 增 **M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**；**A2.1** **M1** 脚注；**A3** **五→六轴**（**M1 DFS**） |

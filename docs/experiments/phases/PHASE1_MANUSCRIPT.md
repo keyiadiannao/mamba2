@@ -1,7 +1,7 @@
 # 阶段 1 成文稿（可直接迁入论文/技术报告）
 
 > **用途**：将阶段 1 **系统验证**整理为连续叙述；数字与路径以 **`EXPERIMENT_REGISTRY.md`** 与本文 **§5 归档索引** 为准。  
-> **勿与 §7 玩具协议混读**：path-batch 主结果与 S1–S4 **各列毫秒** 的物理含义不同，见 **`FIGURE_CAPTIONS_STAGE1.md`** 篇首与 **`RESEARCH_NOTES.md` §7.0**。**阶段 2**（5060 动机表、A2-S3 准确率）为 **第五轴**，与主图纵轴 **不可混读**，见 **`FIGURE_CAPTIONS_STAGE1.md`** **「五条测量轴」** 与 **`RESEARCH_STATUS_AND_DIRECTION.md` §3**。
+> **勿与 §7 玩具协议混读**：path-batch 主结果与 S1–S4 **各列毫秒** 的物理含义不同，见 **`FIGURE_CAPTIONS_STAGE1.md`** 篇首与 **`RESEARCH_NOTES.md` §7.0**。**阶段 2**（5060 动机表、A2-S3 准确率）与 **Phase M1**（同树 DFS 上 SSGS vs 玩具 TF-KV）各为 **独立轴**，与主图纵轴 **不可混读**，见 **`FIGURE_CAPTIONS_STAGE1.md`** **「六条测量轴」** 与 **`RESEARCH_STATUS_AND_DIRECTION.md` §3**。
 
 ---
 
@@ -92,24 +92,25 @@
 | **A2-S3 init×5** | **齐** | **`task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json`**；复跑 **`…_sibling16_*_20260410T0820Z.json`**、**`…_sibling32_*_20260410T0850Z.json`**；贴表 **`…_initseed5_summary_20260410T{0820,0850}Z.tsv`** |
 | **A2-S3 本机 stratified（n8）** | **齐** | **`results/metrics/task_wikitext_sibling8_local5060_cpu_20260410.json`**（**`metrics/`**，**非** **`metrics_result/`**；**X-20260410-local5060-a2s3-n8-strat**） |
 | **SSGS Wikitext** | **齐** | **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **11 行** 量级）+ **`ssgs_mamba_wikitext_*.json`**；辅 **`benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`**（path-batch **同树** smoke，**与 SSGS 分列**） |
+| **M1（SSGS vs TF-KV DFS）** | **齐** | **`ssgs_vs_kv_wikitext_nav_grid.csv`**（通配 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**，**9 行** 量级）+ 多 **STAMP** JSON；登记 **X-ssgs-vs-kv-tree-nav-m1**；**`FIGURE_CAPTIONS_STAGE1.md`** **第六轴** |
 | **SSGS 本机小格（辅）** | **齐** | **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**X-20260410-local5060-ssgs-wikitext-n8-c4d64**） |
 | **B-S2+ 本机 5060** | **齐** | **`results/metrics/probe_path_reader_linear_*_local5060.json`**（**X-20260407-local5060-bs2plus-rerun** 等） |
 
 **脚注（聚合 CSV）**：若 **`ssgs_mamba_wikitext_grid.csv`** 等含 **`json_path`** 列为 **服务器绝对路径**，正文只写 **JSON basename**（与 **`SUBMISSION_PACK` §A2** 一致）。
 
-**四类数字分列脚注（正文须显式）**：**①** **5060 + HF naive** 与 **②** **3090 + fused** **不可同表无标注混点**；**③** **path-batch 墙钟/m2_peak** 与 **④** **§7 单列毫秒**、**⑤** **SSGS 快照/回滚计数**、**⑥** **A2-S3 准确率** **各为独立测量轴**（**`FIGURE_CAPTIONS_STAGE1.md`** 篇首）。**§7.5 S5**「同轨迹总表」仍为 **可选**，视截稿篇幅（**§10** 第 4 条）。
+**多类数字分列脚注（正文须显式）**：**①** **5060 + HF naive** 与 **②** **3090 + fused** **不可同表无标注混点**；**③** **path-batch 墙钟/m2_peak**、**④** **§7 单列毫秒**、**⑤** **SSGS 快照/回滚计数**、**⑥** **M1 三臂 DFS（SSGS vs 玩具 TF-KV）**、**⑦** **A2-S3 准确率** **各为独立测量轴**（**`FIGURE_CAPTIONS_STAGE1.md`** **六轴表**）。**§7.5 S5**「同轨迹总表」仍为 **可选**，视截稿篇幅（**§10** 第 4 条）。
 
 ---
 
 ## 6 结论段（约 200 字，与 `PHASE1_VALIDATION_PLAN.md` §6.3 一致）
 
-在树路径批量编码设定下（`fanout=2`、`dim=128`、多组 `depth×chunk_len`），HuggingFace **无融合核** 的 Mamba-2 path reader 的 CUDA **峰值显存** 可达 **GiB 级**（例如 64 条并行路径时约 **8.9GiB**），而同设定下 **Transformer / GRU** 路径 reader 多在 **百 MiB** 量级。相对地，在 **AutoDL** 上启用 **`mamba_ssm` 融合实现** 后，**同一网格**上 Mamba2 峰值可降至 **约 51–217MiB**（随配置变化），降幅可达 **两个数量级**。因此：**在树形 RAG 的 path-batch workload 中，可观测效率高度依赖实现是否融合，而不能仅由 SSM 架构名义复杂度替代。** 在 **Wikitext 浅树** 上补充的 **叶对 cohort 岭回归 proxy**（**§8**）**不**改变上述效率主结论，仅提供 **与墙钟分列** 的 **可读性标量**；**§7** 与 **Wikitext 同树 SSGS**（**§4**、**`ssgs_mamba_wikitext_grid.csv`**）则服务 **回溯与导航过程代价**（**快照/回滚计数**），**禁止**与主图 **毫秒/峰值** 或 **§7 玩具毫秒列** 混读。
+在树路径批量编码设定下（`fanout=2`、`dim=128`、多组 `depth×chunk_len`），HuggingFace **无融合核** 的 Mamba-2 path reader 的 CUDA **峰值显存** 可达 **GiB 级**（例如 64 条并行路径时约 **8.9GiB**），而同设定下 **Transformer / GRU** 路径 reader 多在 **百 MiB** 量级。相对地，在 **AutoDL** 上启用 **`mamba_ssm` 融合实现** 后，**同一网格**上 Mamba2 峰值可降至 **约 51–217MiB**（随配置变化），降幅可达 **两个数量级**。因此：**在树形 RAG 的 path-batch workload 中，可观测效率高度依赖实现是否融合，而不能仅由 SSM 架构名义复杂度替代。** 在 **Wikitext 浅树** 上补充的 **叶对 cohort 岭回归 proxy**（**§8**）**不**改变上述效率主结论，仅提供 **与墙钟分列** 的 **可读性标量**；**§7** 与 **Wikitext 同树 SSGS**（**§4**、**`ssgs_mamba_wikitext_grid.csv`**）则服务 **回溯与导航过程代价**（**快照/回滚计数**）；**Phase M1**（**`ssgs_vs_kv_wikitext_nav_grid.csv`**）在同树上 **并表 SSGS 与玩具 TF-KV DFS** 的 **墙钟/显存**，**仍与** path-batch 主图、§7 **分列**。**禁止**无脚注混读。
 
 ---
 
 ## 7 英文摘要（可选，约 120 词）
 
-We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured retrieval paths under a fixed **path-batch** harness, reporting step time and **CUDA peak memory** (`max_memory_allocated`). On identical grids, **HuggingFace Mamba-2 without fused kernels** can reach **GiB-scale** peaks whereas **Transformer/GRU** stay around **hundreds of MiB**; with **`mamba_ssm` + `causal_conv1d`**, Mamba-2 peaks drop to **tens to hundreds of MiB** on small/medium leaves and remain **sub-GiB** at **larger leaf counts** in our fused runs—still **not** directly comparable to **HF-naive** rows without labeling. Thus, **observed efficiency is implementation-dependent**. A **toy protocol** (§7) measures clone/restore/KV-increment **per column**; **depth 5–6** extensions are archived separately. **Phase 2** adds **Wikitext-2** under the **same reader slot** (efficiency grids through **256 leaves**) and a **ridge-on-concat-pooled-features** **leaf-pair cohort** proxy (**§8**), **not** merged with wall-clock tables. **SSGS×Mamba** (DFS + token steps + `DynamicCache` snapshots) on the **same Wikitext-built tree** is an **auxiliary** line with **snapshot/rollback counts** in **`ssgs_mamba_wikitext_grid.csv`**, **not** wall-clock path-batch; see **§4** and **`FIGURE_CAPTIONS_STAGE1.md`**. **§9**: retrieval-head wording; **§9.1** auxiliary **B-S2+** ridge probes on **synthetic topic leaves** (local CPU), **not** Wikitext A2-S3.
+We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured retrieval paths under a fixed **path-batch** harness, reporting step time and **CUDA peak memory** (`max_memory_allocated`). On identical grids, **HuggingFace Mamba-2 without fused kernels** can reach **GiB-scale** peaks whereas **Transformer/GRU** stay around **hundreds of MiB**; with **`mamba_ssm` + `causal_conv1d`**, Mamba-2 peaks drop to **tens to hundreds of MiB** on small/medium leaves and remain **sub-GiB** at **larger leaf counts** in our fused runs—still **not** directly comparable to **HF-naive** rows without labeling. Thus, **observed efficiency is implementation-dependent**. A **toy protocol** (§7) measures clone/restore/KV-increment **per column**; **depth 5–6** extensions are archived separately. **Phase 2** adds **Wikitext-2** under the **same reader slot** (efficiency grids through **256 leaves**) and a **ridge-on-concat-pooled-features** **leaf-pair cohort** proxy (**§8**), **not** merged with wall-clock tables. **SSGS×Mamba** (DFS + token steps + `DynamicCache` snapshots) on the **same Wikitext-built tree** is an **auxiliary** line with **snapshot/rollback counts** in **`ssgs_mamba_wikitext_grid.csv`**, **not** wall-clock path-batch; see **§4** and **`FIGURE_CAPTIONS_STAGE1.md`**. **Phase M1** adds a **separate** harness: **same tree and DFS goal**, **SSGS Mamba** vs **toy TF-KV** (full KV vs **truncate_kv**), summarized in **`ssgs_vs_kv_wikitext_nav_grid.csv`**—**not** the path-batch reader sweep. **§9**: retrieval-head wording; **§9.1** auxiliary **B-S2+** ridge probes on **synthetic topic leaves** (local CPU), **not** Wikitext A2-S3.
 
 ---
 
@@ -185,7 +186,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 **下一步（按优先级；与 `docs/overview/execution/NEXT_RESEARCH_PLAN.md` 默认里程碑一致）**：
 
-1. **成文整合（主线收尾；与 P1/P2 可交错）**：以 **`docs/overview/execution/SUBMISSION_PACK.md` §A2–A2.1** 为 **文件名真相源**，将 **`PHASE1_MANUSCRIPT` §8**、**`EXPERIMENT_REGISTRY.md`**、**`results/metrics_result/`** 与 **LaTeX/Word** **逐字对齐**（含 **五轴图注**、**5060 vs 3090** 分列、**`json_path` basename 脚注**）。
+1. **成文整合（主线收尾；与 P1/P2 可交错）**：以 **`docs/overview/execution/SUBMISSION_PACK.md` §A2–A2.1** 为 **文件名真相源**，将 **`PHASE1_MANUSCRIPT` §8**、**`EXPERIMENT_REGISTRY.md`**、**`results/metrics_result/`** 与 **LaTeX/Word** **逐字对齐**（含 **六轴图注**（**M1**）、**5060 vs 3090** 分列、**`json_path` basename 脚注**）。
 2. **可选机制线 B**：**本机 5060 CPU** 已归档 **B-S2+**（**§9.1**，**X-20260407-local5060-bs2plus-rerun**）。**3090 可用时**：**1 条** **B-S2+ CUDA** JSON（**`probe_path_reader_linear.py`** 去 **`--cpu`**），**新开登记行**；**非**主线阻塞；**`RETRIEVAL_HEAD_NOTES.md`**、**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §6**。附录需要时可补 **`probe_retrieval_correlation.py --cpu`**（**`NEXT_RESEARCH_PLAN`** **备选推进 §B**）。
 3. **A2-S3 可选加压**：更大 **`heldout-leaves`**、**`root_child`**、**stratified + `split-seed`** — 与 **init×5** **分列** 说明。  
 4. **Polish**：**S5 总表**（**`RESEARCH_NOTES` §7**）、主图入仓、平面 RAG smoke。  
@@ -232,3 +233,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-10 | **§10**：**`docs/overview/execution/SUBMISSION_PACK.md`**（**A1–A4** 投稿叙事与脚注草稿） |
 | 2026-04-10 | **`SUBMISSION_PACK`**：**§A1b** 摘要草稿；**§A2** 与 **`metrics_result`** 路径扫描对齐 |
 | 2026-04-10 | **`SUBMISSION_PACK` A5–A7**：正文骨架、结果模板、本机实验 **高性价比/搁置** |
+| 2026-04-11 | **§5.1** 增 **M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**；篇首/§6/§7/脚注 **五→六轴**（**Phase M1**）；**§10** 成文整合 **六轴** |
