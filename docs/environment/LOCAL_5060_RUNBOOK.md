@@ -15,6 +15,12 @@ python -c "import torch; print(torch.__version__)"
 cd D:\cursor_try\mamba2
 ```
 
+若 **`conda`** 不在 **PATH**（如 **Cursor 内置终端**），可直接调用 env 解释器（本机示例）：
+
+```powershell
+& "C:\Users\26433\miniconda3\envs\mamba2\python.exe" -c "import torch; print(torch.__version__)"
+```
+
 若 **`conda activate mamba2`** 不可用：在 **Anaconda Prompt** 里 **`conda env list`** 找到 **带 torch 的 env**，再 **`conda activate <name>`**。
 
 可选（Hub 限速）：
