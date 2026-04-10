@@ -60,7 +60,7 @@
 
 **L3 下游 CE（n8 CUDA，`STAMP=20260410T1113Z`）**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm_20260410T1113Z.json`** — **`l3_tf_kv_downstream_ce`**（**`--l3-tf-kv-downstream-ce`**）：**clone** **`ce_nav`=`ce_ref`≈2.121**、**truncate** **`ce_nav`=`ce_ref`≈2.224**、两臂 **`abs_ce_delta`=0**、**`max_abs_logit_diff`=0**（**`probe_seed`=12345**）。同次跑 **Mamba** **`wall_s`≈0.507**、**clone**≈0.074、**truncate**≈0.031（与 **1012Z** 同阶，GPU 抖动正常）。
 
-**待补（CUDA）**：**n16 / n32** 的 **`l3_tf_kv_downstream_ce`**（判据同 n8：**`abs_ce_delta`** 应极小）。云端：**`M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`**；拷回 JSON → 本机 **`aggregate_ssgs_vs_kv_wikitext_json.py`** → 更新 **登记册** / 本节一句。步骤全文：**`NEXT_EXPERIMENTS_COMMANDS` §10.1**「推荐下一步」。
+**L3 下游 CE（n16 / n32 CUDA，`STAMP=20260410T1133Z`）**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n16_cuda_3arm_20260410T1133Z.json`**、**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n32_cuda_3arm_20260410T1133Z.json`** — **`l3_tf_kv_downstream_ce`**：**n16** **clone** **`ce_nav`=`ce_ref`≈2.645**、**truncate** **≈2.708**；**n32** **clone** **≈3.430**、**truncate** **≈3.489**；各臂 **`abs_ce_delta`=0**、**`max_abs_logit_diff`=0**。同次三臂 **`wall_s`** 与 **1012Z** 同档（**n16** **Mamba**≈0.774、**n32**≈1.22，GPU 抖动）。
 
 **网格 CSV**：**`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** — **`python scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py -g 'results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_*.json' --out-csv results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`**。云端 **`run_m1_ssgs_vs_kv_wikitext_cuda.sh`** 扫叶后默认聚合（**`SKIP_M1_AGGREGATE=1`** 跳过；**`AGGREGATE_APPEND=1`** 追加）。
 
@@ -84,7 +84,7 @@
 - [x] **L3（隐状态）**：**`--l3-tf-kv-hidden`** + **`src/rag_tree/tf_kv_l3_probe.py`**；单测 **`tests/test_tf_kv_l3_probe.py`**。  
 - [x] **网格 CSV**：**`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**；单测 **`tests/test_aggregate_ssgs_vs_kv_wikitext_json.py`**。  
 - [x] **L3（下游 CE，固定叶头）**：**`--l3-tf-kv-downstream-ce`**；单测 **`tests/test_tf_kv_l3_downstream_probe.py`**。树 LM **可学习 vs CE**（**X-20260423/24**）为**另一 harness**，不作数值可比。  
-- [ ] **L3 下游 CE · n16/n32（CUDA）**：**`M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1`** → 归档 JSON + 聚合 + **登记册** / §2.1（见 **§10.1 推荐下一步**）。  
+- [x] **L3 下游 CE · n16/n32（CUDA）**：**`STAMP=20260410T1133Z`** — **`…_n{16,32}_cuda_3arm_20260410T1133Z.json`**；**`abs_ce_delta`=0**；已写入 **登记册** / §2.1。  
 - [ ] **L3（训练型子头 / 与树 LM 对齐）**：若要做，须另 **`kind`** 与登记；**禁止**与 path-batch 主表无脚注合并。
 
 ---
@@ -110,4 +110,4 @@
 | 2026-04-10 | **网格 CSV**：**`aggregate_ssgs_vs_kv_wikitext_json.py`**、**`ssgs_vs_kv_wikitext_nav_grid.csv`**；检查表勾选 |
 | 2026-04-10 | **L3 下游 CE**：**`--l3-tf-kv-downstream-ce`**、**`tf_kv_l3_downstream_probe.py`**；脚注 **X-20260423/24** 叙事参考 |
 | 2026-04-10 | **归档**：**`STAMP=20260410T1113Z`** **n8** 三臂 + **`l3_tf_kv_downstream_ce`**（**`…_n8_cuda_3arm_20260410T1113Z.json`**） |
-| 2026-04-11 | **待跑**：**n16/n32** **L3 下游 CE**；**`NEXT_EXPERIMENTS_COMMANDS` §10.1** 推荐命令块 |
+| 2026-04-11 | **归档**：**`STAMP=20260410T1133Z`** **n16/n32** **`l3_tf_kv_downstream_ce`**（**`abs_ce_delta`=0**）；§10.1 推荐命令已跑通 |
