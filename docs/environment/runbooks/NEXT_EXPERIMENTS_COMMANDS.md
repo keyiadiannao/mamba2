@@ -280,6 +280,15 @@ bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
 
 **可选 L3 下游（固定叶头 CE）**：**`--l3-tf-kv-downstream-ce`** → **`l3_tf_kv_downstream_ce`**（未训练 **`Linear(dim,num_leaves)`**，**`abs_ce_delta`** 应极小）。与 **树 LM** **X-20260423 / X-20260424**（**CE 路由 vs 可学习子头**）**不同 harness**，登记与成文勿混表。云端：**`M1_WITH_L3_DOWNSTREAM_CE=1`**。
 
+**推荐下一步（L3 下游 CE · 叶数扩展）**：**n8** 已归档（例 **`STAMP=20260410T1113Z`**）；补 **n16 / n32** 在 **AutoDL**：
+
+```bash
+cd /root/autodl-tmp/mamba2 && git pull
+M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+```
+
+可选同时开隐状态 L3：**`M1_WITH_L3=1 M1_WITH_L3_DOWNSTREAM_CE=1`**。**跑后**：将 **`ssgs_vs_kv_tree_nav_wikitext_n{16,32}_cuda_3arm_${STAMP}.json`** 拷入本仓 **`results/metrics_result/`**，本机 **`aggregate_ssgs_vs_kv_wikitext_json.py`**（勿直接提交云端 CSV 的 **`/root/...` `json_path`**），再在 **`EXPERIMENT_REGISTRY`** **M1** 行与 **`SSGS_MAINLINE_M1.md`** §2.1 写一句各叶 **`l3_tf_kv_downstream_ce`** 的 **`abs_ce_delta`**。
+
 ---
 
 ## 11. 本机 **RTX 5060**（Windows；服务器忙时）
@@ -310,3 +319,4 @@ bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
 | 2026-04-10 | **§10.1**：**`--l3-tf-kv-hidden`**（**`l3_tf_kv_hidden`**）；**`tf_kv_l3_probe.py`** |
 | 2026-04-10 | **§10.1**：**`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**；**`SKIP_M1_AGGREGATE` / `AGGREGATE_APPEND`** |
 | 2026-04-10 | **§10.1**：**`--l3-tf-kv-downstream-ce`**、**`M1_WITH_L3_DOWNSTREAM_CE`**（**`l3_tf_kv_downstream_ce`**） |
+| 2026-04-11 | **§10.1**：**推荐下一步** — **`M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1`**；拷回 JSON + 本机聚合 |
