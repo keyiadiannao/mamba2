@@ -80,6 +80,8 @@ python scripts/benchmarks/benchmark_wikitext_tree.py `
 
 去掉 **`--cpu`**（若脚本支持默认 CUDA）即走 **5060 GPU**；以 **`--cpu`** 可只做 **可跑性检查**。
 
+**已跑通例**（**`git_sha=a466f50`**）：**`results/metrics_result/benchmark_wikitext_local5060_cuda_20260410T1204Z_n8_c8.json`** — **Mamba2 `peak_alloc_mib`≈1201**（**HF naive**）；登记 **X-20260410-benchmark-wikitext-local5060-cuda-n8c8**。
+
 ---
 
 ## 4. 辅线：SSGS × Wikitext（CPU，小模型）
