@@ -21,7 +21,7 @@
 **服务器有空时（可选一条即可）**
 
 - [ ] **`git pull` 后** 在 3090 上 **重跑 `demo_ssgs_mamba_wikitext.py` n8 一格**，刷新 JSON **`git_sha`**（与正文 **HEAD** 对齐）。
-- [ ] **B-S2+**：**`probe_path_reader_linear.py`** **CUDA** 一条 JSON，**新开登记行**（**`NEXT_EXPERIMENTS_COMMANDS.md` §6**）。
+- [ ] **B-S2+ CUDA（3090）**：**`probe_path_reader_linear.py`** **去掉 `--cpu`** 一条 JSON，**新开登记行**（**`NEXT_EXPERIMENTS_COMMANDS.md` §6**）；与 **本机 5060 CPU**（**§9.1**、**X-20260407-local5060-bs2plus-rerun**）**分列**。
 - [ ] **SSGS n128**（**`--num-leaves 128`**，CUDA）+ **`aggregate_ssgs_mamba_wikitext_json.py --append`** —— **辅线延长**，非主线阻塞（**`NEXT_EXPERIMENTS_COMMANDS.md` §10**）。
 
 **已就绪（无需再跑也能写）**：阶段 2 **path-batch** 叶数扫描与 XL、**§7 depth 5–6**、**A2-S3 init×5**、**Wikitext SSGS grid（n8–64）** —— 见 **登记册** 与 **`PHASE1_MANUSCRIPT` §5** 表。
