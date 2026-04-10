@@ -1,6 +1,7 @@
 # 阶段 2 成文草稿（真语料浅树 + 任务）
 
-> **定位**：承接 **`PHASE1_MANUSCRIPT.md`**；**不**替代 **`RESEARCH_STATUS_AND_DIRECTION.md`** 的总览。本节只钉 **阶段 2 叙事边界** 与 **指标列语义**，避免与阶段 1 / §7 / 真 LM 辅线混读。  
+> **路径**：与本目录 **`PHASE1_MANUSCRIPT.md`**、**`EXPERIMENT_REGISTRY.md`** 并列（`docs/experiments/`）。  
+> **定位**：承接 **`PHASE1_MANUSCRIPT.md`**；**不**替代 **`docs/overview/RESEARCH_STATUS_AND_DIRECTION.md`** 的总览。本节只钉 **阶段 2 叙事边界** 与 **指标列语义**，避免与阶段 1 / §7 / 真 LM 辅线混读。  
 > **P1 并入**：核心叙事已迁入 **`PHASE1_MANUSCRIPT.md` §8–§9**（系统+A2-S3、检索头讨论边界）；本文件保留 **表数字、登记修订日志** 与 **`EXPERIMENT_REGISTRY`** 交叉引用。
 
 ---

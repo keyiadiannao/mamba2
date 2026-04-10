@@ -69,7 +69,7 @@ python scripts/research/probe_path_reader_linear.py --cpu --n-leaves 16 --leaf-s
 
 ## 2b. 任务线 A2-S3（叶对 cohort + ridge，CPU）
 
-与 **path-batch**、**3090 `init_seed`×5** **分列**；见 **`PHASE1_MANUSCRIPT.md` §8.2**、**`PHASE2_DRAFT.md`**。
+与 **path-batch**、**3090 `init_seed`×5** **分列**；见 **`docs/experiments/PHASE1_MANUSCRIPT.md` §8.2**、**`docs/experiments/PHASE2_DRAFT.md`**。
 
 ```powershell
 $env:HF_ENDPOINT = "https://hf-mirror.com"

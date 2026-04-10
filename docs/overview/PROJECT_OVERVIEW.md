@@ -1,6 +1,6 @@
 # 项目总览与推进计划
 
-> 单一入口文档：目标、知识分类、目录约定、阶段里程碑。细节执行以 `docs/overview/ROADMAP.md` 周历与 `docs/experiments/EXPERIMENT_REGISTRY.md` 实验表为准。完整文档索引见 `docs/README.md`。
+> **文档导航**：分层索引与「先读谁」以 **`docs/README.md`** 为准。本文保留 **目标、A/B/C/X 分类、仓库目录树、阶段全景**；**可执行周任务**以 **`docs/overview/CURRENT_SPRINT.md`** 为准，**实验登记**以 **`docs/experiments/EXPERIMENT_REGISTRY.md`** 为准（不必与 **`ROADMAP.md`** 重复勾选同一批项）。
 
 ---
 
@@ -33,7 +33,7 @@
 mamba2/
 ├── docs/                    # 见 docs/README.md
 │   ├── overview/            # 总览、总体规划、ROADMAP、CURRENT_SPRINT
-│   ├── experiments/         # EXPERIMENT_REGISTRY、PHASE1、DATASETS
+│   ├── experiments/         # EXPERIMENT_REGISTRY、PHASE1/2 成文稿与草稿、DATASETS
 │   ├── environment/         # SYNC、AUTODL、mamba-ssm 安装说明
 │   └── research/            # 研究笔记（如 SSGS）
 ├── configs/                 # 实验 YAML（超参、路径占位符，不含密钥）

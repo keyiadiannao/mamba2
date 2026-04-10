@@ -2,18 +2,14 @@
 
 本地开发与小规模验证（RTX 5060 8GB），训练与主实验在 AutoDL（48GB）。**代码与配置以 Git 为唯一真相源；大文件走网盘/面板同步，不进仓库。**
 
-**文档分类索引**：`docs/README.md`。**脚本分类索引**：`scripts/README.md`。
+**文档**：分层索引 **`docs/README.md`**（先读谁、成文、规划、环境）。**脚本**：`scripts/README.md`。
 
-- 全局目标、分类与阶段计划：`docs/overview/PROJECT_OVERVIEW.md`
-- 双机分工与上传下载规范：`docs/environment/SYNC_AND_ENVIRONMENTS.md`
-- 实验登记（随做随记）：`docs/experiments/EXPERIMENT_REGISTRY.md`
-- 阶段 1 验证规划与扫参说明：`docs/experiments/PHASE1_VALIDATION_PLAN.md`
-- 阶段 1 **成文稿**（可贴论文/报告）：`docs/experiments/PHASE1_MANUSCRIPT.md`；**指标归档目录**：`results/metrics_result/`
-- **总体规划与当前迭代**：`docs/overview/PROJECT_MASTER_PLAN.md`、`docs/overview/CURRENT_SPRINT.md`
-- **研究现状与方向**（先读，含推荐顺序）：`docs/overview/RESEARCH_STATUS_AND_DIRECTION.md`
-- **下一步任务展开**（阶段 2 / 检索头 / S5）：`docs/overview/NEXT_RESEARCH_PLAN.md`
-- 数据与样例：`docs/experiments/DATASETS.md`
-- AutoDL 环境步骤：`docs/environment/AUTODL_SETUP.md`
+- **研究现状与方向**（建议先读）：`docs/overview/RESEARCH_STATUS_AND_DIRECTION.md`
+- **当前迭代**：`docs/overview/CURRENT_SPRINT.md`；**任务展开**：`docs/overview/NEXT_RESEARCH_PLAN.md`
+- 全局目标、A/B/C/X 与仓库树：`docs/overview/PROJECT_OVERVIEW.md`；月级规划：`docs/overview/PROJECT_MASTER_PLAN.md`
+- 实验登记：`docs/experiments/EXPERIMENT_REGISTRY.md`；阶段 1 成稿：`docs/experiments/PHASE1_MANUSCRIPT.md`；阶段 2 表数字草稿：`docs/experiments/PHASE2_DRAFT.md`；投稿包：`docs/overview/SUBMISSION_PACK.md`
+- **指标归档**：`results/metrics_result/`；数据说明：`docs/experiments/DATASETS.md`；早期验证规划：`docs/experiments/PHASE1_VALIDATION_PLAN.md`
+- 双机与 AutoDL：`docs/environment/SYNC_AND_ENVIRONMENTS.md`、`docs/environment/AUTODL_SETUP.md`
 
 ## 本机 Conda 环境 `mamba2`（推荐）
 
