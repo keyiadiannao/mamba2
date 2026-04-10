@@ -70,6 +70,7 @@
 | **§7 depth 5–6** | `stage2_leavescale_xl_s{1..4}_*_d{5,6}_20260409T1341Z.json`（前缀见 **§4** 脚注）、`…_manifest_20260409T1341Z.txt` | **X-section7-depth-extension-v1** |
 | **A2-S3 init×5（3090）** | `task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json` | **A-stage2-wikitext-path-pair-initseed5-3090-v1**；**`aggregate_task_wikitext_path_pair_json.py`** |
 | **SSGS × Mamba × Wikitext 同树** | `ssgs_mamba_wikitext_*.json`、`ssgs_mamba_wikitext_grid.csv` | **X-20260407-ssgs-mamba-wikitext-tree**；**`aggregate_ssgs_mamba_wikitext_json.py`**；与 **path-batch**、**§7** **分列**（**§4**） |
+| **B-S2+ 本机 5060 CPU** | **`results/metrics/probe_path_reader_linear_text{8,16}_heldout_local5060.json`** | **X-20260407-local5060-bs2plus-rerun**；**`LOCAL_5060_RUNBOOK.md`**；与 **3090 CUDA** **分列** |
 
 **历史归档**（仍在 `results/metrics/`）：`**_20260421.json** 系列，与 **X-20260421-*** 登记一一对应；与 `metrics_result` 中 **STAMP** 文件 **并存**，便于 diff。
 
@@ -86,6 +87,7 @@
 | **阶段 2 path-batch 归档** | **齐** | **leavescale / XL / dim256 / §7 depth** 等见 **§5** 表与 **登记册** |
 | **A2-S3 init×5** | **齐** | **`task_wikitext_sibling{16,32}_*_1438Z.json`** |
 | **SSGS Wikitext** | **齐** | **`ssgs_mamba_wikitext_grid.csv`** + **`ssgs_mamba_wikitext_*.json`** |
+| **B-S2+ 本机 5060** | **齐** | **`probe_path_reader_linear_*_local5060.json`**（登记 **X-20260407-local5060-bs2plus-rerun**） |
 
 **四类数字分列脚注（正文须显式）**：**①** **5060 + HF naive** 与 **②** **3090 + fused** **不可同表无标注混点**；**③** **path-batch 墙钟/m2_peak** 与 **④** **§7 单列毫秒**、**⑤** **SSGS 快照/回滚计数**、**⑥** **A2-S3 准确率** **各为独立测量轴**（**`FIGURE_CAPTIONS_STAGE1.md`** 篇首）。**§7.5 S5**「同轨迹总表」仍为 **可选**，视截稿篇幅（**§10** 第 4 条）。
 
@@ -202,3 +204,5 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-07 | **§10**：**`NEXT_RESEARCH_PLAN.md`** 增 **「当前收口清单」**（成文 / 仓库 hygiene / 可选 GPU 一条） |
 | 2026-04-07 | **§5.1 成文核对**：主图 PNG、CSV、§7、5060、SSGS、A2-S3 **路径核对表**；**脚注矩阵**一句 |
 | 2026-04-07 | **§5 表**：**dim128** 主文 CSV 实际文件名为 **`paper_main_dim128_localgrid_*`**（与 dim256/384 **分列一行** 说明） |
+| 2026-04-07 | **§10**：**`LOCAL_5060_RUNBOOK.md`** + **`NEXT_EXPERIMENTS` §11**（本机 5060） |
+| 2026-04-07 | **§5 / §5.1**：**B-S2+** **`…local5060.json`**；登记 **X-20260407-local5060-bs2plus-rerun** |
