@@ -20,7 +20,7 @@
 | **3** | **阶段 5**：摘要/讨论/局限 与 **`RESEARCH_STATUS` §3.5** 一致（结论 **≤ L1–L3**） |
 | **4** | ~~**3090 登记项**~~ **（已完成）**：**P1** B-S2+ CUDA、**P2** SSGS **n128** 等；见 **`DATA_ARCHIVE_202604_SERVER.md`**、**`NEXT_RESEARCH_PLAN` §2** |
 | **5** | **（可选）** **`probe_retrieval_correlation.py --cpu`** / **§7 CPU** — 仅附录需要；**`NEXT_RESEARCH_PLAN` §B** |
-| **6** | **`pytest tests/`**（或快测）提交前 **smoke** |
+| **6** | ~~**`python -m pytest tests/ -q`**~~ **AutoDL 已跑通**（见下方 **阶段 5**）；截稿前 **`git status`** 干净再推 |
 
 ---
 
@@ -117,9 +117,9 @@
 
 ## 阶段 5 检查清单（与 **`RESEARCH_PHASES_0_TO_DONE.md`** 同步）
 
-- [ ] **§A2** basename ↔ 登记册  
+- [ ] **§A2** basename ↔ 登记册（**`SUBMISSION_PACK` §A2** 仓内扫描 ✅；**正文** 每个引用仍须 **投稿前人工逐字** 对 **`EXPERIMENT_REGISTRY`**）  
 - [x] **§A3 / §A3b** 七轴脚注：**中文 §A3** + **英文 §A3b** 已在 **`SUBMISSION_PACK.md`** — 粘贴进 LaTeX/Word  
-- [ ] **局限段** 含 §3.5 三风险（有损状态 / 回退触发 / H2D）— **`PHASE1_MANUSCRIPT` §9.2** 已有骨架  
+- [x] **局限（§3.5 三风险）**：**`PHASE1_MANUSCRIPT` §9.2** 已书面落地（有损状态 / 回退触发 / H2D）；**摘要句** 投稿前再按字数压一版，**不**升级为 L4 宣称  
 - [x] **`git push`**：**`7052efa`** 已上 **`origin/master`**（含 metrics + 文档 + L3 轨迹 harness）  
 - [x] **`python -m pytest tests/ -q`**（**AutoDL**：**28 passed**, **4 subtests**, **~21 s**；**2026-04-11**）  
 
