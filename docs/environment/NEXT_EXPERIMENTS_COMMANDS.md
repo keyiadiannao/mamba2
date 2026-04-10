@@ -232,6 +232,8 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 
 单测（无 torch）：**`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`**。
 
+**已跑通归档例**（**`git_sha` 以 JSON 为准**）：**n8** CPU+CUDA **`1529Z`**，**n16/n32** CUDA **`1550Z`**，**n64** CUDA **`1601Z`** → **`ssgs_mamba_wikitext_grid.csv`** **5 行**（登记 **X-20260407**）。可选：**n128**（大叶、耗时更长）；**`git pull` 后** 重跑 **n8** 一格对齐 **HEAD**。
+
 ---
 
 ## 修订记录
@@ -249,3 +251,4 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 | 2026-04-09 | **已跑通 XL**：**`TAG=stage2_leavescale_xl`** **`STAMP=20260409T1322Z`（n128）**、**`20260409T1324Z`（n256）**；**`benchmark_wikitext_stage2_leavescale_xl_grid_n128_n256_combined.csv`**；**A-stage2-wikitext-leavescale-xl-v1** |
 | 2026-04-07 | **§10**：**`demo_ssgs_mamba_wikitext.py`** + 登记 **X-20260407-ssgs-mamba-wikitext-tree** |
 | 2026-04-07 | **§10**：**`aggregate_ssgs_mamba_wikitext_json.py`** → **`ssgs_mamba_wikitext_grid.csv`** |
+| 2026-04-07 | **§10**：已跑通 **1529Z / 1550Z / 1601Z** 归档例；**n128**、**HEAD** 重跑 为可选 |
