@@ -380,6 +380,10 @@ M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_
 
 可选同时开隐状态 L3：**`M1_WITH_L3=1 M1_WITH_L3_DOWNSTREAM_CE=1`**。**跑后**：将 JSON 拷入本仓 **`results/metrics_result/`**，本机 **`aggregate_ssgs_vs_kv_wikitext_json.py`**（勿直接提交云端 CSV 的 **`/root/...` `json_path`**），再更新 **`EXPERIMENT_REGISTRY`** / **`SSGS_MAINLINE_M1.md`**。
 
+### 10.2 **M2** 后续实验（**M1** 已归档后的默认顺序）
+
+**详表**：**`docs/experiments/planning/SSGS_MAINLINE_M1.md` §6**（Wave **A** 成文；**B1–B4** 云端单条）。**最常跑的两条**：**`M1_LEAVES="64" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`**（补 **n64** **L3 CE**）；**`M1_LEAVES="8"`** + 新 **`M1_STAMP`**（**`git_sha` 刷新**）。**chunk_len≠8** 的 M1：**直调** **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py --chunk-len 12`**（见 **§6** **B3**）。
+
 ---
 
 ## 11. 本机 **RTX 5060**（Windows；服务器忙时）
@@ -452,3 +456,4 @@ python -m pytest tests/ -q
 | 2026-04-11 | **§0.5 块 F**：**`--out-json`** 改默认示例为 **`metrics_result/probe_…cuda_${STAMP}.json`**（与 **`metrics/`** 分列同步习惯对齐） |
 | 2026-04-11 | **§0.5 块 G**：**阶段 C** **`benchmark_tf_kv_trajectory_l3_minimal.py`**（**L3 轨迹**） |
 | 2026-04-11 | **§12**：阶段 5 **重聚合 M1/SSGS grid** + **`pytest tests/`** + 可选 M1 smoke |
+| 2026-04-11 | **§10.2**：**M2** 跑道指针（**`SSGS_MAINLINE_M1` §6**；**n64+L3 CE** / **`git_sha`** / **chunk_len**） |

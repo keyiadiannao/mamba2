@@ -86,8 +86,8 @@
 
 ## 4. 开工检查表（复制到 issue / sprint）
 
-- [ ] 读完 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5**（证据层级与风险三段）。  
-- [ ] **`pytest tests/test_ssgs*.py`** + **`test_aggregate_ssgs_mamba_wikitext_json.py`** 绿。  
+- [x] 读完 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5**（证据层级与风险三段）— **成文前必读**；局限成句见 **`PHASE1_MANUSCRIPT` §9.2**。  
+- [x] **单测**：**AutoDL** **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**（**2026-04-11**）；**`test_ssgs*.py`** / **`test_tf_kv_*`** 须 **可用 torch** 的环境。**无 torch**：**`py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py tests/test_aggregate_ssgs_vs_kv_wikitext_json.py -q`**。  
 - [x] 在 **`EXPERIMENT_REGISTRY`** 登记 **M1**：**`X-ssgs-vs-kv-tree-nav-m1`** + **`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm.json`**（三臂，**`git_sha=6fa7873`**）；历史两臂文件 **`…_n8_cuda.json`** 仍保留作对照。  
 - [x] **叶数扩展**：**`STAMP=20260410T1012Z`** — **`…_n{8,16,32}_cuda_3arm_20260410T1012Z.json`**；**n64** **`STAMP=20260410T1235Z`** — **`…_n64_cuda_3arm_20260410T1235Z.json`**；已写入 **`EXPERIMENT_REGISTRY`** **X-ssgs-vs-kv-tree-nav-m1**。  
 - [x] **L3（隐状态）**：**`--l3-tf-kv-hidden`** + **`src/rag_tree/tf_kv_l3_probe.py`**；单测 **`tests/test_tf_kv_l3_probe.py`**。  
@@ -109,6 +109,42 @@
 
 ---
 
+## 6. 后续实验跑道（**M2**：M1 归档之后）
+
+> **定位**：**M1** 三臂 + 叶扫 + **L3**（隐状态 / 下游 CE）+ **轨迹 minimal** 已满足 **L2–L3** 叙事；**M2** 不再重复「同一网格再扫一遍」，除非 **审稿点名** 或 **代码版本（`git_sha`）** 需刷新。  
+> **原则**：新 JSON **新 `STAMP`**、**登记册新行或脚注**；与 **path-batch**、**§7 毫秒**、**A2-S3** **脚注分列**（**七轴**）。
+
+### 6.1 Wave **A** — 与成文并行（**不占 GPU**）
+
+| 顺序 | 动作 | 产出 |
+|------|------|------|
+| A1 | **`SUBMISSION_PACK` §A3 / §A3b** + **§A2.1** 入 LaTeX/Word | 主稿脚注与 **M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`** 一句 |
+| A2 | **`FIGURE_CAPTIONS_STAGE1.md`** 七轴表 ↔ 正文 **逐轴** 出现或明确「见附录」 | 防混读审稿 |
+| A3 | （可选）**`RESEARCH_NOTES` §7.5 S5** 总表 | 仅篇幅允许时 |
+
+### 6.2 Wave **B** — 云端 **单条增量**（**AutoDL**；每条 **≤ 数分钟级**，按需选 **1–2** 条）
+
+**环境**：**`docs/environment/runbooks/AUTODL_SETUP.md`** + **`scripts/server/_autodl_env.sh`**（**`conda activate mamba2`**、**`MAMBA2_RESULTS_ROOT`**、**`HF_ENDPOINT`**）。
+
+| 优先级 | 实验 | 命令要点 | 登记 / 后处理 |
+|--------|------|----------|----------------|
+| **B1** | **`git_sha` 刷新**（代码更新后） | **`M1_STAMP=$(date -u +%Y%m%dT%H%MZ)`** + **`M1_LEAVES="8"`** **`bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`** | JSON 拷入 **`results/metrics_result/`**；**`EXPERIMENT_REGISTRY`** **X-ssgs-vs-kv-tree-nav-m1** 附 **新 STAMP** 一句 |
+| **B2** | **M1 · n64 + L3 下游 CE**（补全与 n8/n16/n32 同列） | **`M1_LEAVES="64" M1_WITH_L3_DOWNSTREAM_CE=1`** **`bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`** | 跑后 **`aggregate_ssgs_vs_kv_wikitext_json.py`**（脚本默认已调）；核对 **`abs_ce_delta`** |
+| **B3** | **M1 · chunk_len 消融**（与 **A2-S2** **c12** 叙事对齐，**分列**） | 脚本默认 **c8**；改 **`--chunk-len 12`** 须 **直接调用** **`python scripts/research/benchmark_ssgs_vs_kv_tree_nav_wikitext.py`**（参数同 **`run_m1_*.sh`**，改 **`--chunk-len`** / **`--out-json`** 带新 **STAMP**） | **新 basename**；正文写 **「M1 玩具 TF-KV 臂；chunk_len=12；与 path-batch 表分列」** |
+| **B4** | **SSGS 辅线 · 新格点**（非 M1） | **`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §10** **`run_ssgs_mamba_wikitext_cuda.sh`**；叶数 / **`STAMP`** 自定 | **`aggregate_ssgs_mamba_wikitext_json.py`** → **`ssgs_mamba_wikitext_grid.csv`** |
+
+### 6.3 Wave **C** — 主曲线延伸（**另排期**；**非** 投稿默认阻塞）
+
+- **path-batch** 与 **SSGS** **同树 bundle** 扩展（**`RUN_WIKITEXT_SMOKE=1`** 已有入口，见 **`run_ssgs_mamba_wikitext_cuda.sh`** 注释）。  
+- **更深树 / RAPTOR 式建树**：新 **`kind`** 或新脚本 — 见 **`PROJECT_MASTER_PLAN.md` §2**、**`NEXT_RESEARCH_PLAN.md` §0.2**「阶段 2 延伸」。  
+- **dim256 M1**：显存与实现成本显著上升 — **仅**在假设明确时开 **独立 STAMP** 网格。
+
+### 6.4 Wave **D** — **P★**（默认 **不做**）
+
+- **训练型 L3**、**可学习导航抬 reach_rate**、**B-S3** — 见 **`RESEARCH_STATUS` §3.5**、**`PROJECT_MASTER_PLAN` §1.0** 副线；**须新 `kind`**，**禁止**与当前 M1 表无脚注合并。
+
+---
+
 ## 修订记录
 
 | 日期 | 说明 |
@@ -122,3 +158,4 @@
 | 2026-04-10 | **归档**：**`STAMP=20260410T1113Z`** **n8** 三臂 + **`l3_tf_kv_downstream_ce`**（**`…_n8_cuda_3arm_20260410T1113Z.json`**） |
 | 2026-04-11 | **归档**：**`STAMP=20260410T1133Z`** **n16/n32** **`l3_tf_kv_downstream_ce`**（**`abs_ce_delta`=0**）；§10.1 推荐命令已跑通 |
 | 2026-04-11 | **索引**：**`docs/README`**、**`CURRENT_SPRINT`**、**`ROADMAP`**、**`NEXT_EXPERIMENTS`** 篇首、**`SERVER_SWEEP_RUNBOOK`** — **七轴** 与 **P0** **M1** 入稿指针 |
+| 2026-04-11 | **§6 M2 跑道**：Wave A–D；检查表 **§3.5 / pytest** 与 **AutoDL** 对齐；**B2** **n64+L3 CE**、**B3** **chunk_len** 直调 **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`** |

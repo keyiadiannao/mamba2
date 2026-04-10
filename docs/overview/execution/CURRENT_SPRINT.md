@@ -16,6 +16,7 @@
 | 优先级 | 动作 |
 |--------|------|
 | **1** | **阶段 5**：**`SUBMISSION_PACK.md` §A2** 路径与 **`EXPERIMENT_REGISTRY`** / **`DATA_ARCHIVE_202604_SERVER.md` §0** **逐字对齐** |
+| **1b** | **M2 实验（与成文并行）**：**`SSGS_MAINLINE_M1.md` §6** — 云端优先 **Wave B**（**B2** **n64+L3 CE** 或 **B1** **`git_sha`**）；**勿**重复 **M1** 已归档全网格 |
 | **2** | **阶段 5**：**§A3** + **`FIGURE_CAPTIONS_STAGE1.md`** — **七轴** 脚注句 **粘贴进正稿**（或 **`PHASE1_MANUSCRIPT`** 对应节） |
 | **3** | **阶段 5**：摘要/讨论/局限 与 **`RESEARCH_STATUS` §3.5** 一致（结论 **≤ L1–L3**） |
 | **4** | ~~**3090 登记项**~~ **（已完成）**：**P1** B-S2+ CUDA、**P2** SSGS **n128** 等；见 **`DATA_ARCHIVE_202604_SERVER.md`**、**`NEXT_RESEARCH_PLAN` §2** |

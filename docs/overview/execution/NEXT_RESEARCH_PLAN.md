@@ -62,6 +62,10 @@
 
 **与 P0 关系**：**P0 成文** 为主。**原 P1/P2**（B-S2+ CUDA、SSGS n128）与 **阶段 C L3 轨迹 JSON** 均已归档。**可选**：path-batch **XL** 复跑、**B-S3** 检索头 — 见 **`RESEARCH_STATUS` §3.5**、**`NEXT_EXPERIMENTS_COMMANDS` §0.5**。
 
+### 3.1 **M2** 后续实验（**Mamba + 树 + SSGS** 在 **M1** 归档之后）
+
+**唯一详表与命令**：**`docs/experiments/planning/SSGS_MAINLINE_M1.md` §6**（Wave **A** 成文并行；**B** 云端 **B1–B4** 单条增量；**C** 延伸；**D** = P★）。**建议默认**：截稿前优先 **Wave A**；云端有空再跑 **B2**（**n64 + L3 下游 CE**）或 **B1**（**`git_sha` 刷新**），避免重复全网格。
+
 ---
 
 ## 后续方向（推荐优先级）
@@ -293,3 +297,4 @@ flowchart LR
 | 2026-04-11 | **§0.1**：**P0 收口 ≠ 研究终点**；指针 **`RESEARCH_STATUS` §1.5** 北星（快照回溯 × 树 RAG） |
 | 2026-04-11 | **`RESEARCH_PHASES_0_TO_DONE.md`**：阶段 0–7 表 + 阶段 5 清单；篇首与 **`docs/README`** 互链 |
 | 2026-04-11 | **§1 / 收口清单 / §B B3**：**AutoDL** 全量 **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**, **~21 s** |
+| 2026-04-11 | **§3.1**：**M2** 后续实验 — **`SSGS_MAINLINE_M1.md` §6**（Wave A–D） |
