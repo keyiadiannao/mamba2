@@ -7,7 +7,7 @@
 ## 周期
 
 **开始**：2026-04-07  
-**当前滚动至**：**2026-04-11** — **3090 批次已归档**（**`DATA_ARCHIVE_202604_SERVER.md`**）：**M1**、**SSGS**、**leavescale**、**headcheck**、**B-S2+ CUDA**、**L3 轨迹 JSON**。**执行焦点**：按 **`RESEARCH_PHASES_0_TO_DONE.md` §「阶段 5 检查清单」** 推进 **`SUBMISSION_PACK`** → 正稿；**P★ 训练型 L3** 仍 **非必做**（**`RESEARCH_STATUS` §3.5**）。
+**当前滚动至**：**2026-04-11** — **3090 批次已归档**（**`DATA_ARCHIVE_202604_SERVER.md`**）：**M1**、**SSGS**、**leavescale**、**headcheck**、**B-S2+ CUDA**、**L3 轨迹 JSON**。**执行焦点**：按 **`RESEARCH_PHASES_0_TO_DONE.md` §「阶段 5 检查清单」** 推进 **`SUBMISSION_PACK`** → 正稿；叙事 **主验证轴** = **树状 RAG + Mamba + SSGS/M1**（**`PROJECT_MASTER_PLAN` §1.0**）；**检索/探针** = 副线。**P★ 训练型 L3** 仍 **非必做**（**`RESEARCH_STATUS` §3.5**）。
 
 ---
 

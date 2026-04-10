@@ -9,7 +9,7 @@
 ## A1 · 一页故事线（问题 → 方法 → 结果 → 边界）
 
 **问题**  
-在**树状索引**上，对一批**根—叶路径**做 **path-batch 编码**时，**Mamba-2** 与 **Transformer / GRU** 路径 reader 的 **步均耗时**与 **CUDA 峰值显存**如何变化？该问题**不**等价于「全模型 KV 总账」或「端到端 RAG 吞吐」。
+在**树状索引**上，对一批**根—叶路径**做 **path-batch 编码**时，**Mamba-2** 与 **Transformer / GRU** 路径 reader 的 **步均耗时**与 **CUDA 峰值显存**如何变化？该问题**不**等价于「全模型 KV 总账」或「端到端 RAG 吞吐」。**主验证轴**（**`PROJECT_MASTER_PLAN` §1.0**）：**树状 RAG + Mamba reader + SSGS/M1（快照式 DFS 与同树对照）**；**检索头与探针** 为 **副线**（附录/机制）。
 
 **方法**  
 固定 **建树与遍历协议**，使用 **`run_tree_reader_benchmark` / `benchmark_wikitext_tree.py`** 同一槽位，报告 **`per_step_s`、`peak_alloc_mib`（`max_memory_allocated`）**；**3090** 上 **同网格、同 commit** 对照 **HF naive Mamba** 与 **`mamba_ssm` fused**。阶段 2 在 **Wikitext-2 浅树**上扩展 **网格与叶数**；**A2-S3** 为 **叶对 cohort + 岭回归** 的 **效果 proxy**（与墙钟 **分列**）。**§7**、**SSGS** 为 **机制/导航辅线**，**非**主图同一纵轴。
@@ -217,3 +217,4 @@ Our primary figures report **path-batch** wall-clock and **Mamba-2 peak CUDA mem
 | 2026-04-11 | **§A3b**：英文可粘贴 **边界段 + 七轴一句**（主稿脚注 / Measurements box） |
 | 2026-04-11 | **§A2**：**核对摘要**（basename；**M1 行数 = 聚合 stdout `N`**）；**§A3b** M1 一句同步 |
 | 2026-04-11 | **§A2/§A3b**：**M1 N** 随 JSON 个数（例 **15** on AutoDL）；**pytest** → **`python -m pytest`**（§12） |
+| 2026-04-11 | **§A1 问题段**：**主验证轴**（树+Mamba+SSGS/M1）与 **副线**（检索/探针）；对齐 **`PROJECT_MASTER_PLAN` §1.0** |

@@ -409,6 +409,10 @@ python scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py \
 # 2) 全量单测（须 torch；AutoDL 常无 pytest 入口，勿用裸 pytest）
 python -m pytest tests/ -q
 
+# 2b) 无 torch 快测（聚合 + 几何；本机 Windows 可跑）
+# py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py \
+#   tests/test_aggregate_ssgs_vs_kv_wikitext_json.py tests/test_path_pair_geometry.py -q
+
 # 3) 可选：git_sha 刷新 — M1 单格（改 STAMP / 路径见 §10.1）
 # STAMP=$(date -u +%Y%m%dT%H%MZ)
 # python scripts/research/benchmark_ssgs_vs_kv_tree_nav_wikitext.py --device cuda \

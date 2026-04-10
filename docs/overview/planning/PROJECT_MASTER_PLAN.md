@@ -10,6 +10,22 @@
 
 **一句话**：在**树状结构化检索**（多粒度、多分支导航）场景下，用 **Mamba-2 类状态空间模型** 作为 **reader / 导航器**，结合**检索头**相关机制，在 **同一树索引与同一检索预算** 下，与 **Transformer 系 reader**（及可选的 **混合架构**）对照，度量 **效率（延迟、显存、回溯成本）** 与 **效果（导航/问答）**；并探索 **状态快照式回溯** 等系统级优势。
 
+### 1.0 主验证轴与副线（定调 · 2026-04）
+
+**主验证轴（投稿时优先写进摘要/方法/主结果；证据层级仍受 `RESEARCH_STATUS` §3.5 约束）**
+
+| 支柱 | 本仓落点 | 测量轴（须脚注分列） |
+|------|----------|----------------------|
+| **树状 RAG** | 合成树 + **Wikitext-2 浅树**；**`benchmark_wikitext_tree` / `run_tree_reader_benchmark`** 同槽位 | **Path-batch 主图**；**阶段 2** 效率网格 |
+| **Mamba** | **Mamba2PathReader** vs **Transformer/GRU**；**naive vs fused** 同机对照 | 主文 **Fig.1**、**`paper_main_*` CSV** |
+| **SSGS** | **`dfs_ssgs_mamba`** + **`demo_ssgs_mamba_wikitext`**；**`ssgs_mamba_wikitext_grid.csv`** | **SSGS 轴**（快照/回滚计数，**非** path-batch 墙钟） |
+| **同树 DFS 对照（M1）** | **`benchmark_ssgs_vs_kv_tree_nav_wikitext`**；**`ssgs_vs_kv_wikitext_nav_grid.csv`** | **M1 轴**（SSGS vs **玩具 TF-KV** clone/truncate；可选 L3） |
+
+**副线（机制与文献接口；不替代主表第一叙事）**
+
+- **检索头 / 探针**：**`RETRIEVAL_HEAD_NOTES.md`**、**B-S2 / B-S2+**（**`probe_retrieval_correlation` / `probe_path_reader_linear`**）—— **附录或独立小节**；回答「与 Retrieval Head 文献的关系」与 **表征线性可读性**，**非** path-batch 纵轴。  
+- **B-S3 / 注入训练（C）**：**仅**在审稿点名或单独排期时加投；默认 **不阻塞** 以 **Mamba + 树 + SSGS/M1** 为主线的成文。
+
 **长期北星（超越「阶段 1–2 成文」）**：把 **固定大小隐状态上的 clone/restore** 与 **KV 随上下文线性增长** 在 **树导航、走错路、回溯** 场景下的 **代价结构差异** 讲透；**SSGS（State-Snapshot Guided Search）** 为可包装的算法叙事。**动机层** 可连接 **Agent 式「悔棋」、上下文不被错枝永久污染** 等命题，但 **审稿证据** 必须按 **`RESEARCH_STATUS_AND_DIRECTION.md` §1.5 + §3.5** 的 **L1–L4** 分层推进，**禁止**从效率主图直接跳写到 **无损 Agent 记忆**。
 
 ### 1.1 基线与对照组：「Transformer + 平面 RAG」是否必须？
@@ -113,7 +129,7 @@
 | Mamba/Windows 编译与 CUDA 不匹配 | 主训放 AutoDL；本地只做 CPU/小模型或 WSL |
 | 玩具实验与真任务结论不一致 | 尽早接小真数据；玩具只作假设筛选 |
 | 检索头信号弱 | 缩小任务到「是/否检索」二分类 + 更强探针 |
-| 时间不够 | 砍掉阶段 6 中回溯，只保留主对比 + 检索头一条线 |
+| 时间不够 | 砍掉阶段 6 扩展与 **B-S3**；**优先保留** 主对比 + **SSGS/M1 脚注**；检索探针 **压缩为附录一段** |
 
 ---
 
@@ -128,3 +144,11 @@
 **唯一滚动维护**：**`docs/overview/execution/CURRENT_SPRINT.md`**。本文件为 **月级规划**，不在此重复 sprint 勾选。
 
 **结题逻辑序（阶段 0–7）**：与 §4 周次模板 **对照表** 见 **`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**（**当前主瓶颈 = 阶段 5 投稿包/成文**）。
+
+---
+
+## 11. 修订记录
+
+| 日期 | 说明 |
+|------|------|
+| 2026-04-11 | **§1.0**：**主验证轴** = **树状 RAG + Mamba path reader + SSGS/M1**；**副线** = 检索头与探针（B-S2/B-S2+） |

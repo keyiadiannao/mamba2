@@ -18,7 +18,7 @@
 
 | 主题 | 唯一权威 |
 |------|----------|
-| 叙事框架、基线对照、A/B/C/X、月级阶段表 | [`overview/planning/PROJECT_MASTER_PLAN.md`](overview/planning/PROJECT_MASTER_PLAN.md) |
+| 叙事框架、基线对照、A/B/C/X、月级阶段表、**§1.0 主验证轴/副线** | [`overview/planning/PROJECT_MASTER_PLAN.md`](overview/planning/PROJECT_MASTER_PLAN.md) |
 | **现状**大表、七轴、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
 | **阶段 0→结题**（每阶段实验 + 成功标准；与 L1–L4 对齐） | [`overview/planning/RESEARCH_PHASES_0_TO_DONE.md`](overview/planning/RESEARCH_PHASES_0_TO_DONE.md) |
 | 轨道里程碑、**当前收口清单**、P0–P3、后备推进 § | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
