@@ -1,6 +1,6 @@
 # 研究现状与方向总览
 
-> **读法**：先读本文 **§1–§3** 建立共识；**§3.5** 为 **对外讨论（投资/Agent 叙事）的批判性接收与证据层级**；**§4** 为决策规则；**§5** 为推荐执行顺序（与 **`docs/overview/execution/NEXT_RESEARCH_PLAN.md`** 细节一致）。  
+> **读法**：先读本文 **§1–§3** 建立共识；**§1.5** 为 **长期北星（状态快照回溯 × 树状 RAG）**，与 **阶段 1–2 地基** 的显式分界；**§3.5** 为 **对外讨论（投资/Agent 叙事）的批判性接收与证据层级**；**§4** 为决策规则；**§5** 为推荐执行顺序（与 **`docs/overview/execution/NEXT_RESEARCH_PLAN.md`** 细节一致）。  
 > **更长规划**仍以 **`docs/overview/planning/PROJECT_MASTER_PLAN.md`** 为准；**阶段 1 成稿**见 **`docs/experiments/phases/PHASE1_MANUSCRIPT.md`**。  
 > **可执行勾选清单**（成文 / 仓库 / 可选实验）：**`docs/overview/execution/NEXT_RESEARCH_PLAN.md`** 篇首 **「当前收口清单」**；**归档路径核对表**：**`PHASE1_MANUSCRIPT.md` §5.1**（同目录 **`docs/experiments/phases/`**）；**本机 5060**：**`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md`**（**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §11**）。
 
@@ -11,6 +11,26 @@
 **论文级主叙事、基线对照表（A/B/C/D）、贡献候选长文**：**唯一权威** **`PROJECT_MASTER_PLAN.md` §1**（本节不复制）。
 
 **执行摘要**：**主对比轴**为 **树内、同 harness** 的 **Mamba vs Transformer（+GRU）**；**平面 RAG / 混合架构** 为消融或讨论。**三条贡献候选**（系统 path-batch 实现敏感；检索头机制；快照协议）的**展开与边界**仍见 **MASTER_PLAN**；**与当前证据的对应**见本文 **§2–§3**。
+
+### 1.5 长期北星：状态快照回溯与树状 RAG（**超越阶段 1–2**）
+
+> **定位**：本节固化 **最终要讲清的技术内核** 与 **对外动机**；**不**替代 **§3.5** 的证据层级与止损规则。  
+> **与阶段 1–2 的关系**：当前仓内 **path-batch / §7 / SSGS / M1 / L3 轨迹** 等，是在 **可发表、可复现** 的前提下，为这一北星 **铺地基**（**L1–L3** 量纲）；**不是**「做完阶段 2 就等于证成了 Agent 级无损撤回」。
+
+**概念（与 Mamba / SSM 一致）**：递推 **\(h_t = f(h_{t-1}, x_t)\)** 下，**\(h_t\)** 是对过往历史的 **固定维压缩**。**快照** = 在某时刻保存 **\(h\)**；**回溯** = 将保存的 **\(h\)** 写回运行态，使解码从该时刻继续。这与 **Transformer 依赖随序列增长的 KV Cache** 在 **状态载体几何** 上根本不同：**一方是固定大小状态向量，一方是随上下文线性膨胀的 KV 张量**。
+
+**树状 RAG 中的对照直觉（叙事用；主文须脚注分列 harness）**：
+
+- **KV 模式（Transformer 系 path reader 的常见代价结构）**：误入子树会 **堆叠** 与已读前缀相关的 KV；回溯往往对应 **丢弃缓存（丢前文可复用性）**、**重算**，或 **显存与碎片管理** 压力。  
+- **隐状态模式（Mamba + 显式快照协议，如 SSGS）**：在分支点保存 **\(h\)** 的 **clone**；误入后可用 **O(1) 量级的状态写回**（相对「整段 KV 体量」）回到分支点，再试其它子树。本仓 **SSGS**（`dfs_ssgs_mamba` + `DynamicCache`）与 **M1**（同树 DFS 上对照 **玩具 TF-KV** 的 clone / truncate）都是在 **不同测量轴** 上把这一 **代价结构差异** **做成数字**；**§7** 则提供 **机制毫秒/字节** 的分解尺。
+
+**算法叙事名（贡献包装）**：**State-Snapshot Guided Search（SSGS）** — 在节点完成编码后 **挂载快照**，探索失败则 **加载父快照** 再选兄弟分支；控制流可与 **规则 DFS** 或未来 **可学习策略** 分层讨论（后者 **≠** 当前主文已解决，见 **§3.5**）。
+
+**Agent / 智能体动机（允许写进引言，但必须降维到证据）**：多跳检索里 **错误分支污染上下文** 是常见失效模式；**固定大小状态 + 显式回溯** 提供一种 **「悔棋」式控制流假设** —— 与 **§3.5** 中的 **L4** 叙事同档，**须单独 harness**，**禁止**从 **L1–L2 效率曲线** 直接跳写 **「已解决 Agent 记忆」**。
+
+**价值判断（与 §3.5「批判性接收」一致）**：该方向 **赛道新、与架构特性耦合深**，若能在 **限定任务** 上把 **L3 语义保真** 或 **可学习回退** 做实，**学术上极具张力**；同时 **有损状态、谁触发回退、CPU↔GPU 搬运** 等 **硬风险** 必须进 **讨论/局限**，**不以修辞替代实验**。外部 **「天使轮 / 高收益·中高风险」** 类比喻 **仅用于** 选题沟通，**不**写入可审稿的 **结果句**。
+
+**验证路径**：**§3.5** 已给出 **极简树 + 硬编码读序 + 轨迹对照** 的 **低成本 PoC** 与 **止损规则**；仓库 **阶段 C** **`tf_kv_trajectory_l3_minimal`** 已在 **玩具 TF-KV** 上给出 **错枝/恢复 vs 直达** 的 **表示层** 读数（**≠** 全模型 Agent 证明）。
 
 ---
 
@@ -32,7 +52,7 @@
 | **§7 玩具协议 S1–S4** | 3090 CUDA 归档 + **串行复跑**通过；与 **§7.3.1** 同阶 | **X-20260421-***；`**_20260421.json`** + **`*_20260408T1617Z.json`** |
 | **SSGS × Mamba** | DFS + `DynamicCache` 导航环可复现 | **X-20260421-ssgs-mamba-dfs-demo** |
 | **SSGS × Mamba（Wikitext 同树）** | 与 **`benchmark_wikitext_tree`** **同建树** 上 **`dfs_ssgs_mamba`**；**path-batch** 与 **SSGS** 桥接；**叶数** **n∈{8,16,32,64}** **CUDA** + **n8 CPU** 已进 **`ssgs_mamba_wikitext_grid.csv`** | **`demo_ssgs_mamba_wikitext.py`** + **`aggregate_ssgs_mamba_wikitext_json.py`**；登记 **X-20260407-ssgs-mamba-wikitext-tree**；**`tests/test_ssgs_mamba_wikitext.py`** |
-| **叙事边界** | 主图 / §7 / SSGS / **M1 DFS** / 真 LM / **阶段 2 任务** **六线不混读**（测量轴见 **§3**） | **`FIGURE_CAPTIONS_STAGE1.md`**（篇首 **P0** + **六条测量轴** 表）、`**RESEARCH_NOTES**` §7.0；任务细节 **`PHASE2_DRAFT.md`**（与 **`PHASE1_MANUSCRIPT` §8** 并行） |
+| **叙事边界** | 主图 / §7 / SSGS / **M1 DFS** / **L3 轨迹玩具** / 真 LM / **阶段 2 任务** **七条线不混读**（测量轴见 **§3**） | **`FIGURE_CAPTIONS_STAGE1.md`**（篇首 **P0** + **七条测量轴** 表）、`**RESEARCH_NOTES**` §7.0；任务细节 **`PHASE2_DRAFT.md`**（与 **`PHASE1_MANUSCRIPT` §8** 并行） |
 | **阶段 1 成文** | 可贴正文的一节（含摘要/方法/结果/§7 关系/归档索引） | **`PHASE1_MANUSCRIPT.md`** |
 | **阶段 2 成文（P1）** | **真语料动机 + A2-S3 协议 + 公平性** 已并入主稿 **§8**；**检索头 / Mamba 讨论边界** 见 **§9**；指针 **§10** | **`PHASE1_MANUSCRIPT.md` §8–§10**；**`RETRIEVAL_HEAD_NOTES.md` §8** |
 | **阶段 2 任务指标（A2-S3 v0）** | Wikitext 浅树 + **叶对同 cohort** 二分类（**ridge / concat 池化**）；与 path-batch **分列**，**非**墙钟 | **`task_wikitext_path_pair.py`**（**stratified** 或 **leaf_heldout**）；登记 **A-20260407-stage2-wikitext-path-pair**；含 **`…_leafheldout4_{cpu,cuda5060}.json`** 等 |
@@ -63,14 +83,15 @@
 
 ---
 
-## 3. 测量轴（防混读；六条）
+## 3. 测量轴（防混读；七条）
 
 | 轴 | 回答什么 | 代表登记 / 文件 |
 |----|----------|-----------------|
 | **Path-batch 主图** | 固定路径集合上 **三 reader 批量前向** 的 **时间与 m2_peak** | **A-20260408-paper-main-3090-pair** |
 | **§7 玩具表** | **单路径**上 **clone / restore / TF-R1 / TF-KV** 等 **分列毫秒** | **X-20260421-*** |
-| **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照 | **X-20260421-ssgs-mamba-dfs-demo**；**Wikitext 同树** **X-20260407**（**grid**：**n8–64** **c8** **dim128**，**`ssgs_mamba_wikitext_grid.csv`**） |
-| **M1 同树 DFS** | **同 Wikitext 建树**上 **SSGS** vs **玩具 TF-KV**（clone / truncate_kv）**同一 DFS**；**wall_s / peak**；可选 **L3** | **X-ssgs-vs-kv-tree-nav-m1**；**`ssgs_vs_kv_tree_nav_wikitext_*.json`**；**`ssgs_vs_kv_wikitext_nav_grid.csv`** |
+| **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照 | **X-20260421-ssgs-mamba-dfs-demo**；**Wikitext 同树** **X-20260407**（**`ssgs_mamba_wikitext_grid.csv`**） |
+| **M1 同树 DFS** | **同 Wikitext 建树**上 **SSGS** vs **玩具 TF-KV**（clone / truncate_kv）**同一 DFS**；**wall_s / peak**；可选 **L3**（隐状态、固定叶头 CE） | **X-ssgs-vs-kv-tree-nav-m1**；**`ssgs_vs_kv_tree_nav_wikitext_*.json`**；**`ssgs_vs_kv_wikitext_nav_grid.csv`** |
+| **L3 轨迹（玩具 TF-KV）** | **硬编码** 错枝 **+ restore** **vs** 金路径直达；**末 hidden 余弦**；**≠ M1 DFS** | **X-20260411-tf-kv-trajectory-l3-minimal**；**`tf_kv_trajectory_l3_minimal_*.json`**；**`src/rag_tree/tf_kv_trajectory_l3.py`** |
 | **真 LM 线** | **tiny-gpt2** 上 **CE / 导航指标**；**非** path-batch harness | **X-20260422–25** |
 | **阶段 2 任务（A2-S3）** | 同 Wikitext 树上的 **效果 proxy**（例：叶对 cohort **ridge 准确率**）；**非**主图纵轴、**非** §7 毫秒 | **A-20260407-stage2-wikitext-path-pair**；**`PHASE2_DRAFT.md`**；成文并入 **`PHASE1_MANUSCRIPT.md` §8–§9** |
 
@@ -85,7 +106,7 @@
 - **保留**：问题在 **树导航 / 试错 / 状态可携带** 上与 **KV 堆叠范式** 的 **代价结构差异** 值得研究；**Mamba/SSM** 与 **显式快照** 在工程上 **可测量**（本仓已有 path-batch、§7、SSGS 多轴）。  
 - **拒绝**：把 **动机修辞** 直接写成 **已证成的系统结论**（例如「颠覆 RAG」「必中顶会」「状态无损」），除非有 **同层级的对照实验**。
 
-**证据层级（由弱到强；与主文六轴正交，勿跳级混谈）**
+**证据层级（由弱到强；与主文七轴正交，勿跳级混谈）**
 
 | 层级 | 回答什么 | 本仓接近什么 | 尚未作为主线承诺的 |
 |------|----------|--------------|---------------------|
@@ -110,6 +131,8 @@
   报告 **延迟**（是否打断图）+ **任务指标**（如 next-token / 探针 / 简单分类），**登记为新 kind**，**禁止**与 path-batch **无脚注合并**。  
 - **止损规则**：若 **restore 后指标系统性崩坏**（「失忆/胡言」），则 **收紧主文声称** 或 **转向纯效率+机制** 叙事，**不**强行升维到 L4。
 
+**仓库实现（阶段 C）**：**`src/rag_tree/tf_kv_trajectory_l3.py`** + **`scripts/research/benchmark_tf_kv_trajectory_l3_minimal.py`**（**`kind=tf_kv_trajectory_l3_minimal`**）；**`pytest tests/test_tf_kv_trajectory_l3.py`**（须 **torch** 可用环境）。登记 **X-20260411-tf-kv-trajectory-l3-minimal**。**已归档 CUDA**：**`results/metrics_result/tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`**（**`cosine_hidden_a_vs_b`≈1** 两臂，**`git_sha=6fa7873`**）。
+
 **与 §4 的衔接**：**L1–L2** 本仓已较充实；若目标是 **顶会级「新算法空间」叙事**，须在 **P0 成文** 之外 **显式排期 L3**；若 **L3 失败**，仍保留 **实现敏感性 + 真语料 harness** 的 **可发表** 主线（见 **§6.1**）。
 
 ---
@@ -130,7 +153,7 @@
 
 | 顺序 | 动作 | 目的 |
 |------|------|------|
-| **0** | **M1**：**已登记** **`X-ssgs-vs-kv-tree-nav-m1`**；**成文** 写入 **第六轴**；可选 **n64 / `git_sha` 刷新** | **L3** 在玩具 TF-KV 上 **已测**；**训练型头** 另 **kind** |
+| **0** | **M1**：**已登记** **`X-ssgs-vs-kv-tree-nav-m1`**；**n64**、**L3**（隐状态 **n8** + 下游 CE **n8–n64**）、**网格 CSV ≈15 行** 已归档（**`DATA_ARCHIVE_202604_SERVER.md`**）；**成文** 固化 **第七轴（M1）**；可选 **`git pull` 后单点 smoke 刷新 `git_sha`** | **玩具轨迹甲·乙** 已 **`tf_kv_trajectory_l3_minimal`**（**第七轴旁支 / 脚注分列**）；**训练型 L3** 另 **`kind`**；**训练型子头** 与树 LM **分列** |
 | **1** | **登记**：**EXPERIMENT_REGISTRY** 新增 **阶段 2 / Wikitext 网格** 占位行（如 **`A-stage2-wikitext-grid-v1`**） | 固定 **承诺** 与 **指标列模板**，避免散跑 |
 | **2** | **A2-S1**：`benchmark_wikitext_tree.py` **smoke** → JSON 入 **`results/metrics_result/`** | 验证 **HF + fused + harness** 在阶段 2 网格上仍 **可跑通** |
 | **3** | **B-S1 / B-S2 / B-S2+**：**`RETRIEVAL_HEAD_NOTES.md`**（§2 / §4 GPT-2 探针；§5 叙事；§7 **path reader** 探针） | **机制线** 与 **系统线** 对齐；**per-head** 仍属 **B-S3** |
@@ -186,7 +209,7 @@
 
 ## 7. 相关文档地图
 
-**分层索引与「哪份文件说了算」**：**`docs/README.md`**（含 **单一权威** 矩阵）。**§1–§6** 为本文独有；**不在此维护第二份** 全库文档表。
+**分层索引与「哪份文件说了算」**：**`docs/README.md`**（含 **单一权威** 矩阵）。**§1–§6** 为本文独有；**不在此维护第二份** 全库文档表。**2026-04 服务器 JSON / CSV 路径索引**：**`docs/experiments/planning/DATA_ARCHIVE_202604_SERVER.md`**。**阶段 0→结题**（实验 + 成功标准 + **当前阶段 5** 勾选）：**`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**。
 
 ---
 
@@ -208,3 +231,9 @@
 | 2026-04-10 | **§7 文档地图**：**`SUBMISSION_PACK.md`**（**P0 A1–A4**） |
 | 2026-04-10 | **§2.3–§2.4**、**§4.1**、**§5**：**Phase M1**（**`SSGS_MAINLINE_M1.md`**）**工具就绪** 与 **双臂 harness 缺口**；**主故事** 增 **M1 优先** |
 | 2026-04-11 | **§2.1 表**、**§3**、**§3.5 L3**：**M1 harness 已登记**；测量轴 **五→六**（**M1 DFS**）；**§2.4** **已落地** 叙事 |
+| 2026-04-11 | **§5 顺序 0**：**M1 n64 + L3 批次** 已归档；**`DATA_ARCHIVE_202604_SERVER.md`**；**§7** 文档地图增 **数据索引** 指针 |
+| 2026-04-11 | **§3** 测量轴 **六→七**（**L3 轨迹**）；**§3.5** 增 **阶段 C** 实现指针 |
+| 2026-04-11 | **§3.5**：**L3 轨迹 CUDA JSON** **`20260410T1341Z`** 入仓指针 |
+| 2026-04-11 | **§2.1** 叙事边界 **七线**（含 **L3 轨迹玩具**）；**§3** **七轴** 正交表述；**§5 顺序 0** 与 **`NEXT_RESEARCH_PLAN` §0** 对齐 |
+| 2026-04-11 | **§1.5**：长期 **北星**（快照回溯 vs KV、SSGS、Agent 动机）与 **阶段 1–2 地基** 分界；对齐 **§3.5** 风险与 PoC |
+| 2026-04-11 | **§7 文档地图**：**`RESEARCH_PHASES_0_TO_DONE.md`**（阶段 0–7 + 阶段 5 清单） |

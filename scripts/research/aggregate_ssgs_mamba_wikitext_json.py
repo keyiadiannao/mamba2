@@ -52,10 +52,18 @@ def _load(path: Path) -> dict:
         return json.load(f)
 
 
+def _json_path_cell(abs_path: Path) -> str:
+    ap = abs_path.resolve()
+    try:
+        rel = ap.relative_to(Path.cwd().resolve())
+        return rel.as_posix()
+    except ValueError:
+        return str(ap)
+
+
 def _row_from_json(abs_path: Path, data: dict) -> dict[str, object]:
-    p = str(abs_path.resolve())
     return {
-        "json_path": p,
+        "json_path": _json_path_cell(abs_path),
         "git_sha": data.get("git_sha", ""),
         "device": data.get("device", ""),
         "num_leaves": data.get("num_leaves", ""),

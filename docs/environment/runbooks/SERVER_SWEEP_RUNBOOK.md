@@ -119,7 +119,7 @@ python scripts\benchmarks\plot_mamba_naive_vs_fused.py `
 
 ### 2d. 阶段 2 **A2-S2**：Wikitext 浅树 **fused** 小网格（与 5060 四格同拓扑）
 
-**目的**：在 **真语料浅树**、`dim=128`、`fanout=2` 下，对 **`(num_leaves, chunk_len) ∈ {8,16}×{8,12}`**（默认 **四格**）跑 **TF / GRU / Mamba2 path reader** 的 **path-batch** 计时与 **`m2_peak`**，环境为 **3090 + fused `mamba_ssm`**。与 **5060 HF naive** 的 **`benchmark_wikitext_5060_cuda_*.json`** **分列对照**，**禁止**无脚注同表（见 **`PHASE2_DRAFT.md` §3**、**`FIGURE_CAPTIONS_STAGE1.md`** **六轴**表）。
+**目的**：在 **真语料浅树**、`dim=128`、`fanout=2` 下，对 **`(num_leaves, chunk_len) ∈ {8,16}×{8,12}`**（默认 **四格**）跑 **TF / GRU / Mamba2 path reader** 的 **path-batch** 计时与 **`m2_peak`**，环境为 **3090 + fused `mamba_ssm`**。与 **5060 HF naive** 的 **`benchmark_wikitext_5060_cuda_*.json`** **分列对照**，**禁止**无脚注同表（见 **`PHASE2_DRAFT.md` §3**、**`FIGURE_CAPTIONS_STAGE1.md`** **七轴**表）。
 
 **一键（仓库根目录）**：
 

@@ -1,7 +1,8 @@
 # 阶段 1 成文稿（可直接迁入论文/技术报告）
 
 > **用途**：将阶段 1 **系统验证**整理为连续叙述；数字与路径以 **`EXPERIMENT_REGISTRY.md`** 与本文 **§5 归档索引** 为准。  
-> **勿与 §7 玩具协议混读**：path-batch 主结果与 S1–S4 **各列毫秒** 的物理含义不同，见 **`FIGURE_CAPTIONS_STAGE1.md`** 篇首与 **`RESEARCH_NOTES.md` §7.0**。**阶段 2**（5060 动机表、A2-S3 准确率）与 **Phase M1**（同树 DFS 上 SSGS vs 玩具 TF-KV）各为 **独立轴**，与主图纵轴 **不可混读**，见 **`FIGURE_CAPTIONS_STAGE1.md`** **「六条测量轴」** 与 **`RESEARCH_STATUS_AND_DIRECTION.md` §3**。
+> **全局阶段**：**0→结题** 分步、**阶段 5（成文）** 勾选清单见 **`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**。  
+> **勿与 §7 玩具协议混读**：path-batch 主结果与 S1–S4 **各列毫秒** 的物理含义不同，见 **`FIGURE_CAPTIONS_STAGE1.md`** 篇首与 **`RESEARCH_NOTES.md` §7.0**。**阶段 2**（5060 动机表、A2-S3 准确率）、**Phase M1**（同树 DFS）与 **L3 轨迹**（**`tf_kv_trajectory_l3_minimal`**）各为 **独立轴**，与主图纵轴 **不可混读**，见 **`FIGURE_CAPTIONS_STAGE1.md`** **「七条测量轴」** 与 **`RESEARCH_STATUS_AND_DIRECTION.md` §3**。
 
 ---
 
@@ -46,7 +47,7 @@
 
 **depth 扩展（登记 X-section7-depth-extension-v1）**：在 **`tree_depth_param ∈ {5,6}`**（路径 **6 / 7** 节点；与 **32 / 64 叶** 同深）上各跑 **S1–S4** 全套，**`STAMP=20260409T1341Z`**。**TF-KV** 末段 **`kv_cache_nbytes`** 在 **d5→d6** 上由 **约 96 KiB → 约 112 KiB** 量级抬升；**S1** **Mamba cache** **clone_nbytes** 仍 **约 41 KiB/段**（与 **depth=4** 归档同阶）。产出文件名曾因 shell **残留 `TAG`** 带 **`stage2_leavescale_xl_`** 前缀，**`manifest` 的 `kind=section7_s1_s4_depth_sweep`** 可据以识别；详见 **`EXPERIMENT_REGISTRY`** 该行脚注。此后脚本改用 **`SECTION7_TAG`**，见 **`docs/environment/runbooks/RUN_AUTOADL_SECTION7_NOW.md`**。
 
-**SSGS（State-Snapshot Guided Search）与 Mamba cache**：**`dfs_ssgs_mamba`** 在 **DFS 试错序** 下以 **token 步进** 驱动 **HF `Mamba2Model` + `DynamicCache`**，并用 **clone / zero_ / copy_** 做快照与回滚；**玩具树** 演示见 **X-20260421-ssgs-mamba-dfs-demo**。**同一文本 8 叶树** 上 **SSGS 必达** 与 **tiny-gpt2 子头贪心** 的并列指标见 **X-20260425**。**与 `benchmark_wikitext_tree` 同建树** 的 **Wikitext-2** 接线见 **`demo_ssgs_mamba_wikitext.py`**（登记 **X-20260407-ssgs-mamba-wikitext-tree**）：已归档 **`results/metrics_result/ssgs_mamba_wikitext_*.json`** 与汇总 **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **现 11 行**，含 **n∈{8,16,32,64}** 多 **STAMP** 与 **20260410** **`…_n8/n64_*_0845Z.json`**；**c8 dim128**、**目标最右叶**；**`snapshots_taken=n−1`**、**`leaf_checks=n`** **结构性自检**；**`rollbacks`** 随 n **上升**）。**本机** 另存轻量跑例 **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**c4 dim64**，登记 **X-20260410-local5060-ssgs-wikitext-n8-c4d64**），与 **`metrics_result` grid** **分列**。**禁止**与 **path-batch** 的 **wall-clock / m2_peak** 或 **§7 单列毫秒** **混为同一纵轴**；可与 **A-stage2-wikitext-leavescale**（同 **c8 dim128** 的 **效率曲线**）**并列叙述、分列子表**。可选续作：**n=128**、或 **`git pull` 后重跑一格** 以刷新 **`git_sha`** — **非**主文阻塞（**§10**）。
+**SSGS（State-Snapshot Guided Search）与 Mamba cache**：**`dfs_ssgs_mamba`** 在 **DFS 试错序** 下以 **token 步进** 驱动 **HF `Mamba2Model` + `DynamicCache`**，并用 **clone / zero_ / copy_** 做快照与回滚；**玩具树** 演示见 **X-20260421-ssgs-mamba-dfs-demo**。**同一文本 8 叶树** 上 **SSGS 必达** 与 **tiny-gpt2 子头贪心** 的并列指标见 **X-20260425**。**与 `benchmark_wikitext_tree` 同建树** 的 **Wikitext-2** 接线见 **`demo_ssgs_mamba_wikitext.py`**（登记 **X-20260407-ssgs-mamba-wikitext-tree**）：已归档 **`results/metrics_result/ssgs_mamba_wikitext_*.json`** 与汇总 **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **现 13 行**，含 **n128**、**n∈{8,16,32,64}** 多 **STAMP** 与 **20260410** **`…_n8/n64_*_0845Z.json`**；**c8 dim128**、**目标最右叶**；**`snapshots_taken=n−1`**、**`leaf_checks=n`** **结构性自检**；**`rollbacks`** 随 n **上升**）。**本机** 另存轻量跑例 **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**c4 dim64**，登记 **X-20260410-local5060-ssgs-wikitext-n8-c4d64**），与 **`metrics_result` grid** **分列**。**禁止**与 **path-batch** 的 **wall-clock / m2_peak** 或 **§7 单列毫秒** **混为同一纵轴**；可与 **A-stage2-wikitext-leavescale**（同 **c8 dim128** 的 **效率曲线**）**并列叙述、分列子表**。可选续作：**n=128**、或 **`git pull` 后重跑一格** 以刷新 **`git_sha`** — **非**主文阻塞（**§10**）。
 
 ---
 
@@ -80,7 +81,7 @@
 
 ### 5.1 成文核对（本仓库路径；**2026-04-10 投稿版对齐**）
 
-以下与 **`results/metrics_result/`** 内 **实际 basename** 对齐（投稿前若重跑数据，以 **JSON/`git_sha`** 为准再扫一遍）。**完整核对表**见 **`docs/overview/execution/SUBMISSION_PACK.md` §A2**。
+以下与 **`results/metrics_result/`** 内 **实际 basename** 对齐（投稿前若重跑数据，以 **JSON/`git_sha`** 为准再扫一遍）。**完整核对表**见 **`docs/overview/execution/SUBMISSION_PACK.md` §A2**。**2026-04 服务器批次 STAMP / 登记行对照**：**`docs/experiments/planning/DATA_ARCHIVE_202604_SERVER.md`**。
 
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
@@ -91,14 +92,16 @@
 | **阶段 2 path-batch 归档** | **齐** | **A2-S2** **`benchmark_wikitext_stage2_fused_20260409T1035Z_*`** + grid/manifest；**R2** **`…_fused_r2_20260409T1110Z_*`**；**dim256** **`…_dim256_20260409T1137Z_*`** 与 **`…_dim256_20260410T0847Z_*`**（**minimal**）+ 各 **grid/manifest**；**leavescale / XL / §7 depth** 见 **§5** 表与 **登记册** |
 | **A2-S3 init×5** | **齐** | **`task_wikitext_sibling{16,32}_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json`**；复跑 **`…_sibling16_*_20260410T0820Z.json`**、**`…_sibling32_*_20260410T0850Z.json`**；贴表 **`…_initseed5_summary_20260410T{0820,0850}Z.tsv`** |
 | **A2-S3 本机 stratified（n8）** | **齐** | **`results/metrics/task_wikitext_sibling8_local5060_cpu_20260410.json`**（**`metrics/`**，**非** **`metrics_result/`**；**X-20260410-local5060-a2s3-n8-strat**） |
-| **SSGS Wikitext** | **齐** | **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **11 行** 量级）+ **`ssgs_mamba_wikitext_*.json`**；辅 **`benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`**（path-batch **同树** smoke，**与 SSGS 分列**） |
-| **M1（SSGS vs TF-KV DFS）** | **齐** | **`ssgs_vs_kv_wikitext_nav_grid.csv`**（通配 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**，**9 行** 量级）+ 多 **STAMP** JSON；登记 **X-ssgs-vs-kv-tree-nav-m1**；**`FIGURE_CAPTIONS_STAGE1.md`** **第六轴** |
+| **SSGS Wikitext** | **齐** | **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **13 行** 量级）+ **`ssgs_mamba_wikitext_*.json`**（含 **n128 `20260410T1238Z`**）；辅 **`benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`**（path-batch **同树** smoke，**与 SSGS 分列**） |
+| **M1（SSGS vs TF-KV DFS）** | **齐** | **`ssgs_vs_kv_wikitext_nav_grid.csv`**（通配 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**，**15 行** 量级）+ 多 **STAMP** JSON；登记 **X-ssgs-vs-kv-tree-nav-m1**；**`FIGURE_CAPTIONS_STAGE1.md`** **M1 轴** |
+| **L3 轨迹甲·乙（玩具 TF-KV）** | **齐** | **`results/metrics_result/tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`**（**`cosine`≈1** 两臂）；**`benchmark_tf_kv_trajectory_l3_minimal.py`**；登记 **X-20260411-tf-kv-trajectory-l3-minimal**；**`pytest tests/test_tf_kv_trajectory_l3.py`**；与 **M1**、**path-batch** **分列** |
 | **SSGS 本机小格（辅）** | **齐** | **`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`**（**X-20260410-local5060-ssgs-wikitext-n8-c4d64**） |
 | **B-S2+ 本机 5060** | **齐** | **`results/metrics/probe_path_reader_linear_*_local5060.json`**（**X-20260407-local5060-bs2plus-rerun** 等） |
+| **B-S2+ 3090 CUDA** | **齐** | **`results/metrics_result/probe_path_reader_linear_text16_heldout_train50_cuda_20260410T1302Z.json`**；登记 **X-20260410-probe-path-reader-bs2plus-cuda-3090**（与 **5060 CPU** **分列**） |
 
-**脚注（聚合 CSV）**：若 **`ssgs_mamba_wikitext_grid.csv`** 等含 **`json_path`** 列为 **服务器绝对路径**，正文只写 **JSON basename**（与 **`SUBMISSION_PACK` §A2** 一致）。
+**脚注（聚合 CSV）**：在仓库根运行 **`aggregate_ssgs_*`** 时，**`json_path`** 列为 **`results/metrics_result/…`（POSIX 相对路径）**；正文可写 **basename** 或 **相对路径**（与 **`SUBMISSION_PACK` §A2** 一致）。若见历史 **`/root/…`** 或 **`D:\…`** 列，请 **重跑聚合** 以统一。
 
-**多类数字分列脚注（正文须显式）**：**①** **5060 + HF naive** 与 **②** **3090 + fused** **不可同表无标注混点**；**③** **path-batch 墙钟/m2_peak**、**④** **§7 单列毫秒**、**⑤** **SSGS 快照/回滚计数**、**⑥** **M1 三臂 DFS（SSGS vs 玩具 TF-KV）**、**⑦** **A2-S3 准确率** **各为独立测量轴**（**`FIGURE_CAPTIONS_STAGE1.md`** **六轴表**）。**§7.5 S5**「同轨迹总表」仍为 **可选**，视截稿篇幅（**§10** 第 4 条）。
+**多类数字分列脚注（正文须显式）**：**5060 naive** 与 **3090 fused**、**path-batch**、**§7**、**SSGS**、**M1**、**L3 轨迹**、**A2-S3**、**真 LM 线** **各为独立测量轴**（**`FIGURE_CAPTIONS_STAGE1.md`** **七轴表**）。**§7.5 S5**「同轨迹总表」仍为 **可选**，视截稿篇幅（**§10** 第 4 条）。
 
 ---
 
@@ -174,24 +177,28 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 
 在 **`probe_path_reader_linear.py`** 默认设定下（**STEM / 生活** 各 **n/2** 句叶模板，**`leaf_split=heldout`**，**ridge** 作用于 **未训练** reader 的 **池化向量**），本仓归档：**`results/metrics/probe_path_reader_linear_text8_heldout_local5060.json`**、**`…_text16_heldout_local5060.json`**（**`git_sha`** 以文件内为准）。**`ridge_untrained.*.test_acc`（test）** 摘要：**8 叶** — Transformer **0.5**，GRU **0.25**，Mamba2 **1.0**；**16 叶** — Transformer **1.0**，GRU **0.75**，Mamba2 **1.0**（同 JSON 内 **baseline_raw_mean_pool** 在 **16 叶** 上亦为 **1.0**，表明该 **合成标签 + 确定性叶嵌入** 下 **线性可分性极强**，数值 **不宜外推** 为「真实检索难度」）。
 
-**与 §8.2（Wikitext A2-S3）的关系**：此处为 **path-batch 同型 reader** 上的 **合成 topic 探针**；**A2-S3** 为 **Wikitext 叶块 + 叶对 cohort**。二者 **非同一任务**，正文须 **分列**。**下一步（可选）**：**3090 CUDA** 上同脚本 **去 `--cpu`** 得 **与 5060 CPU 分列** 的一行 JSON；见 **`NEXT_EXPERIMENTS_COMMANDS.md` §6**、**`LOCAL_5060_RUNBOOK.md`**。
+**与 §8.2（Wikitext A2-S3）的关系**：此处为 **path-batch 同型 reader** 上的 **合成 topic 探针**；**A2-S3** 为 **Wikitext 叶块 + 叶对 cohort**。二者 **非同一任务**，正文须 **分列**。**3090 CUDA** 同脚本归档见 **`probe_path_reader_linear_text16_heldout_train50_cuda_20260410T1302Z.json`**（登记 **X-20260410-probe-path-reader-bs2plus-cuda-3090**）；与 **5060 CPU** **分列**。
+
+### 9.2 状态快照 / 回溯叙事的三条硬风险（与 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5** 一致）
+
+正文若写 **SSGS**、**§7 restore**、**M1 / L3 轨迹** 等 **动机句**，须在 **讨论或局限** 中显式承认：（1）**SSM 隐状态为有损压缩**，长序列下细节可失，**快照 ≠ 无损存档**；（2）**回退触发** 在本仓主线多为 **规则 DFS**，**可学习策略 / RL** 未作为主文承诺；（3）**频繁 CPU↔GPU 状态搬运** 可能抵消渐近意义上的理论优势，**大规模树** 须单独测量。—— **不**因外部「Agent / 投资」修辞而省略。
 
 ---
 
 ## 10 下一阶段与文档指针
 
-**本版成文**：**§8.4** 与 **§5** 已收口 **A2-S2 / dim256 / 叶数 8–256 / §7 depth 5–6**；**A2-S3** **3090** **`init_seed`×5**（**n16/n32**、**H=6**）JSON 含 **`1438Z`** 与 **复跑 `0820Z`/`0850Z`**，**TSV 摘要** 已入 **`results/metrics_result/`**，登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**。**dim256** 增补 **`0847Z` minimal**；**SSGS** **`ssgs_mamba_wikitext_grid.csv`** **11 行**（**`EXPERIMENT_REGISTRY` X-20260407**）。
+**本版成文**：**§8.4** 与 **§5** 已收口 **A2-S2 / dim256 / 叶数 8–256 / §7 depth 5–6**；**A2-S3** **3090** **`init_seed`×5**（**n16/n32**、**H=6**）JSON 含 **`1438Z`** 与 **复跑 `0820Z`/`0850Z`**，**TSV 摘要** 已入 **`results/metrics_result/`**，登记 **A-stage2-wikitext-path-pair-initseed5-3090-v1**。**dim256** 增补 **`0847Z` minimal**；**SSGS** **`ssgs_mamba_wikitext_grid.csv`** **13 行**（**`EXPERIMENT_REGISTRY` X-20260407**）。
 
 **主线是否继续？** — **系统主线**（path-batch **效率**、真语料 **Wikitext 扫参**、**§7 玩具协议**、**A2-S3 任务 proxy**）在 **登记级材料** 上 **已闭环**；**不是**弃题，而是 **不必为同一故事无限加格点**。后续工时优先 **把已有数字写进论文/报告**（主文+附录+脚注），其次才是 **可选实验**。
 
 **下一步（按优先级；与 `docs/overview/execution/NEXT_RESEARCH_PLAN.md` 默认里程碑一致）**：
 
-1. **成文整合（主线收尾；与 P1/P2 可交错）**：以 **`docs/overview/execution/SUBMISSION_PACK.md` §A2–A2.1** 为 **文件名真相源**，将 **`PHASE1_MANUSCRIPT` §8**、**`EXPERIMENT_REGISTRY.md`**、**`results/metrics_result/`** 与 **LaTeX/Word** **逐字对齐**（含 **六轴图注**（**M1**）、**5060 vs 3090** 分列、**`json_path` basename 脚注**）。
-2. **可选机制线 B**：**本机 5060 CPU** 已归档 **B-S2+**（**§9.1**，**X-20260407-local5060-bs2plus-rerun**）。**3090 可用时**：**1 条** **B-S2+ CUDA** JSON（**`probe_path_reader_linear.py`** 去 **`--cpu`**），**新开登记行**；**非**主线阻塞；**`RETRIEVAL_HEAD_NOTES.md`**、**`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §6**。附录需要时可补 **`probe_retrieval_correlation.py --cpu`**（**`NEXT_RESEARCH_PLAN`** **备选推进 §B**）。
+1. **成文整合（阶段 5）**：以 **`SUBMISSION_PACK.md` §A2–A2.1** 为 **文件名真相源**，将 **`PHASE1_MANUSCRIPT` §8–§9**、**`EXPERIMENT_REGISTRY.md`**、**`results/metrics_result/`** 与 **LaTeX/Word** **逐字对齐**（含 **七轴图注**（**M1** + **L3 轨迹**）、**5060 vs 3090** 分列、**`json_path` basename 脚注**）；勾选 **`RESEARCH_PHASES_0_TO_DONE.md` 阶段 5**。
+2. **可选机制线 B**：**本机 5060 CPU** 已归档 **B-S2+**（**§9.1**）；**3090 CUDA** 已归档 **B-S2+**（**`probe_path_reader…cuda_20260410T1302Z.json`**，登记 **X-20260410-probe-path-reader-bs2plus-cuda-3090**）。**加分项**：**B-S3**（更大窗口）仍 **非** 主线阻塞；**`RETRIEVAL_HEAD_NOTES.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md` §6**。附录需要时可补 **`probe_retrieval_correlation.py --cpu`**（**`NEXT_RESEARCH_PLAN`** **备选推进 §B**）。
 3. **A2-S3 可选加压**：更大 **`heldout-leaves`**、**`root_child`**、**stratified + `split-seed`** — 与 **init×5** **分列** 说明。  
 4. **Polish**：**S5 总表**（**`RESEARCH_NOTES` §7**）、主图入仓、平面 RAG smoke。  
-5. **SSGS（辅线，非阻塞）**：**Wikitext 同树** 已归档 **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **11 行**，**n8–64** 多 **STAMP**，登记 **X-20260407-ssgs-mamba-wikitext-tree**）。可选：**n=128**、**`git pull` 后** 重跑 **一格** 刷新 **`git_sha`**；玩具树 **X-20260421**、LM 并列 **X-20260425** 仍足 **附录** 基线。  
-6. **总览**：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**、**`docs/overview/execution/NEXT_RESEARCH_PLAN.md`**（**「当前收口清单」**）；**投稿包**：**`docs/overview/execution/SUBMISSION_PACK.md`**（**A1–A4**）；手册：**`docs/environment/runbooks/SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**（**§11 本机 5060**）、**`LOCAL_5060_RUNBOOK.md`**、**`RUN_AUTOADL_SECTION7_NOW.md`**；草稿：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**（同目录 **`phases/`**）。
+5. **SSGS（辅线，非阻塞）**：**Wikitext 同树** 已归档 **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **13 行**，含 **n128** 与 **n8–64** 多 **STAMP**，登记 **X-20260407-ssgs-mamba-wikitext-tree**）。可选：**`git pull` 后** 重跑 **一格** 刷新 **`git_sha`**；玩具树 **X-20260421**、LM 并列 **X-20260425** 仍足 **附录** 基线。  
+6. **总览**：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**、**`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**（**阶段 5 清单**）、**`docs/overview/execution/NEXT_RESEARCH_PLAN.md`**（**「当前收口清单」**）；**投稿包**：**`docs/overview/execution/SUBMISSION_PACK.md`**（**A1–A4**）；手册：**`docs/environment/runbooks/SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**（**§11 本机 5060**）、**`LOCAL_5060_RUNBOOK.md`**、**`RUN_AUTOADL_SECTION7_NOW.md`**；草稿：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**（同目录 **`phases/`**）。
 
 ---
 
@@ -226,11 +233,16 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-07 | **§9.1**：**5060 CPU B-S2+** 成文 + **§7** 英摘一句；**§10** 第 2 条更新（CPU 已归档） |
 | 2026-04-10 | **§5**：**5060 CUDA** Wikitext **n8 c8** smoke（**`benchmark_wikitext_local5060_cuda_*_n8_c8.json`**）；登记 **X-20260410-benchmark-wikitext-local5060-cuda-n8c8** |
 | 2026-04-10 | **§4 / §5 / §5.1 / §8.2**：本机 **5060 CPU** **A2-S3 n8 stratified** + **SSGS c4 d64** 跑例入表；登记 **X-20260410-local5060-a2s3-n8-strat**、**X-20260410-local5060-ssgs-wikitext-n8-c4d64** |
-| 2026-04-10 | **§4 / §5 / §8.2 / §8.3 / §10**：**3090** **A2-S3** 复跑 **0820Z/0850Z** + **TSV**；**dim256** **`0847Z` minimal**；**SSGS grid 11 行**；**§8.2** 补 **A2-S3 研究含义**（与墙钟 **分列** 的 **表征可读性 proxy**） |
+| 2026-04-10 | **§4 / §5 / §8.2 / §8.3 / §10**：**3090** **A2-S3** 复跑 **0820Z/0850Z** + **TSV**；**dim256** **`0847Z` minimal**；**SSGS grid** 后扩至 **13 行**；**§8.2** 补 **A2-S3 研究含义**（与墙钟 **分列** 的 **表征可读性 proxy**） |
 | 2026-04-10 | **§5**：本机 **B-S2+ train50**（**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**）、**Wikitext CPU smoke**（**`benchmark_wikitext_local5060_cpu_*_n8_c8.json`**）；登记 **X-20260410-local5060-bs2plus-train50-n16**、**X-20260410-local5060-wikitext-cpu-n8c8** |
-| 2026-04-10 | **§10 指针**：**`NEXT_RESEARCH_PLAN.md`** 增 **「项目现状快照」**、**「后续方向」**；本机 **5060** 轨道 **无阻塞项**；全量 **`pytest tests/`** **20** passed |
+| 2026-04-10 | **§10 指针**：**`NEXT_RESEARCH_PLAN.md`** 增 **「项目现状快照」**、**「后续方向」**；本机 **5060** 轨道 **无阻塞项**；全量 **`pytest tests/`** **约 21** passed（以 torch 环境计数为准） |
 | 2026-04-10 | **§10**：**「下一步」** 与 **`NEXT_RESEARCH_PLAN`** 默认里程碑对齐；**算力紧张时** 以 **P0 成文** 为第一优先 |
 | 2026-04-10 | **§10**：**`docs/overview/execution/SUBMISSION_PACK.md`**（**A1–A4** 投稿叙事与脚注草稿） |
 | 2026-04-10 | **`SUBMISSION_PACK`**：**§A1b** 摘要草稿；**§A2** 与 **`metrics_result`** 路径扫描对齐 |
 | 2026-04-10 | **`SUBMISSION_PACK` A5–A7**：正文骨架、结果模板、本机实验 **高性价比/搁置** |
-| 2026-04-11 | **§5.1** 增 **M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**；篇首/§6/§7/脚注 **五→六轴**（**Phase M1**）；**§10** 成文整合 **六轴** |
+| 2026-04-11 | **§5.1** 增 **M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**；篇首/§6/§7/脚注 **五→六→七轴**（**Phase M1** + **L3 轨迹**）；**§10** 成文整合 **七轴** |
+| 2026-04-11 | **§5.1**：**`DATA_ARCHIVE_202604_SERVER.md`** 指针；**SSGS grid 13 行**、**B-S2+ 3090** 行；**聚合 `json_path`** 脚注（**相对仓 POSIX**） |
+| 2026-04-11 | **篇首 / §5.1 / §10**：**七轴**（**L3 轨迹**）；**阶段 C** **`tf_kv_trajectory_l3_minimal`** 核对行 |
+| 2026-04-11 | **§5.1**：**L3 轨迹 CUDA** **`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`** 入仓核对 |
+| 2026-04-11 | 篇首/§10：**`RESEARCH_PHASES_0_TO_DONE.md`** 指针；§10 **B-S2+ CUDA** 已归档叙事 |
+| 2026-04-11 | **§9.1** 补 **3090 B-S2+** 归档句；新增 **§9.2** 快照回溯 **三风险**（对齐 **§3.5**） |

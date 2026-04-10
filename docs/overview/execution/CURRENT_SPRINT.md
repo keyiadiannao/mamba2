@@ -1,23 +1,26 @@
 # 当前迭代（滚动）
 
 > **方向与现状总览**（读后再勾选）：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**（含 **§3.5 对外叙事批判性接收、L1–L4 证据层级、P★ L3 PoC**）。  
+> **全局阶段表**（**0→结题**、每阶段实验+成功标准）：**`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**。**当前逻辑阶段**：**阶段 5 — 成文与投稿包**（阶段 0–4 已满足表内「完成」列）。  
 > 每 1–2 周更新一次「周期」与勾选；完成后把结论一行写入 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`**。
 
 ## 周期
 
 **开始**：2026-04-07  
-**当前滚动至**：**2026-04-10** 起 — **AutoDL / 3090 已可用**；**默认并行**：**P0 成文** 与 **P1（B-S2+ CUDA）/ P2（SSGS sha·n128）** 可交错排期（详见 **`NEXT_RESEARCH_PLAN.md`** **§2** + **「后续方向」**）。**P★（L3 PoC）** **不纳入** 本周期必做。
+**当前滚动至**：**2026-04-11** — **3090 批次已归档**（**`DATA_ARCHIVE_202604_SERVER.md`**）：**M1**、**SSGS**、**leavescale**、**headcheck**、**B-S2+ CUDA**、**L3 轨迹 JSON**。**执行焦点**：按 **`RESEARCH_PHASES_0_TO_DONE.md` §「阶段 5 检查清单」** 推进 **`SUBMISSION_PACK`** → 正稿；**P★ 训练型 L3** 仍 **非必做**（**`RESEARCH_STATUS` §3.5**）。
 
 ---
 
-## 本周期焦点（**P0 ∥ P1/P2**）
+## 本周期焦点（**阶段 5 = P0 成文**）
 
 | 优先级 | 动作 |
 |--------|------|
-| **1** | **成文**：按 **`SUBMISSION_PACK.md`**（**A1–A4**）推进；再全表核对 **`PHASE1_MANUSCRIPT` §5.1** |
-| **2** | **3090 登记项**：**P1** B-S2+ CUDA、**P2** SSGS（见 **`NEXT_RESEARCH_PLAN` §2** 与 **`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`**） |
-| **3** | **（可选）** **`probe_retrieval_correlation.py --cpu`** 或 **§7 CPU 玩具** — 仅附录需要时，见 **`NEXT_RESEARCH_PLAN`** **「算力不可用时的备选推进」§B** |
-| **4** | **`pytest tests/`** 提交前 **smoke** |
+| **1** | **阶段 5**：**`SUBMISSION_PACK.md` §A2** 路径与 **`EXPERIMENT_REGISTRY`** / **`DATA_ARCHIVE_202604_SERVER.md` §0** **逐字对齐** |
+| **2** | **阶段 5**：**§A3** + **`FIGURE_CAPTIONS_STAGE1.md`** — **七轴** 脚注句 **粘贴进正稿**（或 **`PHASE1_MANUSCRIPT`** 对应节） |
+| **3** | **阶段 5**：摘要/讨论/局限 与 **`RESEARCH_STATUS` §3.5** 一致（结论 **≤ L1–L3**） |
+| **4** | ~~**3090 登记项**~~ **（已完成）**：**P1** B-S2+ CUDA、**P2** SSGS **n128** 等；见 **`DATA_ARCHIVE_202604_SERVER.md`**、**`NEXT_RESEARCH_PLAN` §2** |
+| **5** | **（可选）** **`probe_retrieval_correlation.py --cpu`** / **§7 CPU** — 仅附录需要；**`NEXT_RESEARCH_PLAN` §B** |
+| **6** | **`pytest tests/`**（或快测）提交前 **smoke** |
 
 ---
 
@@ -84,7 +87,7 @@
 - [x] **A2-S3 任务 smoke 扩展**：**`task_wikitext_path_pair.py`** — **`task_wikitext_path_pair_sibling16_cpu.json`**、**`task_wikitext_path_pair_rootchild16_cpu.json`**（**CPU**，`split_seed=1`）；总览 **RESEARCH_STATUS** §3 测量轴、**`PHASE2_DRAFT.md`** §2。  
 - [x] **A2-S3 叶级 heldout**：**`--pair-split leaf_heldout --heldout-leaves 4`**（16 叶 sibling）→ **`task_wikitext_sibling16_leafheldout4_{cpu,cuda5060}.json`**；见 **`PHASE2_DRAFT.md`**（小 **test** 叶对数、CPU/CUDA ridge 波动）。  
 - [x] **本地收尾**：**`path_pair_geometry.py`** + **`tests/test_path_pair_geometry.py`**；**`aggregate_wikitext_5060_cuda_grid.py`** → **`benchmark_wikitext_5060_cuda_grid_20260407.csv`**；**A2-S3** **`chunk_len=12`** **`…_c12_leafheldout6_*.json`**；**`PHASE1_MANUSCRIPT` §3.1**。  
-- [x] **P1 成文并入主稿**：**`PHASE1_MANUSCRIPT.md` §8–§10**（阶段 2 系统+A2-S3、检索头/Mamba 边界、文档指针）；**`FIGURE_CAPTIONS_STAGE1.md`** **六条测量轴**表（含 **M1**）；**`PHASE2_DRAFT.md`** 顶注指向主稿。  
+- [x] **P1 成文并入主稿**：**`PHASE1_MANUSCRIPT.md` §8–§10**（阶段 2 系统+A2-S3、检索头/Mamba 边界、文档指针）；**`FIGURE_CAPTIONS_STAGE1.md`** **七条测量轴**表（含 **M1**、**L3 轨迹**）；**`PHASE2_DRAFT.md`** 顶注指向主稿。  
 - [x] **仓库梳理（代码/文档）**：**`src/rag_tree/__init__.py`** 惰性导出（**`test_path_pair_geometry`** 可不加载 **torch**）；根目录 **`pytest.ini`**；**`PHASE1_MANUSCRIPT` §5** 主图路径改为 **`results/metrics/figures/`**；**`scripts/README.md`** 补 **aggregate** / **task_wikitext**；**`docs/README.md`** 补 **PHASE2_DRAFT** 链；根 **`README.md`** 单测分层说明。  
 - [ ] **脚本卫生**：Linux 上若再遇 **`bash\r`**，对 **`scripts/**/*.sh`** 执行 **`find scripts -name '*.sh' -print0 | xargs -0 sed -i 's/\r$//'`**（见 **`SH_CRLF_LINUX.md`**）。
 - [x] **A2-S2 第二轮（3090 fused）**：**`TAG=stage2_fused_r2`** **`STAMP=20260409T1110Z`**；**Mamba2 峰值与 R1 一致**；**`git_sha` JSON 内仍为 `6fa7873`**；归档 **`metrics_result/benchmark_wikitext_stage2_fused_r2_*`**；登记 **A-stage2** 已更新。
@@ -112,9 +115,18 @@
 
 ---
 
+## 阶段 5 检查清单（与 **`RESEARCH_PHASES_0_TO_DONE.md`** 同步）
+
+- [ ] **§A2** basename ↔ 登记册  
+- [ ] **§A3** 七轴脚注入稿  
+- [ ] **局限段** 含 §3.5 三风险（有损状态 / 回退触发 / H2D）  
+- [ ] **`git status`** + **pytest**（或聚合单测）  
+
+---
+
 ## 阻塞项
 
-- **AutoDL / 3090**：**实例当前可用**（**2026-04**）；**P1/P2** 按 **`NEXT_RESEARCH_PLAN` §2** 与 **`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`** 执行即可。若再次断档，改回 **「算力不可用时的备选推进」**（**`NEXT_RESEARCH_PLAN`**）并 **更新本行日期**。
+- **AutoDL / 3090**：**实例当前可用**（**2026-04**）；**原 P1/P2** 已归档。**新跑次** 按 **`NEXT_EXPERIMENTS_COMMANDS.md`**；若断档，改 **「算力不可用时的备选推进」**（**`NEXT_RESEARCH_PLAN`**）并 **更新本行日期**。
 - **云端算力（常设）**：**按需开机**；主环境 **`conda activate mamba2`** 下 fused 已验证。**检索头训练**等仍受机时与预算约束。
 - **仅本机 5060 时**：无法复现 3090 fused 数字；以登记册与图为准，不混填表格。
 
@@ -124,7 +136,7 @@
 
 | 优先级 | 方向 | 可执行项 |
 |--------|------|----------|
-| P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 对齐；**`docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`docs/experiments/phases/FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 作 **口径护栏**；**`docs/experiments/phases/PHASE1_MANUSCRIPT.md`** 已含 **阶段 2 §8–§10** 与 **六轴**（含 **M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**）交叉引用；**`SUBMISSION_PACK.md` §A3–A2.1** **粘贴进正稿**（截稿前仍可润色） |
+| P0 | **主线：阶段 1 成文素材** | 主图/CSV 与 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 对齐；**`docs/experiments/planning/PHASE1_VALIDATION_PLAN.md`** 结论段定稿；**`docs/experiments/phases/FIGURE_CAPTIONS_STAGE1.md`** / **§7.0** 作 **口径护栏**；**`docs/experiments/phases/PHASE1_MANUSCRIPT.md`** 已含 **阶段 2 §8–§10** 与 **七轴**（含 **M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**）交叉引用；**`SUBMISSION_PACK.md` §A3–A2.1** **粘贴进正稿**（截稿前仍可润色） |
 | P0 | **真实语料线（云端）** | （已完成）3090 + `HF_ENDPOINT`；**A-20260408-wikitext-3090-fused** — 主线引用时标明 **与合成树同一 harness** |
 | P1 | **主线：§7 协议** | **复跑已通过**（见 sprint §7 勾选 + **`PHASE1_COMPLETE_SUMMARY` 附录 B**）；正文仍须与主图 **分列声明**（§7.3.1） |
 | P1 | **SSGS（协议层）** | **X-20260421-*** 张量 + **`dfs_ssgs_mamba`** demo；**不等于** 真 LM 导航线 |
@@ -150,3 +162,5 @@
 
 - 环境 `mamba2`、cu128、玩具树基准、本地 preset 扫参 8 点 CSV。
 - **2026-04-08**：3090 `paper_main_v1` / `paper_main_naive_v1` 成对数据与同机三张 `mamba_3090_naive_vs_fused_*.png`（见 `EXPERIMENT_REGISTRY`）。
+- **2026-04-11**：**`DATA_ARCHIVE_202604_SERVER.md`** 入仓；**M1 / SSGS / leavescale / B-S2+ CUDA** 路径与 **CSV `json_path`（相对仓）** 对齐；**聚合脚本** 在 JSON 位于 **`cwd`** 下时写 **POSIX 相对路径**。
+- **2026-04-11**：**阶段 C** **L3 轨迹** **`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`** 入 **`metrics_result/`**；登记 **X-20260411-tf-kv-trajectory-l3-minimal** 补数值行。

@@ -1,0 +1,12 @@
+kind=wikitext_fused_leavescale
+tag=stage2_leavescale
+stamp=20260410T1240Z
+chunk_len=8 dim=128 fanout=2 chars_per_leaf=600
+leaves=8 16 32 64
+warmup=2 reps=8
+utc=2026-04-10T12:40:36Z
+git_sha=6fa78733cf6b75d2f9a492c73c65503bedba5b2a
+HF_ENDPOINT=https://hf-mirror.com
+torch 2.11.0+cu126 cuda True
+mamba_ssm True
+NVIDIA GeForce RTX 3090, 580.105.08, 49152 MiB

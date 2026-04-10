@@ -1,8 +1,8 @@
 # 下一阶段：记录模板 + 运行指令
 
-> **用途**：**A2-S2（dim128）** 与 **叶数 / dim256 / §7 depth** 已归档后，优先跑 **A2-S3 多种子**（轻负载），可选 **机制探针 B-S2+**。  
+> **用途**：**A2-S2（dim128）** 与 **叶数 / dim256 / §7 depth** 已归档后，优先跑 **A2-S3 多种子**（轻负载），可选 **机制探针 B-S2+**。按证据层级在服务器推进时，先看 **§0.5**（**L1–L4** 与块 **A–F**）。  
 > **登记**：每次新网格 **新开 `EXPERIMENT_REGISTRY` 行**（勿与 **`A-stage2-wikitext-grid-v1`** 无说明合并）。  
-> **公平性**：**5060 naive** 与 **3090 fused**、**dim128** 与 **dim256** 均须 **分列 + 脚注**（见 **`RESEARCH_STATUS` §6**、**`FIGURE_CAPTIONS`** **六轴**）。
+> **公平性**：**5060 naive** 与 **3090 fused**、**dim128** 与 **dim256** 均须 **分列 + 脚注**（见 **`RESEARCH_STATUS` §6**、**`FIGURE_CAPTIONS`** **七轴**）。
 
 ---
 
@@ -42,6 +42,96 @@ mkdir -p "$MAMBA2_RESULTS_ROOT/metrics_result" "$MAMBA2_RESULTS_ROOT/metrics"
 ```
 
 （Conda 若在 **`/root/anaconda3`**，请改 **`source`** 路径或 **`export CONDA_SH=/root/anaconda3/etc/profile.d/conda.sh`** 后再跑 **`bootstrap_autodl.sh`**；代码若不在 **`/root/autodl-tmp/mamba2`**，**`export MAMBA2_REPO_ROOT=...`**。）
+
+---
+
+## 0.5 按研究证据层级（**L1–L4**）· 服务器推荐序
+
+> **层级定义与边界**：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §3.5**（**L3** 当前 harness 为 **toy TF-KV + 固定叶头 CE**，**≠** 全量 LM / 可训子头；**L4** 本文不列可跑块）。  
+> **跑后**：把 **`$MAMBA2_RESULTS_ROOT`** 下 **JSON** 拷入仓库 **`results/metrics_result/`**（或 **`results/metrics/`**），本机再跑对应 **`aggregate_*.py`**，**`EXPERIMENT_REGISTRY`** 新开行；云路径 **`/root/...`** 勿当仓库真值写进 **CSV**。
+
+| 层级 | 推进目标（摘要） | 服务器动作（先 **§0** `bootstrap`） |
+|------|------------------|-------------------------------------|
+| **L1** | 结构正确、**`git_sha`** 对齐 | **下面块 A**（与 **§1** 同义） |
+| **L2** | 容量 / 成本：同树 **SSGS vs TF-KV**、**path-batch**、辅线 **SSGS 叶扩** | **块 B**（M1 **n64**）、**块 C**（**§4** 叶扫脚本）、**块 D**（SSGS **n128**） |
+| **L3** | 机制探针（**最小**）：隐状态 / 下游 CE | **块 E**（M1 **`M1_WITH_L3_*`**）；**B-S2+ CUDA** 见 **块 F** |
+| **L4** | 训练闭环等 | 见 **`RESEARCH_STATUS` §3.5**，暂无与本仓库 **§4** 同级的单脚本块 |
+
+**块 A — L1：`HEAD` 单格 smoke**
+
+```bash
+cd /root/autodl-tmp/mamba2
+git pull origin master && bash scripts/server/bootstrap_autodl.sh
+
+STAMP=$(date -u +%Y%m%dT%H%MZ)
+python scripts/benchmarks/benchmark_wikitext_tree.py \
+  --num-leaves 8 --fanout 2 --chunk-len 8 --dim 128 \
+  --warmup 2 --reps 8 \
+  --out-json "$MAMBA2_RESULTS_ROOT/metrics_result/benchmark_wikitext_headcheck_${STAMP}_n8_c8.json"
+```
+
+**块 B — L2：M1 扩到 **64 叶**（**fanout=2** 合法）**
+
+```bash
+cd /root/autodl-tmp/mamba2
+M1_LEAVES="64" bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+# 与已有 CSV 合并行：AGGREGATE_APPEND=1
+```
+
+**块 C — L2：path-batch 叶数扫描**（与 **§4** 一致）
+
+```bash
+cd /root/autodl-tmp/mamba2
+export TAG=stage2_leavescale
+unset STAMP
+./scripts/benchmarks/run_server_wikitext_leavescale.sh
+```
+
+**块 D — L2 辅线：SSGS **n128**（**c8 dim128**）+ 汇总**
+
+```bash
+cd /root/autodl-tmp/mamba2
+EXTRA_LEAVES="128" AGGREGATE_APPEND=1 bash scripts/server/run_ssgs_mamba_wikitext_cuda.sh
+```
+
+**块 E — L3（最小）：M1 + 隐状态 / 下游 CE**（JSON 变大；可先 **n8** 或 **n64** 单点）
+
+```bash
+cd /root/autodl-tmp/mamba2
+# 隐状态（每步 trunk 状态 vs 金路径）
+M1_LEAVES="8" M1_WITH_L3=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+# 或：下游固定叶头 CE（与「树 LM 可学习头」分列叙述，见 **`RESEARCH_STATUS` §3.5**）
+M1_LEAVES="8 16 32 64" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh
+```
+
+**块 F — L3 辅线：B-S2+ **CUDA**（与 **`LOCAL_5060_RUNBOOK`** CPU 分列）**
+
+```bash
+cd /root/autodl-tmp/mamba2
+STAMP=$(date -u +%Y%m%dT%H%MZ)
+# 建议写入 **metrics_result**，与 M1 / path-batch 同目录，避免只同步 **metrics_result/** 时漏拷 **metrics/**
+OUT="$MAMBA2_RESULTS_ROOT/metrics_result/probe_path_reader_linear_text16_heldout_train50_cuda_${STAMP}.json"
+mkdir -p "$(dirname "$OUT")"
+# 去掉 --cpu → 有 CUDA 时走 GPU（与 **`probe_path_reader_linear.py`** 默认一致）
+python scripts/research/probe_path_reader_linear.py \
+  --n-leaves 16 --leaf-split heldout --train-steps 50 --train-lr 3e-3 \
+  --out-json "$OUT"
+echo "wrote $OUT"
+```
+
+（**常见失误**：只复制 **`python … --out-json "$OUT"`** 而未在同一 shell 先执行 **`STAMP=…`** 与 **`OUT=…`**，会得到 **`probe_…_cuda_.json`**。）
+
+**块 G — 阶段 C：L3 轨迹甲·乙（**`tf_kv_trajectory_l3_minimal`**；**≠ M1**、**≠ path-batch**）**
+
+```bash
+cd /root/autodl-tmp/mamba2
+STAMP=$(date -u +%Y%m%dT%H%MZ)
+python scripts/research/benchmark_tf_kv_trajectory_l3_minimal.py \
+  --device cuda \
+  --out-json "$MAMBA2_RESULTS_ROOT/metrics_result/tf_kv_trajectory_l3_minimal_cuda_${STAMP}.json"
+```
+
+本机 **CPU**（**须 torch 可加载**）：**`--device cpu`**。登记 **X-20260411-tf-kv-trajectory-l3-minimal**；**`pytest tests/test_tf_kv_trajectory_l3.py`**。
 
 ---
 
@@ -321,4 +411,7 @@ M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_
 | 2026-04-10 | **§10.1**：**`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**；**`SKIP_M1_AGGREGATE` / `AGGREGATE_APPEND`** |
 | 2026-04-10 | **§10.1**：**`--l3-tf-kv-downstream-ce`**、**`M1_WITH_L3_DOWNSTREAM_CE`**（**`l3_tf_kv_downstream_ce`**） |
 | 2026-04-11 | **§10.1**：**L3 CE 叶扩** — **`STAMP=20260410T1133Z`** **n16/n32** 已归档；块内改为重跑 / **n64** 模板 |
-| 2026-04-11 | **篇首公平性**：**`FIGURE_CAPTIONS`** **六轴** 指针 |
+| 2026-04-11 | **篇首公平性**：**`FIGURE_CAPTIONS`** **七轴** 指针 |
+| 2026-04-11 | **§0.5**：按 **`RESEARCH_STATUS` §3.5** **L1–L4** 分层的服务器实验序（块 **A–F**：smoke、M1 **n64**、叶扫、SSGS **n128**、M1 **L3**、**B-S2+ CUDA**） |
+| 2026-04-11 | **§0.5 块 F**：**`--out-json`** 改默认示例为 **`metrics_result/probe_…cuda_${STAMP}.json`**（与 **`metrics/`** 分列同步习惯对齐） |
+| 2026-04-11 | **§0.5 块 G**：**阶段 C** **`benchmark_tf_kv_trajectory_l3_minimal.py`**（**L3 轨迹**） |

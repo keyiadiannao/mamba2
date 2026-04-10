@@ -1,4 +1,5 @@
 json_path,git_sha,device,num_leaves,fanout,chunk_len,dim,mamba_layers,target_leaf_index,ok,snapshots_taken,rollbacks,leaf_checks,wikitext_config,chars_per_leaf,mamba_torch_forward_only,kind
+/root/autodl-tmp/mamba2_results/metrics_result/ssgs_mamba_wikitext_n128_c8_dim128_cuda_20260410T1238Z.json,6fa7873,cuda,128,2,8,128,2,127,True,127,247,128,wikitext-2-raw-v1,600,True,ssgs_mamba_wikitext_tree
 /root/autodl-tmp/mamba2_results/metrics_result/ssgs_mamba_wikitext_n16_c8_cuda_20260409T1550Z.json,6fa7873,cuda,16,2,8,128,2,15,True,15,26,16,wikitext-2-raw-v1,600,True,ssgs_mamba_wikitext_tree
 /root/autodl-tmp/mamba2_results/metrics_result/ssgs_mamba_wikitext_n16_c8_dim128_cuda_20260410T0807Z.json,6fa7873,cuda,16,2,8,128,2,15,True,15,26,16,wikitext-2-raw-v1,600,True,ssgs_mamba_wikitext_tree
 /root/autodl-tmp/mamba2_results/metrics_result/ssgs_mamba_wikitext_n32_c8_cuda_20260409T1550Z.json,6fa7873,cuda,32,2,8,128,2,31,True,31,57,32,wikitext-2-raw-v1,600,True,ssgs_mamba_wikitext_tree
@@ -10,3 +11,4 @@ json_path,git_sha,device,num_leaves,fanout,chunk_len,dim,mamba_layers,target_lea
 /root/autodl-tmp/mamba2_results/metrics_result/ssgs_mamba_wikitext_n8_c8_dim128_cuda_20260410T0803Z.json,6fa7873,cuda,8,2,8,128,2,7,True,7,11,8,wikitext-2-raw-v1,600,True,ssgs_mamba_wikitext_tree
 /root/autodl-tmp/mamba2_results/metrics_result/ssgs_mamba_wikitext_n8_c8_dim128_cuda_20260410T0807Z.json,6fa7873,cuda,8,2,8,128,2,7,True,7,11,8,wikitext-2-raw-v1,600,True,ssgs_mamba_wikitext_tree
 /root/autodl-tmp/mamba2_results/metrics_result/ssgs_mamba_wikitext_n8_c8_dim128_cuda_20260410T0845Z.json,6fa7873,cuda,8,2,8,128,2,7,True,7,11,8,wikitext-2-raw-v1,600,True,ssgs_mamba_wikitext_tree
+/root/autodl-tmp/mamba2_results/metrics_result/ssgs_mamba_wikitext_n8_c8_dim128_cuda_20260410T1238Z.json,6fa7873,cuda,8,2,8,128,2,7,True,7,11,8,wikitext-2-raw-v1,600,True,ssgs_mamba_wikitext_tree

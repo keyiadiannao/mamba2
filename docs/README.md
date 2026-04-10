@@ -19,12 +19,14 @@
 | 主题 | 唯一权威 |
 |------|----------|
 | 叙事框架、基线对照、A/B/C/X、月级阶段表 | [`overview/planning/PROJECT_MASTER_PLAN.md`](overview/planning/PROJECT_MASTER_PLAN.md) |
-| **现状**大表、六轴、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
+| **现状**大表、七轴、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
+| **阶段 0→结题**（每阶段实验 + 成功标准；与 L1–L4 对齐） | [`overview/planning/RESEARCH_PHASES_0_TO_DONE.md`](overview/planning/RESEARCH_PHASES_0_TO_DONE.md) |
 | 轨道里程碑、**当前收口清单**、P0–P3、后备推进 § | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
 | **本周**勾选、阻塞 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
 | 本机 5060 **可复制命令** | [`environment/runbooks/LOCAL_5060_RUNBOOK.md`](environment/runbooks/LOCAL_5060_RUNBOOK.md) |
 | 云端扫参 shell、§7 depth、命令模板 | [`environment/runbooks/SERVER_SWEEP_RUNBOOK.md`](environment/runbooks/SERVER_SWEEP_RUNBOOK.md) + [`environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`](environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md) |
 | 实验 id、路径、结论一行 | [`experiments/planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md) |
+| **2026-04 服务器批次** JSON / CSV 索引（M1、SSGS、leavescale、B-S2+） | [`experiments/planning/DATA_ARCHIVE_202604_SERVER.md`](experiments/planning/DATA_ARCHIVE_202604_SERVER.md) |
 | 周历**模板**与历史 | [`overview/planning/ROADMAP.md`](overview/planning/ROADMAP.md)（勾选以 **CURRENT_SPRINT** 为准） |
 
 ## 0. 三分钟：该读哪份？
@@ -34,9 +36,11 @@
 | 现状、证据、推荐推进顺序 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
 | 本周在做什么、阻塞项 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
 | 任务拆条、收口清单 | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
+| **0→结题** 阶段表与阶段 5 勾选 | [`overview/planning/RESEARCH_PHASES_0_TO_DONE.md`](overview/planning/RESEARCH_PHASES_0_TO_DONE.md) |
 | **Mamba+树+SSGS** 整合主线（M1）工具与缺口 | [`experiments/planning/SSGS_MAINLINE_M1.md`](experiments/planning/SSGS_MAINLINE_M1.md) |
 | 投稿草稿块与检查清单 | [`overview/execution/SUBMISSION_PACK.md`](overview/execution/SUBMISSION_PACK.md) |
 | 实验登记 | [`experiments/planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md) |
+| 四月服务器数据归档（路径 + STAMP） | [`experiments/planning/DATA_ARCHIVE_202604_SERVER.md`](experiments/planning/DATA_ARCHIVE_202604_SERVER.md) |
 
 ## 1. 成文与阶段素材（`experiments/phases/`）
 
@@ -44,16 +48,17 @@
 |------|------|
 | [`phases/PHASE1_MANUSCRIPT.md`](experiments/phases/PHASE1_MANUSCRIPT.md) | 阶段 1 主成稿（含 §8–§10） |
 | [`phases/PHASE2_DRAFT.md`](experiments/phases/PHASE2_DRAFT.md) | 阶段 2 表数字、修订日志 |
-| [`phases/FIGURE_CAPTIONS_STAGE1.md`](experiments/phases/FIGURE_CAPTIONS_STAGE1.md) | 主图图注与六轴护栏（含 **M1**） |
+| [`phases/FIGURE_CAPTIONS_STAGE1.md`](experiments/phases/FIGURE_CAPTIONS_STAGE1.md) | 主图图注与七轴护栏（含 **M1**、**L3 轨迹**） |
 | [`phases/PHASE1_COMPLETE_SUMMARY.md`](experiments/phases/PHASE1_COMPLETE_SUMMARY.md) | 阶段 1 存档与 §7 复跑指针 |
 
-**实验侧总体规划**：[`planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md)、[`planning/DATASETS.md`](experiments/planning/DATASETS.md)、[`planning/PHASE1_VALIDATION_PLAN.md`](experiments/planning/PHASE1_VALIDATION_PLAN.md)、[`planning/SSGS_MAINLINE_M1.md`](experiments/planning/SSGS_MAINLINE_M1.md)（**Phase M1**）。
+**实验侧总体规划**：[`planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md)、[`planning/DATA_ARCHIVE_202604_SERVER.md`](experiments/planning/DATA_ARCHIVE_202604_SERVER.md)、[`planning/DATASETS.md`](experiments/planning/DATASETS.md)、[`planning/PHASE1_VALIDATION_PLAN.md`](experiments/planning/PHASE1_VALIDATION_PLAN.md)、[`planning/SSGS_MAINLINE_M1.md`](experiments/planning/SSGS_MAINLINE_M1.md)（**Phase M1**）。
 
 ## 2. Overview 总体规划（`overview/planning/`）
 
 | 文件 | 职责 |
 |------|------|
 | [`RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) | 现状 + 方向 + 证据梯 |
+| [`RESEARCH_PHASES_0_TO_DONE.md`](overview/planning/RESEARCH_PHASES_0_TO_DONE.md) | 阶段 0–7、实验与成功标准、阶段 5 清单 |
 | [`PROJECT_MASTER_PLAN.md`](overview/planning/PROJECT_MASTER_PLAN.md) | 月级规划、四条线、风险 |
 | [`PROJECT_OVERVIEW.md`](overview/planning/PROJECT_OVERVIEW.md) | 目标、A/B/C/X、**仓库目录树** |
 | [`ROADMAP.md`](overview/planning/ROADMAP.md) | 周历模板与里程碑对照 |

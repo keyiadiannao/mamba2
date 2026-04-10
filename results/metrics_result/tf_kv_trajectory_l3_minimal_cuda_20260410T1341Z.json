@@ -1,0 +1,40 @@
+{
+  "kind": "tf_kv_trajectory_l3_minimal",
+  "git_sha": "6fa7873",
+  "torch_version": "2.11.0+cu126",
+  "device": "cuda",
+  "tree": {
+    "depth": 2,
+    "fanout": 2,
+    "chunk_len": 8,
+    "dim": 128,
+    "target_leaf": "last_in_iter_root_leaf_paths"
+  },
+  "tf_trunk": {
+    "layers": 2,
+    "nhead": 8,
+    "ff_mult": 4
+  },
+  "init_seed": 42,
+  "notes": "Trajectory A takes wrong sibling at root (one node), then restore, then gold suffix. Not full M1 DFS; explicit L3 control-flow probe per RESEARCH_STATUS \u00a73.5.",
+  "clone_restore_arm": {
+    "arm": "full_kv_clone_restore",
+    "cosine_hidden_a_vs_b": 0.99999988,
+    "l2_diff_hidden_a_vs_b": 0.0,
+    "gold_path_nodes": 3,
+    "wrong_branch_first_step_is_leaf": false,
+    "wall_s_trajectory_b_direct": 0.20127539,
+    "wall_s_trajectory_a_wrong_restore": 0.00857614,
+    "definition": "Trajectory B: forward only along gold root\u2014target path. Trajectory A: gold prefix (root only) \u2192 snapshot \u2192 absorb wrong sibling subtree root \u2192 restore \u2192 gold suffix. Compare last-token hidden of IncrementalCausalTransformerKV."
+  },
+  "truncate_kv_arm": {
+    "arm": "truncate_kv_restore",
+    "cosine_hidden_a_vs_b": 0.99999994,
+    "l2_diff_hidden_a_vs_b": 0.0,
+    "gold_path_nodes": 3,
+    "wrong_branch_first_step_is_leaf": false,
+    "wall_s_trajectory_b_direct": 0.00651251,
+    "wall_s_trajectory_a_wrong_restore": 0.00836259,
+    "definition": "Trajectory B: forward only along gold root\u2014target path. Trajectory A: gold prefix (root only) \u2192 snapshot \u2192 absorb wrong sibling subtree root \u2192 restore \u2192 gold suffix. Compare last-token hidden of IncrementalCausalTransformerKV."
+  }
+}

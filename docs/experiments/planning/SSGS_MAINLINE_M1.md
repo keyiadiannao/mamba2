@@ -51,16 +51,25 @@
 | 8 | 7 / 11 / 8 | ≈0.546 | ≈0.081 | ≈0.038 | 14 | 65536 |
 | 16 | 15 / 26 / 16 | ≈0.783 | ≈0.118 | ≈0.069 | 30 | 81920 |
 | 32 | 31 / 57 / 32 | ≈1.21 | ≈0.185 | ≈0.132 | 62 | 98304 |
+| 64 | 63 / 120 / 64 | ≈2.03 | ≈0.31 | ≈0.26 | 126 | 114688 |
 
-**文件**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n{8,16,32}_cuda_3arm_20260410T1012Z.json`**。另：**首轮无 STAMP** 的 **`…_n8_cuda_3arm.json`** 可作对照。
+**文件**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n{8,16,32}_cuda_3arm_20260410T1012Z.json`**；**n64（无 L3）** **`…_n64_cuda_3arm_20260410T1235Z.json`**。另：**首轮无 STAMP** 的 **`…_n8_cuda_3arm.json`** 可作对照。
 
 **趋势（一句）**：**Mamba** `peak_alloc_mib` 三档均 **≈130**；**TF-KV** **≈27.7–28.1**；**`wall_s`** 随叶数上升主要来自 **DFS 迹长度**，**truncate** 臂略快于 **clone** 臂（同 harness）。
 
-**L3 隐状态（n8 CUDA）**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm_l3.json`** — **`l3_tf_kv_hidden`**：**clone / truncate** 与金路径-only 的 **末 token hidden** **余弦 ≈ 1**、**`l2_diff`=0**（**`git_sha` 以 JSON 为准**）。
+**L3 隐状态（n8 CUDA）**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm_l3.json`** — **`l3_tf_kv_hidden`**：**clone / truncate** 与金路径-only 的 **末 token hidden** **余弦 ≈ 1**、**`l2_diff`=0**（**`git_sha` 以 JSON 为准**）。**复跑（`STAMP=20260410T1244Z`）**：**`…_n8_cuda_3arm_20260410T1244Z.json`** — 同结构 **cosine ≈ 1**、**`l2_diff`=0**。
 
 **L3 下游 CE（n8 CUDA，`STAMP=20260410T1113Z`）**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm_20260410T1113Z.json`** — **`l3_tf_kv_downstream_ce`**（**`--l3-tf-kv-downstream-ce`**）：**clone** **`ce_nav`=`ce_ref`≈2.121**、**truncate** **`ce_nav`=`ce_ref`≈2.224**、两臂 **`abs_ce_delta`=0**、**`max_abs_logit_diff`=0**（**`probe_seed`=12345**）。同次跑 **Mamba** **`wall_s`≈0.507**、**clone**≈0.074、**truncate**≈0.031（与 **1012Z** 同阶，GPU 抖动正常）。
 
 **L3 下游 CE（n16 / n32 CUDA，`STAMP=20260410T1133Z`）**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n16_cuda_3arm_20260410T1133Z.json`**、**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n32_cuda_3arm_20260410T1133Z.json`** — **`l3_tf_kv_downstream_ce`**：**n16** **clone** **`ce_nav`=`ce_ref`≈2.645**、**truncate** **≈2.708**；**n32** **clone** **≈3.430**、**truncate** **≈3.489**；各臂 **`abs_ce_delta`=0**、**`max_abs_logit_diff`=0**。同次三臂 **`wall_s`** 与 **1012Z** 同档（**n16** **Mamba**≈0.774、**n32**≈1.22，GPU 抖动）。
+
+**L3 下游 CE（n8–n64 同批 CUDA，`STAMP=20260410T1247Z`）**：**`…_n{8,16,32,64}_cuda_3arm_20260410T1247Z.json`** — 各叶数两臂 **`abs_ce_delta`=0**、**`max_abs_logit_diff`=0**（例 **n64** **clone** **`ce_nav`=`ce_ref`≈4.177**、**truncate** **≈4.252**，**`probe_seed`=12345**）。
+
+### 2.2 **阶段 C：轨迹甲·乙**（**≠ M1 全 DFS**）
+
+**`RESEARCH_STATUS` §3.5** 最小对照：**硬编码** 读序 — **轨迹乙** 仅金路径；**轨迹甲** 根 → **快照** → **错子一步** → **restore** → 金路径后缀。**`kind=tf_kv_trajectory_l3_minimal`**。实现：**`src/rag_tree/tf_kv_trajectory_l3.py`**、**`scripts/research/benchmark_tf_kv_trajectory_l3_minimal.py`**；登记 **X-20260411-tf-kv-trajectory-l3-minimal**。**禁止**与 **M1**、**path-batch** 无脚注同表。
+
+**已归档（3090 CUDA，`STAMP=20260410T1341Z`）**：**`results/metrics_result/tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`** — **clone** **`cosine_hidden_a_vs_b`≈0.99999988**、**truncate_kv** **≈0.99999994**，两臂 **`l2_diff_hidden_a_vs_b`=0**（**`git_sha=6fa7873`**）。
 
 **网格 CSV**：**`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** — **`python scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py -g 'results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_*.json' --out-csv results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`**。云端 **`run_m1_ssgs_vs_kv_wikitext_cuda.sh`** 扫叶后默认聚合（**`SKIP_M1_AGGREGATE=1`** 跳过；**`AGGREGATE_APPEND=1`** 追加）。
 
@@ -71,7 +80,7 @@
 1. **选定基线臂**：优先 **TF-KV 玩具 trunk 上的「错枝 + 截断 KV + 兄弟子树」**（与现有 **`--branch-truncate-demo`** 语义衔接），或 **「回到分叉点整段重算」** 二选一写死。  
 2. **选定任务**：与现有 **SSGS** 一致的最右叶 / 或 **goal 叶**（与 **`demo_ssgs_mamba_wikitext`** 的 **`target_leaf_index`** 对齐）。  
 3. **统一报告**：**总前向步数或 token 数**、**wall-clock**、**峰值显存**、**snapshots/rollbacks**（SSGS 臂）、**kv 字节或截断次数**（KV 臂）、**任务成功**（`ok`）。  
-4. **登记**：**`EXPERIMENT_REGISTRY.md` 新行**；JSON 入 **`results/metrics_result/`**；**`FIGURE_CAPTIONS_STAGE1.md`** 若新增第六张「对照图」须 **显式第六轴或子表脚注**。
+4. **登记**：**`EXPERIMENT_REGISTRY.md` 新行**；JSON 入 **`results/metrics_result/`**；**`FIGURE_CAPTIONS_STAGE1.md`** 若新增对照图须 **显式测量轴脚注**（当前 **七轴** 含 **L3 轨迹**）。
 
 ---
 
@@ -80,18 +89,19 @@
 - [ ] 读完 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5**（证据层级与风险三段）。  
 - [ ] **`pytest tests/test_ssgs*.py`** + **`test_aggregate_ssgs_mamba_wikitext_json.py`** 绿。  
 - [x] 在 **`EXPERIMENT_REGISTRY`** 登记 **M1**：**`X-ssgs-vs-kv-tree-nav-m1`** + **`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm.json`**（三臂，**`git_sha=6fa7873`**）；历史两臂文件 **`…_n8_cuda.json`** 仍保留作对照。  
-- [x] **叶数扩展**：**`STAMP=20260410T1012Z`** — **`…_n{8,16,32}_cuda_3arm_20260410T1012Z.json`** 已入仓并写入 **`EXPERIMENT_REGISTRY`** **X-ssgs-vs-kv-tree-nav-m1**；**n64** 等仍可选。  
+- [x] **叶数扩展**：**`STAMP=20260410T1012Z`** — **`…_n{8,16,32}_cuda_3arm_20260410T1012Z.json`**；**n64** **`STAMP=20260410T1235Z`** — **`…_n64_cuda_3arm_20260410T1235Z.json`**；已写入 **`EXPERIMENT_REGISTRY`** **X-ssgs-vs-kv-tree-nav-m1**。  
 - [x] **L3（隐状态）**：**`--l3-tf-kv-hidden`** + **`src/rag_tree/tf_kv_l3_probe.py`**；单测 **`tests/test_tf_kv_l3_probe.py`**。  
 - [x] **网格 CSV**：**`aggregate_ssgs_vs_kv_wikitext_json.py`** → **`ssgs_vs_kv_wikitext_nav_grid.csv`**；单测 **`tests/test_aggregate_ssgs_vs_kv_wikitext_json.py`**。  
 - [x] **L3（下游 CE，固定叶头）**：**`--l3-tf-kv-downstream-ce`**；单测 **`tests/test_tf_kv_l3_downstream_probe.py`**。树 LM **可学习 vs CE**（**X-20260423/24**）为**另一 harness**，不作数值可比。  
 - [x] **L3 下游 CE · n16/n32（CUDA）**：**`STAMP=20260410T1133Z`** — **`…_n{16,32}_cuda_3arm_20260410T1133Z.json`**；**`abs_ce_delta`=0**；已写入 **登记册** / §2.1。  
+- [x] **L3（轨迹甲·乙，玩具 TF-KV）**：**`tf_kv_trajectory_l3_minimal`** + **`tests/test_tf_kv_trajectory_l3.py`**；**JSON** 按需入 **`metrics_result/`**。  
 - [ ] **L3（训练型子头 / 与树 LM 对齐）**：若要做，须另 **`kind`** 与登记；**禁止**与 path-batch 主表无脚注合并。
 
 ---
 
 ## 5. 相关文档
 
-- **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`** — 六轴、§3.5、L3 最小验证。  
+- **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`** — 七轴、§3.5、L3 最小验证。  
 - **`docs/overview/execution/NEXT_RESEARCH_PLAN.md`** — **M1** 与 **P0 成文 / P1 B-S2+ CUDA** 并行关系。  
 - **`docs/research/RESEARCH_NOTES.md`** §6–§7 — SSGS 与 §7 边界。  
 - **`scripts/README.md`** — 脚本索引（含 SSGS / §7）。  
@@ -111,4 +121,4 @@
 | 2026-04-10 | **L3 下游 CE**：**`--l3-tf-kv-downstream-ce`**、**`tf_kv_l3_downstream_probe.py`**；脚注 **X-20260423/24** 叙事参考 |
 | 2026-04-10 | **归档**：**`STAMP=20260410T1113Z`** **n8** 三臂 + **`l3_tf_kv_downstream_ce`**（**`…_n8_cuda_3arm_20260410T1113Z.json`**） |
 | 2026-04-11 | **归档**：**`STAMP=20260410T1133Z`** **n16/n32** **`l3_tf_kv_downstream_ce`**（**`abs_ce_delta`=0**）；§10.1 推荐命令已跑通 |
-| 2026-04-11 | **索引**：**`docs/README`**、**`CURRENT_SPRINT`**、**`ROADMAP`**、**`NEXT_EXPERIMENTS`** 篇首、**`SERVER_SWEEP_RUNBOOK`** — **六轴** 与 **P0** **M1** 入稿指针 |
+| 2026-04-11 | **索引**：**`docs/README`**、**`CURRENT_SPRINT`**、**`ROADMAP`**、**`NEXT_EXPERIMENTS`** 篇首、**`SERVER_SWEEP_RUNBOOK`** — **七轴** 与 **P0** **M1** 入稿指针 |

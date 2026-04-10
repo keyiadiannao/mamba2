@@ -22,6 +22,17 @@ from pathlib import Path
 
 _KIND = "ssgs_vs_kv_tree_nav_wikitext"
 
+
+def _json_path_cell(abs_path: Path) -> str:
+    """Prefer repo-relative ``results/...`` when the JSON lives under ``cwd``."""
+    ap = abs_path.resolve()
+    try:
+        rel = ap.relative_to(Path.cwd().resolve())
+        return rel.as_posix()
+    except ValueError:
+        return str(ap)
+
+
 _CSV_FIELDS = [
     "json_path",
     "git_sha",
@@ -84,7 +95,7 @@ def _row_from_json(abs_path: Path, data: dict) -> dict[str, object]:
         return "" if x is None else x
 
     return {
-        "json_path": str(abs_path.resolve()),
+        "json_path": _json_path_cell(abs_path),
         "git_sha": _f(data.get("git_sha")),
         "device": _f(data.get("device")),
         "num_leaves": _f(data.get("num_leaves")),
