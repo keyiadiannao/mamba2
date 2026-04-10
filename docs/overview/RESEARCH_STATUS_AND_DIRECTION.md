@@ -210,3 +210,4 @@
 | 2026-04-09 | **§2.1**：**128/256 叶 XL** **`stage2_leavescale_xl`** **`1322Z`/`1324Z`**；**`A-stage2-wikitext-leavescale-xl-v1`**；**Mamba2 峰值** **≈282 / 562 MiB** |
 | 2026-04-09 | **§2.1**：**§7 depth 5–6** **`1341Z`** 归档；**`X-section7-depth-extension-v1`**；**TAG 残留** 致文件名 **`stage2_leavescale_xl_s*`** — 脚本已改 **`SECTION7_TAG`**；**`RUN_AUTOADL_SECTION7_NOW`** 增 **`unset TAG`** |
 | 2026-04-10 | **§3.5 新增**：对外叙事（投资/Agent）**批判性接收**；**L1–L4 证据层级**；三风险；**L3 最小 PoC** 与止损；与 **`NEXT_RESEARCH_PLAN`「后续方向」** 对齐 |
+| 2026-04-10 | **§7 文档地图**：**`SUBMISSION_PACK.md`**（**P0 A1–A4**） |
