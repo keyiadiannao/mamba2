@@ -188,6 +188,7 @@
 | **`PROJECT_MASTER_PLAN.md`** | 6 个月范围与阶段划分 |
 | **`PHASE1_MANUSCRIPT.md`** | 阶段 1 正文素材；**阶段 2**（§8）、**检索头讨论边界**（§9）、指针（§10） |
 | **`NEXT_RESEARCH_PLAN.md`** | 阶段 2 / B / X **任务展开** |
+| **`SUBMISSION_PACK.md`** | **P0 成文**：**A1–A4** 一页故事线、路径核对、可粘贴脚注、检索头短段（与 **`NEXT_RESEARCH_PLAN`** **无云端 §A** 对应） |
 | **`CURRENT_SPRINT.md`** | **本周勾选** 与阻塞 |
 | **`EXPERIMENT_REGISTRY.md`** | **唯一登记真相源** |
 | **`RESEARCH_NOTES.md` §7** | 协议与 SSGS 技术细节 |

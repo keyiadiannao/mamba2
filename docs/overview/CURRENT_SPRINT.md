@@ -14,7 +14,7 @@
 
 | 优先级 | 动作 |
 |--------|------|
-| **1** | **成文**：**`PHASE1_MANUSCRIPT`** 故事线压成 1 页大纲；**§5.1** 路径核对；**`FIGURE_CAPTIONS_STAGE1`** 脚注成句粘贴 |
+| **1** | **成文**：按 **`docs/overview/SUBMISSION_PACK.md`**（**A1–A4**）推进；再全表核对 **`PHASE1_MANUSCRIPT` §5.1** |
 | **2** | **（可选）** **`probe_retrieval_correlation.py --cpu`** 或 **§7 CPU 玩具** — 仅附录需要时，见 **`NEXT_RESEARCH_PLAN`** **§无云端 B** |
 | **3** | **`pytest tests/`** 提交前 **smoke** |
 

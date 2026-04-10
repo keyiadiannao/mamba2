@@ -188,7 +188,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 3. **A2-S3 可选加压**：更大 **`heldout-leaves`**、**`root_child`**、**stratified + `split-seed`** — 与 **init×5** **分列** 说明。  
 4. **Polish**：**S5 总表**（**`RESEARCH_NOTES` §7**）、主图入仓、平面 RAG smoke。  
 5. **SSGS（辅线，非阻塞）**：**Wikitext 同树** 已归档 **`ssgs_mamba_wikitext_grid.csv`**（**n8–64** 等，登记 **X-20260407-ssgs-mamba-wikitext-tree**）。可选：**n=128**、**`git pull` 后** 重跑 **一格** 刷新 **`git_sha`**；玩具树 **X-20260421**、LM 并列 **X-20260425** 仍足 **附录** 基线。  
-6. **总览**：**`RESEARCH_STATUS_AND_DIRECTION.md`**、**`NEXT_RESEARCH_PLAN.md`**（**篇首「当前收口清单」**）；手册：**`SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**（**§11 本机 5060**）、**`LOCAL_5060_RUNBOOK.md`**、**`RUN_AUTOADL_SECTION7_NOW.md`**；草稿：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**。
+6. **总览**：**`RESEARCH_STATUS_AND_DIRECTION.md`**、**`NEXT_RESEARCH_PLAN.md`**（**篇首「当前收口清单」**）；**投稿成文草稿包**：**`docs/overview/SUBMISSION_PACK.md`**（**A1–A4**）；手册：**`SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**（**§11 本机 5060**）、**`LOCAL_5060_RUNBOOK.md`**、**`RUN_AUTOADL_SECTION7_NOW.md`**；草稿：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**。
 
 ---
 
@@ -226,3 +226,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-10 | **§5**：本机 **B-S2+ train50**（**`probe_path_reader_linear_text16_heldout_train50_local5060.json`**）、**Wikitext CPU smoke**（**`benchmark_wikitext_local5060_cpu_*_n8_c8.json`**）；登记 **X-20260410-local5060-bs2plus-train50-n16**、**X-20260410-local5060-wikitext-cpu-n8c8** |
 | 2026-04-10 | **§10 指针**：**`NEXT_RESEARCH_PLAN.md`** 增 **「项目现状快照」**、**「后续方向」**；本机 **5060** 轨道 **无阻塞项**；全量 **`pytest tests/`** **20** passed |
 | 2026-04-10 | **§10**：**「下一步」** 与 **`NEXT_RESEARCH_PLAN`「无云端时：标准推进」** 对齐；**云端暂不可用时** 以 **P0 成文** 为第一优先 |
+| 2026-04-10 | **§10**：**`docs/overview/SUBMISSION_PACK.md`**（**A1–A4** 投稿叙事与脚注草稿） |

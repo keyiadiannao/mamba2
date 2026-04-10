@@ -62,12 +62,14 @@
 
 ### A. 成文（P0，优先）
 
+**成文包（A1–A4 正文与脚注草稿）**：**`docs/overview/SUBMISSION_PACK.md`**（一页故事线、路径核对表、可粘贴边界句、检索头短段）。
+
 | 顺序 | 任务 | 产出/自检 |
 |------|------|-----------|
-| **A1** | **主叙事一页**：从 **`PHASE1_MANUSCRIPT.md`** 摘要 + §6 结论 + §8 阶段 2 段，压成 **投稿用故事线**（问题—方法—结果—边界） | 自用大纲 1 页即可 |
-| **A2** | **数字与路径核对**：**`PHASE1_MANUSCRIPT.md` §5.1** 表 + **`EXPERIMENT_REGISTRY.md`** 对应行；**主图 PNG**、**`paper_main_*` CSV** 文件名与正文引用一致 | 勾选 §5.1 各列 |
-| **A3** | **五轴脚注成句**：从 **`FIGURE_CAPTIONS_STAGE1.md`** 篇首 **复制** 到论文 **Related/Footnote** 占位（5060/3090、naive/fused、path-batch / §7 / SSGS / A2-S3） | 避免混表混读 |
-| **A4** | **机制线边界**：**`PHASE1_MANUSCRIPT.md` §9** + **`RETRIEVAL_HEAD_NOTES.md`** — 「检索头」表述与 **B-S2/B-S2+** 对齐 | 附录段落草稿 |
+| **A1** | **主叙事一页** | **`SUBMISSION_PACK.md` §A1**；按需改写成投稿摘要/引言 |
+| **A2** | **数字与路径核对** | **`SUBMISSION_PACK.md` §A2** + 全表补扫 **`PHASE1_MANUSCRIPT` §5.1** |
+| **A3** | **五轴脚注成句** | **`SUBMISSION_PACK.md` §A3**；完整表见 **`FIGURE_CAPTIONS_STAGE1.md`** |
+| **A4** | **检索头边界** | **`SUBMISSION_PACK.md` §A4**；全文见 **`PHASE1_MANUSCRIPT` §9** |
 | **A5** | **（可选）§7.5 S5** | 视截稿；**非**阻塞 |
 
 ### B. 本机可补的实验（**非**必须；仅当成文需要「附录多一行」）
@@ -269,3 +271,4 @@ flowchart LR
 | 2026-04-09 | **A2-S2b XL**：**`stage2_leavescale_xl`** **n128/n256** **`1322Z`/`1324Z`**；**A-stage2-wikitext-leavescale-xl-v1** |
 | 2026-04-10 | **§3.5 指针**；**「后续方向」** 增 **P★ L3 语义 PoC**、**已决策略**（主线保底 / 叙事升级可选 / 动机≠证据）；见 **`RESEARCH_STATUS_AND_DIRECTION.md` §3.5** |
 | 2026-04-10 | **「无云端时：标准推进」**：**A 成文**（A1–A5）+ **B 本机可选**（B1–B3）；**默认里程碑** **P0→P1→P2→P3**，**P★** 不插入；**`LOCAL_5060_RUNBOOK`** / **`CURRENT_SPRINT`** 对齐 |
+| 2026-04-10 | **`SUBMISSION_PACK.md`**：**A1–A4** 成文包初版（故事线、路径核对、脚注句、检索头短段） |
