@@ -26,7 +26,7 @@
 - **检索头 / 探针**：**`RETRIEVAL_HEAD_NOTES.md`**、**B-S2 / B-S2+**（**`probe_retrieval_correlation` / `probe_path_reader_linear`**）—— **附录或独立小节**；回答「与 Retrieval Head 文献的关系」与 **表征线性可读性**，**非** path-batch 纵轴。  
 - **B-S3 / 注入训练（C）**：**仅**在审稿点名或单独排期时加投；默认 **不阻塞** 以 **Mamba + 树 + SSGS/M1** 为主线的成文。
 
-**长期北星（超越「阶段 1–2 成文」）**：把 **固定大小隐状态上的 clone/restore** 与 **KV 随上下文线性增长** 在 **树导航、走错路、回溯** 场景下的 **代价结构差异** 讲透；**SSGS（State-Snapshot Guided Search）** 为可包装的算法叙事。**动机层** 可连接 **Agent 式「悔棋」、上下文不被错枝永久污染** 等命题，但 **审稿证据** 必须按 **`RESEARCH_STATUS_AND_DIRECTION.md` §1.5 + §3.5** 的 **L1–L4** 分层推进，**禁止**从效率主图直接跳写到 **无损 Agent 记忆**。
+**长期北星（超越「阶段 1–2 成文」）**：把 **固定大小隐状态上的 clone/restore** 与 **KV 随上下文线性增长** 在 **树导航、走错路、回溯** 场景下的 **代价结构差异** 讲透；**SSGS（State-Snapshot Guided Search）** 为可包装的算法叙事。**动机层** 可连接 **Agent 式「悔棋」、上下文不被错枝永久污染** 等命题，但 **审稿证据** 必须按 **`RESEARCH_STATUS_AND_DIRECTION.md` §1.5 + §3.5** 的 **L1–L4** 分层推进，**禁止**从效率主图直接跳写到 **无损 Agent 记忆**。**M1 玩具全链通之后** 若追求 **更大模型 / 更公平对比 / 三风险实测**，见 **`RESEARCH_STATUS` §6.3–§6.4** 与 **`PLAN_NOW_TO_DONE.md` §Ⅵ**（**不替代** 阶段 5 成文闭环）。
 
 ### 1.1 基线与对照组：「Transformer + 平面 RAG」是否必须？
 
@@ -152,3 +152,4 @@
 | 日期 | 说明 |
 |------|------|
 | 2026-04-11 | **§1.0**：**主验证轴** = **树状 RAG + Mamba path reader + SSGS/M1**；**副线** = 检索头与探针（B-S2/B-S2+） |
+| 2026-04-11 | **§1.0 末**：**M1 之后** 指针 **`RESEARCH_STATUS` §6.3–§6.4**、**`PLAN_NOW_TO_DONE` §Ⅵ** |

@@ -30,7 +30,7 @@
 
 ### 0.4 多步总览（方向卡）
 
-**`docs/overview/execution/PLAN_NOW_TO_DONE.md`**：**Ⅰ 成文 → Ⅱ 数据冻结 → Ⅲ 可选 M2 → Ⅳ 截稿 → Ⅴ 审稿/远期**；含 **本周最小勾选** 与 **M2 实验验证点**（**c12** / **bundle** / **`git_sha`**）。
+**`docs/overview/execution/PLAN_NOW_TO_DONE.md`**：**Ⅰ 成文 → Ⅱ 数据冻结 → Ⅲ 可选 M2 → Ⅳ 截稿 → Ⅴ 审稿/远期**；**§Ⅵ** = **M1 玩具全链之后**（更大模型分档、公平定义、三风险实测）。含 **本周最小勾选** 与 **M2 验证点**。**分析长文**：**`RESEARCH_STATUS_AND_DIRECTION.md` §6.4**。
 
 ---
 
@@ -303,4 +303,5 @@ flowchart LR
 | 2026-04-11 | **§1 / 收口清单 / §B B3**：**AutoDL** 全量 **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**, **~21 s** |
 | 2026-04-11 | **§3.1**：**M2** 后续实验 — **`SSGS_MAINLINE_M1.md` §6**（Wave A–D） |
 | 2026-04-11 | **§0.4**：**`PLAN_NOW_TO_DONE.md`** 多步总览；篇首 / **`docs/README`** 互链 |
+| 2026-04-11 | **§0.4**：**§Ⅵ** + **`RESEARCH_STATUS` §6.4** 指针（**M1 之后** 公平/大模型/三风险） |
 | 2026-04-11 | **§3 / §3.1**：**§6.0** **B2 vs 全链条**；**§3** 完成句与 **`1247Z`** **n64 L3 CE** 归档一致 |
