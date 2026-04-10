@@ -236,6 +236,12 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 
 ---
 
+## 11. 本机 **RTX 5060**（Windows；服务器忙时）
+
+**全文**：**`docs/environment/LOCAL_5060_RUNBOOK.md`**（**conda `mamba2`**、**B-S2+**、**Wikitext smoke**、**SSGS CPU**、**pytest**）。与 **§6**（B-S2+）互补：**§6** 给单行示例，**`LOCAL_5060_RUNBOOK`** 含 **WinError 1114 / base torch** 说明与 **多组 out-json 名**。
+
+---
+
 ## 修订记录
 
 | 日期 | 说明 |
@@ -252,3 +258,4 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 | 2026-04-07 | **§10**：**`demo_ssgs_mamba_wikitext.py`** + 登记 **X-20260407-ssgs-mamba-wikitext-tree** |
 | 2026-04-07 | **§10**：**`aggregate_ssgs_mamba_wikitext_json.py`** → **`ssgs_mamba_wikitext_grid.csv`** |
 | 2026-04-07 | **§10**：已跑通 **1529Z / 1550Z / 1601Z** 归档例；**n128**、**HEAD** 重跑 为可选 |
+| 2026-04-07 | **§11**：**`LOCAL_5060_RUNBOOK.md`**（本机 5060 / Windows） |

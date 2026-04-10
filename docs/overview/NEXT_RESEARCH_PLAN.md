@@ -28,17 +28,19 @@
 
 ### 本机 **RTX 5060** 可推进（轻量；与 **3090 登记级** 分列）
 
+**可复制命令与 Windows / conda 说明**：**`docs/environment/LOCAL_5060_RUNBOOK.md`**（**勿**用 **Anaconda base** 下损坏的 **torch DLL**；先 **`conda activate mamba2`** 或可用 env）。
+
 以下 **不占云端 3090**；**显存/时间**仍须自负。**HF naive Mamba** 在 5060 上 **峰值可达 GiB 级**，与 **3090 fused** **禁止无脚注混表**。
 
 | 目的 | 命令或脚本 | 说明 |
 |------|------------|------|
-| **机制 B-S2+（CPU）** | **`NEXT_EXPERIMENTS_COMMANDS.md` §6**：`probe_path_reader_linear.py --cpu`** → JSON | 与 path-batch **分列**；可改 **`--train-steps`** 做 BCE 消融 |
+| **机制 B-S2+（CPU）** | **`LOCAL_5060_RUNBOOK` §2** / **`NEXT_EXPERIMENTS_COMMANDS.md` §6**：`probe_path_reader_linear.py --cpu`** → JSON | 与 path-batch **分列**；可改 **`--train-steps`** 做 BCE 消融 |
 | **检索探针 B-S2（CPU）** | **`probe_retrieval_correlation.py`**（见 **`RETRIEVAL_HEAD_NOTES.md` §2**） | 小模型、**`--cpu`** |
-| **Wikitext path-batch smoke** | **`benchmark_wikitext_tree.py`** **`--num-leaves 8`** **`--chunk-len 8`** **`--dim 128`**，**5060 CUDA** 或 **`--cpu`** | 验证 harness + **HF**；动机表见 **`PHASE2_DRAFT` §1.1**（**naive** 峰值高属预期） |
+| **Wikitext path-batch smoke** | **`LOCAL_5060_RUNBOOK` §3**：**`benchmark_wikitext_tree.py`** **n8/c8/dim128** | **5060 CUDA** 或 CPU；**naive** 峰值高属预期 |
 | **A2-S3 小格（CPU）** | **`task_wikitext_path_pair.py`** **`--num-leaves 8`** **`--cpu`** | 全树前向 + ridge，**慢但可跑**；归档 **`results/metrics/`** |
-| **SSGS Wikitext（CPU）** | **`demo_ssgs_mamba_wikitext.py --cpu`** **`--dim 64`** **`--chunk-len 4`** **`--num-leaves 8`** | 与 **`NEXT_EXPERIMENTS` §10** 一致；**Windows** 若 **torch DLL** 异常则 **skip** 单测 |
-| **§7 玩具（CPU）** | **`scripts/research/benchmark_mamba2_cache_snapshot_segments.py --device cpu`** 等 | 与 **CUDA 归档** **分列**；见 **`SERVER_SWEEP_RUNBOOK`** |
-| **回归** | **`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`**（无 torch）等 | CI/本地冒烟 |
+| **SSGS Wikitext（CPU）** | **`LOCAL_5060_RUNBOOK` §4**：**`demo_ssgs_mamba_wikitext.py --cpu`** | **torch** 须可用 |
+| **§7 玩具（CPU）** | **`benchmark_mamba2_cache_snapshot_segments.py --device cpu`** 等 | 见 **`SERVER_SWEEP_RUNBOOK`** |
+| **回归** | **`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`** | **无 torch**；已可作为本地 **smoke** |
 
 **若要 5060 CUDA 上「新数字」**：优先 **短 smoke**（**n8、c8**），**`--out-json`** 带 **`git_sha`**；**登记新行** 并 **脚注 GPU 型号 + naive/fused**。
 
