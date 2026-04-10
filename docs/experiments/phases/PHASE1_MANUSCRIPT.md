@@ -198,7 +198,7 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 3. **A2-S3 可选加压**：更大 **`heldout-leaves`**、**`root_child`**、**stratified + `split-seed`** — 与 **init×5** **分列** 说明。  
 4. **Polish**：**S5 总表**（**`RESEARCH_NOTES` §7**）、主图入仓、平面 RAG smoke。  
 5. **SSGS（辅线，非阻塞）**：**Wikitext 同树** 已归档 **`ssgs_mamba_wikitext_grid.csv`**（通配合并 **13 行**，含 **n128** 与 **n8–64** 多 **STAMP**，登记 **X-20260407-ssgs-mamba-wikitext-tree**）。可选：**`git pull` 后** 重跑 **一格** 刷新 **`git_sha`**；玩具树 **X-20260421**、LM 并列 **X-20260425** 仍足 **附录** 基线。  
-6. **总览**：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**、**`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**（**阶段 5 清单**）、**`docs/overview/execution/NEXT_RESEARCH_PLAN.md`**（**「当前收口清单」**）；**投稿包**：**`docs/overview/execution/SUBMISSION_PACK.md`**（**A1–A4**）；手册：**`docs/environment/runbooks/SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**（**§11 本机 5060**）、**`LOCAL_5060_RUNBOOK.md`**、**`RUN_AUTOADL_SECTION7_NOW.md`**；草稿：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**（同目录 **`phases/`**）。
+6. **总览**：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**、**`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**（**阶段 5 清单**）、**`docs/overview/execution/NEXT_RESEARCH_PLAN.md`**（**「当前收口清单」**）；**投稿包**：**`docs/overview/execution/SUBMISSION_PACK.md`**（**A1–A4**；**英文主稿七轴**见 **§A3b**）；手册：**`docs/environment/runbooks/SERVER_SWEEP_RUNBOOK.md`**、**`NEXT_EXPERIMENTS_COMMANDS.md`**（**§11 本机 5060**）、**`LOCAL_5060_RUNBOOK.md`**、**`RUN_AUTOADL_SECTION7_NOW.md`**；草稿：**`PHASE2_DRAFT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**（同目录 **`phases/`**）。
 
 ---
 
@@ -246,3 +246,4 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-11 | **§5.1**：**L3 轨迹 CUDA** **`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`** 入仓核对 |
 | 2026-04-11 | 篇首/§10：**`RESEARCH_PHASES_0_TO_DONE.md`** 指针；§10 **B-S2+ CUDA** 已归档叙事 |
 | 2026-04-11 | **§9.1** 补 **3090 B-S2+** 归档句；新增 **§9.2** 快照回溯 **三风险**（对齐 **§3.5**） |
+| 2026-04-11 | **§10**：**`SUBMISSION_PACK` §A3b** 英文七轴指针 |
