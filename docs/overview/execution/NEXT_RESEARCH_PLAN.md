@@ -7,7 +7,7 @@
 
 ## 项目现状快照
 
-**主线材料、完成度大表、五轴防混读**：**唯一权威** **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**（不在此重复表格）。**本机可复制命令**：**唯一权威** **`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md`**。
+**主线材料、完成度大表、六轴防混读**：**唯一权威** **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**（不在此重复表格）。**本机可复制命令**：**唯一权威** **`docs/environment/runbooks/LOCAL_5060_RUNBOOK.md`**。
 
 ### 1. 测试与仓库卫生
 
@@ -73,7 +73,7 @@
 |------|------|-----------|
 | **A1** | **主叙事一页** | **`SUBMISSION_PACK.md` §A1**；摘要/引言句见 **§A1b** |
 | **A2** | **数字与路径核对** | **`SUBMISSION_PACK.md` §A2** + 全表补扫 **`PHASE1_MANUSCRIPT` §5.1** |
-| **A3** | **五轴脚注成句** | **`SUBMISSION_PACK.md` §A3**；完整表见 **`FIGURE_CAPTIONS_STAGE1.md`** |
+| **A3** | **六轴脚注成句** | **`SUBMISSION_PACK.md` §A3**；完整表见 **`FIGURE_CAPTIONS_STAGE1.md`** |
 | **A4** | **检索头边界** | **`SUBMISSION_PACK.md` §A4**；全文见 **`PHASE1_MANUSCRIPT` §9** |
 | **A5** | **（可选）§7.5 S5** | 视截稿；**非**阻塞 |
 
@@ -99,7 +99,7 @@
 
 **成文（优先，不占 GPU）**
 
-- [x] **归档路径核对**：见 **`PHASE1_MANUSCRIPT.md` §5.1** + **`SUBMISSION_PACK.md` §A2**（主图 PNG、**`paper_main_*` CSV**、§7、5060、阶段 2 **含 `dim256` `0847Z`**、A2-S3 **含 TSV**、SSGS **11 行 grid**）；五轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
+- [x] **归档路径核对**：见 **`PHASE1_MANUSCRIPT.md` §5.1** + **`SUBMISSION_PACK.md` §A2**（主图 PNG、**`paper_main_*` CSV**、§7、5060、阶段 2 **含 `dim256` `0847Z`**、A2-S3 **含 TSV**、SSGS **11 行 grid**、**M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**）；六轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
 - [x] **分列脚注规则**：已写入 **`PHASE1_MANUSCRIPT` §5.1**（**5060/3090**、**naive/fused**、**path-batch / §7 / SSGS / A2-S3**）；正式投稿前将对应句式 **粘贴进论文正文/附录** 即可。
 - [ ] **§7.5 S5** 总表是否补 —— **视截稿篇幅**（主图 PNG **已入仓** 三张 **`mamba_3090_naive_vs_fused_dim{128,256,384}_*.png`**）。
 
@@ -262,6 +262,6 @@ flowchart LR
 | 2026-04-10 | **`SUBMISSION_PACK.md`**：**§A1b** 摘要/引言；**§A2** 主文 6 CSV + 5060 grid 等 **存在性 ✅** |
 | 2026-04-10 | **备选推进 §B**（旧称无云端 §B）：本机 **§7 S1** + **B-S2 gpt2 topic heldout** 复跑 JSON；**`SUBMISSION_PACK`** **提交前检查**；**`LOCAL_5060_RUNBOOK` §5.1** |
 | 2026-04-10 | **P0**：**`SUBMISSION_PACK` A5–A7** 成文骨架与搁置表；**§B**：本机 **§7 S2 TF-R1 CPU** 确认 JSON |
-| 2026-04-10 | **投稿版对齐**：**`SUBMISSION_PACK` A2 扩表** + **A2.1/A8**；**`PHASE1_MANUSCRIPT` §5.1**、**`FIGURE_CAPTIONS_STAGE1` P0/五轴** 与 **`metrics_result` basename** 一致；**`NEXT_RESEARCH_PLAN`** 收口清单更新 |
+| 2026-04-10 | **投稿版对齐**：**`SUBMISSION_PACK` A2 扩表** + **A2.1/A8**；**`PHASE1_MANUSCRIPT` §5.1**、**`FIGURE_CAPTIONS_STAGE1` P0** 与 **`metrics_result` basename** 一致；**`NEXT_RESEARCH_PLAN`** 收口清单更新 |
 | 2026-04-10 | **§3 Phase M1**：**`SSGS_MAINLINE_M1.md`**；优先级表增 **M1**；**3090** 待办 **M1 优先**；**P1 B-S2+ CUDA** 标 **副线** |
 | 2026-04-11 | **§3 M1**：harness **已落地** 叙事；里程碑改为 **P0 + M1 脚注** 并行；**六轴** 混读禁令；**P★** 与 **M1 L3** 分工 |

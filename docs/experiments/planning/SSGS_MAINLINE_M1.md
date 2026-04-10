@@ -91,7 +91,7 @@
 
 ## 5. 相关文档
 
-- **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`** — 五轴、§3.5、L3 最小验证。  
+- **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`** — 六轴、§3.5、L3 最小验证。  
 - **`docs/overview/execution/NEXT_RESEARCH_PLAN.md`** — **M1** 与 **P0 成文 / P1 B-S2+ CUDA** 并行关系。  
 - **`docs/research/RESEARCH_NOTES.md`** §6–§7 — SSGS 与 §7 边界。  
 - **`scripts/README.md`** — 脚本索引（含 SSGS / §7）。  
