@@ -73,7 +73,7 @@
 - [x] **主图与登记对齐审计**：见 **`PHASE1_VALIDATION_PLAN.md` §6.5**（2026-04-09）：**A-20260408-paper-main-3090-*** ↔ `results/metrics_result/paper_main_*_{v1,naive_v1}.csv` ↔ `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`。  
 - [x] **`PHASE1_VALIDATION_PLAN.md` 结论段**：**§6.3**（结论文本）+ **§6.5**（引用规则）；**5060 vs 3090** 不可混填见 **§6.2**。  
 - [x] **§7 可复现性**：**2026-04-08** AutoDL 上已按附录 A 全量跑通 `run_path_protocol_cuda.sh`（`MAMBA2_RESULTS_ROOT` → `…/mamba2_results/metrics/`，`STAMP=20260408T1617Z`）；数值与 **`RESEARCH_NOTES` §7.3.1** / 仓内 `*_20260421.json` **同阶**，见 **`PHASE1_COMPLETE_SUMMARY.md` 附录 B**。  
-- [x] **阶段 2 入口草拟**：**`ROADMAP.md`「阶段 2 入口（一页）」**。
+- [x] **阶段 2 里程碑表**：**`NEXT_RESEARCH_PLAN.md` §2**（**`ROADMAP.md`** 仅入口指针）。
 
 ### 后续两周执行计划（主线，可勾选）
 

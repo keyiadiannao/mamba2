@@ -33,19 +33,9 @@
 
 ---
 
-## 阶段 2 入口（一页，滚动）
+## 阶段 2 入口
 
-**目标**（对齐 `PROJECT_MASTER_PLAN` 阶段 2）：在 **真语料** 上得到 **浅层树** + **与阶段 1 相同的 path reader harness**，并增加 **至少一个任务级指标**（导航或 QA），避免长期停在纯合成网格。
-
-| 项 | 说明 |
-|------|------|
-| **语料** | 优先扩展 **`benchmark_wikitext_tree.py` / `hf_corpus.wikitext2_leaf_chunks`**（已登记 **A-20260408-wikitext-3090-fused**）；或另增小语料 + `prepare_leaves_from_corpus.py` |
-| **建树** | 保持 **平衡 k 叉 / 自底向上** 与现有 `benchmark_text_tree` 接口一致；RAPTOR 式层次聚类 **可选**，以「能进同一 `run_tree_reader_benchmark`」为硬约束 |
-| **指标** | 阶段 1：**latency + m2_peak_mib**；阶段 2：**+1** 如路径准确率、浅层 QA EM/F1 或检索命中率（具体指标在开工前写入 **EXPERIMENT_REGISTRY** 新行） |
-| **依赖** | 阶段 1 **主图与登记**审计闭环（**`PHASE1_VALIDATION_PLAN.md` §6.5**）；AutoDL **`HF_ENDPOINT`** 与数据盘路径见 **`AUTODL_SETUP.md`** |
-| **风险** | 真树叶块长短不一 → 需固定 **padding/截断** 策略并在 registry 写明，避免与合成树混比 |
-
-**下一步可执行动作**：详见 **`NEXT_RESEARCH_PLAN.md`**（轨道 A/B/X、里程碑 **A2-S0…S4**、**B-S1…S3**、建议两周任务）。
+**不在此重复**：目标、语料/建树约束、里程碑 **A2-S0…S4**、**B-S1…S3** 的**完整表**见 **`NEXT_RESEARCH_PLAN.md` §1–§3**；**现状与五轴**见 **`RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**。
 
 ---
 

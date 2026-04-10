@@ -19,6 +19,8 @@
 | **C** | 检索头：轻量注入与训练 | 模块、训练脚本、消融 | `src/retrieval_head/`, `experiments/C-*` |
 | **X** | 横切：回溯/快照/评测协议 | 工具与统一指标；**SSGS**（含 **`MambaNavState` / `dfs_ssgs_mamba`**）与 §7 玩具 JSON | `src/rag_tree/ssgs.py`, `src/rag_tree/mamba_cache_utils.py`, `experiments/X-*` |
 
+**四条线依赖与范围长表**：**`PROJECT_MASTER_PLAN.md` §2–§3**（本节仅速查，避免双写）。
+
 **验证实验优先顺序（建议）**
 
 1. **X + A 最小闭环**：**同一棵树、固定检索预算**，**Mamba-2 vs Transformer reader**（主对照）；**平面 top-k RAG** 仅作可选消融，用于说明「树索引」相对「扁平块检索」的收益，**不必**与主对照混成一条必须故事线。
@@ -55,50 +57,18 @@ mamba2/
 
 ## 4. 阶段计划（与 6 个月总目标对齐，可裁剪）
 
-### 阶段 0：项目基建（第 1–2 周）
-
-- 双机 Python 环境一致（版本锁定文件见 `environment/`）。
-- 跑通「小数据 + 极小模型」在 5060 上的 smoke test；同一脚本在 AutoDL 上只改路径与 batch。
-- 填满 `docs/experiments/EXPERIMENT_REGISTRY.md` 表头；第一次登记「环境复现」实验。
-
-### 阶段 1：验证实验 — 树 RAG + Reader 对比（核心优先）
-
-- 构建或接入一层 RAPTOR 式树（可先浅层、小规模语料）。
-- 指标：**同等深度/预算**下的质量 + **序列长度扫描**下的延迟/显存。
-- 结论写入 registry：是否保留「Mamba 系统叙事」。
-
-### 阶段 2：检索头 — 分析（B）
-
-- 冻结主干，做探针/对比激活；文档化「哪些层/通道与检索决策相关」。
-
-### 阶段 3：检索头 — 注入与联合（C + A）
-
-- 轻量模块 + 训练策略；与树导航决策对齐；消融表。
-
-### 阶段 4：扩展（可选）
-
-- 状态快照回溯协议、生成式节点索引等（与讨论稿一致，依赖阶段 1 是否显示优势）。
+**月级阶段表、周次重叠说明**：**`PROJECT_MASTER_PLAN.md` §4**。**阶段 2 任务里程碑（A2-S*）**：**`NEXT_RESEARCH_PLAN.md` §2**。本节不复制，避免与总体规划双写。
 
 ---
 
 ## 5. 文档维护规则
 
 - **改代码必改登记**：新实验在 `docs/experiments/EXPERIMENT_REGISTRY.md` 增一行；重要结论复制到对应 `experiments/.../README.md`。
-- **周度**：更新 `docs/overview/ROADMAP.md` 勾选与下周三条可执行任务。
-- **月度**：在本文件「阶段计划」下追加一段「本月结论与下月假设」。
+- **周度（可执行勾选）**：**`docs/overview/CURRENT_SPRINT.md`**。**周历模板 / 历史**：**`docs/overview/ROADMAP.md`**（勿与 sprint 重复维护同一批勾选项）。
+- **月度**：在 **`PROJECT_MASTER_PLAN.md`** 或 **`RESEARCH_STATUS_AND_DIRECTION.md`** 补一句「本月结论与下月假设」，或写入 sprint 顶注。
 
 ---
 
 ## 6. 相关文件索引
 
-| 文档 | 用途 |
-|------|------|
-| `docs/overview/ROADMAP.md` | 周粒度任务与里程碑 |
-| `docs/environment/SYNC_AND_ENVIRONMENTS.md` | 5060 / AutoDL 分工与同步 |
-| `docs/experiments/EXPERIMENT_REGISTRY.md` | 实验 ID、命令、指标、结论 |
-| `docs/experiments/PHASE1_VALIDATION_PLAN.md` | 阶段 1 验证目标、扫参网格、产出与判据 |
-| `docs/overview/PROJECT_MASTER_PLAN.md` | **6 个月级总体规划**、四条线、风险、里程碑 |
-| `docs/overview/CURRENT_SPRINT.md` | **当前 1–2 周**执行任务（滚动） |
-| `docs/experiments/DATASETS.md` | 数据与样例路径约定 |
-| `docs/environment/AUTODL_SETUP.md` | 云端实例克隆、环境、smoke、扫参 |
-| `docs/environment/MAMBA_SSM_INSTALL_LINUX.md` | AutoDL 上安装融合核（causal-conv1d、mamba-ssm） |
+**完整分层索引与单一权威矩阵**：**`docs/README.md`**。

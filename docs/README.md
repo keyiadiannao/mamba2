@@ -2,6 +2,21 @@
 
 对外入口：仓库根目录 **`README.md`**。本文件按**职责**分层，减少在 `overview/` 多份总览之间的重复阅读。
 
+## 单一权威（避免双写）
+
+以下主题**只在该处维护长文/长表**；其他文档仅**链接**，不复制同一段落。
+
+| 主题 | 唯一权威 |
+|------|----------|
+| 叙事框架、基线对照、A/B/C/X 四条线、月级阶段表 | [`overview/PROJECT_MASTER_PLAN.md`](overview/PROJECT_MASTER_PLAN.md) |
+| **现状**大表、五轴防混读、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/RESEARCH_STATUS_AND_DIRECTION.md`](overview/RESEARCH_STATUS_AND_DIRECTION.md) |
+| 轨道里程碑（A2-S*、B-S*）、**当前收口清单**、P0–P3 / 无云端 §A–§C | [`overview/NEXT_RESEARCH_PLAN.md`](overview/NEXT_RESEARCH_PLAN.md) |
+| **本周**勾选、阻塞、周期说明 | [`overview/CURRENT_SPRINT.md`](overview/CURRENT_SPRINT.md) |
+| 本机 5060 **可复制命令**与章节索引 | [`environment/LOCAL_5060_RUNBOOK.md`](environment/LOCAL_5060_RUNBOOK.md) |
+| 云端扫参 shell、§7 depth、**TAG/STAMP** 约定 | [`environment/SERVER_SWEEP_RUNBOOK.md`](environment/SERVER_SWEEP_RUNBOOK.md) + [`environment/NEXT_EXPERIMENTS_COMMANDS.md`](environment/NEXT_EXPERIMENTS_COMMANDS.md) |
+| 实验 id、路径、结论一行 | [`experiments/EXPERIMENT_REGISTRY.md`](experiments/EXPERIMENT_REGISTRY.md) |
+| 周历**模板**、历史一行记录 | [`overview/ROADMAP.md`](overview/ROADMAP.md)（可执行项见 **CURRENT_SPRINT**） |
+
 ## 0. 三分钟：该读哪份？
 
 | 目的 | 文件 |
@@ -37,7 +52,7 @@
 | [`NEXT_RESEARCH_PLAN.md`](overview/NEXT_RESEARCH_PLAN.md) | 中长期任务表、收口清单 |
 | [`PROJECT_MASTER_PLAN.md`](overview/PROJECT_MASTER_PLAN.md) | 里程碑式总体规划（月级） |
 | [`PROJECT_OVERVIEW.md`](overview/PROJECT_OVERVIEW.md) | 目标、**A/B/C/X** 分类、**仓库目录树**；执行细节指向上表与 registry |
-| [`ROADMAP.md`](overview/ROADMAP.md) | 周历**模板**与里程碑对照；**可执行项以 CURRENT_SPRINT 为准**，避免与 sprint 双写 |
+| [`ROADMAP.md`](overview/ROADMAP.md) | 周历**模板**、里程碑对照与**历史**一行；**阶段 2 详表**见 **NEXT_RESEARCH_PLAN §2**；**可执行勾选**以 **CURRENT_SPRINT** 为准 |
 
 ## 3. 实验与数据
 

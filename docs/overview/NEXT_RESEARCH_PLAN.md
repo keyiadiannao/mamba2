@@ -1,34 +1,21 @@
 # 下一步研究计划（展开）
 
 > **先读**：**`RESEARCH_STATUS_AND_DIRECTION.md`**（整体方向、现状、**§3.5 对外叙事批判性接收与证据层级**、决策原则、**§6 公平性与何时换更大模型**、与本文件 **推荐顺序** 的对应）。  
-> **前置**：阶段 1 已收束（**`PHASE1_MANUSCRIPT.md`**、**`results/metrics_result/`**、§7 复跑验收）。本文将 **`ROADMAP.md` 阶段 2 入口** 与 **`PROJECT_MASTER_PLAN.md`** 工作分解 **展开为可执行任务**；**周期勾选**仍以 **`CURRENT_SPRINT.md`** 为准。
+> **前置**：阶段 1 已收束（**`PHASE1_MANUSCRIPT.md`**、**`results/metrics_result/`**、§7 复跑验收）。本文将 **`PROJECT_MASTER_PLAN.md`** 工作分解 **展开为可执行任务**（**`ROADMAP.md`** 仅保留 **阶段 2 入口指针**，不重复里程碑表）；**周期勾选**仍以 **`CURRENT_SPRINT.md`** 为准。
 
 ---
 
-## 项目现状快照（文档 + 实验；**本站 `HEAD`** 以 **`git rev-parse --short HEAD`** 为准）
+## 项目现状快照
 
-### 1. 主线材料（成文可引用；登记见 **`EXPERIMENT_REGISTRY.md`**）
+**主线材料、完成度大表、五轴防混读**：**唯一权威** **`RESEARCH_STATUS_AND_DIRECTION.md` §2–§3**（不在此重复表格）。**本机可复制命令**：**唯一权威** **`docs/environment/LOCAL_5060_RUNBOOK.md`**。
 
-| 轴 | 状态 |
-|----|------|
-| **Path-batch 主文** | **3090** fused vs naive **`paper_main_*` CSV** + **`results/metrics/figures/mamba_3090_naive_vs_fused_dim*.png`**；**5060 HF naive** Wikitext 动机与 **3090 fused** **须分列脚注** |
-| **阶段 2 Wikitext 效率** | **3090** 四格、**dim256**、**叶数扫描 8→64**、**XL 128/256** 等 **JSON/CSV/manifest** 已归档 **`results/metrics_result/`** |
-| **§7 玩具协议** | **S1–S4** + **depth 5–6** 扩展已归档；与 path-batch **分列**（**`FIGURE_CAPTIONS_STAGE1.md`** **五轴**） |
-| **A2-S3** | **3090** **`init_seed`×5**（**n16/n32**、**leaf_heldout**）；**本机** **stratified n8**（**`task_wikitext_sibling8_local5060_cpu_20260410.json`** 等） |
-| **机制 B-S2+** | **本机** ridge **n8/n16**、**BCE train50**（**`probe_path_reader_*_local5060.json`**）；**3090 CUDA 同脚本去 `--cpu`** 仍为 **待补对照行** |
-| **SSGS × Wikitext** | **`metrics_result`** **grid（n8–64，c8 dim128）**；**本机** 另存 **c4 dim64** 轻量 JSON（**分列**） |
-
-### 2. 本机（RTX 5060 / **`mamba2`**）已跑通项（与云端 **分列**）
-
-手册：**`docs/environment/LOCAL_5060_RUNBOOK.md`**。**B-S2+**（ridge + 可选 train50）、**A2-S3 n8**、**Wikitext path-batch**（**CUDA 峰值 smoke** + **CPU 可跑性**）、**SSGS 轻量**、登记 id **`X-20260410-local5060-*`** / **`X-20260407-local5060-bs2plus-rerun`** —— **本轨道已无未跑阻塞项**；新数字仅属 **可选扩展**（如 **`probe_retrieval_correlation.py`**、更大 **A2-S3** 格点）。
-
-### 3. 测试与仓库卫生
+### 1. 测试与仓库卫生
 
 - **`pytest tests/`**（须 **`mamba2`** 等有 **torch** 的环境）：**20 passed**（全量；约 **15 s** 量级，以本机为准）。
 - **`py -3 -m pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py -q`**：**无 torch** 亦可跑（**2** 条），见 **`LOCAL_5060_RUNBOOK` §5**。
 - **`git status`**：提交前自检应保持 **干净**；勿手改污染 **`metrics_result/`** 归档。
 
-### 4. 仍依赖云端（AutoDL / **RTX 3090**）
+### 2. 仍依赖云端（AutoDL / **RTX 3090**）
 
 1. **B-S2+ CUDA**：**`probe_path_reader_linear.py`** **去掉 `--cpu`** 一条 JSON → **与 `PHASE1_MANUSCRIPT` §9.1 本机 CPU 分列**。  
 2. **SSGS**：**`git pull` 后** **`demo_ssgs_mamba_wikitext.py` n8**（**c8 dim128**，与 grid 一致）刷新 **`git_sha`**。  
@@ -92,10 +79,6 @@
 
 ## 当前收口清单（工作台整理；与 **`PHASE1_MANUSCRIPT.md` §10** 对齐）
 
----
-
-## 当前收口清单（工作台整理；与 **`PHASE1_MANUSCRIPT.md` §10** 对齐）
-
 **成文（优先，不占 GPU）**
 
 - [x] **归档路径核对**：见 **`PHASE1_MANUSCRIPT.md` §5.1**（主图 PNG、**`paper_main_*` CSV**、§7、5060、阶段 2、A2-S3、SSGS）；五轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
@@ -123,23 +106,7 @@
 
 **已就绪（无需再跑也能写）**：阶段 2 **path-batch** 叶数扫描与 XL、**§7 depth 5–6**、**A2-S3 init×5**、**Wikitext SSGS grid（n8–64）** —— 见 **登记册** 与 **`PHASE1_MANUSCRIPT` §5** 表。
 
-### 本机 **RTX 5060** 可推进（轻量；与 **3090 登记级** 分列）
-
-**可复制命令与 Windows / conda 说明**：**`docs/environment/LOCAL_5060_RUNBOOK.md`**（**勿**用 **Anaconda base** 下损坏的 **torch DLL**；先 **`conda activate mamba2`** 或可用 env）。
-
-以下 **不占云端 3090**；**显存/时间**仍须自负。**HF naive Mamba** 在 5060 上 **峰值可达 GiB 级**，与 **3090 fused** **禁止无脚注混表**。
-
-| 目的 | 命令或脚本 | 说明 |
-|------|------------|------|
-| **机制 B-S2+（CPU）** | **`LOCAL_5060_RUNBOOK` §2** / **`NEXT_EXPERIMENTS_COMMANDS.md` §6**：`probe_path_reader_linear.py --cpu`** → JSON | 与 path-batch **分列**；可改 **`--train-steps`** 做 BCE 消融 |
-| **检索探针 B-S2（CPU）** | **`probe_retrieval_correlation.py`**（见 **`RETRIEVAL_HEAD_NOTES.md` §2**） | 小模型、**`--cpu`** |
-| **Wikitext path-batch smoke** | **`LOCAL_5060_RUNBOOK` §3**：**`benchmark_wikitext_tree.py`** **n8/c8/dim128** | **5060 CUDA** 或 CPU；**naive** 峰值高属预期 |
-| **A2-S3 小格（CPU）** | **`task_wikitext_path_pair.py`** **`--num-leaves 8`** **`--cpu`** | 全树前向 + ridge，**慢但可跑**；归档 **`results/metrics/`** |
-| **SSGS Wikitext（CPU）** | **`LOCAL_5060_RUNBOOK` §4**：**`demo_ssgs_mamba_wikitext.py --cpu`** | **torch** 须可用 |
-| **§7 玩具（CPU）** | **`benchmark_mamba2_cache_snapshot_segments.py --device cpu`** 等 | 见 **`SERVER_SWEEP_RUNBOOK`** |
-| **回归** | **`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`** | **无 torch**；已可作为本地 **smoke** |
-
-**若要 5060 CUDA 上「新数字」**：优先 **短 smoke**（**n8、c8**），**`--out-json`** 带 **`git_sha`**；**登记新行** 并 **脚注 GPU 型号 + naive/fused**。
+**本机 5060 可复制命令**（含 B-S2+ / Wikitext / SSGS / §7 CPU）：**唯一权威** **`docs/environment/LOCAL_5060_RUNBOOK.md`**；**勿**在此文件维护第二份命令表。
 
 ---
 
@@ -245,11 +212,9 @@ flowchart LR
 
 ---
 
-## 6. 建议的最近两周（复制到 `CURRENT_SPRINT`）
+## 6. 建议的最近两周
 
-1. **A2-S0**：**EXPERIMENT_REGISTRY** 新增 **`A-stage2-wikitext-grid-v1`**（或自定 id），填 **目的 + 指标列模板**。  
-2. **A2-S1**：跑 **§2.4** smoke，**json** 入 **`results/metrics_result/`**，**git commit**。  
-3. **B-S1**：新建 **`docs/research/RETRIEVAL_HEAD_NOTES.md`** 提纲（问题定义、与树导航的关系、不做什么）。
+**唯一维护处**：**`docs/overview/CURRENT_SPRINT.md`**。请勿在本节复制粘贴周任务（曾与 sprint **双写**）。
 
 ---
 

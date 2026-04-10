@@ -82,7 +82,7 @@
 ## 5. 里程碑产出物
 
 - **工程**：`src/rag_tree/` 建树与 reader 基准；`src/retrieval_head/`；配置与脚本；`results/metrics/*.csv`。  
-- **文档**：`docs/overview/PROJECT_MASTER_PLAN.md`（本文件）、`docs/experiments/PHASE1_VALIDATION_PLAN.md`、`docs/experiments/EXPERIMENT_REGISTRY.md`、`docs/overview/ROADMAP.md`。  
+- **文档**：本文件；**分层索引与「单一权威」矩阵**：**`docs/README.md`**；**当前迭代勾选**：**`docs/overview/CURRENT_SPRINT.md`**；**周历模板**（勿与 sprint 双写）：**`docs/overview/ROADMAP.md`**；**`docs/experiments/PHASE1_VALIDATION_PLAN.md`**；**`docs/experiments/EXPERIMENT_REGISTRY.md`**。  
 - **学术**：1 篇主投（系统 + 机制）或 1 系统 + 1 机制短文；具体在阶段 1 结束后根据数据定题。
 
 ---
@@ -117,20 +117,10 @@
 
 ## 9. 文档与仓库导航
 
-| 文档 | 内容 |
-|------|------|
-| `docs/overview/PROJECT_MASTER_PLAN.md` | 本总体规划 |
-| `docs/overview/PROJECT_OVERVIEW.md` | 精简总览 + 目录约定 |
-| `docs/experiments/PHASE1_VALIDATION_PLAN.md` | 阶段 1 扫参与判据 |
-| `docs/overview/CURRENT_SPRINT.md` | **当前 1–2 周可执行任务**（滚动更新） |
-| `docs/environment/SYNC_AND_ENVIRONMENTS.md` | 双机与同步 |
-| `docs/overview/ROADMAP.md` | 周历 |
-| `docs/experiments/EXPERIMENT_REGISTRY.md` | 实验登记表 |
+**完整分层索引与「单一权威」**（避免与各 overview 双写长表）：**`docs/README.md`**。
 
 ---
 
 ## 10. 当前进度快照（维护方式）
 
-在 `docs/overview/CURRENT_SPRINT.md` 顶部更新 **已完成 / 进行中 / 下一步** 三行即可；重大节点再改本文件「进度快照」段落。
-
-**截至规划落盘时**：阶段 0 基本完成；阶段 1 已完成玩具树、单次基准、本地扫参 CSV 与规划文档；**下一工作包**见 `docs/overview/CURRENT_SPRINT.md`。
+**唯一滚动维护**：**`docs/overview/CURRENT_SPRINT.md`**。本文件为 **月级规划**，不在此重复 sprint 勾选。
