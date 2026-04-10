@@ -56,8 +56,8 @@
 
 | 类别 | 文件名模式 | 说明 |
 |------|------------|------|
-| **主文 fused CSV** | `paper_main_dim{128,256,384}_paper_main_v1.csv` | 3090 fused 网格 |
-| **主文 naive CSV** | `paper_main_*_paper_main_naive_v1.csv` | 同机 naive |
+| **主文 fused CSV** | **`paper_main_dim128_localgrid_paper_main_v1.csv`**；**`paper_main_dim{256,384}_paper_main_v1.csv`** | 3090 fused；**dim128** 文件名为 **localgrid**（与 dim256/384 **同登记轮次**，见 **登记册**） |
+| **主文 naive CSV** | **`paper_main_dim128_localgrid_paper_main_naive_v1.csv`**；**`paper_main_dim{256,384}_paper_main_naive_v1.csv`** | 同机 naive |
 | **Manifest** | `paper_main_manifest_paper_main_{v1,naive_v1}.txt` | 环境元数据 |
 | **主图** | `results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png` | 与 **pair** 登记对应（相对仓库根） |
 | **§7 复跑（2026-04-08）** | `mamba2_cache_snap_segments_depth4_cuda_20260408T1617Z.json` 等 6 文件 | S1–S4 + branchdemo；另含 `*_20260408T1030Z` 为同协议早次复跑 |
@@ -72,6 +72,22 @@
 | **SSGS × Mamba × Wikitext 同树** | `ssgs_mamba_wikitext_*.json`、`ssgs_mamba_wikitext_grid.csv` | **X-20260407-ssgs-mamba-wikitext-tree**；**`aggregate_ssgs_mamba_wikitext_json.py`**；与 **path-batch**、**§7** **分列**（**§4**） |
 
 **历史归档**（仍在 `results/metrics/`）：`**_20260421.json** 系列，与 **X-20260421-*** 登记一一对应；与 `metrics_result` 中 **STAMP** 文件 **并存**，便于 diff。
+
+### 5.1 成文核对（本仓库路径；**2026-04-07**）
+
+以下已由仓库内 **文件存在性** 核对（投稿前若重跑数据，以 **JSON/`git_sha`** 为准再扫一遍）。
+
+| 核对项 | 状态 | 备注 |
+|--------|------|------|
+| **主文 CSV + Manifest** | **齐** | **`paper_main_dim128_localgrid_paper_main_{v1,naive_v1}.csv`**；**`paper_main_dim{256,384}_paper_main_{v1,naive_v1}.csv`**；**`paper_main_manifest_paper_main_{v1,naive_v1}.txt`** |
+| **主图 PNG（naive vs fused）** | **齐** | **`results/metrics/figures/mamba_3090_naive_vs_fused_dim{128,256,384}_paper_main_v1.png`**（各一张） |
+| **§7 + 玩具 JSON** | **齐** | **`metrics_result/`** 内 **`…1617Z`** 等；**`results/metrics/*_20260421.json`** 与登记 **X-20260421-*** 对应 |
+| **5060 Wikitext 动机** | **齐** | **`benchmark_wikitext_5060_cuda_*_20260407.json`**、**`…_grid_20260407.csv`** |
+| **阶段 2 path-batch 归档** | **齐** | **leavescale / XL / dim256 / §7 depth** 等见 **§5** 表与 **登记册** |
+| **A2-S3 init×5** | **齐** | **`task_wikitext_sibling{16,32}_*_1438Z.json`** |
+| **SSGS Wikitext** | **齐** | **`ssgs_mamba_wikitext_grid.csv`** + **`ssgs_mamba_wikitext_*.json`** |
+
+**四类数字分列脚注（正文须显式）**：**①** **5060 + HF naive** 与 **②** **3090 + fused** **不可同表无标注混点**；**③** **path-batch 墙钟/m2_peak** 与 **④** **§7 单列毫秒**、**⑤** **SSGS 快照/回滚计数**、**⑥** **A2-S3 准确率** **各为独立测量轴**（**`FIGURE_CAPTIONS_STAGE1.md`** 篇首）。**§7.5 S5**「同轨迹总表」仍为 **可选**，视截稿篇幅（**§10** 第 4 条）。
 
 ---
 
@@ -184,3 +200,5 @@ We benchmark Transformer, GRU, and Mamba-2 **path readers** on tree-structured r
 | 2026-04-07 | **§10 / §4 SSGS**：**Wikitext 同树** — **`demo_ssgs_mamba_wikitext.py`**、登记 **X-20260407-ssgs-mamba-wikitext-tree** |
 | 2026-04-07 | **成文收口**：摘要/§4/§5/§6/§7 英摘/§10 补 **Wikitext SSGS grid**；**§5** 表增 **`ssgs_mamba_wikitext_*`** |
 | 2026-04-07 | **§10**：**`NEXT_RESEARCH_PLAN.md`** 增 **「当前收口清单」**（成文 / 仓库 hygiene / 可选 GPU 一条） |
+| 2026-04-07 | **§5.1 成文核对**：主图 PNG、CSV、§7、5060、SSGS、A2-S3 **路径核对表**；**脚注矩阵**一句 |
+| 2026-04-07 | **§5 表**：**dim128** 主文 CSV 实际文件名为 **`paper_main_dim128_localgrid_*`**（与 dim256/384 **分列一行** 说明） |

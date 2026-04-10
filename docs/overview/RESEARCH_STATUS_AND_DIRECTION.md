@@ -2,7 +2,7 @@
 
 > **读法**：先读本文 **§1–§3** 建立共识；**§4** 为决策规则；**§5** 为推荐执行顺序（与 **`NEXT_RESEARCH_PLAN.md`** 细节一致）。  
 > **更长规划**仍以 **`PROJECT_MASTER_PLAN.md`** 为准；**阶段 1 成稿**见 **`PHASE1_MANUSCRIPT.md`**。  
-> **可执行勾选清单**（成文 / 仓库 / 可选实验）：**`NEXT_RESEARCH_PLAN.md`** 篇首 **「当前收口清单」**。
+> **可执行勾选清单**（成文 / 仓库 / 可选实验）：**`NEXT_RESEARCH_PLAN.md`** 篇首 **「当前收口清单」**；**归档路径核对表**：**`PHASE1_MANUSCRIPT.md` §5.1**；**本机 5060 轻量实验**：**`NEXT_RESEARCH_PLAN.md`** **「本机 RTX 5060 可推进」** 表。
 
 ---
 

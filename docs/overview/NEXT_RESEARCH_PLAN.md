@@ -9,14 +9,14 @@
 
 **成文（优先，不占 GPU）**
 
-- [ ] 通读 **`PHASE1_MANUSCRIPT.md` §8–§10**，把 **登记册**（**`EXPERIMENT_REGISTRY.md`**）与 **`results/metrics_result/`** 里 **已引用文件名** 核对一遍，五轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
-- [ ] **5060 vs 3090**、**naive vs fused**、**path-batch vs §7 vs SSGS vs A2-S3** 四类数字 **分列脚注** 写进正文/附录（禁止无标注混表）。
-- [ ] 主图 PNG 是否入仓、**§7.5 S5** 总表是否补 —— **视截稿篇幅**（**`PHASE1_MANUSCRIPT` §10** 第 4 条）。
+- [x] **归档路径核对**：见 **`PHASE1_MANUSCRIPT.md` §5.1**（主图 PNG、**`paper_main_*` CSV**、§7、5060、阶段 2、A2-S3、SSGS）；五轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
+- [x] **分列脚注规则**：已写入 **`PHASE1_MANUSCRIPT` §5.1**（**5060/3090**、**naive/fused**、**path-batch / §7 / SSGS / A2-S3**）；正式投稿前将对应句式 **粘贴进论文正文/附录** 即可。
+- [ ] **§7.5 S5** 总表是否补 —— **视截稿篇幅**（主图 PNG **已入仓** 三张 **`mamba_3090_naive_vs_fused_dim{128,256,384}_*.png`**）。
 
 **仓库与数据 hygiene**
 
-- [ ] **`git status`** 干净；勿让 Excel/手改 **污染** 已归档 **`benchmark_wikitext_stage2_*`** / **`…leavescale_xl_*`**（误改用 **`git restore results/metrics_result/<file>`** 回滚）。
-- [ ] **SSGS Wikitext** 以 **`ssgs_mamba_wikitext_grid.csv`** + **`ssgs_mamba_wikitext_*.json`** 为准；勿保留 **`…grid-Copy1.csv`** 等重复副本在 **`metrics_result/`**。
+- [ ] **`git status`** 干净（提交前自检）；勿让 Excel/手改 **污染** 已归档 **`benchmark_wikitext_stage2_*`** / **`…leavescale_xl_*`**（误改用 **`git restore results/metrics_result/<file>`** 回滚）。
+- [x] **SSGS Wikitext**：以 **`ssgs_mamba_wikitext_grid.csv`** + **`ssgs_mamba_wikitext_*.json`** 为准；**勿**保留 **`…grid-Copy1.csv`** 等重复副本。
 
 **服务器有空时（可选一条即可）**
 
@@ -25,6 +25,22 @@
 - [ ] **SSGS n128**（**`--num-leaves 128`**，CUDA）+ **`aggregate_ssgs_mamba_wikitext_json.py --append`** —— **辅线延长**，非主线阻塞（**`NEXT_EXPERIMENTS_COMMANDS.md` §10**）。
 
 **已就绪（无需再跑也能写）**：阶段 2 **path-batch** 叶数扫描与 XL、**§7 depth 5–6**、**A2-S3 init×5**、**Wikitext SSGS grid（n8–64）** —— 见 **登记册** 与 **`PHASE1_MANUSCRIPT` §5** 表。
+
+### 本机 **RTX 5060** 可推进（轻量；与 **3090 登记级** 分列）
+
+以下 **不占云端 3090**；**显存/时间**仍须自负。**HF naive Mamba** 在 5060 上 **峰值可达 GiB 级**，与 **3090 fused** **禁止无脚注混表**。
+
+| 目的 | 命令或脚本 | 说明 |
+|------|------------|------|
+| **机制 B-S2+（CPU）** | **`NEXT_EXPERIMENTS_COMMANDS.md` §6**：`probe_path_reader_linear.py --cpu`** → JSON | 与 path-batch **分列**；可改 **`--train-steps`** 做 BCE 消融 |
+| **检索探针 B-S2（CPU）** | **`probe_retrieval_correlation.py`**（见 **`RETRIEVAL_HEAD_NOTES.md` §2**） | 小模型、**`--cpu`** |
+| **Wikitext path-batch smoke** | **`benchmark_wikitext_tree.py`** **`--num-leaves 8`** **`--chunk-len 8`** **`--dim 128`**，**5060 CUDA** 或 **`--cpu`** | 验证 harness + **HF**；动机表见 **`PHASE2_DRAFT` §1.1**（**naive** 峰值高属预期） |
+| **A2-S3 小格（CPU）** | **`task_wikitext_path_pair.py`** **`--num-leaves 8`** **`--cpu`** | 全树前向 + ridge，**慢但可跑**；归档 **`results/metrics/`** |
+| **SSGS Wikitext（CPU）** | **`demo_ssgs_mamba_wikitext.py --cpu`** **`--dim 64`** **`--chunk-len 4`** **`--num-leaves 8`** | 与 **`NEXT_EXPERIMENTS` §10** 一致；**Windows** 若 **torch DLL** 异常则 **skip** 单测 |
+| **§7 玩具（CPU）** | **`scripts/research/benchmark_mamba2_cache_snapshot_segments.py --device cpu`** 等 | 与 **CUDA 归档** **分列**；见 **`SERVER_SWEEP_RUNBOOK`** |
+| **回归** | **`pytest tests/test_aggregate_ssgs_mamba_wikitext_json.py`**（无 torch）等 | CI/本地冒烟 |
+
+**若要 5060 CUDA 上「新数字」**：优先 **短 smoke**（**n8、c8**），**`--out-json`** 带 **`git_sha`**；**登记新行** 并 **脚注 GPU 型号 + naive/fused**。
 
 ---
 
