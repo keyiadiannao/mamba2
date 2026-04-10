@@ -25,7 +25,7 @@
 
 | 文件 | 行数（量级） | 说明 |
 |------|----------------|------|
-| **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** | **13**（**数据行**；+1 表头 ⇒ 文件 **14** 行） | **M1** 三臂 + 多 **STAMP**；含 **L3** 列（隐状态余弦、下游 CE） |
+| **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** | **N**（**数据行**；**N** = **`aggregate_ssgs_vs_kv_wikitext_json.py` stdout**；全量 JSON 时常 **15**，子集时 **13**；+1 表头） | **M1** 三臂 + 多 **STAMP**；含 **L3** 列（隐状态余弦、下游 CE） |
 | **`results/metrics_result/ssgs_mamba_wikitext_grid.csv`** | **13** | **SSGS × Mamba** 同 Wikitext 建树；含 **n128** |
 | **`results/metrics_result/benchmark_wikitext_stage2_leavescale_grid_20260410T1240Z.csv`** | **12** | **path-batch** **n∈{8,16,32,64}** **c8 dim128**（与 **20260409T1257Z** 档 **分列**） |
 
@@ -102,3 +102,4 @@
 | 2026-04-11 | **§2.6**：**阶段 C** **L3 轨迹** 脚本与登记指针 |
 | 2026-04-11 | **§2.6**：**CUDA** **`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`** 入仓 |
 | 2026-04-11 | **§0**：核心 JSON 与登记 id **速查表** |
+| 2026-04-11 | **§1 M1 grid**：**N** 行 = **`aggregate_*` stdout**（全量常 **15** 数据行） |

@@ -51,4 +51,4 @@
 | 日期 | 说明 |
 |------|------|
 | 2026-04-11 | 初版：阶段 0–7 表 + 阶段 5 清单 + 与 MASTER_PLAN 映射 |
-| 2026-04-11 | **M1 nav grid**：文档统一为 **13 数据行**（+ 表头）；核对见 **`SUBMISSION_PACK` §A2**；重跑 **`NEXT_EXPERIMENTS_COMMANDS` §12** |
+| 2026-04-11 | **M1 nav grid**：**N 数据行** = **`aggregate_*` stdout**（全量 JSON 常 **15**）；核对见 **`SUBMISSION_PACK` §A2**；**§12** 用 **`python -m pytest`** |

@@ -404,10 +404,10 @@ python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
 python scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py \
   -g 'results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_*.json' \
   --out-csv results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv
-# 期望：M1 nav 表为 13 数据行 + 1 表头；json_path 列为 results/metrics_result/...
+# 期望：脚本打印 wrote ... (N row(s)) — **N = 数据行**（无表头）；**N** 随通配到的 JSON 个数变（例 **13 / 15**）；**json_path** 列应为 **results/metrics_result/...**
 
-# 2) 全量单测（须 torch）
-pytest tests/ -q
+# 2) 全量单测（须 torch；AutoDL 常无 pytest 入口，勿用裸 pytest）
+python -m pytest tests/ -q
 
 # 3) 可选：git_sha 刷新 — M1 单格（改 STAMP / 路径见 §10.1）
 # STAMP=$(date -u +%Y%m%dT%H%MZ)
@@ -416,7 +416,7 @@ pytest tests/ -q
 # 然后重复步骤 1) 中第二条 aggregate
 ```
 
-**说明**：**§A2** 完整表与登记 id 见 **`docs/overview/execution/SUBMISSION_PACK.md` §A2**；**M1 行数** 以 **`SUBMISSION_PACK` 核对摘要** 为准（**勿写 15 行**）。
+**说明**：**§A2** 完整表与登记 id 见 **`docs/overview/execution/SUBMISSION_PACK.md` §A2**；**M1 / SSGS 数据行数** 以 **本步 `aggregate_*` stdout 的 `N row(s)`** 为准（**勿与旧稿硬编码数字打架**）。
 
 ---
 
