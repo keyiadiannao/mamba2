@@ -153,7 +153,7 @@
 
 | 顺序 | 动作 | 目的 |
 |------|------|------|
-| **0** | **M1**：**已登记** **`X-ssgs-vs-kv-tree-nav-m1`**；**n64**、**L3**（隐状态 **n8** + 下游 CE **n8–n64**）、**网格 CSV ≈15 行** 已归档（**`DATA_ARCHIVE_202604_SERVER.md`**）；**成文** 固化 **第七轴（M1）**；可选 **`git pull` 后单点 smoke 刷新 `git_sha`** | **玩具轨迹甲·乙** 已 **`tf_kv_trajectory_l3_minimal`**（**第七轴旁支 / 脚注分列**）；**训练型 L3** 另 **`kind`**；**训练型子头** 与树 LM **分列** |
+| **0** | **M1**：**已登记** **`X-ssgs-vs-kv-tree-nav-m1`**；**n64**、**L3**（隐状态 **n8** + 下游 CE **n8–n64**）、**网格 CSV 13 数据行**（+ 表头；**`DATA_ARCHIVE_202604_SERVER.md`**）已归档；**成文** 固化 **第七轴（M1）**；可选 **`git pull` 后单点 smoke 刷新 `git_sha`** | **玩具轨迹甲·乙** 已 **`tf_kv_trajectory_l3_minimal`**（**第七轴旁支 / 脚注分列**）；**训练型 L3** 另 **`kind`**；**训练型子头** 与树 LM **分列** |
 | **1** | **登记**：**EXPERIMENT_REGISTRY** 新增 **阶段 2 / Wikitext 网格** 占位行（如 **`A-stage2-wikitext-grid-v1`**） | 固定 **承诺** 与 **指标列模板**，避免散跑 |
 | **2** | **A2-S1**：`benchmark_wikitext_tree.py` **smoke** → JSON 入 **`results/metrics_result/`** | 验证 **HF + fused + harness** 在阶段 2 网格上仍 **可跑通** |
 | **3** | **B-S1 / B-S2 / B-S2+**：**`RETRIEVAL_HEAD_NOTES.md`**（§2 / §4 GPT-2 探针；§5 叙事；§7 **path reader** 探针） | **机制线** 与 **系统线** 对齐；**per-head** 仍属 **B-S3** |
@@ -237,3 +237,4 @@
 | 2026-04-11 | **§2.1** 叙事边界 **七线**（含 **L3 轨迹玩具**）；**§3** **七轴** 正交表述；**§5 顺序 0** 与 **`NEXT_RESEARCH_PLAN` §0** 对齐 |
 | 2026-04-11 | **§1.5**：长期 **北星**（快照回溯 vs KV、SSGS、Agent 动机）与 **阶段 1–2 地基** 分界；对齐 **§3.5** 风险与 PoC |
 | 2026-04-11 | **§7 文档地图**：**`RESEARCH_PHASES_0_TO_DONE.md`**（阶段 0–7 + 阶段 5 清单） |
+| 2026-04-11 | **§5 顺序 0 / M1**：nav grid **13 数据行**（+ 表头）；与 **`SUBMISSION_PACK` §A2**、**`DATA_ARCHIVE`** 对齐 |

@@ -42,6 +42,8 @@
 
 **仓库扫描（2026-04-11）**：下列路径均已 **存在**（相对仓库根 **`results/metrics_result/`** 除非另写 **`results/metrics/`**）；**`json_path`** 列以 **仓内聚合** 为准时多为 **`results/metrics_result/…`（POSIX）**。
 
+**核对摘要（当前工作区，2026-04）**：主图 **PNG×3**、**`paper_main_*` CSV/manifest**、**5060 四格**、**stage2 fused/R2/dim256/leavescale（1257Z+1240Z）**、**headcheck**、**B-S2+ CUDA**、**XL n128/n256**、**§7 depth 5–6** 样例、**A2-S3**（1438Z/0820Z/0850Z + **TSV**）、**`ssgs_mamba_wikitext_grid.csv`**、**`benchmark_wikitext_ssgs_bundle_*`**、**`tf_kv_trajectory_l3_minimal_*`** — **basename 均存在**。**M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**：**13 条数据行 + 1 表头**（全文 **14 行**）；成文写 **「13 条合并行」** 或 **「13 JSON 对应行」**，**勿**再写 **15 行**。若 CSV 内 **`json_path`** 仍为 **`/root/autodl-tmp/...`**，在仓根重跑 **`aggregate_ssgs_vs_kv_wikitext_json.py`** / **`aggregate_ssgs_mamba_wikitext_json.py`** 可改为 **`results/metrics_result/…`**（见 **`NEXT_EXPERIMENTS_COMMANDS.md` §12**）。
+
 | 类别 | 路径（投稿正文/附录请 **逐字** 引用 basename） | 状态 |
 |------|------|------|
 | 主图 PNG ×3 | `results/metrics/figures/mamba_3090_naive_vs_fused_dim128_paper_main_v1.png` 及 **dim256 / dim384** 同名模式 | ✅ |
@@ -62,7 +64,7 @@
 | **A2-S3** init×5 | `…/task_wikitext_sibling16_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json`、**`…_20260410T0820Z.json`**（与 1438Z 聚合一致）；**sibling32** **`…_20260409T1438Z.json`**、**`…_20260410T0850Z.json`** | ✅ |
 | **A2-S3 贴表 TSV** | `…/task_wikitext_sibling16_c8_leafheldout6_initseed5_summary_20260410T0820Z.tsv`、`…_sibling32_…_summary_20260410T0850Z.tsv` | ✅ |
 | **SSGS** 汇总 | **`…/ssgs_mamba_wikitext_grid.csv`**（通配 **`ssgs_mamba_wikitext_*.json`** 合并；本仓 **13 行** 量级，含 **n128**） | ✅ |
-| **M1（SSGS vs TF-KV，同树 DFS）** | **`…/ssgs_vs_kv_wikitext_nav_grid.csv`**（通配 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**；本仓 **15 行** 量级，含多 **STAMP** / 可选 **L3** 列）；登记 **X-ssgs-vs-kv-tree-nav-m1** | ✅ |
+| **M1（SSGS vs TF-KV，同树 DFS）** | **`…/ssgs_vs_kv_wikitext_nav_grid.csv`**（通配 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**；本仓 **13 数据行 + 表头**，含多 **STAMP** / 可选 **L3** 列）；登记 **X-ssgs-vs-kv-tree-nav-m1** | ✅ |
 | **path-batch smoke（同树三 reader）** | `…/benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`（**辅**；与 SSGS **分列**） | ✅ |
 | **L3 轨迹甲·乙（玩具 TF-KV）** | **`…/tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`**（**`kind=tf_kv_trajectory_l3_minimal`**；**3090 CUDA**；**`git_sha=6fa7873`**） | ✅ |
 
@@ -125,7 +127,7 @@ Our primary figures report **path-batch** wall-clock and **Mamba-2 peak CUDA mem
 1. **Path-batch main figure** — Step time and `max_memory_allocated` peak for **batched** paths under **`run_tree_reader_benchmark` / `benchmark_wikitext_tree`**; registry **A-20260408-paper-main-3090-***.  
 2. **§7 toy table** — **Per-operation** timings on **one** path for Mamba cache clone, TF-R1, TF-KV increment, restore, etc.; registry **X-20260421-***; **do not subtract** from path-batch bars.  
 3. **SSGS demo** — **DFS + `DynamicCache`** with **snapshot / rollback counts** on the same tokenizer-step loop; Wikitext grid **`ssgs_mamba_wikitext_grid.csv`** (merged JSONs; **13-row** scale in this repo); **X-20260407**; **not** path-batch latency.  
-4. **M1 same-tree DFS** — **SSGS Mamba** vs **toy TF-KV** (clone / `truncate_kv`) on **one** DFS navigation task over **one** built tree; **`ssgs_vs_kv_wikitext_nav_grid.csv`**; **X-ssgs-vs-kv-tree-nav-m1**; optional L3 hidden/CE columns are **still not** path-batch or §7 columns.  
+4. **M1 same-tree DFS** — **SSGS Mamba** vs **toy TF-KV** (clone / `truncate_kv`) on **one** DFS navigation task over **one** built tree; **`ssgs_vs_kv_wikitext_nav_grid.csv`** (**13 data rows + header** in this repo); **X-ssgs-vs-kv-tree-nav-m1**; optional L3 hidden/CE columns are **still not** path-batch or §7 columns.  
 5. **L3 trajectory (toy TF-KV)** — Hard-coded **wrong branch → restore → gold suffix** vs **gold path only** on a **small balanced tree**; **`kind=tf_kv_trajectory_l3_minimal`**, e.g. **`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`**; **≠** full M1 DFS sweep.  
 6. **Real-LM toy line** — **X-20260422–25** CE / navigation metrics on a **tiny LM** harness; **≠** path-batch or SSGS.  
 7. **Stage-2 task (A2-S3)** — Leaf-pair cohort **ridge** test accuracy (and related TSVs); **A-20260407-stage2-wikitext-path-pair**; **≠** wall-clock of Figure 1.
@@ -213,3 +215,4 @@ Our primary figures report **path-batch** wall-clock and **Mamba-2 peak CUDA mem
 | 2026-04-11 | **提交前检查**、**A7**：**pytest** 与 **3090 P1/P2 已归档** 叙事对齐 |
 | 2026-04-11 | 篇首：**`RESEARCH_PHASES_0_TO_DONE.md` 阶段 5** 指针；与 **`CURRENT_SPRINT`** 勾选对齐 |
 | 2026-04-11 | **§A3b**：英文可粘贴 **边界段 + 七轴一句**（主稿脚注 / Measurements box） |
+| 2026-04-11 | **§A2**：**核对摘要**（basename 存在性；**M1 = 13 数据行**）；**§A3b** M1 一句同步 |

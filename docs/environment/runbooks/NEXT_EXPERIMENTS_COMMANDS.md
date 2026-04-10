@@ -388,6 +388,38 @@ M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_
 
 ---
 
+## 12. 阶段 5：仓内核对 + 重聚合 + 测试（**Linux / AutoDL** 推荐）
+
+在**仓库根**执行（**`conda activate mamba2`** 或同等 **torch+cuda**）：
+
+```bash
+# 0) 可选：确认 §A2 关键文件存在（bash）
+test -f results/metrics/figures/mamba_3090_naive_vs_fused_dim128_paper_main_v1.png
+test -f results/metrics_result/tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json
+
+# 1) 将 grid CSV 的 json_path 改为仓内 POSIX 路径（覆盖写回同名 CSV）
+python scripts/research/aggregate_ssgs_mamba_wikitext_json.py \
+  -g 'results/metrics_result/ssgs_mamba_wikitext_*.json' \
+  --out-csv results/metrics_result/ssgs_mamba_wikitext_grid.csv
+python scripts/research/aggregate_ssgs_vs_kv_wikitext_json.py \
+  -g 'results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_*.json' \
+  --out-csv results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv
+# 期望：M1 nav 表为 13 数据行 + 1 表头；json_path 列为 results/metrics_result/...
+
+# 2) 全量单测（须 torch）
+pytest tests/ -q
+
+# 3) 可选：git_sha 刷新 — M1 单格（改 STAMP / 路径见 §10.1）
+# STAMP=$(date -u +%Y%m%dT%H%MZ)
+# python scripts/research/benchmark_ssgs_vs_kv_tree_nav_wikitext.py --device cuda \
+#   --num-leaves 8 --out-json results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_n8_cuda_3arm_${STAMP}.json
+# 然后重复步骤 1) 中第二条 aggregate
+```
+
+**说明**：**§A2** 完整表与登记 id 见 **`docs/overview/execution/SUBMISSION_PACK.md` §A2**；**M1 行数** 以 **`SUBMISSION_PACK` 核对摘要** 为准（**勿写 15 行**）。
+
+---
+
 ## 修订记录
 
 | 日期 | 说明 |
@@ -415,3 +447,4 @@ M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_
 | 2026-04-11 | **§0.5**：按 **`RESEARCH_STATUS` §3.5** **L1–L4** 分层的服务器实验序（块 **A–F**：smoke、M1 **n64**、叶扫、SSGS **n128**、M1 **L3**、**B-S2+ CUDA**） |
 | 2026-04-11 | **§0.5 块 F**：**`--out-json`** 改默认示例为 **`metrics_result/probe_…cuda_${STAMP}.json`**（与 **`metrics/`** 分列同步习惯对齐） |
 | 2026-04-11 | **§0.5 块 G**：**阶段 C** **`benchmark_tf_kv_trajectory_l3_minimal.py`**（**L3 轨迹**） |
+| 2026-04-11 | **§12**：阶段 5 **重聚合 M1/SSGS grid** + **`pytest tests/`** + 可选 M1 smoke |

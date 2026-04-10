@@ -25,7 +25,7 @@
 
 | 文件 | 行数（量级） | 说明 |
 |------|----------------|------|
-| **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** | **15** | **M1** 三臂 + 多 **STAMP**；含 **L3** 列（隐状态余弦、下游 CE） |
+| **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** | **13**（**数据行**；+1 表头 ⇒ 文件 **14** 行） | **M1** 三臂 + 多 **STAMP**；含 **L3** 列（隐状态余弦、下游 CE） |
 | **`results/metrics_result/ssgs_mamba_wikitext_grid.csv`** | **13** | **SSGS × Mamba** 同 Wikitext 建树；含 **n128** |
 | **`results/metrics_result/benchmark_wikitext_stage2_leavescale_grid_20260410T1240Z.csv`** | **12** | **path-batch** **n∈{8,16,32,64}** **c8 dim128**（与 **20260409T1257Z** 档 **分列**） |
 

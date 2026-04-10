@@ -11,7 +11,7 @@
 
 ### 0.1 当前所处阶段（一句话）
 
-**阶段 1–2 的实证与登记已基本收口**：**path-batch**、**§7**、**A2-S3**、**SSGS（grid 13 行）**、**Phase M1（三臂 + L3 + ≈15 行 nav grid）**、**B-S2+ CUDA**、**玩具 L3 轨迹甲·乙（`tf_kv_trajectory_l3_minimal`）** 等均 **入仓 JSON / CSV** 并与 **`EXPERIMENT_REGISTRY`** 对齐。**当前主瓶颈** 已从「补跑服务器格点」转为 **P0：成文冻结与投稿叙事**（**`SUBMISSION_PACK` §A1–A4** 粘贴正稿、**七轴**脚注不混读）。  
+**阶段 1–2 的实证与登记已基本收口**：**path-batch**、**§7**、**A2-S3**、**SSGS（grid 13 行）**、**Phase M1**（三臂 + L3；nav grid **13** 数据行 + 表头）、**B-S2+ CUDA**、**玩具 L3 轨迹甲·乙（`tf_kv_trajectory_l3_minimal`）** 等均 **入仓 JSON / CSV** 并与 **`EXPERIMENT_REGISTRY`** 对齐。**当前主瓶颈** 已从「补跑服务器格点」转为 **P0：成文冻结与投稿叙事**（**`SUBMISSION_PACK` §A1–A4** 粘贴正稿、**七轴**脚注不混读）。  
 **方向性说明**：**P0 收口 ≠ 研究终点**。长期叙事仍以 **`RESEARCH_STATUS_AND_DIRECTION.md` §1.5**（**状态快照回溯 × 树状 RAG** 北星）与 **§3.5**（证据层级 / 风险 / PoC）为准；阶段 1–2 是为该北星服务的 **可发表地基**，**L4 级 Agent 声称** 须 **另排期、另 harness**。
 
 ### 0.2 从现在到远期的分阶段计划
@@ -57,7 +57,7 @@
 > **Harness（已落地）**：**`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`**（**`kind=ssgs_vs_kv_tree_nav_wikitext`**）— **Mamba** + **TF-KV clone** + **TF-KV truncate_kv**；**`run_m1_ssgs_vs_kv_wikitext_cuda.sh`**；可选 **`--l3-tf-kv-hidden`** / **`--l3-tf-kv-downstream-ce`**。  
 > **归档摘要**：多 **STAMP** 的 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**；汇总 **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`**（**`aggregate_ssgs_vs_kv_wikitext_json.py`**）。**L3** 与 **n8/n16/n32** 实测见 **`SSGS_MAINLINE_M1.md`** §2.1。
 
-**已完成（相对 2026-04-11 稿）**：**同 Wikitext 建树、同 DFS 任务**下的 **三臂统一 JSON**、**叶扫至 n64**、**隐状态 L3**、**固定叶头 CE（n8–n64）**、**网格 CSV（≈15 行）** 与 **登记册** 更新。  
+**已完成（相对 2026-04-11 稿）**：**同 Wikitext 建树、同 DFS 任务**下的 **三臂统一 JSON**、**叶扫至 n64**、**隐状态 L3**、**固定叶头 CE（n8–n64）**、**网格 CSV（**13** 数据行 + 表头）** 与 **登记册** 更新。  
 **可选后续**：**`git pull` 后** 单点 smoke 刷新 **`git_sha`**；**训练型子头 / 树 LM 对齐** 须 **另 `kind`**。**~~轨迹甲·乙（玩具 TF-KV）~~** 已归档：**`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`**（**`X-20260411-tf-kv-trajectory-l3-minimal`**）。**成文**：在 **`FIGURE_CAPTIONS_STAGE1.md`** / **`PHASE1_MANUSCRIPT` §5.1** / **`SUBMISSION_PACK` §A2–A3** 写入 **M1** 与 **七轴**（含 **L3 轨迹**），**禁止**无脚注混读。
 
 **与 P0 关系**：**P0 成文** 为主。**原 P1/P2**（B-S2+ CUDA、SSGS n128）与 **阶段 C L3 轨迹 JSON** 均已归档。**可选**：path-batch **XL** 复跑、**B-S3** 检索头 — 见 **`RESEARCH_STATUS` §3.5**、**`NEXT_EXPERIMENTS_COMMANDS` §0.5**。

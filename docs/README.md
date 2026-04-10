@@ -24,7 +24,7 @@
 | 轨道里程碑、**当前收口清单**、P0–P3、后备推进 § | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
 | **本周**勾选、阻塞 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
 | 本机 5060 **可复制命令** | [`environment/runbooks/LOCAL_5060_RUNBOOK.md`](environment/runbooks/LOCAL_5060_RUNBOOK.md) |
-| 云端扫参 shell、§7 depth、命令模板 | [`environment/runbooks/SERVER_SWEEP_RUNBOOK.md`](environment/runbooks/SERVER_SWEEP_RUNBOOK.md) + [`environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`](environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md) |
+| 云端扫参 shell、§7 depth、命令模板 | [`environment/runbooks/SERVER_SWEEP_RUNBOOK.md`](environment/runbooks/SERVER_SWEEP_RUNBOOK.md) + [`environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md`](environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md)（**§12** 阶段 5 聚合/测试） |
 | 实验 id、路径、结论一行 | [`experiments/planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md) |
 | **2026-04 服务器批次** JSON / CSV 索引（M1、SSGS、leavescale、B-S2+） | [`experiments/planning/DATA_ARCHIVE_202604_SERVER.md`](experiments/planning/DATA_ARCHIVE_202604_SERVER.md) |
 | 周历**模板**与历史 | [`overview/planning/ROADMAP.md`](overview/planning/ROADMAP.md)（勾选以 **CURRENT_SPRINT** 为准） |
@@ -74,7 +74,7 @@
 ## 4. 环境：执行手册（`environment/runbooks/`）
 
 - **本机 5060**：[`LOCAL_5060_RUNBOOK.md`](environment/runbooks/LOCAL_5060_RUNBOOK.md)
-- **云端命令模板**：[`NEXT_EXPERIMENTS_COMMANDS.md`](environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md)、[`SERVER_SWEEP_RUNBOOK.md`](environment/runbooks/SERVER_SWEEP_RUNBOOK.md)
+- **云端命令模板**：[`NEXT_EXPERIMENTS_COMMANDS.md`](environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md)（**§12**）、[`SERVER_SWEEP_RUNBOOK.md`](environment/runbooks/SERVER_SWEEP_RUNBOOK.md)
 - **同步与实例**：[`SYNC_AND_ENVIRONMENTS.md`](environment/runbooks/SYNC_AND_ENVIRONMENTS.md)、[`AUTODL_SETUP.md`](environment/runbooks/AUTODL_SETUP.md)
 - **融合核安装步骤**：[`MAMBA_SSM_INSTALL_LINUX.md`](environment/runbooks/MAMBA_SSM_INSTALL_LINUX.md)
 - **§7 depth 一键**：[`RUN_AUTOADL_SECTION7_NOW.md`](environment/runbooks/RUN_AUTOADL_SECTION7_NOW.md)
