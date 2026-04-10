@@ -382,7 +382,11 @@ M1_LEAVES="16 32" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_
 
 ### 10.2 **M2** 后续实验（**M1** 已归档后的默认顺序）
 
-**详表**：**`docs/experiments/planning/SSGS_MAINLINE_M1.md` §6**（Wave **A** 成文；**B1–B4** 云端单条）。**最常跑的两条**：**`M1_LEAVES="64" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`**（补 **n64** **L3 CE**）；**`M1_LEAVES="8"`** + 新 **`M1_STAMP`**（**`git_sha` 刷新**）。**chunk_len≠8** 的 M1：**直调** **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py --chunk-len 12`**（见 **§6** **B3**）。
+**详表**：**`docs/experiments/planning/SSGS_MAINLINE_M1.md` §6**（含 **§6.0：B2 与「全链条」分层** — **必读**）。
+
+**若要先验证「M1 全链条能跑通」再上探针**：在 AutoDL 上 **先** **`M1_LEAVES="64" bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`**（**不开** **`M1_WITH_L3_*`**，确认三臂 **`ok`**）**再** **`M1_LEAVES="64" M1_WITH_L3_DOWNSTREAM_CE=1 bash …`**（**B2** = **环节 ②+③**；**不是**新对比方法）。**本仓已含** **`…_n64_cuda_3arm_20260410T1247Z.json`**（**`l3_tf_kv_downstream_ce`**）时，**B2** 多为 **换机复现 / 刷新 `git_sha`**；**无该文件** 时再作 **首次补档**。
+
+**其它常跑**：**`M1_LEAVES="8"`** + 新 **`M1_STAMP`**（**`git_sha` 刷新**）。**chunk_len≠8** 的 M1：**直调** **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py --chunk-len 12`**（见 **`SSGS_MAINLINE_M1` §6** **B3**）。
 
 ---
 
@@ -457,3 +461,4 @@ python -m pytest tests/ -q
 | 2026-04-11 | **§0.5 块 G**：**阶段 C** **`benchmark_tf_kv_trajectory_l3_minimal.py`**（**L3 轨迹**） |
 | 2026-04-11 | **§12**：阶段 5 **重聚合 M1/SSGS grid** + **`pytest tests/`** + 可选 M1 smoke |
 | 2026-04-11 | **§10.2**：**M2** 跑道指针（**`SSGS_MAINLINE_M1` §6**；**n64+L3 CE** / **`git_sha`** / **chunk_len**） |
+| 2026-04-11 | **§10.2**：**§6.0** 互链 — **先 n64 三臂 smoke 再 B2**；**B2 ≠ 全链条唯一验证** |

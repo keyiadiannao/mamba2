@@ -114,6 +114,30 @@
 > **定位**：**M1** 三臂 + 叶扫 + **L3**（隐状态 / 下游 CE）+ **轨迹 minimal** 已满足 **L2–L3** 叙事；**M2** 不再重复「同一网格再扫一遍」，除非 **审稿点名** 或 **代码版本（`git_sha`）** 需刷新。  
 > **原则**：新 JSON **新 `STAMP`**、**登记册新行或脚注**；与 **path-batch**、**§7 毫秒**、**A2-S3** **脚注分列**（**七轴**）。
 
+### 6.0 **B2 在做什么？与「全链条」的关系**（上 AutoDL 前读）
+
+本仓 **「Mamba + 树状 RAG + SSGS」** 在 **M1 harness**（**`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`**）里已串好的 **可实现链条** 是分层来的，**不是**「一句端到端大模型 RAG」：
+
+| 环节 | 内容 | **B2 是否覆盖** |
+|------|------|-----------------|
+| **① 数据 → 浅树** | **Wikitext-2** 叶块 → **`build_bottom_up_text_tree`**（与 **`demo_ssgs_mamba_wikitext`** 同协议） | ✅ 每次 M1 跑都会走 |
+| **② 同树 DFS 导航（三臂）** | **SSGS+Mamba**；**TF-KV clone**；**TF-KV truncate**；记 **`wall_s`、峰值、`ok`、快照/回滚** 等 | ✅ **B2 命令里必然执行**（与是否开 L3 无关） |
+| **③ L3 探针（可选）** | **隐状态一致**（`--l3-tf-kv-hidden`）或 **固定随机叶头上 CE 对齐**（`--l3-tf-kv-downstream-ce`）：检验 TF-KV 臂上「走错再恢复」的轨迹与「只走金路径」在表示上是否一致 | **B2 只做其中一种**：把 **③ 的下游 CE** 从已有 **n8/n16/n32** **补到 n64**，使 **网格 CSV** 里 **L3 CE 列** 与 **叶数** 对齐，**不**引入新对比算法 |
+| **④ 其它对比方法** | 例如新回溯基线、可学习策略、更大 LM —— 须 **新臂 / 新 `kind` + 登记**（**§6.4** / **`PROJECT_MASTER_PLAN` §1.0**） | ❌ **B2 不包含**；应在 **①②（及可选③）跑通** 后再单独立项 |
+
+**结论**：**B2 不是「从零验证全链条」**，而是 **在同一条 M1 harness 上** 跑 **n64** 且 **打开 L3 下游 CE**（**环节 ②+③**）。**本仓已归档** 同批 **`STAMP=20260410T1247Z`** 的 **n8/n16/n32/n64** 四 JSON（均含 **`l3_tf_kv_downstream_ce`**，**`abs_ce_delta`≈0**）— 若你 **AutoDL 工作区已有这些文件**，**B2** 的目的改为 **换机复现 / `git pull` 后刷新 `git_sha`**；**若缺失 n64 该列**，再用 B2 **补档**。若你要 **先验证全链条可实现、再考虑加新方法**，建议在 AutoDL 上 **分两步**：
+
+1. **全链条 smoke（可不开 L3，先确认 ② 三臂在 n64 上 `ok`）**  
+   `M1_LEAVES="64" bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`  
+   （不设 **`M1_WITH_L3_*`**，JSON 仍含 **mamba / tf_kv_clone / tf_kv_truncate** 三臂与 **`ok`**。）
+2. **再上 B2（在 ①② 已确认的前提下，补 L3 CE 列）**  
+   `M1_LEAVES="64" M1_WITH_L3_DOWNSTREAM_CE=1 bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`  
+   核对 JSON 内 **`l3_tf_kv_downstream_ce`**、各臂 **`abs_ce_delta`** 应与 **n8/n16/n32** 归档同阶（≈0）。
+
+**与 path-batch 主图的关系**：**`benchmark_wikitext_tree`**（多路径 batch 前向）是 **另一条测量轴**；「全链条」若还包括 **同树 path-batch + SSGS 一行 JSON**，见 **`run_ssgs_mamba_wikitext_cuda.sh`** 里 **`RUN_WIKITEXT_SMOKE=1`**（**`NEXT_EXPERIMENTS_COMMANDS.md` §10**），与 **M1 DFS** **脚注分列**。
+
+**再加「其它方法」做对比**：在 **①②** 稳定后，为 **新基线** 单开实验设计与 **`EXPERIMENT_REGISTRY`** 行；**禁止**与当前 M1 表无脚注合并（**七轴**）。
+
 ### 6.1 Wave **A** — 与成文并行（**不占 GPU**）
 
 | 顺序 | 动作 | 产出 |
@@ -129,7 +153,7 @@
 | 优先级 | 实验 | 命令要点 | 登记 / 后处理 |
 |--------|------|----------|----------------|
 | **B1** | **`git_sha` 刷新**（代码更新后） | **`M1_STAMP=$(date -u +%Y%m%dT%H%MZ)`** + **`M1_LEAVES="8"`** **`bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`** | JSON 拷入 **`results/metrics_result/`**；**`EXPERIMENT_REGISTRY`** **X-ssgs-vs-kv-tree-nav-m1** 附 **新 STAMP** 一句 |
-| **B2** | **M1 · n64 + L3 下游 CE**（补全与 n8/n16/n32 同列） | **`M1_LEAVES="64" M1_WITH_L3_DOWNSTREAM_CE=1`** **`bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`** | 跑后 **`aggregate_ssgs_vs_kv_wikitext_json.py`**（脚本默认已调）；核对 **`abs_ce_delta`** |
+| **B2** | **M1 · n64 + L3 下游 CE** — **环节 ②+③**；**非**新对比法。**本仓已有** **`…_n64_cuda_3arm_20260410T1247Z.json`** 时以 **复现/刷新** 为主（**全链条 smoke** 仍建议先做 **§6.0** 步 1） | **`M1_LEAVES="64" M1_WITH_L3_DOWNSTREAM_CE=1`** **`bash scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`** | 跑后 **`aggregate_ssgs_vs_kv_wikitext_json.py`**；核对 **`abs_ce_delta`**；新 **STAMP** → JSON 拷回仓 + **登记册** |
 | **B3** | **M1 · chunk_len 消融**（与 **A2-S2** **c12** 叙事对齐，**分列**） | 脚本默认 **c8**；改 **`--chunk-len 12`** 须 **直接调用** **`python scripts/research/benchmark_ssgs_vs_kv_tree_nav_wikitext.py`**（参数同 **`run_m1_*.sh`**，改 **`--chunk-len`** / **`--out-json`** 带新 **STAMP**） | **新 basename**；正文写 **「M1 玩具 TF-KV 臂；chunk_len=12；与 path-batch 表分列」** |
 | **B4** | **SSGS 辅线 · 新格点**（非 M1） | **`docs/environment/runbooks/NEXT_EXPERIMENTS_COMMANDS.md` §10** **`run_ssgs_mamba_wikitext_cuda.sh`**；叶数 / **`STAMP`** 自定 | **`aggregate_ssgs_mamba_wikitext_json.py`** → **`ssgs_mamba_wikitext_grid.csv`** |
 
@@ -159,3 +183,5 @@
 | 2026-04-11 | **归档**：**`STAMP=20260410T1133Z`** **n16/n32** **`l3_tf_kv_downstream_ce`**（**`abs_ce_delta`=0**）；§10.1 推荐命令已跑通 |
 | 2026-04-11 | **索引**：**`docs/README`**、**`CURRENT_SPRINT`**、**`ROADMAP`**、**`NEXT_EXPERIMENTS`** 篇首、**`SERVER_SWEEP_RUNBOOK`** — **七轴** 与 **P0** **M1** 入稿指针 |
 | 2026-04-11 | **§6 M2 跑道**：Wave A–D；检查表 **§3.5 / pytest** 与 **AutoDL** 对齐；**B2** **n64+L3 CE**、**B3** **chunk_len** 直调 **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`** |
+| 2026-04-11 | **§6.0**：**B2** vs **全链条**（①②③④）；AutoDL **先 n64 三臂 smoke 再 B2**；**path-batch smoke** 指针 |
+| 2026-04-11 | **§6.0 / B2**：与 **`1247Z`** **n64 L3 CE** 已入仓一致 — **B2** = 复现或补档 |

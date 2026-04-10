@@ -57,14 +57,14 @@
 > **Harness（已落地）**：**`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`**（**`kind=ssgs_vs_kv_tree_nav_wikitext`**）— **Mamba** + **TF-KV clone** + **TF-KV truncate_kv**；**`run_m1_ssgs_vs_kv_wikitext_cuda.sh`**；可选 **`--l3-tf-kv-hidden`** / **`--l3-tf-kv-downstream-ce`**。  
 > **归档摘要**：多 **STAMP** 的 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**；汇总 **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`**（**`aggregate_ssgs_vs_kv_wikitext_json.py`**）。**L3** 与 **n8/n16/n32** 实测见 **`SSGS_MAINLINE_M1.md`** §2.1。
 
-**已完成（相对 2026-04-11 稿）**：**同 Wikitext 建树、同 DFS 任务**下的 **三臂统一 JSON**、**叶扫至 n64**、**隐状态 L3**、**固定叶头 CE（n8–n64）**、**网格 CSV**（**数据行 = 聚合 `N row(s)`** + 表头）与 **登记册** 更新。  
+**已完成（相对 2026-04-11 稿）**：**同 Wikitext 建树、同 DFS 任务**下的 **三臂统一 JSON**、**叶扫至 n64**（**三臂**，例 **`…_n64_cuda_3arm_20260410T1235Z.json`**）、**隐状态 L3**（**n8** 等）、**固定叶头 CE（n8 / n16 / n32 / n64 已归档**，同批例 **`STAMP=20260410T1247Z`** 四 JSON）、**网格 CSV**（**数据行 = 聚合 `N row(s)`** + 表头）与 **登记册** 更新。**M2 · B2** 在 **本仓已齐** 时 = **AutoDL 上复现 / `git pull` 后刷新 `git_sha` 与 `abs_ce_delta` 自检**（见 **`SSGS_MAINLINE_M1` §6.0–§6.2**）。  
 **可选后续**：**`git pull` 后** 单点 smoke 刷新 **`git_sha`**；**训练型子头 / 树 LM 对齐** 须 **另 `kind`**。**~~轨迹甲·乙（玩具 TF-KV）~~** 已归档：**`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`**（**`X-20260411-tf-kv-trajectory-l3-minimal`**）。**成文**：在 **`FIGURE_CAPTIONS_STAGE1.md`** / **`PHASE1_MANUSCRIPT` §5.1** / **`SUBMISSION_PACK` §A2–A3** 写入 **M1** 与 **七轴**（含 **L3 轨迹**），**禁止**无脚注混读。
 
 **与 P0 关系**：**P0 成文** 为主。**原 P1/P2**（B-S2+ CUDA、SSGS n128）与 **阶段 C L3 轨迹 JSON** 均已归档。**可选**：path-batch **XL** 复跑、**B-S3** 检索头 — 见 **`RESEARCH_STATUS` §3.5**、**`NEXT_EXPERIMENTS_COMMANDS` §0.5**。
 
 ### 3.1 **M2** 后续实验（**Mamba + 树 + SSGS** 在 **M1** 归档之后）
 
-**唯一详表与命令**：**`docs/experiments/planning/SSGS_MAINLINE_M1.md` §6**（Wave **A** 成文并行；**B** 云端 **B1–B4** 单条增量；**C** 延伸；**D** = P★）。**建议默认**：截稿前优先 **Wave A**；云端有空再跑 **B2**（**n64 + L3 下游 CE**）或 **B1**（**`git_sha` 刷新**），避免重复全网格。
+**唯一详表与命令**：**`docs/experiments/planning/SSGS_MAINLINE_M1.md` §6**（**§6.0** 说明 **B2** 与 **「全链条」①②③④** — **B2 只补环节③ 在 n64 的 L3 CE 列，不是从零验证全链，也不是新对比法**）。Wave **A** 成文并行；**B** 云端 **B1–B4**；**C** 延伸；**D** = P★。**AutoDL**：若要先确认 **M1 链** 可实现，**先** **`M1_LEAVES="64"`** 三臂 **无 L3**，**再** **B2**（见 **§6.0** 两步）。
 
 ---
 
@@ -298,3 +298,4 @@ flowchart LR
 | 2026-04-11 | **`RESEARCH_PHASES_0_TO_DONE.md`**：阶段 0–7 表 + 阶段 5 清单；篇首与 **`docs/README`** 互链 |
 | 2026-04-11 | **§1 / 收口清单 / §B B3**：**AutoDL** 全量 **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**, **~21 s** |
 | 2026-04-11 | **§3.1**：**M2** 后续实验 — **`SSGS_MAINLINE_M1.md` §6**（Wave A–D） |
+| 2026-04-11 | **§3 / §3.1**：**§6.0** **B2 vs 全链条**；**§3** 完成句与 **`1247Z`** **n64 L3 CE** 归档一致 |
