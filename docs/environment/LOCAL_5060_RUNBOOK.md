@@ -64,6 +64,20 @@ python scripts/research/probe_path_reader_linear.py --cpu --n-leaves 16 --leaf-s
 
 ---
 
+## 2b. 任务线 A2-S3（叶对 cohort + ridge，CPU）
+
+与 **path-batch**、**3090 `init_seed`×5** **分列**；见 **`PHASE1_MANUSCRIPT.md` §8.2**、**`PHASE2_DRAFT.md`**。
+
+```powershell
+$env:HF_ENDPOINT = "https://hf-mirror.com"
+python scripts/research/task_wikitext_path_pair.py --cpu --num-leaves 8 --cohort sibling --chunk-len 8 --dim 128 `
+  --out-json results/metrics/task_wikitext_sibling8_local5060_cpu_20260410.json
+```
+
+**已跑通例**（**`git_sha=1a65b29`**）：**`results/metrics/task_wikitext_sibling8_local5060_cpu_20260410.json`** — **stratified**，**`ridge_concat.*.test_acc`≈0.857**；登记 **X-20260410-local5060-a2s3-n8-strat**。
+
+---
+
 ## 3. 系统线：Wikitext path-batch smoke（5060 CUDA 或 CPU）
 
 **动机向**（**HF naive Mamba** 峰值可达 **GiB 级** — 与 **3090 fused** **禁止无脚注混表**）：
@@ -90,6 +104,8 @@ python scripts/benchmarks/benchmark_wikitext_tree.py `
 python scripts/research/demo_ssgs_mamba_wikitext.py --cpu --num-leaves 8 --chunk-len 4 --dim 64 --layers 2 `
   --out-json results/metrics/ssgs_mamba_wikitext_n8_smoke_local5060.json
 ```
+
+**已跑通例**（**`git_sha=1a65b29`**，文件名带超参）：**`results/metrics/ssgs_mamba_wikitext_n8_c4_d64_local5060_20260410.json`** — **`ok True`**，**snapshots_taken 7**、**rollbacks 11**、**leaf_checks 8**；登记 **X-20260410-local5060-ssgs-wikitext-n8-c4d64**（与 **`metrics_result/ssgs_mamba_wikitext_*`** **归档 grid** **分列**）。
 
 若 **torch** 仍异常，先修复 **conda env**，勿强用 **base**。
 
