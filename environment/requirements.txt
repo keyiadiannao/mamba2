@@ -8,6 +8,10 @@
 # numpy
 # transformers>=4.40
 datasets>=2.14
+# HF / some causal LMs (e.g. Mamba2) load configs that need the Python protobuf runtime
+protobuf>=4.21
+# Tokenizers for some Hub models (e.g. Mamba2): sentencepiece and/or tiktoken
+sentencepiece>=0.1.99
 matplotlib>=3.7
 # tqdm
 # pyyaml

@@ -5,6 +5,24 @@
 > **从现在到结题的多步总览**（成文 / 冻结 / 可选 M2 / 截稿 / 审稿）：**`docs/overview/execution/PLAN_NOW_TO_DONE.md`**。  
 > 每 1–2 周更新一次「周期」与勾选；完成后把结论一行写入 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`**。
 
+---
+
+## 工程北星阶段（**战略 B · 正式开工**）
+
+> **主计划**：**`docs/overview/engineering/ENGINEERING_NORTH_STAR_PLAN.md`**（**文档/脚本/结果与旧线分列**、**复用 `import`**、**G1–G5**、**Sprint 1–3**）。**门闩**：**`PLAN_NOW_TO_DONE.md` §Ⅷ**。  
+> **代码落点**：**`scripts/engineering/`**；**工程 JSON**：**`results/metrics_result/engineering/`**；**登记前缀**：**`ENG-*`**（与 **`X-*`** 分列）。
+
+### Sprint 1 勾选（第 1–2 周）
+
+- [x] **G5**：**`ENGINEERING_NORTH_STAR_PLAN.md` §4** 已定 **gpt2 / mamba2-370m**；**§4.1** 区分 **path-batch 玩具 trunk** vs **Sprint 2 全因果臂**。  
+- [x] **G1 骨架**：**`run_engineering_path_batch_smoke.py`** + **`src/rag_tree/engineering_envelope.py`** + **`tests/test_engineering_path_batch_smoke.py`**。  
+- [x] **登记**：**`EXPERIMENT_REGISTRY.md`** **`ENG-20260411-path-batch-smoke-v1`**（跑通后补 **实际 `out-json` basename** 一句）。  
+- [ ] **`CURRENT_SPRINT`** 下迭代：每完成一项勾一项；**阻塞** 写入本节末 **阻塞项**。
+
+**说明**：阶段 5 成文勾选与上表 **并行** 时，**时间分配** 以主计划为准；若 **仅战略 B**，**上表为 P0**。
+
+---
+
 ## 周期
 
 **开始**：2026-04-07  
@@ -17,7 +35,8 @@
 | 优先级 | 动作 |
 |--------|------|
 | **1** | **阶段 5**：**`SUBMISSION_PACK.md` §A2** 路径与 **`EXPERIMENT_REGISTRY`** / **`DATA_ARCHIVE_202604_SERVER.md` §0** **逐字对齐** |
-| **1b** | **可选 M2**（**不阻塞成文**）：**`PLAN_NOW_TO_DONE.md` §Ⅲ** + **`SSGS_MAINLINE_M1.md` §6** — 优先 **Ⅲ-1 c12** 或 **Ⅲ-2 bundle**；**n64+L3** 已有时 **勿**重复全网格 |
+| **1b** | **可选 M2**（**不阻塞成文**）：**`PLAN_NOW_TO_DONE.md` §Ⅲ** — **Ⅲ-1（M1 c12 n8）** **2026-04-11** 已归档；余 **Ⅲ-2 bundle**（**`RUN_WIKITEXT_SMOKE=1`**）**可选**；**n64+L3** 已齐 **勿**重复全网格 |
+| **1c** | ~~**摘要成稿**~~ **（已并入 `PHASE1_MANUSCRIPT` 摘要/§7）**；终稿 LaTeX 再核对 **`SUBMISSION_PACK` §A1b** |
 | **2** | **阶段 5**：**§A3** + **`FIGURE_CAPTIONS_STAGE1.md`** — **七轴** 脚注句 **粘贴进正稿**（或 **`PHASE1_MANUSCRIPT`** 对应节） |
 | **3** | **阶段 5**：摘要/讨论/局限 与 **`RESEARCH_STATUS` §3.5** 一致（结论 **≤ L1–L3**） |
 | **4** | ~~**3090 登记项**~~ **（已完成）**：**P1** B-S2+ CUDA、**P2** SSGS **n128** 等；见 **`DATA_ARCHIVE_202604_SERVER.md`**、**`NEXT_RESEARCH_PLAN` §2** |
@@ -167,3 +186,4 @@
 - **2026-04-08**：3090 `paper_main_v1` / `paper_main_naive_v1` 成对数据与同机三张 `mamba_3090_naive_vs_fused_*.png`（见 `EXPERIMENT_REGISTRY`）。
 - **2026-04-11**：**`DATA_ARCHIVE_202604_SERVER.md`** 入仓；**M1 / SSGS / leavescale / B-S2+ CUDA** 路径与 **CSV `json_path`（相对仓）** 对齐；**聚合脚本** 在 JSON 位于 **`cwd`** 下时写 **POSIX 相对路径**。
 - **2026-04-11**：**阶段 C** **L3 轨迹** **`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`** 入 **`metrics_result/`**；登记 **X-20260411-tf-kv-trajectory-l3-minimal** 补数值行。
+- **2026-04-11**：**工程北星** 主计划 **`ENGINEERING_NORTH_STAR_PLAN.md`**、**`scripts/engineering/`**、**`results/metrics_result/engineering/`**；**战略 B** Sprint 1 勾选入 **`CURRENT_SPRINT`** 篇首。

@@ -39,7 +39,7 @@
 与 **`docs/overview/execution/SUBMISSION_PACK.md`**、**`docs/experiments/planning/DATA_ARCHIVE_202604_SERVER.md` §0** 同步勾选：
 
 1. [ ] **§A2**：主文/附录出现的每个 **`results/metrics_result/`** basename 与 **`EXPERIMENT_REGISTRY`** 一行对齐（**`SUBMISSION_PACK` §A2** 仓内存在性已扫；**粘贴后** 终稿人工对表）。  
-2. [x] **§A3 / §A3b**：**中文 §A3** + **英文 §A3b** 已写入 **`SUBMISSION_PACK.md`**；**待** 粘贴进主稿。完整表仍见 **`FIGURE_CAPTIONS_STAGE1.md`**。  
+2. [x] **§A3 / §A3b**：**中文 §A3** + **英文 §A3b** 已写入 **`SUBMISSION_PACK.md`**；**已并入** **`PHASE1_MANUSCRIPT.md` §5.2**（终稿脚注可整段迁移或缩写）。完整表仍见 **`FIGURE_CAPTIONS_STAGE1.md`**。  
 3. [x] **局限 ↔ §3.5**：**`PHASE1_MANUSCRIPT.md` §9.2** 三风险已写清；**摘要/讨论** 截稿前再审 **证据层级 ≤ L1–L3**（见 **`RESEARCH_STATUS` §3.5**）。  
 4. [ ] **`git status`** 干净（持续项）；**全量单测**：**AutoDL** **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**, **~21 s**（**2026-04-11**）✅。  
 5. [ ] （可选）**§7.5 S5**、主图 PNG 入仓策略 — **视截稿**。
@@ -51,5 +51,5 @@
 | 日期 | 说明 |
 |------|------|
 | 2026-04-11 | 初版：阶段 0–7 表 + 阶段 5 清单 + 与 MASTER_PLAN 映射 |
-| 2026-04-11 | **M1 nav grid**：**N 数据行** = **`aggregate_*` stdout**（全量 JSON 常 **15**）；核对见 **`SUBMISSION_PACK` §A2**；**§12** 用 **`python -m pytest`** |
-| 2026-04-11 | **阶段 5 清单**：**§9.2** 局限 ✅；**pytest** 全量 ✅（**28+4 subtests**）；**§A2** / **`git status`** 仍为截稿前人工项 |
+| 2026-04-11 | **M1 nav grid**：**N 数据行** = **`aggregate_*` stdout**（随 JSON 数变，本仓 **2026-04-11** 曾 **18**）；核对见 **`SUBMISSION_PACK` §A2**；**§12** 用 **`python -m pytest`** |
+| 2026-04-11 | **阶段 5 清单**：**§9.2** 局限 ✅；**pytest** 全量 ✅（**28+4 subtests**）；**§A3** 已并入 **`PHASE1_MANUSCRIPT` §5.2** ✅；**§A2** / **`git status`** 仍为截稿前人工项 |

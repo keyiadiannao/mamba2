@@ -25,8 +25,8 @@
 
 | 文件 | 行数（量级） | 说明 |
 |------|----------------|------|
-| **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** | **N**（**数据行**；**N** = **`aggregate_ssgs_vs_kv_wikitext_json.py` stdout**；随通配 JSON 数变，本仓全量曾 **17**；+1 表头） | **M1** 三臂 + 多 **STAMP**；**`json_path`** 宜为 **`results/metrics_result/…`**（仓根 **`aggregate_*`** 重写） |
-| **`results/metrics_result/ssgs_mamba_wikitext_grid.csv`** | **13** | **SSGS × Mamba** 同 Wikitext 建树；含 **n128** |
+| **`results/metrics_result/ssgs_vs_kv_wikitext_nav_grid.csv`** | **N**（**数据行**；**N** = **`aggregate_ssgs_vs_kv_wikitext_json.py` stdout**；随通配 JSON 数变；**2026-04-11** 本机重建 **18**；+1 表头） | **M1** 三臂 + 多 **STAMP**（含 **`chunk_len=12`** **M2** 一条）；**`json_path`** 宜为 **`results/metrics_result/…`**（仓根 **`aggregate_*`** 重写） |
+| **`results/metrics_result/ssgs_mamba_wikitext_grid.csv`** | **16** | **SSGS × Mamba** 同 Wikitext 建树；含 **n128**；**2026-04-11** **`…T0204Z` / `…T0303Z` / `…T0334Z`** **n8** 复跑（迹 **7/11/8**） |
 | **`results/metrics_result/benchmark_wikitext_stage2_leavescale_grid_20260410T1240Z.csv`** | **12** | **path-batch** **n∈{8,16,32,64}** **c8 dim128**（与 **20260409T1257Z** 档 **分列**） |
 
 ---
@@ -44,6 +44,7 @@
 | **`20260410T1247Z`** | n8, n16, n32, **n64** | **L3 下游 CE** 全档 |
 | **`20260410T1616Z`** | **n64** | 三臂、**无** **`l3_tf_kv_downstream_ce`** |
 | **`20260410T1617Z`** | **n64** | 三臂 **+ L3 下游 CE**（**`abs_ce_delta`=0**；**`git_sha`/墙钟** 以 JSON 为准） |
+| **`20260411T0202Z`** | **n8** | **`chunk_len=12`**（**M2 §Ⅲ-1**）；与 **c8** 默认档 **分列** |
 
 **通配**：**`results/metrics_result/ssgs_vs_kv_tree_nav_wikitext_*.json`**（另含历史无 STAMP / 旧 STAMP 文件时，以 **`aggregate` 实际合并行** 为准）。
 
@@ -55,6 +56,9 @@
 |--------------|------|
 | **`ssgs_mamba_wikitext_n128_c8_dim128_cuda_20260410T1238Z.json`** | **n128**（**127 / 247 / 128**） |
 | **`ssgs_mamba_wikitext_n8_c8_dim128_cuda_20260410T1238Z.json`** | 同会话 **n8** 刷新 |
+| **`ssgs_mamba_wikitext_n8_c8_dim128_cuda_20260411T0204Z.json`** | **n8** 与 **grid** 对齐 CUDA 复跑（迹 **7/11/8**） |
+| **`ssgs_mamba_wikitext_n8_c8_dim128_cuda_20260411T0303Z.json`** | **n8** 再次复跑（**`git_sha=6fa7873`**；与 **0204Z** 同阶迹） |
+| **`ssgs_mamba_wikitext_n8_c8_dim128_cuda_20260411T0334Z.json`** | **n8** 再次复跑（**`STAMP=0334Z`**；与上同阶迹） |
 
 **登记**：**`X-20260407-ssgs-mamba-wikitext-tree`**。
 
@@ -104,5 +108,4 @@
 | 2026-04-11 | **§2.6**：**阶段 C** **L3 轨迹** 脚本与登记指针 |
 | 2026-04-11 | **§2.6**：**CUDA** **`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`** 入仓 |
 | 2026-04-11 | **§0**：核心 JSON 与登记 id **速查表** |
-| 2026-04-11 | **§1 M1 grid**：**N** 行 = **`aggregate_*` stdout**（全量常 **15** 数据行） |
-| 2026-04-11 | **§1 / §2.1**：**M1 grid** **N** 以 **`aggregate_*` stdout** 为准（本仓 **17**）；**1616Z** / **1617Z** **n64** 分列 |
+| 2026-04-11 | **§1 / §2.1**：**M1 grid** **N** 以 **`aggregate_*` stdout** 为准（**2026-04-11** 重建 **18**；随通配 JSON 数变）；**1616Z** / **1617Z** **n64** 分列；与 **`NARRATIVE` §9** 快照互链 |

@@ -10,7 +10,7 @@
 
 **§7.2–§7.3 与附录表 §7.3.1** 属于**另一套可复现玩具协议**：在**单条**合成路径或专用 Transformer trunk 上，**分别**测量 S1（Mamba `DynamicCache` clone）、S4（restore）、S2（TF-R1 无 KV 整段前向）、S3（TF-KV 增量）等；**各列物理含义不同**，**不得**与主图曲线混为同一「一步」或互相做差得出结论。
 
-**SSGS × Mamba（`dfs_ssgs_mamba`）** 再占一条线：**按 token 前向 + `DynamicCache` + DFS 回溯**，用于证明**导航环**与迹的一致性。**玩具树** 登记 **X-20260421-ssgs-mamba-dfs-demo**；**与 `benchmark_wikitext_tree` 同建树** 的 **Wikitext** 归档见 **X-20260407-ssgs-mamba-wikitext-tree**（**`results/metrics_result/ssgs_mamba_wikitext_grid.csv`**：通配合并 **多 JSON**，本仓 **13 行** 量级（**`aggregate` 合并后**；以 **`ssgs_mamba_wikitext_grid.csv`** 为准）；列 **`snapshots_taken` / `rollbacks` / `leaf_checks`**，**非** path-batch **wall-clock**；**`json_path`** 若来自服务器，脚注写 **basename**）。**辅**：同树 **path-batch 三 reader** 小 smoke **`benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`**（**与 SSGS 计数分列**）。它与 path-batch 全网格扫参、与 §7.3.1 各列**仍非同一实验**。
+**SSGS × Mamba（`dfs_ssgs_mamba`）** 再占一条线：**按 token 前向 + `DynamicCache` + DFS 回溯**，用于证明**导航环**与迹的一致性。**玩具树** 登记 **X-20260421-ssgs-mamba-dfs-demo**；**与 `benchmark_wikitext_tree` 同建树** 的 **Wikitext** 归档见 **X-20260407-ssgs-mamba-wikitext-tree**（**`results/metrics_result/ssgs_mamba_wikitext_grid.csv`**：通配合并 **多 JSON**，本仓 **16 行** 量级（**`aggregate` 合并后**；以 **`ssgs_mamba_wikitext_grid.csv`** 为准）；列 **`snapshots_taken` / `rollbacks` / `leaf_checks`**，**非** path-batch **wall-clock**；**`json_path`** 若来自服务器，脚注写 **basename**）。**辅**：同树 **path-batch 三 reader** 小 smoke **`benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`**（**与 SSGS 计数分列**）。它与 path-batch 全网格扫参、与 §7.3.1 各列**仍非同一实验**。
 
 **Phase M1（SSGS vs 玩具 TF-KV，同树 DFS）** 再占一条线：与 **`demo_ssgs_mamba_wikitext` 同 Wikitext 建树**、**同一 DFS 目标叶** 上，**Mamba 臂** 与 **IncrementalCausalTransformerKV** 的 **full KV clone/restore**、**truncate_kv** 两臂 **并表**（**`kind=ssgs_vs_kv_tree_nav_wikitext`**）；报告 **wall_s / peak / KV 字节或截断次数** 等。该 **玩具 TF-KV trunk** **不是** **`TransformerPathReader`**，也**不是** path-batch **三 reader** 槽位。可选 **L3**：末 token hidden **余弦**（vs 金路径-only）、**固定随机叶头 CE**（**`abs_ce_delta`**）；**与树 LM** **X-20260423/24**（CE 路由 vs 可学习子头）**不同 harness**。登记 **X-ssgs-vs-kv-tree-nav-m1**；汇总 **`ssgs_vs_kv_wikitext_nav_grid.csv`**（通配 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**）。
 
@@ -28,7 +28,7 @@
 |----|----------|-----------------|
 | **Path-batch 主图** | 固定路径集合上 **三 reader 批量前向** 的 **时间与 m2_peak** | **A-20260408-paper-main-3090-pair**；`paper_main_*.csv` |
 | **§7 玩具表** | **单路径**上 **clone / restore / TF-R1 / TF-KV** 等 **分列毫秒** | **X-20260421-***；`*_20260421.json` |
-| **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照（**计数**：snapshots / rollbacks） | **X-20260421**（玩具）；**X-20260407** + **`ssgs_mamba_wikitext_grid.csv`**（Wikitext 同树；**多 STAMP** 合并，**13 行** 量级） |
+| **SSGS demo** | **DFS 试错序** + **token 步进** + cache 快照（**计数**：snapshots / rollbacks） | **X-20260421**（玩具）；**X-20260407** + **`ssgs_mamba_wikitext_grid.csv`**（Wikitext 同树；**多 STAMP** 合并，**16 行** 量级） |
 | **M1 同树 DFS 对照** | **同 Wikitext 建树**上 **SSGS Mamba** vs **玩具 TF-KV**（clone / **truncate_kv**）**同一 DFS**；**wall_s / peak / KV**；可选 **L3**（隐状态、固定叶头 CE） | **X-ssgs-vs-kv-tree-nav-m1**；**`ssgs_vs_kv_tree_nav_wikitext_*.json`**；**`ssgs_vs_kv_wikitext_nav_grid.csv`** |
 | **L3 轨迹（玩具 TF-KV）** | **硬编码** 错枝一步 **+ restore** **+** 金后缀 **vs** 金路径直达；**末 hidden 余弦 / 墙钟**；**≠ M1 DFS** | **X-20260411-tf-kv-trajectory-l3-minimal**；**`tf_kv_trajectory_l3_minimal_*.json`** |
 | **真 LM 线** | **tiny-gpt2** 上 **CE / 导航指标**；**非** path-batch harness | **X-20260422–25** |

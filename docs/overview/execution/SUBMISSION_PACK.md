@@ -1,6 +1,7 @@
 # 投稿成文包（P0：A1–A8，含 **A3b** 英文七轴）
 
 > **用途**：把 **`docs/experiments/phases/PHASE1_MANUSCRIPT.md`**、**`FIGURE_CAPTIONS_STAGE1.md`**、**`docs/experiments/planning/EXPERIMENT_REGISTRY.md`** 压成 **可粘贴** 的叙事与脚注；**登记真相**仍以 **登记册** 为准。  
+> **正式体例基础阶段总结（IMRaD 浓缩）**：**`docs/experiments/phases/FOUNDATION_STAGE_FORMAL_SUMMARY.md`** — 与 **A1–A4** 并行可读，作 **对外汇报/长文提纲**。  
 > **生成**：与 **`NEXT_RESEARCH_PLAN.md`** **「算力不可用时的备选推进」** §A 对齐（**P0 成文** 主路径相同）；路径核对 **已扫仓库**（**2026-04-11**）。**四月服务器批次索引**：**`docs/experiments/planning/DATA_ARCHIVE_202604_SERVER.md`**。  
 > **阶段定位**：**`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`** **阶段 5** — 本文件 **A1–A4** 为阶段 5 核心产出；勾选与 **`CURRENT_SPRINT.md`** 篇首一致。
 
@@ -23,15 +24,15 @@
 - **5060 + HF naive** 与 **3090 + fused** **禁止无脚注同表**。  
 - **path-batch**、**§7 毫秒列**、**SSGS 快照/回滚计数**、**M1 三臂 DFS**、**A2-S3 准确率**、**（可选）L3 轨迹甲·乙玩具 TF-KV** 为 **多条独立测量轴**（**`FIGURE_CAPTIONS_STAGE1.md`** **七轴** 表）。
 
-### A1b · 摘要 / 引言用草稿（摘自 `PHASE1_MANUSCRIPT.md`，可再压缩到字数限制）
+### A1b · 摘要 / 引言用草稿（与 **`PHASE1_MANUSCRIPT.md` 摘要 / §7**、**`NARRATIVE_MAINLINE_TREE_READER_SSGS.md` §0** 同步；可再压缩到字数限制）
 
-**中文摘要（约 150 字量级；投稿前按会议删改）**
+**中文摘要（投稿版约 220–280 字量级；细节格点见正文 §5 / §8）**
 
-在树状索引上，以同一批根—叶路径对 Transformer、GRU、Mamba-2 三类路径 reader 做批量前向，测量步均耗时与 CUDA 峰值显存。实验表明：Mamba-2 path reader 的可观测效率对是否启用 `mamba_ssm` 融合实现极为敏感——无融合核时峰值可达 GiB 量级，与 Transformer/GRU 的百 MiB 量级形成反差；融合后同网格峰值可降至约 51–217 MiB（随叶数与 dim 可升至数百 MiB–约 1 GiB 以下，仍与 naive 分列）。故在树形 RAG 的 path-batch 负载下，不能仅用 SSM 名义复杂度替代实测效率；主文须同机、同 commit 报告 naive 与 fused 对照。阶段 2 在 Wikitext-2 浅树上沿用同一 harness，已归档四格、dim256、叶数 8→256 等登记级效率曲线；并以叶对 cohort + 岭回归给出与墙钟分列的效果 proxy。§7 玩具协议已扩展 depth 5–6；SSGS×Mamba 与主图非同一 harness；Wikitext 同树上已归档 snapshots/rollbacks 与 grid（§4、§5）。
+**权威粘贴源**：**`PHASE1_MANUSCRIPT.md`** **「摘要（投稿版）」** 整段 + **关键词**；与 **`NARRATIVE` §0.1** 同文。叙事链说明见 **`NARRATIVE` §1**。
 
-**英文摘要（约 120 词；见 `PHASE1_MANUSCRIPT.md` §7 英文摘要全文）**
+**英文摘要（约 160–200 词；含 Keywords）**
 
-可直接复制 **`PHASE1_MANUSCRIPT.md`** 从 *We benchmark Transformer, GRU…* 起一整段；投稿前统一 **时态** 与 **期刊缩写**。
+**权威粘贴源**：**`PHASE1_MANUSCRIPT.md` §7**；与 **`NARRATIVE` §0.2** 同文。投稿前统一 **时态** 与 **期刊缩写**。
 
 **引言首段提示（非正文）**  
 先落 **树路径编码 + path-batch harness**，再点出 **naive vs fused** 与 **真语料扩展**；**勿**在首段混谈 Agent 端到端或「检索头」——细节放 **§9 / 附录**。
@@ -42,7 +43,7 @@
 
 **仓库扫描（2026-04-11）**：下列路径均已 **存在**（相对仓库根 **`results/metrics_result/`** 除非另写 **`results/metrics/`**）；**`json_path`** 列以 **仓内聚合** 为准时多为 **`results/metrics_result/…`（POSIX）**。
 
-**核对摘要（当前工作区，2026-04）**：主图 **PNG×3**、**`paper_main_*` CSV/manifest**、**5060 四格**、**stage2 fused/R2/dim256/leavescale（1257Z+1240Z）**、**headcheck**、**B-S2+ CUDA**、**XL n128/n256**、**§7 depth 5–6** 样例、**A2-S3**（1438Z/0820Z/0850Z + **TSV**）、**`ssgs_mamba_wikitext_grid.csv`**、**`benchmark_wikitext_ssgs_bundle_*`**、**`tf_kv_trajectory_l3_minimal_*`** — **basename 均存在**。**M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**：**数据行数 = 当次 `aggregate_ssgs_vs_kv_wikitext_json.py` 打印的 `N row(s)`**（= 通配到的 **`ssgs_vs_kv_tree_nav_wikitext_*.json`** 个数；常见 **13 或 15**，**勿写死**）；**文件总行数 = N + 1（表头）**。成文写 **「合并自 N 个登记 JSON」** 并脚注 **grid basename** 即可。若 CSV 内 **`json_path`** 仍为 **`/root/autodl-tmp/...`**，在仓根重跑聚合可改为 **`results/metrics_result/…`**（**`NEXT_EXPERIMENTS_COMMANDS.md` §12**）。
+**核对摘要（当前工作区，2026-04）**：主图 **PNG×3**、**`paper_main_*` CSV/manifest**、**5060 四格**、**stage2 fused/R2/dim256/leavescale（1257Z+1240Z）**、**headcheck**、**B-S2+ CUDA**、**XL n128/n256**、**§7 depth 5–6** 样例、**A2-S3**（1438Z/0820Z/0850Z + **TSV**）、**`ssgs_mamba_wikitext_grid.csv`**、**`benchmark_wikitext_ssgs_bundle_*`**、**`tf_kv_trajectory_l3_minimal_*`** — **basename 均存在**。**M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**：**数据行数 = 当次 `aggregate_ssgs_vs_kv_wikitext_json.py` 打印的 `N row(s)`**（= 通配到的 **`ssgs_vs_kv_tree_nav_wikitext_*.json`** 个数；随通配 JSON 数变；本仓 **2026-04-11** 重聚合后 **18** 行数据 + 表头，**勿写死**）；**文件总行数 = N + 1（表头）**。成文写 **「合并自 N 个登记 JSON」** 并脚注 **grid basename** 即可。若 CSV 内 **`json_path`** 仍为 **`/root/autodl-tmp/...`**，在仓根重跑聚合可改为 **`results/metrics_result/…`**（**`NEXT_EXPERIMENTS_COMMANDS.md` §12**）。
 
 | 类别 | 路径（投稿正文/附录请 **逐字** 引用 basename） | 状态 |
 |------|------|------|
@@ -63,7 +64,7 @@
 | §7 depth 5–6 | `…/stage2_leavescale_xl_s{1..4}_*_d{5,6}_20260409T1341Z.json`（文件名前缀历史 **`TAG` 残留**，见 **`EXPERIMENT_REGISTRY` X-section7**）、manifest | ✅ |
 | **A2-S3** init×5 | `…/task_wikitext_sibling16_c8_leafheldout6_initseed{0..4}_20260409T1438Z.json`、**`…_20260410T0820Z.json`**（与 1438Z 聚合一致）；**sibling32** **`…_20260409T1438Z.json`**、**`…_20260410T0850Z.json`** | ✅ |
 | **A2-S3 贴表 TSV** | `…/task_wikitext_sibling16_c8_leafheldout6_initseed5_summary_20260410T0820Z.tsv`、`…_sibling32_…_summary_20260410T0850Z.tsv` | ✅ |
-| **SSGS** 汇总 | **`…/ssgs_mamba_wikitext_grid.csv`**（通配 **`ssgs_mamba_wikitext_*.json`** 合并；本仓 **13 行** 量级，含 **n128**） | ✅ |
+| **SSGS** 汇总 | **`…/ssgs_mamba_wikitext_grid.csv`**（通配 **`ssgs_mamba_wikitext_*.json`** 合并；本仓 **16 行** 量级，含 **n128**） | ✅ |
 | **M1（SSGS vs TF-KV，同树 DFS）** | **`…/ssgs_vs_kv_wikitext_nav_grid.csv`**（通配 **`ssgs_vs_kv_tree_nav_wikitext_*.json`**；**数据行数 = 聚合 stdout 的 `N row(s)`** + **表头**；含多 **STAMP** / 可选 **L3** 列）；登记 **X-ssgs-vs-kv-tree-nav-m1** | ✅ |
 | **path-batch smoke（同树三 reader）** | `…/benchmark_wikitext_ssgs_bundle_20260410T0803Z_n8_c8.json`（**辅**；与 SSGS **分列**） | ✅ |
 | **L3 轨迹甲·乙（玩具 TF-KV）** | **`…/tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`**（**`kind=tf_kv_trajectory_l3_minimal`**；**3090 CUDA**；**`git_sha=6fa7873`**） | ✅ |
@@ -82,7 +83,7 @@
 
 - **阶段 2 path-batch（3090 fused）**：优先写 **登记 STAMP** + **四格 basename**，例：`benchmark_wikitext_stage2_fused_20260409T1035Z_n16_c8.json`；**dim256** 写 **`1137Z` 全四格** 或 **`0847Z` minimal** 三格，**勿**混为同一表无说明。  
 - **A2-S3**：附录表可直接引用 **`task_wikitext_*_summary_20260410T{0820,0850}Z.tsv`**；若审稿人要原始 run，再列 **10** 个 **`initseed*_1438Z`/`0820Z`/`0850Z`** JSON。  
-- **SSGS**：主文一句 **`ssgs_mamba_wikitext_grid.csv`** + **「通配合并、当前 13 行量级」** 即可；**禁止**与 path-batch **`per_step_s`** 同纵轴。  
+- **SSGS**：主文一句 **`ssgs_mamba_wikitext_grid.csv`** + **「通配合并、当前 16 行量级」** 即可；**禁止**与 path-batch **`per_step_s`** 同纵轴。  
 - **M1**：附录或方法脚注 **`ssgs_vs_kv_wikitext_nav_grid.csv`** + **「三臂 DFS、玩具 TF-KV ≠ path-batch reader」**；**禁止**与 **§7 单列毫秒**、**path-batch** **无标注同表**。  
 - **L3 轨迹（阶段 C）**：一句 **`tf_kv_trajectory_l3_minimal`** + **「硬编码错枝→restore vs 金路径直达；≠ M1 全 DFS、≠ path-batch」**；登记 **X-20260411-tf-kv-trajectory-l3-minimal**。  
 - **本机 5060**：路径多在 **`results/metrics/`**（非 **`metrics_result`**），见 **`EXPERIMENT_REGISTRY` X-20260410-***。
@@ -126,7 +127,7 @@ Our primary figures report **path-batch** wall-clock and **Mamba-2 peak CUDA mem
 
 1. **Path-batch main figure** — Step time and `max_memory_allocated` peak for **batched** paths under **`run_tree_reader_benchmark` / `benchmark_wikitext_tree`**; registry **A-20260408-paper-main-3090-***.  
 2. **§7 toy table** — **Per-operation** timings on **one** path for Mamba cache clone, TF-R1, TF-KV increment, restore, etc.; registry **X-20260421-***; **do not subtract** from path-batch bars.  
-3. **SSGS demo** — **DFS + `DynamicCache`** with **snapshot / rollback counts** on the same tokenizer-step loop; Wikitext grid **`ssgs_mamba_wikitext_grid.csv`** (merged JSONs; **13-row** scale in this repo); **X-20260407**; **not** path-batch latency.  
+3. **SSGS demo** — **DFS + `DynamicCache`** with **snapshot / rollback counts** on the same tokenizer-step loop; Wikitext grid **`ssgs_mamba_wikitext_grid.csv`** (merged JSONs; **16-row** scale in this repo as of **2026-04-11**); **X-20260407**; **not** path-batch latency.  
 4. **M1 same-tree DFS** — **SSGS Mamba** vs **toy TF-KV** (clone / `truncate_kv`) on **one** DFS navigation task over **one** built tree; **`ssgs_vs_kv_wikitext_nav_grid.csv`** (**N data rows + header**, **N** = count of merged `ssgs_vs_kv_tree_nav_wikitext_*.json`); **X-ssgs-vs-kv-tree-nav-m1**; optional L3 hidden/CE columns are **still not** path-batch or §7 columns.  
 5. **L3 trajectory (toy TF-KV)** — Hard-coded **wrong branch → restore → gold suffix** vs **gold path only** on a **small balanced tree**; **`kind=tf_kv_trajectory_l3_minimal`**, e.g. **`tf_kv_trajectory_l3_minimal_cuda_20260410T1341Z.json`**; **≠** full M1 DFS sweep.  
 6. **Real-LM toy line** — **X-20260422–25** CE / navigation metrics on a **tiny LM** harness; **≠** path-batch or SSGS.  
@@ -209,7 +210,7 @@ Our primary figures report **path-batch** wall-clock and **Mamba-2 peak CUDA mem
 | 2026-04-10 | **A1b** 中英摘要/引言提示；**A2** 全表 **✅** 存在性扫描（paper_main 6 CSV、5060 四 JSON+grid、leavescale n8–64、SSGS grid） |
 | 2026-04-10 | **提交前检查**表（pytest / git）；与 **`LOCAL_5060_RUNBOOK` §5.1** 对齐 |
 | 2026-04-10 | **A5–A7**：正文骨架（引言/方法/结果/讨论）、**A6** 结果句模板、**A7** 本机 **高性价比/搁置** |
-| 2026-04-10 | **A2 扩表**：与 **`metrics_result`** **逐字对齐** — **dim256 `0847Z`**、**A2-S3 `0820Z`/`0850Z`+TSV**、**SSGS** grid（后扩 **13 行**）、**ssgs_bundle `0803Z`**、**`json_path`** 脚注规则 |
+| 2026-04-10 | **A2 扩表**：与 **`metrics_result`** **逐字对齐** — **dim256 `0847Z`**、**A2-S3 `0820Z`/`0850Z`+TSV**、**SSGS** grid（后扩 **16 行**）、**ssgs_bundle `0803Z`**、**`json_path`** 脚注规则 |
 | 2026-04-10 | **A2.1** 主文引用习惯；**A8** 对齐后下一步（P0–P2） |
 | 2026-04-11 | **A2/A2.1/A3**：**M1** grid + **七轴**；**A8 §1**：**P0** 核对 **M1** 一句入正稿 |
 | 2026-04-11 | **提交前检查**、**A7**：**pytest** 与 **3090 P1/P2 已归档** 叙事对齐 |
@@ -219,3 +220,6 @@ Our primary figures report **path-batch** wall-clock and **Mamba-2 peak CUDA mem
 | 2026-04-11 | **§A2/§A3b**：**M1 N** 随 JSON 个数（例 **15** on AutoDL）；**pytest** → **`python -m pytest`**（§12） |
 | 2026-04-11 | **§A1 问题段**：**主验证轴**（树+Mamba+SSGS/M1）与 **副线**（检索/探针）；对齐 **`PROJECT_MASTER_PLAN` §1.0** |
 | 2026-04-11 | **提交前检查**：**AutoDL** **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests** |
+| 2026-04-11 | **§A2**：**M1** **`chunk_len=12`** **`…_c12_20260411T0202Z.json`**；**SSGS** **`…_0204Z.json`**；仓根 **`aggregate_*`** → **M1 `N`=18**、**SSGS 16 行**（**0334Z** **n8** 复跑后）；**`EXPERIMENT_REGISTRY`** 同步 |
+| 2026-04-11 | **§A3b** 轴 3：**SSGS** grid **…→ 16-row**（**0334Z**；以 **`aggregate_*` stdout** 为准） |
+| 2026-04-11 | **§A1b**：摘要/英摘 改为 **`PHASE1` 摘要 / §7** + **`NARRATIVE` §0** 指针；**§7** 服务器 **Ⅲ-2** 见 **`NARRATIVE` §7** |

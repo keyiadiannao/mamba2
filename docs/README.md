@@ -6,10 +6,11 @@
 
 | 路径 | 类别 | 内容 |
 |------|------|------|
-| **`docs/overview/planning/`** | 总体规划 | 月级叙事、现状大表、项目总览、周历模板 |
+| **`docs/overview/planning/`** | 总体规划 | 月级叙事、现状大表、项目总览、周历模板；**`NARRATIVE_MAINLINE_TREE_READER_SSGS`** 主线链与数据索引 |
 | **`docs/overview/execution/`** | 实施与迭代 | 下一步任务展开、当前 sprint 勾选、投稿包 |
+| **`docs/overview/engineering/`** | **工程北星**（战略 B） | **Runner / G1–G5 / Sprint**；与 **`experiments/`** 实证线 **文档分列**、**代码复用** |
 | **`docs/experiments/planning/`** | 实验总体规划 | 登记册、数据约定、阶段 1 验证计划 |
-| **`docs/experiments/phases/`** | 阶段成稿与素材 | 阶段 1/2 手稿、图注、阶段总结 |
+| **`docs/experiments/phases/`** | 阶段成稿与素材 | 阶段 1/2 手稿、图注、**`FOUNDATION_STAGE_FORMAL_SUMMARY`** 基础阶段正式浓缩稿、阶段总结 |
 | **`docs/environment/runbooks/`** | 执行手册 | 本机 5060、AutoDL、云端扫参、同步、安装步骤 |
 | **`docs/environment/troubleshooting/`** | 问题与解决 | CRLF、`bash\r`、Git 合并与未跟踪冲突等 |
 | **`docs/research/`** | 研究笔记 | SSGS、§7、检索头叙事 |
@@ -19,6 +20,7 @@
 | 主题 | 唯一权威 |
 |------|----------|
 | 叙事框架、基线对照、A/B/C/X、月级阶段表、**§1.0 主验证轴/副线** | [`overview/planning/PROJECT_MASTER_PLAN.md`](overview/planning/PROJECT_MASTER_PLAN.md) |
+| **主线叙事链**（树→路径→reader→导航；**SSGS**；数据/登记索引；**§0 中/英摘要可用稿**） | [`overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md`](overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md) |
 | **现状**大表、七轴、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
 | **阶段 0→结题**（每阶段实验 + 成功标准；与 L1–L4 对齐） | [`overview/planning/RESEARCH_PHASES_0_TO_DONE.md`](overview/planning/RESEARCH_PHASES_0_TO_DONE.md) |
 | 轨道里程碑、**当前收口清单**、P0–P3、后备推进 § | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
@@ -35,12 +37,17 @@
 | 目的 | 文件 |
 |------|------|
 | **接下来几周干什么**（阶段 5→投出→审稿） | [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) |
+| **实证快照 + 北星框架（F0–F5）+ 下一步命令** | [`overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md`](overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md) **§9–§11** + [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) **§Ⅶ** |
+| **「论文 1」何时动笔（工程门闩 G1–G5 · 真 TF 可比）** | [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) **§Ⅷ**（与篇首 **战略 B** 同读） |
+| **工程北星：执行计划 · Sprint · 文档/脚本/结果边界** | [`overview/engineering/ENGINEERING_NORTH_STAR_PLAN.md`](overview/engineering/ENGINEERING_NORTH_STAR_PLAN.md)（**唯一主文件**；**RW 动机** 见 [`research/RESEARCH_NOTES.md`](research/RESEARCH_NOTES.md) **§8**） |
+| **基础阶段结论（论文格式浓缩）** | [`experiments/phases/FOUNDATION_STAGE_FORMAL_SUMMARY.md`](experiments/phases/FOUNDATION_STAGE_FORMAL_SUMMARY.md) |
+| **投稿摘要可用稿（中/英）** | [`overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md`](overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md) **§0** |
 | **M1 之后**：更大模型、公平对比、三风险实测 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) **§6.3–§6.4** + [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) **§Ⅵ** |
 | 现状、证据、推荐推进顺序 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
 | 本周在做什么、阻塞项 | [`overview/execution/CURRENT_SPRINT.md`](overview/execution/CURRENT_SPRINT.md) |
 | 任务拆条、收口清单 | [`overview/execution/NEXT_RESEARCH_PLAN.md`](overview/execution/NEXT_RESEARCH_PLAN.md) |
 | **0→结题** 阶段表与阶段 5 勾选 | [`overview/planning/RESEARCH_PHASES_0_TO_DONE.md`](overview/planning/RESEARCH_PHASES_0_TO_DONE.md) |
-| **Mamba+树+SSGS** 整合主线（**M1** 工具；**M2** 后续跑道 **§6**） | [`experiments/planning/SSGS_MAINLINE_M1.md`](experiments/planning/SSGS_MAINLINE_M1.md) |
+| **Mamba+树+SSGS** 整合主线（**M1** 工具；**M2** **§6**；**phase-5 收口** **`NARRATIVE` §8**） | [`experiments/planning/SSGS_MAINLINE_M1.md`](experiments/planning/SSGS_MAINLINE_M1.md) + [`overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md`](overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md) **§8** |
 | 投稿草稿块与检查清单 | [`overview/execution/SUBMISSION_PACK.md`](overview/execution/SUBMISSION_PACK.md) |
 | 实验登记 | [`experiments/planning/EXPERIMENT_REGISTRY.md`](experiments/planning/EXPERIMENT_REGISTRY.md) |
 | 四月服务器数据归档（路径 + STAMP） | [`experiments/planning/DATA_ARCHIVE_202604_SERVER.md`](experiments/planning/DATA_ARCHIVE_202604_SERVER.md) |
@@ -50,6 +57,7 @@
 | 文件 | 说明 |
 |------|------|
 | [`phases/PHASE1_MANUSCRIPT.md`](experiments/phases/PHASE1_MANUSCRIPT.md) | 阶段 1 主成稿（含 §8–§10） |
+| [`phases/FOUNDATION_STAGE_FORMAL_SUMMARY.md`](experiments/phases/FOUNDATION_STAGE_FORMAL_SUMMARY.md) | **基础阶段** 正式论文体例 **浓缩总结**（摘要/方法/结果/讨论/结论；七轴分列） |
 | [`phases/PHASE2_DRAFT.md`](experiments/phases/PHASE2_DRAFT.md) | 阶段 2 表数字、修订日志 |
 | [`phases/FIGURE_CAPTIONS_STAGE1.md`](experiments/phases/FIGURE_CAPTIONS_STAGE1.md) | 主图图注与七轴护栏（含 **M1**、**L3 轨迹**） |
 | [`phases/PHASE1_COMPLETE_SUMMARY.md`](experiments/phases/PHASE1_COMPLETE_SUMMARY.md) | 阶段 1 存档与 §7 复跑指针 |

@@ -61,6 +61,42 @@ def _depth_edges(num_leaves: int, fanout: int) -> int:
     return int(round(d))
 
 
+def build_wikitext_tree_benchmark_dict(args: argparse.Namespace) -> dict:
+    """Run the same path-batch benchmark as the CLI; reusable from `scripts/engineering/`."""
+    fanout = args.fanout
+    n = args.num_leaves
+    depth_edges = _depth_edges(n, fanout)
+
+    leaves = wikitext2_leaf_chunks(n, args.chars_per_leaf, config=args.wikitext_config)
+    device = torch.device("cpu" if args.cpu or not torch.cuda.is_available() else "cuda")
+    root = build_bottom_up_text_tree(leaves, fanout, args.chunk_len, args.dim, device, torch.float32)
+    paths, num_paths = batched_paths(root)
+    if num_paths != n:
+        raise RuntimeError(f"path mismatch {num_paths} != {n}")
+
+    out = run_reader_benchmark_on_paths(
+        paths,
+        nhead=args.nhead,
+        include_mamba2=not args.no_mamba2,
+        warmup=args.warmup,
+        reps=args.reps,
+        device=device,
+    )
+    out["tree_kind"] = "wikitext2_bottom_up"
+    out["dataset"] = "wikitext"
+    out["wikitext_config"] = args.wikitext_config
+    out["num_leaves"] = n
+    out["fanout"] = fanout
+    out["depth"] = depth_edges
+    out["chars_per_leaf"] = args.chars_per_leaf
+    out["chunk_len"] = args.chunk_len
+    out["kind"] = "benchmark_wikitext_tree"
+    sha = args.git_sha if args.git_sha is not None else _git_short_sha(_REPO_ROOT)
+    out["git_sha"] = sha
+    out["torch_version"] = torch.__version__
+    return out
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--num-leaves", type=int, default=8)
@@ -92,42 +128,11 @@ def main() -> int:
     args = p.parse_args()
     _ = args.seed
 
-    fanout = args.fanout
-    n = args.num_leaves
-    depth_edges = _depth_edges(n, fanout)
-
     try:
-        leaves = wikitext2_leaf_chunks(n, args.chars_per_leaf, config=args.wikitext_config)
+        out = build_wikitext_tree_benchmark_dict(args)
     except ImportError as e:
         print(str(e), file=sys.stderr)
         return 1
-
-    device = torch.device("cpu" if args.cpu or not torch.cuda.is_available() else "cuda")
-    root = build_bottom_up_text_tree(leaves, fanout, args.chunk_len, args.dim, device, torch.float32)
-    paths, num_paths = batched_paths(root)
-    if num_paths != n:
-        raise RuntimeError(f"path mismatch {num_paths} != {n}")
-
-    out = run_reader_benchmark_on_paths(
-        paths,
-        nhead=args.nhead,
-        include_mamba2=not args.no_mamba2,
-        warmup=args.warmup,
-        reps=args.reps,
-        device=device,
-    )
-    out["tree_kind"] = "wikitext2_bottom_up"
-    out["dataset"] = "wikitext"
-    out["wikitext_config"] = args.wikitext_config
-    out["num_leaves"] = n
-    out["fanout"] = fanout
-    out["depth"] = depth_edges
-    out["chars_per_leaf"] = args.chars_per_leaf
-    out["chunk_len"] = args.chunk_len
-    out["kind"] = "benchmark_wikitext_tree"
-    sha = args.git_sha if args.git_sha is not None else _git_short_sha(_REPO_ROOT)
-    out["git_sha"] = sha
-    out["torch_version"] = torch.__version__
 
     text = json.dumps(out, indent=2)
     print(text)

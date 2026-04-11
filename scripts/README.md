@@ -4,6 +4,7 @@
 
 | 子目录 | 脚本 | 说明 |
 |--------|------|------|
+| **[engineering/](engineering/)** | **`run_engineering_path_batch_smoke.py`**、**`run_causal_lm_path_kv_smoke.py`** | **G1 / G3**；见 **`engineering/README.md`** |
 | **[smoke/](smoke/)** | `smoke_local.py` | PyTorch / CUDA 冒烟 |
 | | `smoke_mamba_minimal.py` | HF `Mamba2Model` / `MambaModel` 小配置前向 |
 | **[benchmarks/](benchmarks/)** | `benchmark_tree_walk.py` | 玩具树路径 reader 微基准 |

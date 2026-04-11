@@ -1,0 +1,71 @@
+{
+  "kind": "probe_path_reader_linear",
+  "git_sha": "6fa7873",
+  "torch_version": "2.11.0+cu126",
+  "device": "cuda",
+  "label": "topic: 8 STEM + 8 life/arts leaf templates; y=0 first half / y=1 second half in leaf list",
+  "leaf_split": "heldout",
+  "heldout_per_class": 2,
+  "tree": {
+    "num_leaves": 16,
+    "fanout": 2,
+    "chunk_len": 8,
+    "dim": 128,
+    "path_shape": [
+      16,
+      40,
+      128
+    ]
+  },
+  "test_frac": null,
+  "n_train": 12,
+  "n_test": 4,
+  "ridge_lambda": 0.01,
+  "init_seed": 42,
+  "ridge_untrained": {
+    "baseline_raw_mean_pool": {
+      "train_acc": 1.0,
+      "test_acc": 1.0,
+      "output_dim": 128
+    },
+    "transformer": {
+      "train_acc": 1.0,
+      "test_acc": 1.0,
+      "output_dim": 128
+    },
+    "gru": {
+      "train_acc": 1.0,
+      "test_acc": 0.5,
+      "output_dim": 128
+    },
+    "mamba2": {
+      "train_acc": 1.0,
+      "test_acc": 1.0,
+      "output_dim": 128
+    }
+  },
+  "notes": "ridge_untrained: ridge on pooled vectors, not BCE. bce_* : re-init readers; BCE on train indices; train_target=head_only freezes reader. Not GPT-2; not retrieval-head ID.",
+  "bce_reader_train": {
+    "transformer": {
+      "train_acc": 1.0,
+      "test_acc": 1.0,
+      "train_steps": 50,
+      "train_lr": 0.003,
+      "train_target": "reader_plus_head"
+    },
+    "gru": {
+      "train_acc": 1.0,
+      "test_acc": 0.0,
+      "train_steps": 50,
+      "train_lr": 0.003,
+      "train_target": "reader_plus_head"
+    },
+    "mamba2": {
+      "train_acc": 1.0,
+      "test_acc": 1.0,
+      "train_steps": 50,
+      "train_lr": 0.003,
+      "train_target": "reader_plus_head"
+    }
+  }
+}

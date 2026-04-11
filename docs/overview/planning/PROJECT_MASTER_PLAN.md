@@ -10,6 +10,8 @@
 
 **一句话**：在**树状结构化检索**（多粒度、多分支导航）场景下，用 **Mamba-2 类状态空间模型** 作为 **reader / 导航器**，结合**检索头**相关机制，在 **同一树索引与同一检索预算** 下，与 **Transformer 系 reader**（及可选的 **混合架构**）对照，度量 **效率（延迟、显存、回溯成本）** 与 **效果（导航/问答）**；并探索 **状态快照式回溯** 等系统级优势。
 
+**叙事链（树 → 路径 → reader → 导航 + SSGS）与数据登记索引**：**[`NARRATIVE_MAINLINE_TREE_READER_SSGS.md`](NARRATIVE_MAINLINE_TREE_READER_SSGS.md)** — 与下表 **§1.0** 同轴，便于成文时逐段挂 **basename**。
+
 ### 1.0 主验证轴与副线（定调 · 2026-04）
 
 **主验证轴（投稿时优先写进摘要/方法/主结果；证据层级仍受 `RESEARCH_STATUS` §3.5 约束）**
@@ -153,3 +155,4 @@
 |------|------|
 | 2026-04-11 | **§1.0**：**主验证轴** = **树状 RAG + Mamba path reader + SSGS/M1**；**副线** = 检索头与探针（B-S2/B-S2+） |
 | 2026-04-11 | **§1.0 末**：**M1 之后** 指针 **`RESEARCH_STATUS` §6.3–§6.4**、**`PLAN_NOW_TO_DONE` §Ⅵ** |
+| 2026-04-11 | 篇首：**`NARRATIVE_MAINLINE_TREE_READER_SSGS.md`** — 叙事链 + **EXPERIMENT_REGISTRY** / **`DATA_ARCHIVE`** 数据索引 |

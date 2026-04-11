@@ -104,6 +104,8 @@
 - **`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`** — 七轴、§3.5、L3 最小验证。  
 - **`docs/overview/execution/NEXT_RESEARCH_PLAN.md`** — **M1** 与 **P0 成文 / P1 B-S2+ CUDA** 并行关系。  
 - **`docs/research/RESEARCH_NOTES.md`** §6–§7 — SSGS 与 §7 边界。  
+- **`docs/overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md` §8** — **Mamba + 树状 RAG + SSGS** 主线 **phase-5 收口**（成稿检查 + 数据/登记索引；**勿无因重复 n8 SSGS**）。  
+- **`NARRATIVE_MAINLINE_TREE_READER_SSGS.md` §9–§11** — **聚合快照（N 行）**、**F0–F5 可落地框架**、**推荐下一步命令**；与 **`PLAN_NOW_TO_DONE` §Ⅶ** 同轨。  
 - **`scripts/README.md`** — 脚本索引（含 SSGS / §7）。  
 - **M1 云端扫叶数**：**`scripts/server/run_m1_ssgs_vs_kv_wikitext_cuda.sh`**（默认 **`M1_LEAVES="8 16 32"`**、**三臂**；**`M1_NO_TRUNCATE=1`** 仅两臂）。
 

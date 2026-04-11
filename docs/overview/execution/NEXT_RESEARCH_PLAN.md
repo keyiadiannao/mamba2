@@ -11,7 +11,7 @@
 
 ### 0.1 当前所处阶段（一句话）
 
-**阶段 1–2 的实证与登记已基本收口**：**path-batch**、**§7**、**A2-S3**、**SSGS（grid 13 行）**、**Phase M1**（三臂 + L3；nav grid **N** 数据行 + 表头，**N** 见 **`aggregate_ssgs_vs_kv_wikitext_json.py` stdout**）、**B-S2+ CUDA**、**玩具 L3 轨迹甲·乙（`tf_kv_trajectory_l3_minimal`）** 等均 **入仓 JSON / CSV** 并与 **`EXPERIMENT_REGISTRY`** 对齐。**当前主瓶颈** 已从「补跑服务器格点」转为 **P0：成文冻结与投稿叙事**（**`SUBMISSION_PACK` §A1–A4** 粘贴正稿、**七轴**脚注不混读）。  
+**阶段 1–2 的实证与登记已基本收口**：**path-batch**、**§7**、**A2-S3**、**SSGS（grid 16 行）**、**Phase M1**（三臂 + L3；nav grid **N** 数据行 + 表头，**N** 见 **`aggregate_ssgs_vs_kv_wikitext_json.py` stdout**）、**B-S2+ CUDA**、**玩具 L3 轨迹甲·乙（`tf_kv_trajectory_l3_minimal`）** 等均 **入仓 JSON / CSV** 并与 **`EXPERIMENT_REGISTRY`** 对齐。**当前主瓶颈** 已从「补跑服务器格点」转为 **P0：成文冻结与投稿叙事**（**`SUBMISSION_PACK` §A1–A4** 粘贴正稿、**七轴**脚注不混读）。  
 **方向性说明**：**P0 收口 ≠ 研究终点**。长期叙事仍以 **`RESEARCH_STATUS_AND_DIRECTION.md` §1.5**（**状态快照回溯 × 树状 RAG** 北星）与 **§3.5**（证据层级 / 风险 / PoC）为准；阶段 1–2 是为该北星服务的 **可发表地基**，**L4 级 Agent 声称** 须 **另排期、另 harness**。
 
 ### 0.2 从现在到远期的分阶段计划
@@ -50,7 +50,7 @@
 
 1. ~~**B-S2+ CUDA**~~：**`results/metrics_result/probe_path_reader_linear_text16_heldout_train50_cuda_20260410T1302Z.json`**；登记 **X-20260410-probe-path-reader-bs2plus-cuda-3090**（与 **`LOCAL_5060_RUNBOOK` §2** CPU 分列）。  
 2. ~~**SSGS n8 刷新 `git_sha`**~~：**`20260410T1238Z`** 等同批已含 **n8**（见 **X-20260407-ssgs-mamba-wikitext-tree**）。  
-3. ~~**SSGS n128**~~：**`ssgs_mamba_wikitext_n128_c8_dim128_cuda_20260410T1238Z.json`** + grid **13 行**。
+3. ~~**SSGS n128**~~：**`ssgs_mamba_wikitext_n128_c8_dim128_cuda_20260410T1238Z.json`** + grid **16 行**。
 
 ---
 
@@ -79,7 +79,7 @@
 | **P0** | **成文整合** | **`PHASE1_MANUSCRIPT`** / **`FIGURE_CAPTIONS_STAGE1`** / **`EXPERIMENT_REGISTRY`** 对齐投稿版；**§7.5 S5** 总表 **视截稿篇幅** |
 | **M1** | **SSGS 整合对照（主线科研）** | **`SSGS_MAINLINE_M1.md`**：**harness 已归档**（**`X-ssgs-vs-kv-tree-nav-m1`**）；**L3** 见 **`RESEARCH_STATUS` §3.5**；成文须 **单列脚注**（**`FIGURE_CAPTIONS_STAGE1.md`** **第七轴：M1 DFS 三臂**） |
 | ~~**P1**~~ | ~~**3090：B-S2+ CUDA**~~ | **已完成**：**`probe_path_reader…cuda_20260410T1302Z.json`**；登记 **X-20260410-probe-path-reader-bs2plus-cuda-3090** |
-| ~~**P2**~~ | ~~**SSGS n128 等**~~ | **已完成**：**n128** 等在 **`ssgs_mamba_wikitext_grid.csv`（13 行）**；登记 **X-20260407-ssgs-mamba-wikitext-tree** |
+| ~~**P2**~~ | ~~**SSGS n128 等**~~ | **已完成**：**n128** 等在 **`ssgs_mamba_wikitext_grid.csv`（16 行）**；登记 **X-20260407-ssgs-mamba-wikitext-tree** |
 | **P3** | **A2-S3 可选加压** | **云端或本机 CPU**（视脚本）；与 **init×5** **分列** 说明 |
 | **P★** | **（可选）训练型 L3** | **M1** 已含 **隐状态 + 固定头 CE**；**玩具轨迹** 已 **`tf_kv_trajectory_l3_minimal`**；**训练型探针** 另 **`kind`**；**`RESEARCH_STATUS` §3.5** |
 
@@ -132,7 +132,7 @@
 
 **成文（优先，不占 GPU）**
 
-- [x] **归档路径核对**：见 **`PHASE1_MANUSCRIPT.md` §5.1** + **`SUBMISSION_PACK.md` §A2**（主图 PNG、**`paper_main_*` CSV**、§7、5060、阶段 2 **含 `dim256` `0847Z`**、A2-S3 **含 TSV**、SSGS **13 行 grid**、**M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**）；七轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
+- [x] **归档路径核对**：见 **`PHASE1_MANUSCRIPT.md` §5.1** + **`SUBMISSION_PACK.md` §A2**（主图 PNG、**`paper_main_*` CSV**、§7、5060、阶段 2 **含 `dim256` `0847Z`**、A2-S3 **含 TSV**、SSGS **16 行 grid**、**M1** **`ssgs_vs_kv_wikitext_nav_grid.csv`**）；七轴图注见 **`FIGURE_CAPTIONS_STAGE1.md`**。
 - [x] **分列脚注规则**：已写入 **`PHASE1_MANUSCRIPT` §5.1**（**5060/3090**、**naive/fused**、**path-batch / §7 / SSGS / A2-S3**）；正式投稿前将对应句式 **粘贴进论文正文/附录** 即可。
 - [ ] **§7.5 S5** 总表是否补 —— **视截稿篇幅**（主图 PNG **已入仓** 三张 **`mamba_3090_naive_vs_fused_dim{128,256,384}_*.png`**）。
 
@@ -155,7 +155,7 @@
 2. **path-batch XL** 或 **§7.5 S5** 所需 **新脚本/合成表**（**视截稿**）。  
 3. **B-S3** 或 **训练型 L3**（**新 `kind`**）—— **阶段 2+**；见 **`RESEARCH_STATUS` §3.5**。
 
-**已就绪（无需再跑也能写）**：阶段 2 **path-batch**（**A2-S2**、**dim256 `1137Z`+`0847Z`**、叶数扫描与 XL、**§7 depth 5–6**）、**A2-S3**（**1438Z** + **0820Z/0850Z** + **TSV**）、**Wikitext SSGS**（**`ssgs_mamba_wikitext_grid.csv` 13 行**）、**B-S2+ CUDA**、**L3 轨迹 JSON** —— 见 **登记册**、**`DATA_ARCHIVE_202604_SERVER.md` §0**、**`SUBMISSION_PACK` §A2/A2.1/A8**、**`PHASE1_MANUSCRIPT` §5**。
+**已就绪（无需再跑也能写）**：阶段 2 **path-batch**（**A2-S2**、**dim256 `1137Z`+`0847Z`**、叶数扫描与 XL、**§7 depth 5–6**）、**A2-S3**（**1438Z** + **0820Z/0850Z** + **TSV**）、**Wikitext SSGS**（**`ssgs_mamba_wikitext_grid.csv` 16 行**）、**B-S2+ CUDA**、**L3 轨迹 JSON** —— 见 **登记册**、**`DATA_ARCHIVE_202604_SERVER.md` §0**、**`SUBMISSION_PACK` §A2/A2.1/A8**、**`PHASE1_MANUSCRIPT` §5**。
 
 **M1 开工清单**（与 **§3** 一致）：见 **`docs/experiments/planning/SSGS_MAINLINE_M1.md` §4**。
 
@@ -297,7 +297,7 @@ flowchart LR
 | 2026-04-10 | **投稿版对齐**：**`SUBMISSION_PACK` A2 扩表** + **A2.1/A8**；**`PHASE1_MANUSCRIPT` §5.1**、**`FIGURE_CAPTIONS_STAGE1` P0** 与 **`metrics_result` basename** 一致；**`NEXT_RESEARCH_PLAN`** 收口清单更新 |
 | 2026-04-10 | **§3 Phase M1**：**`SSGS_MAINLINE_M1.md`**；优先级表增 **M1**；**3090** 待办 **M1 优先**；**P1 B-S2+ CUDA** 标 **副线** |
 | 2026-04-11 | **§3 M1**：harness **已落地** 叙事；里程碑改为 **P0 + M1 脚注** 并行；**七轴** 混读禁令；**P★** 与 **M1 L3** 分工 |
-| 2026-04-11 | **§0**：全局阶段 / 分阶段路线图 / **下一步**；**七轴** + **SSGS 13 行** + **P1/P2 已划**；**pytest** 改为 **以实际计数为准** |
+| 2026-04-11 | **§0**：全局阶段 / 分阶段路线图 / **下一步**；**七轴** + **SSGS 16 行** + **P1/P2 已划**；**pytest** 改为 **以实际计数为准** |
 | 2026-04-11 | **§0.1**：**P0 收口 ≠ 研究终点**；指针 **`RESEARCH_STATUS` §1.5** 北星（快照回溯 × 树 RAG） |
 | 2026-04-11 | **`RESEARCH_PHASES_0_TO_DONE.md`**：阶段 0–7 表 + 阶段 5 清单；篇首与 **`docs/README`** 互链 |
 | 2026-04-11 | **§1 / 收口清单 / §B B3**：**AutoDL** 全量 **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**, **~21 s** |
