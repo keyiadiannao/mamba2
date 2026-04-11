@@ -90,7 +90,7 @@
 
 | 优先级 | id | 说明 |
 |--------|-----|------|
-| **P0** | **`TASK-sprint1c-leafheldout-shallow-*`（进行中）** | **`PLAN_NOW_TO_DONE.md` §Ⅸ-5**：**深档** **`leaf_heldout` H=17**（**n32 root_child**）+ **浅档** **n8 sibling**（**难度梯度**）；跑完补 **`TASK-*`** 一行 |
+| **P0** | **`TASK-sprint1c-sibling-heldout-n32-n8-*`（进行中）** | **`PLAN_NOW_TO_DONE.md` §Ⅸ-5**：**`n32 sibling + leaf_heldout H=8`**（**`root_child+leaf_heldout` 对 n=32 几何不可行**）+ **浅档 n8 sibling**；跑完补 **`TASK-*`** 一行 |
 | **P0** | ~~**`TASK-end-to-end-*`（拟）**~~ | **§Ⅸ Sprint 1（b）** 已登记 **`TASK-20260407-wikitext-sprint1b-…`**；**战略 B** 后续仍见 **§Ⅸ-1/2** |
 | ~~**P0**~~ | ~~**M1 / `X-ssgs-vs-kv-tree-nav-m1`**~~ | **（已完成 2026-04-07；2026-04-10 补 n64 + L3 批次）** 登记表 **`X-ssgs-vs-kv-tree-nav-m1`**；**`truncate_kv`** 臂已并入 **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`**；**玩具 TF-KV L3**（**隐状态 / 固定叶头 CE**）已测；**训练型子头 / 轨迹甲·乙** 另 **kind** |
 | P0 | — | （已完成）同机 paper_main：见登记表 **A-20260408-paper-main-3090-*** |

@@ -192,7 +192,7 @@ py -3 scripts/research/aggregate_task_wikitext_path_pair_json.py \
   --glob "results/metrics_result/task_wikitext_f2_n32_rootchild_seed*.json"
 ```
 
-**推荐（更强 held-out）**：追加 **`--pair-split leaf_heldout --heldout-leaves H`** —— **须**使 **train / test 叶区间** 与 **`root_child` 块边界** 相交，否则 **测试对可能全为同一类**（脚本报错）。例：**`n=32`、fanout=2、`block=16`**：若 **`H=8`**，test 叶为 **[24,31]**，**全在第二块** → **无效**；应取 **`H≥17`**（test 叶 **[15,31]**，含 **叶 15** 与 **叶 16+**，跨块负例存在）或 **改用默认 `stratified`**。**浅树**（如 **n=8, block=4**）另算；**拿不准时先用 `stratified` 跑通 Table A**。
+**`leaf_heldout` 与 `root_child`（两块等大）**：当 **`num_leaves = 2 × block`**（例 **n=32**、**block=16**）时，**前缀 train / 后缀 test** 与 **块边界** 的几何 **不可能** 同时让 **train、test 内** 都存在 **跨块叶对**（故必触发 **`single class in train or test`**）。**证明要点**：train 含跨块对 **⇔** **`n−H−1 ≥ block`** **⇔** **`H ≤ n−block`**；test 含跨块对 **⇔** **`n−H ≤ block−1`** **⇔** **`H ≥ n−block+1`**；二者 **⇒** **`H ≤ n−block` 且 `H ≥ n−block+1`**，矛盾。**结论**：**`cohort=root_child`、`n=32`** 时 **勿用 `leaf_heldout`**；更强 held-out 请 **改用 `stratified` + 调 `test_frac` / `split-seed`**，或 **`cohort=sibling`**（块小、**`leaf_heldout`** 易同时两类），或 **改标签几何**（新代码）。
 
 **Table B — T1（同树导航代价；与 Table A 分列）**
 
@@ -213,12 +213,12 @@ py -3 scripts/research/benchmark_ssgs_vs_kv_tree_nav_wikitext.py --device cuda \
 
 ### Ⅸ-5 Sprint 1c（**下一步实验**；仍无新代码）
 
-> **动机**：**Sprint 1（b）** 深档 **stratified** 上 **ridge test_acc 近饱和**（见 **`TASK-20260407-wikitext-sprint1b-…`**）— **1c** 用 **更强 held-out** 与 **浅档对照** 把 **难度梯度** 做实。
+> **动机**：**Sprint 1（b）** 深档 **stratified** 上 **ridge test_acc 近饱和**（见 **`TASK-20260407-wikitext-sprint1b-…`**）— **1c** 用 **held-out 叶**（**在 `root_child` 下不可用**，见上节）与 **浅档** 把 **难度梯度** 做实。
 
 | 序号 | 实验 | 目的 |
 |------|------|------|
-| **1c-A** | **`n=32`、fanout=2、`cohort=root_child`、`pair_split=leaf_heldout`、`heldout_leaves=17`**（**5×`init-seed`**） | test 叶 **[15,31]** 跨 **`block=16`** 边界，**减轻**「全在同一块」；期望 **test_acc 方差/均值** 与 **（b）** 可区分 |
-| **1c-B** | **`n=8`、fanout=2、`cohort=sibling`、`stratified`、5 seeds** | **§Ⅸ** 浅档「短/单跳」占位；与 **深档** **同脚本**、**分列 basename** |
+| **1c-A** | **`n=32`、fanout=2、`cohort=sibling`、`pair_split=leaf_heldout`、`heldout_leaves=8`**（**5×`init-seed`**） | **`sibling` 块=2**，前缀/后缀 **可同时** 含 **同/异块** 叶对；**深档 + 叶级 held-out**（与 **（b）** 的 **root_child 语义不同**，**分列**） |
+| **1c-B** | **`n=8`、fanout=2、`cohort=sibling`、`stratified`、5 seeds** | **§Ⅸ** 浅档「短/单跳」占位 |
 
 **服务器 GPU（bash；仓根）**
 
@@ -226,18 +226,18 @@ py -3 scripts/research/benchmark_ssgs_vs_kv_tree_nav_wikitext.py --device cuda \
 export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
 export CUDA_VISIBLE_DEVICES=0
 
-# 1c-A：深档 + leaf_heldout H=17
+# 1c-A：深档 n32 + sibling + leaf_heldout（勿对 n32 使用 root_child+leaf_heldout）
 for seed in 0 1 2 3 4; do
   python3 scripts/research/task_wikitext_path_pair.py \
-    --num-leaves 32 --fanout 2 --cohort root_child \
-    --pair-split leaf_heldout --heldout-leaves 17 \
+    --num-leaves 32 --fanout 2 --cohort sibling \
+    --pair-split leaf_heldout --heldout-leaves 8 \
     --init-seed "$seed" \
-    --out-json "results/metrics_result/task_wikitext_f2_n32_rootchild_h17_seed${seed}.json"
+    --out-json "results/metrics_result/task_wikitext_f2_n32_sibling_h8_seed${seed}.json"
 done
 python3 scripts/research/aggregate_task_wikitext_path_pair_json.py \
-  --glob "results/metrics_result/task_wikitext_f2_n32_rootchild_h17_seed*.json"
+  --glob "results/metrics_result/task_wikitext_f2_n32_sibling_h8_seed*.json"
 
-# 1c-B：浅档 sibling n=8（若脚本报「单类」则改 test_frac 或 cohort）
+# 1c-B：浅档 sibling n=8
 for seed in 0 1 2 3 4; do
   python3 scripts/research/task_wikitext_path_pair.py \
     --num-leaves 8 --fanout 2 --cohort sibling \
@@ -248,7 +248,7 @@ python3 scripts/research/aggregate_task_wikitext_path_pair_json.py \
   --glob "results/metrics_result/task_wikitext_f2_n8_sibling_seed*.json"
 ```
 
-**若 1c-A 报错**：见 **§Ⅸ-4**（train/test 需 **两类**）；可试 **`H=16`** 或回退 **stratified**。**完成**：**`EXPERIMENT_REGISTRY.md`** 新行 **`TASK-*-sprint1c-*`** + 聚合 **mean±std**。
+**若 1c-A 仍报错**：改 **`H`**（如 **4** / **12**）或 **`--split-seed`** + **`stratified`**。**完成**：**`EXPERIMENT_REGISTRY.md`** 新行 **`TASK-*-sprint1c-*`** + 聚合 **mean±std**。
 
 ---
 
@@ -339,4 +339,4 @@ python3 scripts/research/aggregate_task_wikitext_path_pair_json.py \
 | 2026-04-07 | **§Ⅸ-1 / §Ⅸ-2**：**树状 vs 平面** 与 **回溯分档**（轻量 **1–2 次** vs 全 DFS）假设 + **Sprint 1–3** 开工序 |
 | 2026-04-07 | **§Ⅸ-3**：Sprint 1 **Wikitext 难度梯度**（**暂缓 Hotpot**）；**`root_child`/`sibling`**；**T0 vs T1 acc** 须 **统一任务** 或 **拆分报告**（**`benchmark_wikitext_tree` 无 `--flat`**） |
 | 2026-04-07 | **§Ⅸ-4**：Sprint 1 锁定 **（b）** — **Table A/B** 可复制命令、**`scripts/research/`** 路径、**`root_child` block=16 @ n32**、脚注模板 |
-| 2026-04-07 | **§Ⅸ-5**：**Sprint 1c** — **`leaf_heldout` H=17** + **浅档 n8 sibling**；登记 **`TASK-20260407-wikitext-sprint1b-…`** |
+| 2026-04-07 | **§Ⅸ-4/5 勘误**：**`root_child` + `leaf_heldout` @ n=32** **不可能** 两类 train/test；**§Ⅸ-5** **1c-A** 改为 **`sibling` + `leaf_heldout` H=8**；登记 **`TASK-20260407-wikitext-sprint1b-…`** |

@@ -18,7 +18,7 @@
 > **下一步（1c）**：**`PLAN_NOW_TO_DONE.md` §Ⅸ-5** — **深档 `leaf_heldout` H=17**（5 seeds）+ **浅档 n8 sibling**（5 seeds）；**仍无新代码**。**Sprint 2（a）**：统一监督头。**F0 平面**：Sprint 2。
 
 - [x] **深档（b）**：**n32 root_child stratified** + **Table B** SSGS/M1 **同参**。  
-- [ ] **深档（1c-A）**：**`leaf_heldout` H=17** + 聚合 **mean±std**。  
+- [ ] **深档（1c-A）**：**`n32` + `cohort=sibling` + `leaf_heldout` H=8**（**勿** **`root_child`+`leaf_heldout`**，见 **`PLAN` §Ⅸ-4/Ⅸ-5**）+ 聚合。  
 - [ ] **浅档（1c-B）**：**n8 sibling** 五 seed。  
 - [x] **首条 `TASK-*`**：**sprint1b** 已登记。
 
