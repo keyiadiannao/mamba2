@@ -192,7 +192,7 @@ py -3 scripts/research/aggregate_task_wikitext_path_pair_json.py \
   --glob "results/metrics_result/task_wikitext_f2_n32_rootchild_seed*.json"
 ```
 
-**推荐（与登记表 A2-S3 一致、更强 held-out）**：追加 **`--pair-split leaf_heldout --heldout-leaves 8`**（须保证 train/test **两类皆非空**；若报错则调小 **`H`** 或改用默认 **`stratified`**）。
+**推荐（更强 held-out）**：追加 **`--pair-split leaf_heldout --heldout-leaves H`** —— **须**使 **train / test 叶区间** 与 **`root_child` 块边界** 相交，否则 **测试对可能全为同一类**（脚本报错）。例：**`n=32`、fanout=2、`block=16`**：若 **`H=8`**，test 叶为 **[24,31]**，**全在第二块** → **无效**；应取 **`H≥17`**（test 叶 **[15,31]**，含 **叶 15** 与 **叶 16+**，跨块负例存在）或 **改用默认 `stratified`**。**浅树**（如 **n=8, block=4**）另算；**拿不准时先用 `stratified` 跑通 Table A**。
 
 **Table B — T1（同树导航代价；与 Table A 分列）**
 
