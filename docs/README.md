@@ -6,7 +6,7 @@
 
 | 路径 | 类别 | 内容 |
 |------|------|------|
-| **`docs/overview/planning/`** | 总体规划 | 月级叙事、现状大表、项目总览、周历模板；**`NARRATIVE_MAINLINE_TREE_READER_SSGS`** 主线链与数据索引 |
+| **`docs/overview/planning/`** | 总体规划 | 月级叙事、现状大表、项目总览、周历模板；**`NARRATIVE_MAINLINE_TREE_READER_SSGS`** 主线链与数据索引；**`MOTIVATION_MAMBA_TREE_RAG_SSGS_REFERENCE`** 动机与外部叙事参照（**非**替代单一权威） |
 | **`docs/overview/execution/`** | 实施与迭代 | 下一步任务展开、当前 sprint 勾选、投稿包 |
 | **`docs/overview/engineering/`** | **工程北星**（战略 B） | **Runner / G1–G5 / Sprint**；与 **`experiments/`** 实证线 **文档分列**、**代码复用** |
 | **`docs/experiments/planning/`** | 实验总体规划 | 登记册、数据约定、阶段 1 验证计划 |
@@ -38,6 +38,7 @@
 |------|------|
 | **接下来几周干什么**（阶段 5→投出→审稿） | [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) |
 | **实证快照 + 北星框架（F0–F5）+ 下一步命令** | [`overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md`](overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md) **§9–§11** + [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) **§Ⅶ** |
+| **动机与架构叙事参照**（Mamba×树×SSGS、风险、文献索引） | [`overview/planning/MOTIVATION_MAMBA_TREE_RAG_SSGS_REFERENCE.md`](overview/planning/MOTIVATION_MAMBA_TREE_RAG_SSGS_REFERENCE.md) |
 | **「论文 1」何时动笔（工程门闩 G1–G5 · 真 TF 可比）** | [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) **§Ⅷ**（与篇首 **战略 B** 同读） |
 | **工程北星：执行计划 · Sprint · 文档/脚本/结果边界** | [`overview/engineering/ENGINEERING_NORTH_STAR_PLAN.md`](overview/engineering/ENGINEERING_NORTH_STAR_PLAN.md)（**唯一主文件**；**RW 动机** 见 [`research/RESEARCH_NOTES.md`](research/RESEARCH_NOTES.md) **§8**） |
 | **基础阶段结论（论文格式浓缩）** | [`experiments/phases/FOUNDATION_STAGE_FORMAL_SUMMARY.md`](experiments/phases/FOUNDATION_STAGE_FORMAL_SUMMARY.md) |
