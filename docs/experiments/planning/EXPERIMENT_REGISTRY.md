@@ -89,6 +89,7 @@
 
 | 优先级 | id | 说明 |
 |--------|-----|------|
+| **P0** | **`TASK-end-to-end-*`（拟）** | **战略 B · 门闩 G 后**（**`PLAN_NOW_TO_DONE.md` §Ⅸ**）：**Mamba + 树状 RAG + SSGS** **真实下游任务** 验证（任务指标 + 强基线）；**优先于** 论文 1 **§Ⅰ** 全文成稿；产出 **`TASK-*` / `ENG-task-*` 登记行** |
 | ~~**P0**~~ | ~~**M1 / `X-ssgs-vs-kv-tree-nav-m1`**~~ | **（已完成 2026-04-07；2026-04-10 补 n64 + L3 批次）** 登记表 **`X-ssgs-vs-kv-tree-nav-m1`**；**`truncate_kv`** 臂已并入 **`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`**；**玩具 TF-KV L3**（**隐状态 / 固定叶头 CE**）已测；**训练型子头 / 轨迹甲·乙** 另 **kind** |
 | P0 | — | （已完成）同机 paper_main：见登记表 **A-20260408-paper-main-3090-*** |
 | P1 | S1–S4 + SSGS×Mamba + 树×因果 LM + 启发式导航 | S1–S4；**SSGS×Mamba** **X-20260421-ssgs-mamba-dfs-demo** + **Wikitext 同树** **X-20260407-ssgs-mamba-wikitext-tree**；**X-20260422** + **X-20260423**（**reach_rate**）；大叶数 **A-20260408-research-large-leaves-3090**、探针 **X-20260408-probe-mamba2-3090-fused** |
