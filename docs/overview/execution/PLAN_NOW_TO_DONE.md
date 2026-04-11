@@ -355,3 +355,4 @@ python3 scripts/research/aggregate_task_wikitext_path_pair_json.py \
 | 2026-04-07 | **§Ⅸ-4**：Sprint 1 锁定 **（b）** — **Table A/B** 可复制命令、**`scripts/research/`** 路径、**`root_child` block=16 @ n32**、脚注模板 |
 | 2026-04-07 | **§Ⅸ-4/5 勘误**：**`root_child` + `leaf_heldout` @ n=32** **不可能** 两类 train/test；**§Ⅸ-5** **1c-A** 改为 **`sibling` + `leaf_heldout` H=8**；登记 **`TASK-20260407-wikitext-sprint1b-…`** |
 | 2026-04-07 | **§Ⅸ-6**：**Sprint 2 建议序**（**P0 叙事冻结**、**P1（a）统一监督**、**P1b init 协议**、**P2 平面 / 扫参**） |
+| 2026-04-07 | **P0 备忘**：**`P0_STATUS_MEMO.md`**（**§Ⅸ 快照**、**禁混表**、**Sprint2（a）与树/平面不互阻塞**） |

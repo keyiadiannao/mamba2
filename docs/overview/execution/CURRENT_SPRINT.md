@@ -11,22 +11,22 @@
 
 > **计划全文**：**`PLAN_NOW_TO_DONE.md` §Ⅸ-1 / §Ⅸ-2**（**树状 vs 平面**、**回溯轻量 vs 全 DFS**、**Sprint 1–3**）。
 
-### Sprint 1（**（b）已交付**；**1c 进行中**）
+### Sprint 1（**已收口**）
 
-> **语料**：**Wikitext-2 only**（**`PLAN_NOW_TO_DONE.md` §Ⅸ-3**）。  
-> **（b）完成**：**`TASK-20260407-wikitext-sprint1b-n32-rootchild-split-b-v1`**（登记表）；**Table A/B** basename 见登记行。  
-> **下一步（1c）**：**`PLAN_NOW_TO_DONE.md` §Ⅸ-5** — **深档 `leaf_heldout` H=17**（5 seeds）+ **浅档 n8 sibling**（5 seeds）；**仍无新代码**。**Sprint 2（a）**：统一监督头。**F0 平面**：Sprint 2。
+> 详见 **`P0_STATUS_MEMO.md`**。
 
 - [x] **深档（b）**：**n32 root_child stratified** + **Table B** SSGS/M1 **同参**。  
-- [x] **深档（1c-A）**：**`n32` + `sibling` + `leaf_heldout` H=8** — 见 **`TASK-20260407-wikitext-1cA-…`**（**Mamba2 mean≈0.68** **std≈0.15**）。  
-- [x] **浅档（1c-B）**：**n8 sibling** — **`TASK-20260407-wikitext-1cB-…`**（**test 7 对**）。  
-- [x] **首条 `TASK-*`**：**sprint1b** 已登记；**1cA/1cB** 已登记。
+- [x] **深档（1c-A）**：**`n32` + `sibling` + `leaf_heldout` H=8** — **`TASK-20260407-wikitext-1cA-…`**。  
+- [x] **浅档（1c-B）**：**n8 sibling** — **`TASK-20260407-wikitext-1cB-…`**。  
+- [x] **P0 备忘**：**`docs/overview/execution/P0_STATUS_MEMO.md`**。
 
-### Sprint 2–3
+### Sprint 2（**（a）已开工 · 目标：统一监督**）
 
-- [ ] **Sprint 2（a）**：统一监督头（**`PLAN` §Ⅸ**）。  
-- [ ] **复用优先**：**`task_wikitext_path_pair`** / **`probe_path_reader_linear`** / **`benchmark_ssgs_vs_kv_tree_nav_wikitext`** / **`demo_ssgs_mamba_wikitext`**；新脚本 **仅** 为统一 schema 或 **cap 回溯** 必要时添加。  
-- [ ] **CI**：**`engineering-tests` 绿**；新入口 **可选** 加 **CPU smoke**。
+> **树 vs 平面**：**不阻塞** Sprint 2（a）；**「树状优势」全文叙事** 建议后续补 **平面臂**（**`PLAN` P2 / `--flat`**），与 **2（a）** 可 **并行** —— 见 **`P0_STATUS_MEMO.md` §5**。
+
+- [ ] **2（a）**：**同一 held-out 任务协议** + **SSGS/回溯表示** → **与 ridge 可比头** → 新 **`kind` + `TASK-*` + pytest smoke**（设计见 **`PLAN` §Ⅸ-6 P1**）。  
+- [ ] **P2 可选**：**平面序列基线**（**小 PR**）或与 **2（a）** 并行排期。  
+- [ ] **CI**：新入口 **不破坏** **`engineering-tests`**。
 
 ---
 

@@ -37,6 +37,7 @@
 | 目的 | 文件 |
 |------|------|
 | **接下来几周干什么**（阶段 5→投出→审稿） | [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) |
+| **P0 状态备忘**（§Ⅸ 实证冻结、禁混表、Sprint2 与树/平面） | [`overview/execution/P0_STATUS_MEMO.md`](overview/execution/P0_STATUS_MEMO.md) |
 | **实证快照 + 北星框架（F0–F5）+ 下一步命令** | [`overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md`](overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md) **§9–§11** + [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) **§Ⅶ** |
 | **动机与架构叙事参照**（Mamba×树×SSGS、风险、文献索引） | [`overview/planning/MOTIVATION_MAMBA_TREE_RAG_SSGS_REFERENCE.md`](overview/planning/MOTIVATION_MAMBA_TREE_RAG_SSGS_REFERENCE.md) |
 | **「论文 1」何时动笔（工程门闩 G1–G5 · 真 TF 可比）** | [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) **§Ⅷ**（与篇首 **战略 B** 同读） |
