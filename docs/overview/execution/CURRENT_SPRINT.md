@@ -18,13 +18,13 @@
 > **下一步（1c）**：**`PLAN_NOW_TO_DONE.md` §Ⅸ-5** — **深档 `leaf_heldout` H=17**（5 seeds）+ **浅档 n8 sibling**（5 seeds）；**仍无新代码**。**Sprint 2（a）**：统一监督头。**F0 平面**：Sprint 2。
 
 - [x] **深档（b）**：**n32 root_child stratified** + **Table B** SSGS/M1 **同参**。  
-- [ ] **深档（1c-A）**：**`n32` + `cohort=sibling` + `leaf_heldout` H=8**（**勿** **`root_child`+`leaf_heldout`**，见 **`PLAN` §Ⅸ-4/Ⅸ-5**）+ 聚合。  
-- [ ] **浅档（1c-B）**：**n8 sibling** 五 seed。  
-- [x] **首条 `TASK-*`**：**sprint1b** 已登记。
+- [x] **深档（1c-A）**：**`n32` + `sibling` + `leaf_heldout` H=8** — 见 **`TASK-20260407-wikitext-1cA-…`**（**Mamba2 mean≈0.68** **std≈0.15**）。  
+- [x] **浅档（1c-B）**：**n8 sibling** — **`TASK-20260407-wikitext-1cB-…`**（**test 7 对**）。  
+- [x] **首条 `TASK-*`**：**sprint1b** 已登记；**1cA/1cB** 已登记。
 
 ### Sprint 2–3
 
-- [ ] **Sprint 1c 登记行**（跑完 **1c-A/B** 后 **`TASK-*-sprint1c-*`**）。  
+- [ ] **Sprint 2（a）**：统一监督头（**`PLAN` §Ⅸ**）。  
 - [ ] **复用优先**：**`task_wikitext_path_pair`** / **`probe_path_reader_linear`** / **`benchmark_ssgs_vs_kv_tree_nav_wikitext`** / **`demo_ssgs_mamba_wikitext`**；新脚本 **仅** 为统一 schema 或 **cap 回溯** 必要时添加。  
 - [ ] **CI**：**`engineering-tests` 绿**；新入口 **可选** 加 **CPU smoke**。
 
