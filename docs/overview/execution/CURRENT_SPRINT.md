@@ -1,13 +1,32 @@
 # 当前迭代（滚动）
 
 > **方向与现状总览**（读后再勾选）：**`docs/overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`**（含 **§3.5 对外叙事批判性接收、L1–L4 证据层级、P★ L3 PoC**）。  
-> **全局阶段表**（**0→结题**、每阶段实验+成功标准）：**`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**。**当前逻辑阶段**：**阶段 5 — 成文与投稿包**（阶段 0–4 已满足表内「完成」列）。  
-> **从现在到结题的多步总览**（成文 / 冻结 / 可选 M2 / 截稿 / 审稿）：**`docs/overview/execution/PLAN_NOW_TO_DONE.md`**。  
+> **全局阶段表**（**0→结题**、每阶段实验+成功标准）：**`docs/overview/planning/RESEARCH_PHASES_0_TO_DONE.md`**。**当前逻辑阶段**：**战略 A** 下为 **阶段 5 — 成文与投稿包**；**战略 B** 下 **门闩 G 已达成** 时，**优先** **`PLAN_NOW_TO_DONE.md` §Ⅸ**（**真实任务验证**），**非** 以阶段 5 成文为唯一主轴。  
+> **从现在到结题的多步总览**（成文 / 冻结 / 可选 M2 / 截稿 / 审稿 / **§Ⅸ 任务矩阵**）：**`docs/overview/execution/PLAN_NOW_TO_DONE.md`**。  
 > 每 1–2 周更新一次「周期」与勾选；完成后把结论一行写入 **`docs/experiments/planning/EXPERIMENT_REGISTRY.md`**。
 
 ---
 
-## 工程北星阶段（**战略 B · 正式开工**）
+## §Ⅸ 真实任务验证（**战略 B · 当前开工**）
+
+> **计划全文**：**`PLAN_NOW_TO_DONE.md` §Ⅸ-1 / §Ⅸ-2**（**树状 vs 平面**、**回溯轻量 vs 全 DFS**、**Sprint 1–3**）。
+
+### Sprint 1（**任务卡冻结** — 进行中）
+
+- [ ] **长文档/多跳 原型**：选定 **1** 个（语料 + 建树方式 + 标签协议）；写明 **为何预期树状优势**（与 §Ⅸ-1 表一致）。  
+- [ ] **短上下文/单跳 原型**：选定 **1** 个；写明 **平面基线** 与 **是否** 需要 **轻回溯（≤1–2 次）**。  
+- [ ] **主指标**：**1–2 个**（如 path/leaf **acc**、**EM**、**success@k**）；**预算脚注**（token 步数上界 + 峰值或墙钟）与 **`ENGINEERING_NORTH_STAR_PLAN.md` §4.4** 对齐。  
+- [ ] **对照矩阵占位**：**{平面, 树} × {无回溯, 轻回溯, 全回溯}** 中至少 **4** 臂在表上有 **名字**（实现可落在 Sprint 2）。
+
+### Sprint 2–3
+
+- [ ] **首条 `TASK-*` 登记** + **JSON 归档**（见 **`PLAN` §Ⅸ** 完成标志）。  
+- [ ] **复用优先**：**`task_wikitext_path_pair`** / **`probe_path_reader_linear`** / **`benchmark_ssgs_vs_kv_tree_nav_wikitext`** / **`demo_ssgs_mamba_wikitext`**；新脚本 **仅** 为统一 schema 或 **cap 回溯** 必要时添加。  
+- [ ] **CI**：**`engineering-tests` 绿**；新入口 **可选** 加 **CPU smoke**。
+
+---
+
+## 工程北星阶段（**战略 B · 门闩已达成**）
 
 > **主计划**：**`docs/overview/engineering/ENGINEERING_NORTH_STAR_PLAN.md`**（**文档/脚本/结果与旧线分列**、**复用 `import`**、**G1–G5**、**Sprint 1–3**）。**门闩**：**`PLAN_NOW_TO_DONE.md` §Ⅷ**。  
 > **代码落点**：**`scripts/engineering/`**；**工程 JSON**：**`results/metrics_result/engineering/`**；**登记前缀**：**`ENG-*`**（与 **`X-*`** 分列）。
@@ -26,11 +45,11 @@
 ## 周期
 
 **开始**：2026-04-07  
-**当前滚动至**：**2026-04-11** — **3090 批次已归档**（**`DATA_ARCHIVE_202604_SERVER.md`**）：**M1**、**SSGS**、**leavescale**、**headcheck**、**B-S2+ CUDA**、**L3 轨迹 JSON**。**执行焦点**：按 **`RESEARCH_PHASES_0_TO_DONE.md` §「阶段 5 检查清单」** 推进 **`SUBMISSION_PACK`** → 正稿；叙事 **主验证轴** = **树状 RAG + Mamba + SSGS/M1**（**`PROJECT_MASTER_PLAN` §1.0**）；**检索/探针** = 副线。**P★ 训练型 L3** 仍 **非必做**（**`RESEARCH_STATUS` §3.5**）。
+**当前滚动至**：**2026-04-11** — **3090 批次已归档**（**`DATA_ARCHIVE_202604_SERVER.md`**）：**M1**、**SSGS**、**leavescale**、**headcheck**、**B-S2+ CUDA**、**L3 轨迹 JSON**。**战略 B 下执行焦点（2026-04 修订）**：**`PLAN_NOW_TO_DONE.md` §Ⅸ** — **树状 vs 平面**、**回溯分档**、**TASK-*** 首条登记；**非** 以 **SUBMISSION_PACK 正稿** 为唯一 P0。**若走战略 A**：仍按 **`RESEARCH_PHASES_0_TO_DONE.md` §「阶段 5 检查清单」**。**P★ 训练型 L3** 仍 **非必做**（**`RESEARCH_STATUS` §3.5**）。
 
 ---
 
-## 本周期焦点（**阶段 5 = P0 成文**）
+## 本周期焦点（**战略 A：阶段 5 = P0 成文**）
 
 | 优先级 | 动作 |
 |--------|------|
