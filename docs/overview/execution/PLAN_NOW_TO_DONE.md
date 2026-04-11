@@ -2,6 +2,7 @@
 
 > **用途**：给你一张 **方向卡** — 每步 **做什么、验证什么、产出什么**；细节命令仍以 **`NEXT_EXPERIMENTS_COMMANDS.md`**、**`SSGS_MAINLINE_M1.md` §6**、**`SUBMISSION_PACK.md`** 为准。**实证快照与推荐命令** → **`NARRATIVE_MAINLINE_TREE_READER_SSGS.md` §9–§11**；**可落地框架 F0–F5** → 下文 **§Ⅶ** 与 **`NARRATIVE` §10**。  
 > **两条战略并存**：（**A**）**尽快收束成稿**：实证已够时走 **§Ⅰ–§Ⅳ**（阶段 5）。（**B**）**工程北星优先**：把 **「第一篇论文」的正稿启动** 推迟到 **§Ⅷ 门闩**（全流程真可用 + 与 **真实 Transformer 栈** 公平可比）之后；下文 **§Ⅰ 默认「下一步优先」仅适用于战略 A** — 若你选 **B**，以 **§Ⅷ** 为主轴，**勿**把阶段 5 成稿当成当前里程碑。  
+> **当前选定（2026-04-11）**：**战略 B** — **工程门闩后再启动论文 1 主稿（§Ⅰ）**。门闩交付见 **`ENGINEERING_NORTH_STAR_PLAN.md`**；**动笔前** 须 **GitHub Actions `engineering-tests` 对推送 HEAD 为绿**（与本地 **`py -3 -m pytest` … engineering 四测** 一致）。  
 > **当前逻辑阶段（战略 A）**：**阶段 5（成文）**（**`RESEARCH_PHASES_0_TO_DONE.md`**）；实证 **0–4** 已收口，**主线不再依赖新实验也能投稿**。  
 > **M1 ①②③ 玩具全链已通** 之后若追求 **可用性 / 更大模型 / 更公平对比 / 三风险实测** — 见 **§Ⅵ** 与 **`RESEARCH_STATUS_AND_DIRECTION.md` §6.4**（**与阶段 5 并行规划，不替代投稿闭环**）。  
 > **修订**：截稿或每完成一大步，在文末 **修订记录** 写一行；**`CURRENT_SPRINT.md`** 篇首可互链本文件。
@@ -97,13 +98,17 @@ flowchart LR
 ### Ⅷ-3 与 **§Ⅵ / §Ⅶ** 的映射
 
 - **§Ⅷ** = **「论文 1 何时动笔」** 的 **硬门闩**；**§Ⅶ F3–F5** = 门闩内的 **技术阶梯**；**§Ⅵ** = 公平与风险 **内容** 的 **理论来源**。  
-- **战略 B** 下 **§Ⅰ–§Ⅳ** **暂停为 P0**；仅当 **G 达成后** 再启用 **§Ⅰ** 作为 **论文 1 成稿流水线**。
+- **战略 B** 下 **§Ⅰ–§Ⅳ** **暂停为 P0**；仅当 **G 达成后** 再启用 **§Ⅰ** 作为 **论文 1 成稿流水线**。**G 已于 2026-04-11 达成**（见 **`ENGINEERING_NORTH_STAR_PLAN.md` §3** 与下文 **门闩 G 已达成** 段）；**§Ⅰ 动笔** 前仍须 **确认 CI 绿**。
 
 **执行计划（文档/脚本/结果分列 + Sprint）**：**`docs/overview/engineering/ENGINEERING_NORTH_STAR_PLAN.md`**；**统一 CLI**：**`scripts/engineering/run_engineering.py`**；速查：**`scripts/engineering/README.md`**；工程 JSON 默认目录：**`results/metrics_result/engineering/`**。
 
 > **G5 公平性一页纸（§Ⅷ-1 子门闩）**：**`ENGINEERING_NORTH_STAR_PLAN.md` §4 + §4.2** 已含 **§Ⅷ-0** 所要求的 **TF checkpoint**、**任务**、**预算两项**、**不对等** 与 **可复现命令** —— **G5 表已冻结**（**2026-04-11**）。**§Ⅷ-1 G1（统一入口）**：**`scripts/engineering/run_engineering.py`** 以子命令转发 **path-batch / G3-a / G3-b / M1**（见 **`ENGINEERING_NORTH_STAR_PLAN.md` §2**）；各 **`kind` 仍分 JSON**。
 
 > **G3 预训因果 LM（独立实验）**：**§4.3** — **G3-a** 烟测与 **G3-b** **`engineering_causal_lm_compare`**（**标准 AR vs 树路径**）为 **主文可独立成表** 的证据线，**与 path-batch 玩具表分表**；**不是**「仅为附录脚注」。实现与登记见 **`ENGINEERING_NORTH_STAR_PLAN.md`**。
+
+### 门闩 **G** 已达成（**工程北星 · 2026-04-11**）
+
+**客观标志**：**G5** §4 一页纸已冻结；**G1** **`run_engineering.py`** 四子命令；**G2/G3** 预训 **`from_pretrained`** + **`ENG-*`** 归档（含 G3-b / 消融 / M1→`engineering/`）；**G4** **`.github/workflows/engineering_tests.yml`**（**11** 个工程相关 **`pytest`** 与 CI 对齐）。**战略 B** 下自此 **可** 将 **§Ⅰ** 列为 **论文 1 主稿下一里程碑**；**以 GitHub `engineering-tests` 绿为最终确认**（推送 **`aac8fce`** 及之后）。
 
 ---
 
@@ -189,3 +194,4 @@ flowchart LR
 | 2026-04-11 | **G3**：**§4.3** — **独立实验**（**G3-a** / **G3-b**）；与 **玩具 path-batch** **分表**；旁注 **§Ⅷ** |
 | 2026-04-11 | **§Ⅵ-0**：互链 **`ENGINEERING_NORTH_STAR_PLAN.md` §4.4**（公平 **Q1–Q5** 提案） |
 | 2026-04-11 | **§Ⅷ-1 G1**：**`run_engineering.py`** 统一 CLI；**§Ⅷ** 段末 **G5** 旁注更新 |
+| 2026-04-11 | **战略 B** 锁定；**门闩 G 已达成**（§Ⅷ 新小节）；**§Ⅰ 动笔前** 以 **GitHub `engineering-tests` 绿** 为准（**`aac8fce`**） |

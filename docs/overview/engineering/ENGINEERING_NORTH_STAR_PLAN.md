@@ -77,7 +77,7 @@
 - [x] **M1 落工程目录**：**`results/metrics_result/engineering/eng_m1_ssgs_vs_kv_n8_c8_cuda_20260411T0907Z.json`**、**`…_n8_c12_cuda_20260411T0907Z.json`**（**`kind=ssgs_vs_kv_tree_nav_wikitext`**）；登记 **`ENG-m1-ssgs-vs-kv-engineering-v1`**（与 **`X-ssgs-vs-kv-tree-nav-m1`** **分列 basename**，协议同）。  
 - [x] **统一 CLI**：**`scripts/engineering/run_engineering.py`**（**§Ⅷ-1 G1**）— **子命令** **`path-batch-smoke`**、**`g3-compare`**、**`causal-kv-smoke`**、**`m1-ssgs-vs-kv`** → 既有脚本；**`pytest`** **`tests/test_run_engineering_cli.py`**。**`kind`** 仍分属各 Runner，**不**混 JSON。
 
-**门闩 G 达成**：**G1–G5 全勾** → 在 **`PLAN_NOW_TO_DONE.md` 修订记录** 写一行，并宣布 **启用 §Ⅰ 作为论文 1 成稿流水线**。
+**门闩 G 已达成**（**2026-04-11**）：**G1–G5** 证据与勾选见上；**`PLAN_NOW_TO_DONE.md`** 篇首与 **§Ⅷ** 已声明 **战略 B** 下 **门闩后再启 §Ⅰ**。**启用 §Ⅰ 主稿前** 请 **确认 GitHub Actions `engineering-tests` 绿**（与推送 **HEAD** 一致）。
 
 ---
 
@@ -213,3 +213,4 @@
 | 2026-04-11 | **G3 预训补格**：**`ENG-g3-pretrain-ablate-v1`**（**ml256 / ml1024 / c12** + **G3-a c12**）；**Mamba ratio**：**ml512≈1.11**、**ml256≈1.20**、**ml1024=1.0** |
 | 2026-04-11 | **M1 → `engineering/`**：**`eng_m1_ssgs_vs_kv_n8_c8_cuda_20260411T0907Z.json`**、**`…_n8_c12_cuda_20260411T0907Z.json`**；**`ENG-m1-ssgs-vs-kv-engineering-v1`** |
 | 2026-04-11 | **§Ⅷ-1 G1**：**`run_engineering.py`** 统一 CLI（**四子命令** 转发）；**`test_run_engineering_cli`** |
+| 2026-04-11 | **门闩 G 已达成** 段；**启用 §Ⅰ** 前 **CI `engineering-tests` 绿** |
