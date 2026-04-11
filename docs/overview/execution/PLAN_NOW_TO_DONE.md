@@ -180,3 +180,4 @@ flowchart LR
 | 2026-04-11 | **§Ⅶ**：**F0–F5** 可落地框架与 **`NARRATIVE` §10** 对齐；**下一步命令** 摘录 |
 | 2026-04-11 | **篇首**：**战略 A / B** 并存；**§Ⅷ** — **论文 1 门闩**（**G1–G5**、真 **TF** 定义）；**B** 下 **§Ⅰ 非 P0** |
 | 2026-04-11 | **§Ⅷ 后**：互链 **`ENGINEERING_NORTH_STAR_PLAN.md`**（**Sprint**、**ENG-***、**`scripts/engineering/`**） |
+| 2026-04-11 | **工程北星落地**：**`master`** **`a01d899`** — **G1** path-batch 信封、**G3** causal KV smoke、**G4** **`.github/workflows/engineering_tests.yml`**；**GitHub** 上确认 **Actions** **`engineering-tests`** 通过；登记 **`EXPERIMENT_REGISTRY`** **`ENG-*`** |

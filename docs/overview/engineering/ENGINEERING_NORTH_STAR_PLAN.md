@@ -108,3 +108,4 @@
 | 2026-04-11 | **§4 G5**：Mamba 默认 **`AntonV/mamba2-370m-hf`**；**G3** 归档 **`eng_causal_kv_both.json`**；**`ENG-20260411-ssgs-mamba-wikitext-aligned-v1`**：**`ssgs_mamba_wikitext_n8_c8_dim128_cuda_20260411T0717Z.json`**（与 **G3** 同树参 **分列**） |
 | 2026-04-11 | **Sprint 1**：**`README.md` §G1**；**`pytest`** **`test_engineering_*`** + **`test_causal_lm_kv_stats`**（**8 passed**，无 GPU）；**`eng_path_batch_smoke_cuda_20260411.json`** 入仓；**`ENG-20260411-path-batch-smoke-v1`** 结案 |
 | 2026-04-11 | **Sprint 3 / G4**：**`engineering_tests`** GitHub Actions（**无 torch** 工程单测） |
+| 2026-04-11 | 已推送 **origin/master** **`a01d899`**；请在 **GitHub → Actions** 确认 **engineering-tests** 绿 |
