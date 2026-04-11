@@ -13,10 +13,14 @@
 
 ### Sprint 1（**任务卡冻结** — 进行中）
 
-- [ ] **长文档/多跳 原型**：选定 **1** 个（语料 + 建树方式 + 标签协议）；写明 **为何预期树状优势**（与 §Ⅸ-1 表一致）。  
-- [ ] **短上下文/单跳 原型**：选定 **1** 个；写明 **平面基线** 与 **是否** 需要 **轻回溯（≤1–2 次）**。  
-- [ ] **主指标**：**1–2 个**（如 path/leaf **acc**、**EM**、**success@k**）；**预算脚注**（token 步数上界 + 峰值或墙钟）与 **`ENGINEERING_NORTH_STAR_PLAN.md` §4.4** 对齐。  
-- [ ] **对照矩阵占位**：**{平面, 树} × {无回溯, 轻回溯, 全回溯}** 中至少 **4** 臂在表上有 **名字**（实现可落在 Sprint 2）。
+> **语料**：**Wikitext-2 only**（**`PLAN_NOW_TO_DONE.md` §Ⅸ-3**）— **不换** Hotpot/MuSiQue；难度用 **浅树 vs 深树 + cohort** 拉齐。  
+> **浅档**：**n=4–8**，**`--cohort sibling`**。**深档**：**n=32–128**，**`--cohort root_child`**（块 = **`fanout**(depth−1)**，子树级叶对标签）。**「左/右子树二元 held-out」** 若要做，属 **新标签几何**；可先 **`root_child` + `leaf_heldout`**。  
+> **T0 vs T1**：**`task_wikitext_path_pair` → acc** 与 **SSGS/M1 JSON** **默认不同 `kind`**；**「T1 acc > T0」** 需 **统一监督头**（Sprint 2）或 Sprint 1 **拆分报告**（见 **§Ⅸ-3**）。**F0 平面**：**`benchmark_wikitext_tree` 无 `--flat`** — Sprint 2 或新 flag。
+
+- [ ] **长文档/多跳 原型**：**深档 Wikitext** + **`build_bottom_up_text_tree`** + **`task_wikitext_path_pair`** **`root_child`**（与 §Ⅸ-1 / §Ⅸ-3 一致）。  
+- [ ] **短上下文/单跳 原型**：**浅档** + **`sibling`**；**平面 F0/F1** 可 **占位到 Sprint 2**。  
+- [ ] **主指标**：**ridge test_acc**（**init-seed×5** 已有 **`aggregate_task_wikitext_path_pair_json.py`**）；**回溯** 旁列 **`snapshots_taken` / `rollbacks` / `wall_s`**（**同树** 另跑 SSGS/M1）。  
+- [ ] **对照矩阵占位**：至少 **T0（path-pair）** + **T1 侧机制 JSON**；**四臂全齐** 不阻塞 Sprint 1。
 
 ### Sprint 2–3
 

@@ -150,6 +150,23 @@ flowchart LR
 
 **立即开工（本周动作）**：在 **`CURRENT_SPRINT.md`** 勾选 **§Ⅸ Sprint 1**；代码侧 **优先复用** **`task_wikitext_path_pair`**、**`probe_path_reader_linear`**、**`benchmark_ssgs_vs_kv_tree_nav_wikitext`**、**`demo_ssgs_mamba_wikitext`** —— **新文件** 仅在为 **统一任务 JSON schema** 或 **回溯 cap** 必要时引入。
 
+### Ⅸ-3 Sprint 1 语料决议（**Wikitext 难度梯度；暂缓 Hotpot/MuSiQue**）
+
+> 吸收外部评审共识：**Sprint 1 不换语料**，在 **Wikitext-2** 上通过 **树深度 × 任务粒度** 制造难度档，避免 Hotpot 等引入 **QA 格式 / 领域 / 建树逻辑** 三重 confounder。
+
+| 共识点 | 说明 |
+|--------|------|
+| **暂缓 Hotpot** | 标准多跳 QA 与 **A2-S3**（叶对 + ridge + held-out **acc**）**评估口径不同**；语料与 **按连续流建树** 的 **`build_bottom_up_text_tree`** 也不对齐 —— **不宜**在 Sprint 1 与既有 Wikitext 数字 **交叉验证**。 |
+| **难度梯度（同一语料、同一 reader 槽）** | **浅档**：**`num_leaves` 4–8**、`fanout=2`、**`--cohort sibling`** — 对应「短/单跳」叙事。**深档**：**`num_leaves` 32–128**、**`--cohort root_child`** — 块大小 **`fanout**(depth−1)**，叶对标签依赖 **更粗子树划分**（比 sibling 更接近「路径聚合 / 多跳」直觉），**且** 已在 **`path_pair_geometry`** / **`task_wikitext_path_pair.py`** 实现，**无需**先换 Hotpot。 |
+| **「子树 held-out」叙事** | **理想**形态（例如 **左半树 vs 右半树** 二元标签）在仓库中 **尚无** 现成 `cohort`；**第一步**可用 **`root_child` + `leaf_heldout`** 达到 **「子树级一致性 + held-out」** 的 **可操作近似**，再迭代 **自定义 cohort**（需新几何/标签生成）。 |
+| **四臂 F0–T1** | **F0（平面）**：**`benchmark_wikitext_tree.py` 当前无 `--flat`** —— **须新实现**（或 **Sprint 2** 再补）；**Sprint 1 可不跑 F0/F1**（与外部建议一致）。**T0 vs T1**：见下 **实现对齐**。 |
+
+**实现对齐（重要）**：**`task_wikitext_path_pair`** 产出 **`ridge_*.*.test_acc`**（路径 reader → 分类）。**`demo_ssgs_mamba_wikitext`** / **M1** 产出 **`snapshots_taken` / `rollbacks` / `wall_s`** 等 **导航–机制** 指标，**默认不是** 同一套 **`test_acc`**。因此 **「T1 准确率显著高于 T0」** 只有在下列之一成立时才是 **合法完成标志**：（**a**）为 SSGS/截断臂构造 **与 A2-S3 同一监督头** 的 **`kind`**（新代码或扩展）；或（**b**）Sprint 1 **拆分报告**：**T0** = **A2-S3 深档 acc**（及 **init-seed×5**）；**T1** = **同树** SSGS/M1 **JSON**（效率迹），**脚注** 写清 **任务目标不同列**，**不**合成虚假「acc 胜负」。推荐 **（a）** 作为 Sprint 2 目标，**（b）** 作为 Sprint 1 **诚实下限**。
+
+**Sprint 1 完成标志（修订版）**：**深档**（例 **`num_leaves=32`**、`fanout=2`、**`cohort root_child`**）上 **`task_wikitext_path_pair`** **`leaf_heldout` + `init-seed` 扫描** 产出 **可登记 JSON**；**可选同构** 跑 **`demo_ssgs_mamba_wikitext`** / **M1** **同参同树** 作为 **回溯代价** 旁列。**若** 实现 **（a）** 后再采用 **「T1 acc > T0 acc」** 为硬门闩。
+
+**风险**（与外部表一致）：深档 **全体接近 chance** → 先用 **depth=4（16 叶）** 试水；平面在深档 **意外优于树** → 记为 **条件性结论**，叙事转向 **「树何时有效」**。
+
 ---
 
 ## Ⅰ 阶段 5 成文（**战略 A 默认下一步优先**）
@@ -237,3 +254,4 @@ flowchart LR
 | 2026-04-11 | **战略 B** 锁定；**门闩 G 已达成**（§Ⅷ 新小节）；**§Ⅰ 动笔前** 以 **GitHub `engineering-tests` 绿** 为准（**`aac8fce`**） |
 | 2026-04-07 | **§Ⅸ**：门闩 G 后 **优先真实任务验证**（Mamba+树状 RAG+SSGS **端到端效果**），**暂缓** §Ⅰ 成文为主里程碑 |
 | 2026-04-07 | **§Ⅸ-1 / §Ⅸ-2**：**树状 vs 平面** 与 **回溯分档**（轻量 **1–2 次** vs 全 DFS）假设 + **Sprint 1–3** 开工序 |
+| 2026-04-07 | **§Ⅸ-3**：Sprint 1 **Wikitext 难度梯度**（**暂缓 Hotpot**）；**`root_child`/`sibling`**；**T0 vs T1 acc** 须 **统一任务** 或 **拆分报告**（**`benchmark_wikitext_tree` 无 `--flat`**） |
