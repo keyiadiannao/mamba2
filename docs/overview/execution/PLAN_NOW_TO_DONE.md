@@ -167,6 +167,50 @@ flowchart LR
 
 **风险**（与外部表一致）：深档 **全体接近 chance** → 先用 **depth=4（16 叶）** 试水；平面在深档 **意外优于树** → 记为 **条件性结论**，叙事转向 **「树何时有效」**。
 
+### Ⅸ-4 Sprint 1 交付 **（b）**：可复制命令与脚注模板
+
+> **策略**：**不改脚本**；**Table A** = **`task_wikitext_path_pair`** 的 **`ridge_*.*.test_acc`**（多 **`--init-seed`**）；**Table B** = **同 `num_leaves` / `fanout` / chunk 默认** 的 **`demo_ssgs_mamba_wikitext`** 或 **`benchmark_ssgs_vs_kv_tree_nav_wikitext`** JSON（**导航代价迹**）。两表 **不可做数值胜负**，脚注一句即可。
+
+**CLI 勘误**（相对口头 bash）：**无** `--depth` / `--leaves`；深度由 **`--num-leaves`** 与 **`--fanout`** 推导（须满足 **`num_leaves = fanout ** depth_edges`**（整数））。**`task_wikitext_path_pair.py`**、**`demo_ssgs_mamba_wikitext.py`**、**`benchmark_ssgs_vs_kv_tree_nav_wikitext.py`** 均在 **`scripts/research/`**（**不是** `scripts/benchmarks/`）。
+
+**`root_child` 块大小**：**`block = fanout ** (depth_edges − 1)`**。例：**`fanout=2`**、**`num_leaves=32`** → **`depth_edges=5`** → **`block=16`**（叶 **0–15** 与 **16–31** 各一块）。**冒烟**：**`num_leaves=8`** → **`depth_edges=3`** → **`block=4`**；若 **`leaf_heldout`** 报 **单类**，改 **`H`** 或 **`stratified`**。
+
+---
+
+**Table A — T0（深档分类 acc；5 seeds）**
+
+```bash
+# Bash（仓根；GPU 若可用则去掉 --cpu）
+for seed in 0 1 2 3 4; do
+  py -3 scripts/research/task_wikitext_path_pair.py \
+    --num-leaves 32 --fanout 2 --cohort root_child \
+    --init-seed "$seed" --cpu \
+    --out-json "results/metrics_result/task_wikitext_f2_n32_rootchild_seed${seed}.json"
+done
+
+py -3 scripts/research/aggregate_task_wikitext_path_pair_json.py \
+  --glob "results/metrics_result/task_wikitext_f2_n32_rootchild_seed*.json"
+```
+
+**推荐（与登记表 A2-S3 一致、更强 held-out）**：追加 **`--pair-split leaf_heldout --heldout-leaves 8`**（须保证 train/test **两类皆非空**；若报错则调小 **`H`** 或改用默认 **`stratified`**）。
+
+**Table B — T1（同树导航代价；与 Table A 分列）**
+
+```bash
+# SSGS-only（玩具 Mamba + DFS）
+py -3 scripts/research/demo_ssgs_mamba_wikitext.py --cpu --num-leaves 32 --fanout 2 \
+  --out-json results/metrics_result/ssgs_mamba_wikitext_n32_f2_sprint1b.json
+
+# 或 M1 三臂（CUDA 推荐；墙钟与 TF 臂脚注见脚本 docstring）
+py -3 scripts/research/benchmark_ssgs_vs_kv_tree_nav_wikitext.py --device cuda \
+  --num-leaves 32 --fanout 2 \
+  --out-json results/metrics_result/ssgs_vs_kv_wikitext_n32_f2_sprint1b.json
+```
+
+**脚注模板（粘贴进 Table B 或总表下）**：「**Table A** 报告 **叶对 + ridge** 的 **test_acc**；**Table B** 报告 **同语料建树** 上 **SSGS/M1 导航** 的 **快照/回退/墙钟/峰值**，**任务目标与 Table A 不同**，**不可**将两表数值直接比较。」
+
+**Sprint 2（a）**：统一监督头后再回答 **「回溯是否提升 acc」**。
+
 ---
 
 ## Ⅰ 阶段 5 成文（**战略 A 默认下一步优先**）
@@ -255,3 +299,4 @@ flowchart LR
 | 2026-04-07 | **§Ⅸ**：门闩 G 后 **优先真实任务验证**（Mamba+树状 RAG+SSGS **端到端效果**），**暂缓** §Ⅰ 成文为主里程碑 |
 | 2026-04-07 | **§Ⅸ-1 / §Ⅸ-2**：**树状 vs 平面** 与 **回溯分档**（轻量 **1–2 次** vs 全 DFS）假设 + **Sprint 1–3** 开工序 |
 | 2026-04-07 | **§Ⅸ-3**：Sprint 1 **Wikitext 难度梯度**（**暂缓 Hotpot**）；**`root_child`/`sibling`**；**T0 vs T1 acc** 须 **统一任务** 或 **拆分报告**（**`benchmark_wikitext_tree` 无 `--flat`**） |
+| 2026-04-07 | **§Ⅸ-4**：Sprint 1 锁定 **（b）** — **Table A/B** 可复制命令、**`scripts/research/`** 路径、**`root_child` block=16 @ n32**、脚注模板 |

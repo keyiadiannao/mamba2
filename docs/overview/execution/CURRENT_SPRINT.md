@@ -15,7 +15,7 @@
 
 > **语料**：**Wikitext-2 only**（**`PLAN_NOW_TO_DONE.md` §Ⅸ-3**）— **不换** Hotpot/MuSiQue；难度用 **浅树 vs 深树 + cohort** 拉齐。  
 > **浅档**：**n=4–8**，**`--cohort sibling`**。**深档**：**n=32–128**，**`--cohort root_child`**（块 = **`fanout**(depth−1)**，子树级叶对标签）。**「左/右子树二元 held-out」** 若要做，属 **新标签几何**；可先 **`root_child` + `leaf_heldout`**。  
-> **T0 vs T1**：**`task_wikitext_path_pair` → acc** 与 **SSGS/M1 JSON** **默认不同 `kind`**；**「T1 acc > T0」** 需 **统一监督头**（Sprint 2）或 Sprint 1 **拆分报告**（见 **§Ⅸ-3**）。**F0 平面**：**`benchmark_wikitext_tree` 无 `--flat`** — Sprint 2 或新 flag。
+> **T0 vs T1**：Sprint 1 **锁定交付（b）** — **Table A**（**`task_wikitext_path_pair`** acc）+ **Table B**（**同参** SSGS/M1 代价 JSON），**脚注分列**；**不**宣称 T1 提升 acc。**命令快照**：**`PLAN_NOW_TO_DONE.md` §Ⅸ-4**。**Sprint 2（a）**：统一监督头后再答「回溯是否提升 acc」。**F0 平面**：仍 **Sprint 2**（**`benchmark_wikitext_tree` 无 `--flat`**）。
 
 - [ ] **长文档/多跳 原型**：**深档 Wikitext** + **`build_bottom_up_text_tree`** + **`task_wikitext_path_pair`** **`root_child`**（与 §Ⅸ-1 / §Ⅸ-3 一致）。  
 - [ ] **短上下文/单跳 原型**：**浅档** + **`sibling`**；**平面 F0/F1** 可 **占位到 Sprint 2**。  
