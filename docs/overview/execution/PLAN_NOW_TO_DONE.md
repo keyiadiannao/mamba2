@@ -250,6 +250,20 @@ python3 scripts/research/aggregate_task_wikitext_path_pair_json.py \
 
 **若 1c-A 仍报错**：改 **`H`**（如 **4** / **12**）或 **`--split-seed`** + **`stratified`**。**完成**：**`EXPERIMENT_REGISTRY.md`** 新行 **`TASK-*-sprint1c-*`** + 聚合 **mean±std**。
 
+### Ⅸ-6 Sprint 2 建议序（**滚动；与战略 B 一致**）
+
+> **当前实证小结**（**2026-04**）：**（b）** **root_child·stratified** ≈ **饱和**；**1c-A** **sibling·leaf_heldout** 上 **reader 可区分**、**`init_seed` 有方差**；**Table B**（**SSGS/M1**）**代价迹** 独立成列；**（b）与 1c 分列**、**Table A 与 Table B 分列** —— **足以支撑「继续研究」**，**不足**以宣称 **「回溯已证提升下游 acc」**（须 **§Ⅸ Sprint 2（a）** 或 **等价任务设计**）。
+
+| 优先级 | 方向 | 产出 / 判据 |
+|--------|------|-------------|
+| **P0** | **叙事 + 方法冻结** | 一页内部 memo：**（b）/ 1c-A / 1c-B / Table B** 各 **一行** 主结论 + **禁止混表** 句；对齐导师 **§Ⅵ-0 / `ENGINEERING_NORTH_STAR_PLAN` §4.4** |
+| **P1** | **Sprint 2（a）· 统一监督** | 在 **同 held-out 协议** 下，**SSGS 路径表示** 进 **与 ridge 可比的头**（或 **BCE**）；回答 **「回溯是否提升 acc」** — **新 `kind` + `TASK-*`** |
+| **P1b** | **init 协议** | **1c-A** 类任务：**固定 `split_seed`**、报告 **多 seed mean±std** 或 **固定 checkpoint**；避免单次 seed 讲故事 |
+| **P2** | **平面基线 F0** | **`benchmark_wikitext_tree` 无 `--flat`** — 需 **小 PR**：**同语料块序列** 对照 **树 path-batch**（**脚注分列**） |
+| **P2** | **可选：深档 root_child 再扫** | **`stratified` + `test_frac` / `split_seed` 网格** 一格；**不**与 **1c-A** 无脚注合并 |
+
+**战略 B 下**：**§Ⅰ 成稿** 仍 **不**作为阻塞；**优先** **P0 → P1b**（低成本）→ **P1**（开发窗口）→ **P2**。
+
 ---
 
 ## Ⅰ 阶段 5 成文（**战略 A 默认下一步优先**）
@@ -340,3 +354,4 @@ python3 scripts/research/aggregate_task_wikitext_path_pair_json.py \
 | 2026-04-07 | **§Ⅸ-3**：Sprint 1 **Wikitext 难度梯度**（**暂缓 Hotpot**）；**`root_child`/`sibling`**；**T0 vs T1 acc** 须 **统一任务** 或 **拆分报告**（**`benchmark_wikitext_tree` 无 `--flat`**） |
 | 2026-04-07 | **§Ⅸ-4**：Sprint 1 锁定 **（b）** — **Table A/B** 可复制命令、**`scripts/research/`** 路径、**`root_child` block=16 @ n32**、脚注模板 |
 | 2026-04-07 | **§Ⅸ-4/5 勘误**：**`root_child` + `leaf_heldout` @ n=32** **不可能** 两类 train/test；**§Ⅸ-5** **1c-A** 改为 **`sibling` + `leaf_heldout` H=8**；登记 **`TASK-20260407-wikitext-sprint1b-…`** |
+| 2026-04-07 | **§Ⅸ-6**：**Sprint 2 建议序**（**P0 叙事冻结**、**P1（a）统一监督**、**P1b init 协议**、**P2 平面 / 扫参**） |
