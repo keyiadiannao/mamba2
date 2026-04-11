@@ -11,20 +11,20 @@
 
 > **计划全文**：**`PLAN_NOW_TO_DONE.md` §Ⅸ-1 / §Ⅸ-2**（**树状 vs 平面**、**回溯轻量 vs 全 DFS**、**Sprint 1–3**）。
 
-### Sprint 1（**任务卡冻结** — 进行中）
+### Sprint 1（**（b）已交付**；**1c 进行中**）
 
-> **语料**：**Wikitext-2 only**（**`PLAN_NOW_TO_DONE.md` §Ⅸ-3**）— **不换** Hotpot/MuSiQue；难度用 **浅树 vs 深树 + cohort** 拉齐。  
-> **浅档**：**n=4–8**，**`--cohort sibling`**。**深档**：**n=32–128**，**`--cohort root_child`**（块 = **`fanout**(depth−1)**，子树级叶对标签）。**「左/右子树二元 held-out」** 若要做，属 **新标签几何**；可先 **`root_child` + `leaf_heldout`**。  
-> **T0 vs T1**：Sprint 1 **锁定交付（b）** — **Table A**（**`task_wikitext_path_pair`** acc）+ **Table B**（**同参** SSGS/M1 代价 JSON），**脚注分列**；**不**宣称 T1 提升 acc。**命令快照**：**`PLAN_NOW_TO_DONE.md` §Ⅸ-4**。**Sprint 2（a）**：统一监督头后再答「回溯是否提升 acc」。**F0 平面**：仍 **Sprint 2**（**`benchmark_wikitext_tree` 无 `--flat`**）。
+> **语料**：**Wikitext-2 only**（**`PLAN_NOW_TO_DONE.md` §Ⅸ-3**）。  
+> **（b）完成**：**`TASK-20260407-wikitext-sprint1b-n32-rootchild-split-b-v1`**（登记表）；**Table A/B** basename 见登记行。  
+> **下一步（1c）**：**`PLAN_NOW_TO_DONE.md` §Ⅸ-5** — **深档 `leaf_heldout` H=17**（5 seeds）+ **浅档 n8 sibling**（5 seeds）；**仍无新代码**。**Sprint 2（a）**：统一监督头。**F0 平面**：Sprint 2。
 
-- [ ] **长文档/多跳 原型**：**深档 Wikitext** + **`build_bottom_up_text_tree`** + **`task_wikitext_path_pair`** **`root_child`**（与 §Ⅸ-1 / §Ⅸ-3 一致）。  
-- [ ] **短上下文/单跳 原型**：**浅档** + **`sibling`**；**平面 F0/F1** 可 **占位到 Sprint 2**。  
-- [ ] **主指标**：**ridge test_acc**（**init-seed×5** 已有 **`aggregate_task_wikitext_path_pair_json.py`**）；**回溯** 旁列 **`snapshots_taken` / `rollbacks` / `wall_s`**（**同树** 另跑 SSGS/M1）。  
-- [ ] **对照矩阵占位**：至少 **T0（path-pair）** + **T1 侧机制 JSON**；**四臂全齐** 不阻塞 Sprint 1。
+- [x] **深档（b）**：**n32 root_child stratified** + **Table B** SSGS/M1 **同参**。  
+- [ ] **深档（1c-A）**：**`leaf_heldout` H=17** + 聚合 **mean±std**。  
+- [ ] **浅档（1c-B）**：**n8 sibling** 五 seed。  
+- [x] **首条 `TASK-*`**：**sprint1b** 已登记。
 
 ### Sprint 2–3
 
-- [ ] **首条 `TASK-*` 登记** + **JSON 归档**（见 **`PLAN` §Ⅸ** 完成标志）。  
+- [ ] **Sprint 1c 登记行**（跑完 **1c-A/B** 后 **`TASK-*-sprint1c-*`**）。  
 - [ ] **复用优先**：**`task_wikitext_path_pair`** / **`probe_path_reader_linear`** / **`benchmark_ssgs_vs_kv_tree_nav_wikitext`** / **`demo_ssgs_mamba_wikitext`**；新脚本 **仅** 为统一 schema 或 **cap 回溯** 必要时添加。  
 - [ ] **CI**：**`engineering-tests` 绿**；新入口 **可选** 加 **CPU smoke**。
 
