@@ -34,7 +34,7 @@ flowchart LR
 
 | 顺序 | 目标 | 验证什么 | 备注 |
 |------|------|----------|------|
-| **Ⅵ-0** | **写清「公平」定义** | **同一任务**、**同一预算维度**（token？峰值？步数？）下比什么 | 与 **M1** **跨臂 wall 不对等** 不矛盾；**新实验** 须 **新脚注** |
+| **Ⅵ-0** | **写清「公平」定义** | **同一任务**、**同一预算维度**（token？峰值？步数？）下比什么 | **已定提案**：**`ENGINEERING_NORTH_STAR_PLAN.md` §4.4**（**Q1–Q5**）；**待导师会议确认**；与 **M1** **跨臂 wall 不对等** 不矛盾 |
 | **Ⅵ-1** | **仍用 path-reader / M1 槽位加规模**（**`RESEARCH_STATUS` §6.3 档 1**） | **dim / 层数 / chunk / 序列** 抬高后 **结论形状是否仍成立** | **同机**、**新 STAMP**；**先于** 换 7B |
 | **Ⅵ-2** | **冻结「中等」LM 作 reader**（**档 2**） | **表示与峰值** 进入 **更真实量级**；仍 **分项** path encoder vs 全模型 KV | **新登记行**；**禁止**与 **paper_main_v1** 逐格混表 |
 | **Ⅵ-3** | **三风险电池**（**档 1–2 内优先**） | **有损**：restore 后 **任务落差** 或 **长序列 L3 劣化**；**回退**：规则 vs 学习 **同树同任务**；**H2D**：快照 **设备迁移** 打点 | 各条 **新 `kind` 或 JSON 扩展**；对齐 **§3.5** 三风险 |
@@ -99,7 +99,11 @@ flowchart LR
 - **§Ⅷ** = **「论文 1 何时动笔」** 的 **硬门闩**；**§Ⅶ F3–F5** = 门闩内的 **技术阶梯**；**§Ⅵ** = 公平与风险 **内容** 的 **理论来源**。  
 - **战略 B** 下 **§Ⅰ–§Ⅳ** **暂停为 P0**；仅当 **G 达成后** 再启用 **§Ⅰ** 作为 **论文 1 成稿流水线**。
 
-**执行计划（文档/脚本/结果分列 + Sprint）**：**`docs/overview/engineering/ENGINEERING_NORTH_STAR_PLAN.md`**；代码入口占位：**`scripts/engineering/README.md`**；工程 JSON 默认目录：**`results/metrics_result/engineering/`**。
+**执行计划（文档/脚本/结果分列 + Sprint）**：**`docs/overview/engineering/ENGINEERING_NORTH_STAR_PLAN.md`**；**统一 CLI**：**`scripts/engineering/run_engineering.py`**；速查：**`scripts/engineering/README.md`**；工程 JSON 默认目录：**`results/metrics_result/engineering/`**。
+
+> **G5 公平性一页纸（§Ⅷ-1 子门闩）**：**`ENGINEERING_NORTH_STAR_PLAN.md` §4 + §4.2** 已含 **§Ⅷ-0** 所要求的 **TF checkpoint**、**任务**、**预算两项**、**不对等** 与 **可复现命令** —— **G5 表已冻结**（**2026-04-11**）。**§Ⅷ-1 G1（统一入口）**：**`scripts/engineering/run_engineering.py`** 以子命令转发 **path-batch / G3-a / G3-b / M1**（见 **`ENGINEERING_NORTH_STAR_PLAN.md` §2**）；各 **`kind` 仍分 JSON**。
+
+> **G3 预训因果 LM（独立实验）**：**§4.3** — **G3-a** 烟测与 **G3-b** **`engineering_causal_lm_compare`**（**标准 AR vs 树路径**）为 **主文可独立成表** 的证据线，**与 path-batch 玩具表分表**；**不是**「仅为附录脚注」。实现与登记见 **`ENGINEERING_NORTH_STAR_PLAN.md`**。
 
 ---
 
@@ -165,7 +169,7 @@ flowchart LR
 3. [x] **Ⅱ-1**：本机/仓根 **重聚合** 两个 **grid CSV**（**2026-04-11** 已跑：`ssgs_*_nav_grid`、`ssgs_mamba_wikitext_grid`）。  
 4. [x] **Ⅱ-2**：**AutoDL** **`python -m pytest tests/ -q`** — **28 passed**, **4 subtests**（**2026-04-11**）。  
 5. [x] **Ⅲ-1**（**M1 `chunk_len=12` n8**）已归档；**Ⅲ-2**（**`RUN_WIKITEXT_SMOKE=1`** 同树 bundle）仍 **可选**（见 **`NARRATIVE` §6**）。  
-6. [ ] **Ⅵ-0**：与导师 **一页纸** 定 **「公平」维度**（再排 **Ⅵ-1**）；**讨论口径** 已见前序 **协议公平** 共识，可压缩进方法脚注。
+6. [ ] **Ⅵ-0**：与导师 **确认** **`ENGINEERING_NORTH_STAR_PLAN.md` §4.4**（**Q1–Q5** 已定稿提案；会后若有改动须同步该节）（再排 **Ⅵ-1**）；**讨论口径** 可压缩进方法脚注。
 
 ---
 
@@ -181,3 +185,7 @@ flowchart LR
 | 2026-04-11 | **篇首**：**战略 A / B** 并存；**§Ⅷ** — **论文 1 门闩**（**G1–G5**、真 **TF** 定义）；**B** 下 **§Ⅰ 非 P0** |
 | 2026-04-11 | **§Ⅷ 后**：互链 **`ENGINEERING_NORTH_STAR_PLAN.md`**（**Sprint**、**ENG-***、**`scripts/engineering/`**） |
 | 2026-04-11 | **工程北星落地**：**`master`** **`a01d899`** — **G1** path-batch 信封、**G3** causal KV smoke、**G4** **`.github/workflows/engineering_tests.yml`**；**GitHub** 上确认 **Actions** **`engineering-tests`** 通过；登记 **`EXPERIMENT_REGISTRY`** **`ENG-*`** |
+| 2026-04-11 | **§Ⅷ G5**：**`ENGINEERING_NORTH_STAR_PLAN.md` §4 + §4.2** 填满 **§Ⅷ-0** 四维度；**G5 公平性一页纸已冻结**（旁注见 **§Ⅷ** **`ENGINEERING…` 链** 段末） |
+| 2026-04-11 | **G3**：**§4.3** — **独立实验**（**G3-a** / **G3-b**）；与 **玩具 path-batch** **分表**；旁注 **§Ⅷ** |
+| 2026-04-11 | **§Ⅵ-0**：互链 **`ENGINEERING_NORTH_STAR_PLAN.md` §4.4**（公平 **Q1–Q5** 提案） |
+| 2026-04-11 | **§Ⅷ-1 G1**：**`run_engineering.py`** 统一 CLI；**§Ⅷ** 段末 **G5** 旁注更新 |

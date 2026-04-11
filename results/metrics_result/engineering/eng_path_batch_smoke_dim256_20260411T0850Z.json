@@ -1,0 +1,48 @@
+{
+  "kind": "engineering_path_batch_smoke",
+  "schema_version": 1,
+  "runner": "scripts/engineering/run_engineering_path_batch_smoke.py",
+  "underlying_kind": "benchmark_wikitext_tree",
+  "arms_note": "Sprint-1: single path-batch bundle (TF+GRU+Mamba2 readers per benchmark_wikitext_tree). Later: split explicit Mamba vs HF-AutoModelForCausalLM arms under \u00a7\u2167-0.",
+  "payload": {
+    "device": "cuda",
+    "depth": 3,
+    "fanout": 2,
+    "num_leaves": 8,
+    "chunk_len": 8,
+    "transformer": {
+      "reader": "transformer",
+      "elapsed_s": 0.028305,
+      "per_step_s": 0.003538,
+      "peak_alloc_mib": 34.67,
+      "batch_paths": 8,
+      "tokens_per_path": 32,
+      "dim": 256
+    },
+    "gru": {
+      "reader": "gru",
+      "elapsed_s": 0.021023,
+      "per_step_s": 0.002628,
+      "peak_alloc_mib": 40.03,
+      "batch_paths": 8,
+      "tokens_per_path": 32,
+      "dim": 256
+    },
+    "mamba2": {
+      "reader": "mamba2",
+      "elapsed_s": 0.097177,
+      "per_step_s": 0.012147,
+      "peak_alloc_mib": 70.12,
+      "batch_paths": 8,
+      "tokens_per_path": 32,
+      "dim": 256
+    },
+    "tree_kind": "wikitext2_bottom_up",
+    "dataset": "wikitext",
+    "wikitext_config": "wikitext-2-raw-v1",
+    "chars_per_leaf": 600,
+    "kind": "benchmark_wikitext_tree",
+    "git_sha": "6fa7873",
+    "torch_version": "2.11.0+cu126"
+  }
+}

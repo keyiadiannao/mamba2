@@ -1,0 +1,620 @@
+{
+  "kind": "engineering_causal_lm_compare",
+  "schema_version": 1,
+  "runner": "scripts/engineering/run_g3_causal_lm_compare.py",
+  "tree_kind": "wikitext2_bottom_up",
+  "dataset": "wikitext",
+  "wikitext_config": "wikitext-2-raw-v1",
+  "num_leaves": 32,
+  "fanout": 2,
+  "chunk_len": 8,
+  "dim_toy_embed": 128,
+  "max_length": 512,
+  "num_paths_total": 32,
+  "num_paths_run": 32,
+  "arms": {
+    "gpt2": {
+      "model_id": "openai-community/gpt2",
+      "device": "cuda",
+      "protocol": {
+        "baseline": "concat_all_path_documents_single_forward_trunc_max_length",
+        "tree": "per_path_separate_forward_trunc_max_length",
+        "note": "tree peak_alloc uses max over paths; token upper bound: per-path seq_len sum vs baseline seq_len"
+      },
+      "baseline_ar": {
+        "seq_len": 512,
+        "peak_alloc_mib": 321.6103515625,
+        "past_or_cache_nbytes": 0,
+        "elapsed_s": 0.009127039462327957,
+        "past_or_cache_nbytes_estimated": 18874368
+      },
+      "tree_path": {
+        "num_paths": 32,
+        "sum_seq_lens": 16384,
+        "max_peak_alloc_mib": 321.6103515625,
+        "sum_elapsed_s": 0.5487292809411883,
+        "paths": [
+          {
+            "path_index": 0,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.2935315677896142,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 1,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.00908996257930994,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 2,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007859531790018082,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 3,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007548918016254902,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 4,
+            "doc_chars": 37862,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007490573450922966,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 5,
+            "doc_chars": 37863,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.012038281187415123,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 6,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007817108184099197,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 7,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007895476184785366,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 8,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007506366819143295,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 9,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.013428580947220325,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 10,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.008108017966151237,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 11,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.00765156839042902,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 12,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007469129748642445,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 13,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.00838184729218483,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 14,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.008313484489917755,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 15,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.008740532211959362,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 16,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007496494799852371,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 17,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007454623468220234,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 18,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.008285771124064922,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 19,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.00804205797612667,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 20,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007863725535571575,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 21,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007466102950274944,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 22,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.00824912078678608,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 23,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.008057056926190853,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 24,
+            "doc_chars": 37862,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007619014009833336,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 25,
+            "doc_chars": 37864,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.0076861754059791565,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 26,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.008157368749380112,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 27,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.00815568771213293,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 28,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.0077398065477609634,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 29,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007567955181002617,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 30,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.008125855587422848,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 31,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.6103515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007891517132520676,
+            "past_or_cache_nbytes_estimated": 18874368
+          }
+        ]
+      },
+      "within_arm_ratios": {
+        "peak_max_tree_over_baseline": 1.0,
+        "token_steps_sum_tree_over_baseline_seq": 32.0
+      },
+      "dtype": "torch.float16"
+    },
+    "mamba2_370m": {
+      "model_id": "AntonV/mamba2-370m-hf",
+      "device": "cuda",
+      "protocol": {
+        "baseline": "concat_all_path_documents_single_forward_trunc_max_length",
+        "tree": "per_path_separate_forward_trunc_max_length",
+        "note": "tree peak_alloc uses max over paths; token upper bound: per-path seq_len sum vs baseline seq_len"
+      },
+      "baseline_ar": {
+        "seq_len": 512,
+        "peak_alloc_mib": 887.052734375,
+        "past_or_cache_nbytes": 0,
+        "elapsed_s": 0.06656565610319376
+      },
+      "tree_path": {
+        "num_paths": 32,
+        "sum_seq_lens": 16384,
+        "max_peak_alloc_mib": 985.55517578125,
+        "sum_elapsed_s": 7.297784727998078,
+        "paths": [
+          {
+            "path_index": 0,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 985.55517578125,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 5.310960558243096
+          },
+          {
+            "path_index": 1,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06089735683053732
+          },
+          {
+            "path_index": 2,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06021329201757908
+          },
+          {
+            "path_index": 3,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06659315060824156
+          },
+          {
+            "path_index": 4,
+            "doc_chars": 37862,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06624837499111891
+          },
+          {
+            "path_index": 5,
+            "doc_chars": 37863,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06525834742933512
+          },
+          {
+            "path_index": 6,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06499715428799391
+          },
+          {
+            "path_index": 7,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06070177908986807
+          },
+          {
+            "path_index": 8,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.05983882583677769
+          },
+          {
+            "path_index": 9,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06540149357169867
+          },
+          {
+            "path_index": 10,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06667640991508961
+          },
+          {
+            "path_index": 11,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06642735470086336
+          },
+          {
+            "path_index": 12,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06604779418557882
+          },
+          {
+            "path_index": 13,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.05948221683502197
+          },
+          {
+            "path_index": 14,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.05992491357028484
+          },
+          {
+            "path_index": 15,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06319552194327116
+          },
+          {
+            "path_index": 16,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06775560695677996
+          },
+          {
+            "path_index": 17,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06669850554317236
+          },
+          {
+            "path_index": 18,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06704854220151901
+          },
+          {
+            "path_index": 19,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06782309338450432
+          },
+          {
+            "path_index": 20,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06054098252207041
+          },
+          {
+            "path_index": 21,
+            "doc_chars": 37867,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06148368027061224
+          },
+          {
+            "path_index": 22,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.0604452071711421
+          },
+          {
+            "path_index": 23,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06685841269791126
+          },
+          {
+            "path_index": 24,
+            "doc_chars": 37862,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06812895182520151
+          },
+          {
+            "path_index": 25,
+            "doc_chars": 37864,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.0652762008830905
+          },
+          {
+            "path_index": 26,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.0688975602388382
+          },
+          {
+            "path_index": 27,
+            "doc_chars": 37865,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06001080572605133
+          },
+          {
+            "path_index": 28,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06110607739537954
+          },
+          {
+            "path_index": 29,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06036720052361488
+          },
+          {
+            "path_index": 30,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06648870836943388
+          },
+          {
+            "path_index": 31,
+            "doc_chars": 37866,
+            "seq_len": 512,
+            "peak_alloc_mib": 887.052734375,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06599064823240042
+          }
+        ]
+      },
+      "within_arm_ratios": {
+        "peak_max_tree_over_baseline": 1.111044628565012,
+        "token_steps_sum_tree_over_baseline_seq": 32.0
+      },
+      "dtype": "torch.float16"
+    }
+  },
+  "git_sha": "6fa7873",
+  "torch_version": "2.11.0+cu126"
+}

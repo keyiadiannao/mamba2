@@ -1,0 +1,120 @@
+{
+  "kind": "engineering_causal_lm_compare",
+  "schema_version": 1,
+  "runner": "scripts/engineering/run_g3_causal_lm_compare.py",
+  "tree_kind": "wikitext2_bottom_up",
+  "dataset": "wikitext",
+  "wikitext_config": "wikitext-2-raw-v1",
+  "num_leaves": 8,
+  "fanout": 2,
+  "chunk_len": 8,
+  "dim_toy_embed": 128,
+  "max_length": 512,
+  "num_paths_total": 8,
+  "num_paths_run": 8,
+  "arms": {
+    "gpt2": {
+      "model_id": "openai-community/gpt2",
+      "device": "cuda",
+      "protocol": {
+        "baseline": "concat_all_path_documents_single_forward_trunc_max_length",
+        "tree": "per_path_separate_forward_trunc_max_length",
+        "note": "tree peak_alloc uses max over paths; token upper bound: per-path seq_len sum vs baseline seq_len"
+      },
+      "baseline_ar": {
+        "seq_len": 512,
+        "peak_alloc_mib": 321.4228515625,
+        "past_or_cache_nbytes": 0,
+        "elapsed_s": 0.008170940913259983,
+        "past_or_cache_nbytes_estimated": 18874368
+      },
+      "tree_path": {
+        "num_paths": 8,
+        "sum_seq_lens": 4096,
+        "max_peak_alloc_mib": 321.4228515625,
+        "sum_elapsed_s": 0.3499997677281499,
+        "paths": [
+          {
+            "path_index": 0,
+            "doc_chars": 9016,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.4228515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.2966652689501643,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 1,
+            "doc_chars": 9015,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.4228515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007911144755780697,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 2,
+            "doc_chars": 9017,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.4228515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007561402395367622,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 3,
+            "doc_chars": 9017,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.4228515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007429319433867931,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 4,
+            "doc_chars": 9012,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.4228515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007395607419312,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 5,
+            "doc_chars": 9013,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.4228515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.0073419129475951195,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 6,
+            "doc_chars": 9016,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.4228515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.007476473227143288,
+            "past_or_cache_nbytes_estimated": 18874368
+          },
+          {
+            "path_index": 7,
+            "doc_chars": 9015,
+            "seq_len": 512,
+            "peak_alloc_mib": 321.4228515625,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.008218638598918915,
+            "past_or_cache_nbytes_estimated": 18874368
+          }
+        ]
+      },
+      "within_arm_ratios": {
+        "peak_max_tree_over_baseline": 1.0,
+        "token_steps_sum_tree_over_baseline_seq": 8.0
+      },
+      "dtype": "torch.float16"
+    }
+  },
+  "git_sha": "6fa7873",
+  "torch_version": "2.11.0+cu126"
+}

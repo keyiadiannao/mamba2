@@ -1,0 +1,212 @@
+{
+  "kind": "engineering_causal_lm_compare",
+  "schema_version": 1,
+  "runner": "scripts/engineering/run_g3_causal_lm_compare.py",
+  "tree_kind": "wikitext2_bottom_up",
+  "dataset": "wikitext",
+  "wikitext_config": "wikitext-2-raw-v1",
+  "num_leaves": 8,
+  "fanout": 2,
+  "chunk_len": 8,
+  "dim_toy_embed": 128,
+  "max_length": 1024,
+  "num_paths_total": 8,
+  "num_paths_run": 8,
+  "arms": {
+    "gpt2": {
+      "model_id": "openai-community/gpt2",
+      "device": "cuda",
+      "protocol": {
+        "baseline": "concat_all_path_documents_single_forward_trunc_max_length",
+        "tree": "per_path_separate_forward_trunc_max_length",
+        "note": "tree peak_alloc uses max over paths; token upper bound: per-path seq_len sum vs baseline seq_len"
+      },
+      "baseline_ar": {
+        "seq_len": 1024,
+        "peak_alloc_mib": 388.9638671875,
+        "past_or_cache_nbytes": 0,
+        "elapsed_s": 0.010584304109215736,
+        "past_or_cache_nbytes_estimated": 37748736
+      },
+      "tree_path": {
+        "num_paths": 8,
+        "sum_seq_lens": 8192,
+        "max_peak_alloc_mib": 388.9638671875,
+        "sum_elapsed_s": 0.37970218155533075,
+        "paths": [
+          {
+            "path_index": 0,
+            "doc_chars": 9016,
+            "seq_len": 1024,
+            "peak_alloc_mib": 388.9638671875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.3037463529035449,
+            "past_or_cache_nbytes_estimated": 37748736
+          },
+          {
+            "path_index": 1,
+            "doc_chars": 9015,
+            "seq_len": 1024,
+            "peak_alloc_mib": 388.9638671875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.009914723224937916,
+            "past_or_cache_nbytes_estimated": 37748736
+          },
+          {
+            "path_index": 2,
+            "doc_chars": 9017,
+            "seq_len": 1024,
+            "peak_alloc_mib": 388.9638671875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.010406792163848877,
+            "past_or_cache_nbytes_estimated": 37748736
+          },
+          {
+            "path_index": 3,
+            "doc_chars": 9017,
+            "seq_len": 1024,
+            "peak_alloc_mib": 388.9638671875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.016646833159029484,
+            "past_or_cache_nbytes_estimated": 37748736
+          },
+          {
+            "path_index": 4,
+            "doc_chars": 9012,
+            "seq_len": 1024,
+            "peak_alloc_mib": 388.9638671875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.009838266298174858,
+            "past_or_cache_nbytes_estimated": 37748736
+          },
+          {
+            "path_index": 5,
+            "doc_chars": 9013,
+            "seq_len": 1024,
+            "peak_alloc_mib": 388.9638671875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.00975086446851492,
+            "past_or_cache_nbytes_estimated": 37748736
+          },
+          {
+            "path_index": 6,
+            "doc_chars": 9016,
+            "seq_len": 1024,
+            "peak_alloc_mib": 388.9638671875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.009699207730591297,
+            "past_or_cache_nbytes_estimated": 37748736
+          },
+          {
+            "path_index": 7,
+            "doc_chars": 9015,
+            "seq_len": 1024,
+            "peak_alloc_mib": 388.9638671875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.0096991416066885,
+            "past_or_cache_nbytes_estimated": 37748736
+          }
+        ]
+      },
+      "within_arm_ratios": {
+        "peak_max_tree_over_baseline": 1.0,
+        "token_steps_sum_tree_over_baseline_seq": 8.0
+      },
+      "dtype": "torch.float16"
+    },
+    "mamba2_370m": {
+      "model_id": "AntonV/mamba2-370m-hf",
+      "device": "cuda",
+      "protocol": {
+        "baseline": "concat_all_path_documents_single_forward_trunc_max_length",
+        "tree": "per_path_separate_forward_trunc_max_length",
+        "note": "tree peak_alloc uses max over paths; token upper bound: per-path seq_len sum vs baseline seq_len"
+      },
+      "baseline_ar": {
+        "seq_len": 1024,
+        "peak_alloc_mib": 1035.326171875,
+        "past_or_cache_nbytes": 0,
+        "elapsed_s": 0.06886353809386492
+      },
+      "tree_path": {
+        "num_paths": 8,
+        "sum_seq_lens": 8192,
+        "max_peak_alloc_mib": 1035.326171875,
+        "sum_elapsed_s": 5.874006708152592,
+        "paths": [
+          {
+            "path_index": 0,
+            "doc_chars": 9016,
+            "seq_len": 1024,
+            "peak_alloc_mib": 1035.326171875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 5.408915730193257
+          },
+          {
+            "path_index": 1,
+            "doc_chars": 9015,
+            "seq_len": 1024,
+            "peak_alloc_mib": 1035.326171875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06139068119227886
+          },
+          {
+            "path_index": 2,
+            "doc_chars": 9017,
+            "seq_len": 1024,
+            "peak_alloc_mib": 1035.326171875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06932138744741678
+          },
+          {
+            "path_index": 3,
+            "doc_chars": 9017,
+            "seq_len": 1024,
+            "peak_alloc_mib": 1035.326171875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06936998665332794
+          },
+          {
+            "path_index": 4,
+            "doc_chars": 9012,
+            "seq_len": 1024,
+            "peak_alloc_mib": 1035.326171875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.061703779734671116
+          },
+          {
+            "path_index": 5,
+            "doc_chars": 9013,
+            "seq_len": 1024,
+            "peak_alloc_mib": 1035.326171875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06246332172304392
+          },
+          {
+            "path_index": 6,
+            "doc_chars": 9016,
+            "seq_len": 1024,
+            "peak_alloc_mib": 1035.326171875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.06983061507344246
+          },
+          {
+            "path_index": 7,
+            "doc_chars": 9015,
+            "seq_len": 1024,
+            "peak_alloc_mib": 1035.326171875,
+            "past_or_cache_nbytes": 0,
+            "elapsed_s": 0.07101120613515377
+          }
+        ]
+      },
+      "within_arm_ratios": {
+        "peak_max_tree_over_baseline": 1.0,
+        "token_steps_sum_tree_over_baseline_seq": 8.0
+      },
+      "dtype": "torch.float16"
+    }
+  },
+  "git_sha": "6fa7873",
+  "torch_version": "2.11.0+cu126"
+}

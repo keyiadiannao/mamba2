@@ -28,4 +28,6 @@ jobs:
           python -m pytest
           tests/test_engineering_path_batch_smoke.py
           tests/test_causal_lm_kv_stats.py
+          tests/test_run_g3_causal_lm_compare_cli.py
+          tests/test_run_engineering_cli.py
           -q

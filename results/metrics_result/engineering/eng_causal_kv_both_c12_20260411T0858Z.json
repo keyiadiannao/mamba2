@@ -1,0 +1,153 @@
+{
+  "kind": "engineering_causal_lm_path_kv_smoke",
+  "schema_version": 1,
+  "runner": "scripts/engineering/run_causal_lm_path_kv_smoke.py",
+  "tree_kind": "wikitext2_bottom_up",
+  "dataset": "wikitext",
+  "wikitext_config": "wikitext-2-raw-v1",
+  "num_leaves": 8,
+  "fanout": 2,
+  "chunk_len": 12,
+  "dim_toy_embed": 128,
+  "max_length": 512,
+  "num_paths_total": 8,
+  "num_paths_run": 8,
+  "arms": {
+    "gpt2": {
+      "model_id": "openai-community/gpt2",
+      "device": "cuda",
+      "dtype": "torch.float16",
+      "paths": [
+        {
+          "path_index": 0,
+          "doc_chars": 9016,
+          "seq_len": 512,
+          "peak_alloc_mib": 321.4521484375,
+          "past_or_cache_nbytes": 0,
+          "past_or_cache_nbytes_estimated": 18874368
+        },
+        {
+          "path_index": 1,
+          "doc_chars": 9015,
+          "seq_len": 512,
+          "peak_alloc_mib": 389.4521484375,
+          "past_or_cache_nbytes": 0,
+          "past_or_cache_nbytes_estimated": 18874368
+        },
+        {
+          "path_index": 2,
+          "doc_chars": 9017,
+          "seq_len": 512,
+          "peak_alloc_mib": 389.4521484375,
+          "past_or_cache_nbytes": 0,
+          "past_or_cache_nbytes_estimated": 18874368
+        },
+        {
+          "path_index": 3,
+          "doc_chars": 9017,
+          "seq_len": 512,
+          "peak_alloc_mib": 389.4521484375,
+          "past_or_cache_nbytes": 0,
+          "past_or_cache_nbytes_estimated": 18874368
+        },
+        {
+          "path_index": 4,
+          "doc_chars": 9012,
+          "seq_len": 512,
+          "peak_alloc_mib": 389.4521484375,
+          "past_or_cache_nbytes": 0,
+          "past_or_cache_nbytes_estimated": 18874368
+        },
+        {
+          "path_index": 5,
+          "doc_chars": 9013,
+          "seq_len": 512,
+          "peak_alloc_mib": 389.4521484375,
+          "past_or_cache_nbytes": 0,
+          "past_or_cache_nbytes_estimated": 18874368
+        },
+        {
+          "path_index": 6,
+          "doc_chars": 9016,
+          "seq_len": 512,
+          "peak_alloc_mib": 389.4521484375,
+          "past_or_cache_nbytes": 0,
+          "past_or_cache_nbytes_estimated": 18874368
+        },
+        {
+          "path_index": 7,
+          "doc_chars": 9015,
+          "seq_len": 512,
+          "peak_alloc_mib": 389.4521484375,
+          "past_or_cache_nbytes": 0,
+          "past_or_cache_nbytes_estimated": 18874368
+        }
+      ]
+    },
+    "mamba2_370m": {
+      "model_id": "AntonV/mamba2-370m-hf",
+      "device": "cuda",
+      "dtype": "torch.float16",
+      "paths": [
+        {
+          "path_index": 0,
+          "doc_chars": 9016,
+          "seq_len": 512,
+          "peak_alloc_mib": 1053.39697265625,
+          "past_or_cache_nbytes": 0
+        },
+        {
+          "path_index": 1,
+          "doc_chars": 9015,
+          "seq_len": 512,
+          "peak_alloc_mib": 1009.95703125,
+          "past_or_cache_nbytes": 0
+        },
+        {
+          "path_index": 2,
+          "doc_chars": 9017,
+          "seq_len": 512,
+          "peak_alloc_mib": 1010.84765625,
+          "past_or_cache_nbytes": 0
+        },
+        {
+          "path_index": 3,
+          "doc_chars": 9017,
+          "seq_len": 512,
+          "peak_alloc_mib": 1010.84765625,
+          "past_or_cache_nbytes": 0
+        },
+        {
+          "path_index": 4,
+          "doc_chars": 9012,
+          "seq_len": 512,
+          "peak_alloc_mib": 1010.84765625,
+          "past_or_cache_nbytes": 0
+        },
+        {
+          "path_index": 5,
+          "doc_chars": 9013,
+          "seq_len": 512,
+          "peak_alloc_mib": 1010.84765625,
+          "past_or_cache_nbytes": 0
+        },
+        {
+          "path_index": 6,
+          "doc_chars": 9016,
+          "seq_len": 512,
+          "peak_alloc_mib": 1010.84765625,
+          "past_or_cache_nbytes": 0
+        },
+        {
+          "path_index": 7,
+          "doc_chars": 9015,
+          "seq_len": 512,
+          "peak_alloc_mib": 1010.84765625,
+          "past_or_cache_nbytes": 0
+        }
+      ]
+    }
+  },
+  "git_sha": "6fa7873",
+  "torch_version": "2.11.0+cu126"
+}
