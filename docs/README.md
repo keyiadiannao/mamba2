@@ -1,12 +1,12 @@
 # 文档索引（主表）
 
-对外入口：仓库根目录 **`README.md`**。目录已按 **总体规划 / 实施**、**执行手册 / 排障** 分层；**单一权威**矩阵避免双写。
+对外入口：仓库根目录 **`README.md`**。目录已按 **总体规划 / 实施**、**执行手册 / 排障** 分层；**单一权威**矩阵避免双写。**从现在 → L1 端到端实验完成** 的时间序主线：**[`overview/planning/MASTER_EXPERIMENT_PLAN_E2E.md`](overview/planning/MASTER_EXPERIMENT_PLAN_E2E.md)**。
 
 ## 文件夹结构（速查）
 
 | 路径 | 类别 | 内容 |
 |------|------|------|
-| **`docs/overview/planning/`** | 总体规划 | 月级叙事、现状大表、项目总览、周历模板；**`NARRATIVE_MAINLINE_TREE_READER_SSGS`** 主线链与数据索引；**`MOTIVATION_MAMBA_TREE_RAG_SSGS_REFERENCE`** 动机与外部叙事参照（**非**替代单一权威） |
+| **`docs/overview/planning/`** | 总体规划 | 月级叙事、现状大表、项目总览、周历模板；**`NARRATIVE_MAINLINE_TREE_READER_SSGS`** 主线链与数据索引；**`MOTIVATION_MAMBA_TREE_RAG_SSGS_REFERENCE`** 动机与外部叙事参照；**`RAPTOR_INSPIRED_NEXT_PHASE`** **RAPTOR 式 × SSGS × Mamba** 下一重点（**非**全量复现 RAPTOR） |
 | **`docs/overview/execution/`** | 实施与迭代 | 下一步任务展开、当前 sprint 勾选、投稿包 |
 | **`docs/overview/engineering/`** | **工程北星**（战略 B） | **Runner / G1–G5 / Sprint**；与 **`experiments/`** 实证线 **文档分列**、**代码复用** |
 | **`docs/experiments/planning/`** | 实验总体规划 | 登记册、数据约定、阶段 1 验证计划 |
@@ -19,6 +19,8 @@
 
 | 主题 | 唯一权威 |
 |------|----------|
+| **时间序主线：阶段 0→5、L1 门闩、任务 A/B 选择** | [`overview/planning/MASTER_EXPERIMENT_PLAN_E2E.md`](overview/planning/MASTER_EXPERIMENT_PLAN_E2E.md) |
+| **L1 JSON `kind`、L2/L3 分层、检查单、CSV 列** | [`overview/planning/E2E_MAIN_RESULTS_AND_EVIDENCE_TIERS.md`](overview/planning/E2E_MAIN_RESULTS_AND_EVIDENCE_TIERS.md) |
 | 叙事框架、基线对照、A/B/C/X、月级阶段表、**§1.0 主验证轴/副线** | [`overview/planning/PROJECT_MASTER_PLAN.md`](overview/planning/PROJECT_MASTER_PLAN.md) |
 | **主线叙事链**（树→路径→reader→导航；**SSGS**；数据/登记索引；**§0 中/英摘要可用稿**） | [`overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md`](overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md) |
 | **现状**大表、七轴、§3.5 证据梯、决策 §4、公平性 §6 | [`overview/planning/RESEARCH_STATUS_AND_DIRECTION.md`](overview/planning/RESEARCH_STATUS_AND_DIRECTION.md) |
@@ -36,7 +38,9 @@
 
 | 目的 | 文件 |
 |------|------|
+| **从现在 → L1 端到端跑完**（阶段勾选、门闩） | [`overview/planning/MASTER_EXPERIMENT_PLAN_E2E.md`](overview/planning/MASTER_EXPERIMENT_PLAN_E2E.md) |
 | **接下来几周干什么**（阶段 5→投出→审稿） | [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) |
+| **RAPTOR 式下一重点**（× SSGS × Mamba，阶段 R1–R4） | [`overview/planning/RAPTOR_INSPIRED_NEXT_PHASE.md`](overview/planning/RAPTOR_INSPIRED_NEXT_PHASE.md) |
 | **P0 状态备忘**（§Ⅸ 实证冻结、禁混表、Sprint2 与树/平面） | [`overview/execution/P0_STATUS_MEMO.md`](overview/execution/P0_STATUS_MEMO.md) |
 | **实证快照 + 北星框架（F0–F5）+ 下一步命令** | [`overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md`](overview/planning/NARRATIVE_MAINLINE_TREE_READER_SSGS.md) **§9–§11** + [`overview/execution/PLAN_NOW_TO_DONE.md`](overview/execution/PLAN_NOW_TO_DONE.md) **§Ⅶ** |
 | **动机与架构叙事参照**（Mamba×树×SSGS、风险、文献索引） | [`overview/planning/MOTIVATION_MAMBA_TREE_RAG_SSGS_REFERENCE.md`](overview/planning/MOTIVATION_MAMBA_TREE_RAG_SSGS_REFERENCE.md) |
@@ -101,3 +105,21 @@
 
 - [`RESEARCH_NOTES.md`](research/RESEARCH_NOTES.md)
 - [`RETRIEVAL_HEAD_NOTES.md`](research/RETRIEVAL_HEAD_NOTES.md)
+
+---
+
+## 7. 文档冗余说明（2026-04 整理）
+
+以下文件 **仍有价值**，但与主线 **部分重叠**；**新决策以「单一权威」表为准**，勿双写数字。
+
+| 易重复读 | 实际请优先读 |
+|----------|----------------|
+| **`NEXT_RESEARCH_PLAN.md`** 全篇当路线图 | **`MASTER_EXPERIMENT_PLAN_E2E.md`**（时间序）+ **`CURRENT_SPRINT.md`**（精简执行面板） |
+| **`NEXT_RESEARCH_SPRINT_AFTER_MANUSCRIPT.md`** 当总计划 | **R4 Wikitext 服务器队列** 专用；总骨架 **MASTER §4** |
+| **`END_TO_END_TASK_PIPELINE.md`** 当 L1 定义 | **T1/T2/T3 工程细节**；**L1 正式 `kind`** 以 **`E2E_MAIN_RESULTS_AND_EVIDENCE_TIERS.md` §7** 为准 |
+| **`RESEARCH_PHASES_0_TO_DONE.md`** 与 **MASTER** | **阶段 0–7 历史与成功标准**；**L1 门闩** 以 **MASTER 阶段 5** 为硬条件 |
+| **`PHASE1_MANUSCRIPT.md`** vs **`SUBMISSION_STYLE_MANUSCRIPT_DRAFT.md`** | **IMRaD 投稿体例** 以 **`SUBMISSION_STYLE_MANUSCRIPT_DRAFT.md`** + **`latex/submission_manuscript.tex`**；**PHASE1** 为阶段 1 **存档叙述** |
+| **`FOUNDATION_STAGE_FORMAL_SUMMARY.md`** vs **NARRATIVE §0** | **浓缩成稿** vs **摘要可用稿**；改摘要时 **只改一处真源**（建议 **NARRATIVE §0** 或 **SUBMISSION 草案**，另一处 **指向**） |
+| **`ROADMAP.md`** 周历 | **模板与历史**；**当周勾选** 以 **`CURRENT_SPRINT.md`** 为准 |
+
+**成稿与路径核对**：**`SUBMISSION_PACK.md` §A2** + **`EXPERIMENT_REGISTRY.md`**（basename **逐字**）。
